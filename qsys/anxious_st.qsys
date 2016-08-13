@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="$${FILENAME}">
+ <component
+   name="$${FILENAME}"
+   displayName="$${FILENAME}"
+   version="1.0"
+   description=""
+   tags=""
+   categories="System" />
+ <parameter name="bonusData"><![CDATA[bonusData 
+{
+   element $${FILENAME}
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element alt_vip_itc_0
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
+   element alt_vip_vfb_0
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{}";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element camera_st_0
+   {
+      datum _sortIndex
+      {
+         value = "4";
+         type = "int";
+      }
+   }
+   element clk_50
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+   }
+   element sdram_controller_0
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element sdram_controller_0.s1
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "0";
+         type = "String";
+      }
+   }
+   element sys_sdram_pll_0
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+   }
+   element vip_clk
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+   }
+}
+]]></parameter>
+ <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
+ <parameter name="device" value="EP4CGX150DF31C7" />
+ <parameter name="deviceFamily" value="Cyclone IV GX" />
+ <parameter name="deviceSpeedGrade" value="7" />
+ <parameter name="fabricMode" value="QSYS" />
+ <parameter name="generateLegacySim" value="false" />
+ <parameter name="generationId" value="0" />
+ <parameter name="globalResetBus" value="false" />
+ <parameter name="hdlLanguage" value="VERILOG" />
+ <parameter name="hideFromIPCatalog" value="false" />
+ <parameter name="lockedInterfaceDefinition" value="" />
+ <parameter name="maxAdditionalLatency" value="1" />
+ <parameter name="projectName" value="" />
+ <parameter name="sopcBorderPoints" value="false" />
+ <parameter name="systemHash" value="0" />
+ <parameter name="testBenchDutName" value="" />
+ <parameter name="timeStamp" value="0" />
+ <parameter name="useTestBenchNamingPattern" value="false" />
+ <instanceScript></instanceScript>
+ <interface
+   name="alt_vip_itc_0_clocked_video"
+   internal="alt_vip_itc_0.clocked_video"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="camera_st_0_conduit"
+   internal="camera_st_0.conduit"
+   type="conduit"
+   dir="end" />
+ <interface name="clk" internal="clk_50.clk_in" type="clock" dir="end" />
+ <interface
+   name="new_sdram_controller_0_wire"
+   internal="sdram_controller_0.wire"
+   type="conduit"
+   dir="end" />
+ <interface name="reset" internal="clk_50.clk_in_reset" type="reset" dir="end" />
+ <interface
+   name="sys_sdram_pll_0_sdram_clk"
+   internal="sys_sdram_pll_0.sdram_clk"
+   type="clock"
+   dir="start" />
+ <interface name="vip" internal="vip_clk.clk_in" type="clock" dir="end" />
+ <interface
+   name="vip_reset"
+   internal="vip_clk.clk_in_reset"
+   type="reset"
+   dir="end" />
+ <module name="alt_vip_itc_0" kind="alt_vip_itc" version="14.0" enabled="1">
+  <parameter name="ACCEPT_COLOURS_IN_SEQ" value="0" />
+  <parameter name="ANC_LINE" value="0" />
+  <parameter name="AP_LINE" value="0" />
+  <parameter name="BPS" value="8" />
+  <parameter name="CLOCKS_ARE_SAME" value="0" />
+  <parameter name="COLOUR_PLANES_ARE_IN_PARALLEL" value="1" />
+  <parameter name="FAMILY" value="Cyclone IV GX" />
+  <parameter name="FIELD0_ANC_LINE" value="0" />
+  <parameter name="FIELD0_V_BACK_PORCH" value="0" />
+  <parameter name="FIELD0_V_BLANK" value="0" />
+  <parameter name="FIELD0_V_FRONT_PORCH" value="0" />
+  <parameter name="FIELD0_V_RISING_EDGE" value="0" />
+  <parameter name="FIELD0_V_SYNC_LENGTH" value="0" />
+  <parameter name="FIFO_DEPTH" value="640" />
+  <parameter name="F_FALLING_EDGE" value="0" />
+  <parameter name="F_RISING_EDGE" value="0" />
+  <parameter name="GENERATE_SYNC" value="0" />
+  <parameter name="H_ACTIVE_PIXELS" value="640" />
+  <parameter name="H_BACK_PORCH" value="48" />
+  <parameter name="H_BLANK" value="0" />
+  <parameter name="H_FRONT_PORCH" value="16" />
+  <parameter name="H_SYNC_LENGTH" value="96" />
+  <parameter name="INTERLACED" value="0" />
+  <parameter name="NO_OF_MODES" value="1" />
+  <parameter name="NUMBER_OF_COLOUR_PLANES" value="3" />
+  <parameter name="STD_WIDTH" value="1" />
+  <parameter name="THRESHOLD" value="639" />
+  <parameter name="USE_CONTROL" value="0" />
+  <parameter name="USE_EMBEDDED_SYNCS" value="0" />
+  <parameter name="V_ACTIVE_LINES" value="480" />
+  <parameter name="V_BACK_PORCH" value="33" />
+  <parameter name="V_BLANK" value="0" />
+  <parameter name="V_FRONT_PORCH" value="10" />
+  <parameter name="V_SYNC_LENGTH" value="2" />
+ </module>
+ <module name="alt_vip_vfb_0" kind="alt_vip_vfb" version="13.1" enabled="1">
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
+  <parameter name="PARAMETERISATION"><![CDATA[<frameBufferParams><VFB_NAME>MyFrameBuffer</VFB_NAME><VFB_MAX_WIDTH>640</VFB_MAX_WIDTH><VFB_MAX_HEIGHT>480</VFB_MAX_HEIGHT><VFB_BPS>8</VFB_BPS><VFB_CHANNELS_IN_SEQ>1</VFB_CHANNELS_IN_SEQ><VFB_CHANNELS_IN_PAR>3</VFB_CHANNELS_IN_PAR><VFB_WRITER_RUNTIME_CONTROL>0</VFB_WRITER_RUNTIME_CONTROL><VFB_DROP_FRAMES>1</VFB_DROP_FRAMES><VFB_READER_RUNTIME_CONTROL>0</VFB_READER_RUNTIME_CONTROL><VFB_REPEAT_FRAMES>1</VFB_REPEAT_FRAMES><VFB_FRAMEBUFFERS_ADDR>00000000</VFB_FRAMEBUFFERS_ADDR><VFB_MEM_PORT_WIDTH>32</VFB_MEM_PORT_WIDTH><VFB_MEM_MASTERS_USE_SEPARATE_CLOCK>true</VFB_MEM_MASTERS_USE_SEPARATE_CLOCK><VFB_RDATA_FIFO_DEPTH>128</VFB_RDATA_FIFO_DEPTH><VFB_RDATA_BURST_TARGET>64</VFB_RDATA_BURST_TARGET><VFB_WDATA_FIFO_DEPTH>128</VFB_WDATA_FIFO_DEPTH><VFB_WDATA_BURST_TARGET>64</VFB_WDATA_BURST_TARGET><VFB_MAX_NUMBER_PACKETS>0</VFB_MAX_NUMBER_PACKETS><VFB_MAX_SYMBOLS_IN_PACKET>10</VFB_MAX_SYMBOLS_IN_PACKET><VFB_INTERLACED_SUPPORT>0</VFB_INTERLACED_SUPPORT><VFB_CONTROLLED_DROP_REPEAT>0</VFB_CONTROLLED_DROP_REPEAT><VFB_BURST_ALIGNMENT>true</VFB_BURST_ALIGNMENT><VFB_DROP_INVALID_FIELDS>0</VFB_DROP_INVALID_FIELDS></frameBufferParams>]]></parameter>
+ </module>
+ <module name="camera_st_0" kind="camera_st_24" version="1.0" enabled="1">
+  <parameter name="DATA_WIDTH" value="24" />
+  <parameter name="FIFO_LENGTH_LOG_2" value="8" />
+ </module>
+ <module name="clk_50" kind="clock_source" version="15.0" enabled="1">
+  <parameter name="clockFrequency" value="50000000" />
+  <parameter name="clockFrequencyKnown" value="true" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module
+   name="sdram_controller_0"
+   kind="altera_avalon_new_sdram_controller"
+   version="15.0"
+   enabled="1">
+  <parameter name="TAC" value="5.5" />
+  <parameter name="TMRD" value="3" />
+  <parameter name="TRCD" value="20.0" />
+  <parameter name="TRFC" value="70.0" />
+  <parameter name="TRP" value="20.0" />
+  <parameter name="TWR" value="14.0" />
+  <parameter name="casLatency" value="3" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="columnWidth" value="10" />
+  <parameter name="componentName">$${FILENAME}_sdram_controller_0</parameter>
+  <parameter name="dataWidth" value="32" />
+  <parameter name="generateSimulationModel" value="false" />
+  <parameter name="initNOPDelay" value="0.0" />
+  <parameter name="initRefreshCommands" value="8" />
+  <parameter name="masteredTristateBridgeSlave" value="0" />
+  <parameter name="model">single_Micron_MT48LC4M32B2_7_chip</parameter>
+  <parameter name="numberOfBanks" value="4" />
+  <parameter name="numberOfChipSelects" value="1" />
+  <parameter name="pinsSharedViaTriState" value="false" />
+  <parameter name="powerUpDelay" value="100.0" />
+  <parameter name="refreshPeriod" value="7.8125" />
+  <parameter name="registerDataIn" value="true" />
+  <parameter name="rowWidth" value="13" />
+ </module>
+ <module
+   name="sys_sdram_pll_0"
+   kind="altera_up_avalon_sys_sdram_pll"
+   version="15.0"
+   enabled="1">
+  <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
+  <parameter name="CIII_boards" value="DE0" />
+  <parameter name="CIV_boards" value="DE2i-150" />
+  <parameter name="CV_boards" value="DE1-SoC" />
+  <parameter name="device_family" value="Cyclone IV GX" />
+  <parameter name="gui_outclk" value="50.0" />
+  <parameter name="gui_refclk" value="50.0" />
+  <parameter name="other_boards" value="None" />
+ </module>
+ <module name="vip_clk" kind="clock_source" version="15.0" enabled="1">
+  <parameter name="clockFrequency" value="100000000" />
+  <parameter name="clockFrequencyKnown" value="true" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="alt_vip_vfb_0.read_master"
+   end="sdram_controller_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="alt_vip_vfb_0.write_master"
+   end="sdram_controller_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="camera_st_0.aso_out"
+   end="alt_vip_vfb_0.din" />
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="alt_vip_vfb_0.dout"
+   end="alt_vip_itc_0.din" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="vip_clk.clk"
+   end="alt_vip_vfb_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="vip_clk.clk"
+   end="camera_st_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="vip_clk.clk"
+   end="alt_vip_itc_0.is_clk_rst" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_50.clk"
+   end="sys_sdram_pll_0.ref_clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="sys_sdram_pll_0.sys_clk"
+   end="sdram_controller_0.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="sys_sdram_pll_0.sys_clk"
+   end="alt_vip_vfb_0.read_master_av_clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="sys_sdram_pll_0.sys_clk"
+   end="alt_vip_vfb_0.write_master_av_clock" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="vip_clk.clk_reset"
+   end="alt_vip_itc_0.is_clk_rst_reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_50.clk_reset"
+   end="sys_sdram_pll_0.ref_reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="vip_clk.clk_reset"
+   end="alt_vip_vfb_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="vip_clk.clk_reset"
+   end="camera_st_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="sys_sdram_pll_0.reset_source"
+   end="alt_vip_vfb_0.read_master_av_reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="sys_sdram_pll_0.reset_source"
+   end="sdram_controller_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="sys_sdram_pll_0.reset_source"
+   end="alt_vip_vfb_0.write_master_av_reset" />
+ <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
+ <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
+ <interconnectRequirement
+   for="new_target"
+   name="new_requirement_name"
+   value="new_requirement_value" />
+ <interconnectRequirement
+   for="new_target"
+   name="new_requirement_name_0"
+   value="new_requirement_value" />
+ <interconnectRequirement
+   for="new_target"
+   name="new_requirement_name_1"
+   value="new_requirement_value" />
+</system>
