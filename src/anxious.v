@@ -171,14 +171,15 @@ inout						FAN_CTRL;
 assign FAN_CTRL = SW[0]; // turn off FAN
 
 wire clk_camera;
-reg clk_vga = 1'b0;
-
-always @ (posedge(CLOCK_50))
-	clk_vga <= ~clk_vga;
+wire clk_qsys;
+wire clk_vga;
 
 cam_pll U_cam_pll (
 	.inclk0 (CLOCK_50),
-	.c0     (clk_camera)
+	.c0     (clk_camera),
+	.c1     (clk_qsys),
+	.c2     (DRAM_CLK),
+	.c3     (clk_vga)
 );
 
 function [6:0] seg7;
@@ -223,7 +224,7 @@ anxious_qsys U_sys (
 	.camera_mm_0_conduit_cam_reset     (GPIO[34]),    //                            .cam_reset
 	.camera_mm_0_conduit_cam_vsync     (GPIO[22]),    //                            .cam_vsync
 	.camera_mm_0_conduit_cam_xclk      (GPIO[25]),    //                            .cam_xclk
-	.clk_clk                           (CLOCK_50),    //                         clk.clk
+	.clk_clk                           (clk_qsys),    //                         clk.clk
 	.led_export                        (LEDG[0]),     //                         led.export
 	.new_sdram_controller_0_wire_addr  (DRAM_ADDR),   // new_sdram_controller_0_wire.addr
 	.new_sdram_controller_0_wire_ba    (DRAM_BA),     //                            .ba
@@ -235,7 +236,6 @@ anxious_qsys U_sys (
 	.new_sdram_controller_0_wire_ras_n (DRAM_RAS_N),  //                            .ras_n
 	.new_sdram_controller_0_wire_we_n  (DRAM_WE_N),   //                            .we_n
 	.reset_reset_n                     (KEY[0]),      //                       reset.reset_n
-	.sys_sdram_pll_0_sdram_clk_clk     (DRAM_CLK),    //   sys_sdram_pll_0_sdram_clk.clk
 	.vga_mm_0_conduit_vga_b            (VGA_B),       //            vga_mm_0_conduit.vga_b
 	.vga_mm_0_conduit_vga_blank_n      (VGA_BLANK_N), //                            .vga_blank_n
 	.vga_mm_0_conduit_vga_clk          (VGA_CLK),     //                            .vga_clk
@@ -244,10 +244,9 @@ anxious_qsys U_sys (
 	.vga_mm_0_conduit_vga_r            (VGA_R),       //                            .vga_r
 	.vga_mm_0_conduit_vga_sync_n       (VGA_SYNC_N),  //                            .vga_sync_n
 	.vga_mm_0_conduit_vga_vs           (VGA_VS),      //                            .vga_vs
-	.vga_mm_0_conduit_clk_vga          (clk_vga),      //                            .clk_vga
+	.vga_mm_0_conduit_clk_vga          (clk_vga),     //                            .clk_vga
 	.frame_buffer_switcher_0_enable_enable (SW[2]), // frame_buffer_switcher_0_enable.enable
 	.camera_mm_0_black_cnt_readdata    (black_cnt)  //          camera_mm_0_black_cnt.readdata
 );
-
 
 endmodule

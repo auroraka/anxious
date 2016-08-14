@@ -139,8 +139,8 @@ begin
 
         rdfull_c   := rdfull(r.rdsel);
         rdempty_c  := rdempty(r.rdsel);
-        v.addr_syn := sv.addr;
-        v.addr     := v.addr_syn; -- 2-FF sync
+        v.addr_syn := sr.addr;
+        v.addr     := r.addr_syn; -- 2-FF sync
         writedata  <= q(r.rdsel);
         address    <= r.addr(r.rdsel);
         

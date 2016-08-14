@@ -13,43 +13,55 @@
 #               Tip: Type 'jtagconfig' to list all available jtag cables .
 
 # Check the number of arguments passed into the script
-if [ $# -eq 4 ]
+SHOW_HELP="0"
+if [ $# -lt 2 ]
 then
-	CPU_NUMBER=$1
-	START_ROW=$2
-	ROW_CNT=$3
-  	CABLE_NUMBER=$4
+	SHOW_HELP="1"
 else
+	COMMAND=$1
+	CPU_ID=$2
+	CABLE_NUMBER="1"
+	if [[ $COMMAND != "all" && $COMMAND != "generate-bsp" && $COMMAND != "generate-makefile" && $COMMAND != "make" && $COMMAND != "download" && $COMMAND != "open-terminal" ]]
+	then
+		SHOW_HELP="1"
+	fi
 	if [ $# -eq 3 ]
 	then
-		CPU_NUMBER=$1
-		START_ROW=$2
-		ROW_CNT=$3
-		CABLE_NUMBER="1"
+		CABLE_NUMBER=$3
 	else
-  		echo ""
-  		echo "Usage:    ./generate.sh <CPU number> <start row> <row count> [<cable number>]"
-		echo "Example:  ./generate.sh 2"
-  		echo ""
-		echo "Description:  A script that contains a bunch of app and bsp switches that will generate"
-		echo "the makefiles, compile the code, download the code, open a terminal."
-  		echo "The first parameter is the CPU number cpu subsystem to target."
-  		echo ""
-		echo "Pass in a jtag cable number as the second parameter if you have multiple jtag programming cables."
-  		echo ""
-		echo "Tip: Type 'jtagconfig -n' to see all available jtag cables."
-  		exit 1
+		if [ $# -gt 3 ]
+		then
+  			SHOW_HELP="1"
+  		fi
 	fi
 fi
 
-if [ $CPU_NUMBER -gt 5 ]
+
+if [ "$SHOW_HELP" = "1" ]
+then
+	echo ""
+	echo "Usage:    ./generate.sh <command> <CPU number> [<cable number>]"
+	echo "Example:  ./generate.sh all 2"
+	echo ""
+	echo "Description:  A script that contains a bunch of app and bsp switches that will generate"
+	echo "the makefiles, compile the code, download the code, open a terminal."
+	echo ""
+	echo "Command can be one of 'all', 'generate-bsp', 'generate-makefile', 'make', 'download', or 'open-terminal'."
+	echo ""
+	echo "Pass in a jtag cable number if you have multiple jtag programming cables."
+	echo ""
+	echo "Tip: Type 'jtagconfig -n' to see all available jtag cables."
+	exit 1
+fi
+
+if [ $CPU_ID -gt 5 ]
 then
 	echo "Please specify a CPU number between 0 and 4."
 	exit 2
 fi
 
 # Name of elf file
-ELF_NAME=test_code$CPU_NUMBER.elf
+ELF_NAME=test_code$CPU_ID.elf
 
 # JDI file name
 JDI_FILE=../../anxious_st.jdi
@@ -61,22 +73,22 @@ JDI_FILE=../../anxious_st.jdi
 # name pre-pended.  For this reason, each Nios II CPU component 
 # in your Qsys design must have a unique cpu name.
 
-PHILOSOPHER_CPU_NAME="nios2_gen2_"$CPU_NUMBER
+PHILOSOPHER_CPU_NAME="nios2_gen2_"$CPU_ID
 PHILOSOPHER_DOWNLOAD_CPU_NAME=$PHILOSOPHER_CPU_NAME
-PHILOSOPHER_JTAG_UART_NAME="jtag_uart_"$CPU_NUMBER
+PHILOSOPHER_JTAG_UART_NAME="jtag_uart_"$CPU_ID
 
 # cpu and jtag uart instance numbers
-CPU_INSTANCE_NUMBER=$(($CPU_NUMBER))
-JTAG_UART_INSTANCE_NUMBER=$(($CPU_NUMBER))
+CPU_INSTANCE_NUMBER=$(($CPU_ID))
+JTAG_UART_INSTANCE_NUMBER=$(($CPU_ID))
 
 # These are the two folders where all the files are dumped
-APP_DIR="render_"$CPU_NUMBER
-BSP_DIR="render_bsp_"$CPU_NUMBER
+APP_DIR="render_"$CPU_ID
+BSP_DIR="render_bsp_"$CPU_ID
 
 # Source dir
 SRC_DIR="./src"
 
-echo "Philosopher number is " $CPU_NUMBER
+echo "Philosopher number is " $CPU_ID
 echo "Philosopher cpu name is " $PHILOSOPHER_CPU_NAME
 echo "Philosopher jtag uart name is " $PHILOSOPHER_JTAG_UART_NAME
 echo "CPU instance number is " $CPU_INSTANCE_NUMBER
@@ -112,38 +124,44 @@ BSP_FLAGS="--set hal.max_file_descriptors 4 \
 
 # ******** DON'T NEED TO MODIFY ANYTHING BELOW THIS LINE **************
 
-# make sure the application and bsp directories are blown away first before attempting to regenerate new projects
-rm -rf $APP_DIR
-rm -rf $BSP_DIR
+if [[ "$COMMAND" = "all" || "$COMMAND" = "generate-bsp" ]]
+then
+	# make sure the application and bsp directories are blown away first before attempting to regenerate new projects
+	rm -rf $APP_DIR
+	rm -rf $BSP_DIR
 
-mkdir $BSP_DIR
+	mkdir $BSP_DIR
 
-# generate the settings.bsp file
-cmd="nios2-bsp-create-settings --settings settings"
-
-# generate the BSP in the $BSP_DIR
-cmd="nios2-bsp $BSP_TYPE $BSP_DIR $SOPC_DIR $BSP_FLAGS"
-$cmd || {
-  echo "nios2-bsp failed"
-  exit 1
-}
-
-
-# generate the application in the $APP_DIR
-cmd="nios2-app-generate-makefile --app-dir $APP_DIR --bsp-dir $BSP_DIR --elf-name $ELF_NAME --src-rdir $SRC_DIR --set APP_CFLAGS_OPTIMIZATION $OPTIMIZATION_LEVEL --set CFLAGS \"-DROW_CNT=$ROW_CNT -DSTART_ROW=$START_ROW\""
-$cmd || {
-  echo "nios2-app-generate-makefile failed"
-  exit 1
-}
+	# generate the BSP in the $BSP_DIR
+	generate_bsp_cmd="nios2-bsp $BSP_TYPE $BSP_DIR $SOPC_DIR $BSP_FLAGS"
+	$generate_bsp_cmd || {
+	  echo "nios2-bsp failed"
+	  exit 1
+	}
+fi
 
 
-# Running make (for application and the bsp due to dependencies)
-cmd="make --directory=$APP_DIR"
-echo "Executing" $cmd
-$cmd || {
-    echo "make failed"
-    exit 1
-}
+if [[ "$COMMAND" = "all" || "$COMMAND" = "generate-makefile" ]]
+then
+	# generate the application in the $APP_DIR
+	generate_makefile_cmd="nios2-app-generate-makefile --app-dir $APP_DIR --bsp-dir $BSP_DIR --elf-name $ELF_NAME --src-rdir $SRC_DIR --set APP_CFLAGS_OPTIMIZATION $OPTIMIZATION_LEVEL --set CFLAGS \"-DCPU_ID=$CPU_ID\""
+	$generate_makefile_cmd || {
+		echo "nios2-app-generate-makefile failed"
+		exit 1
+	}
+fi
+
+
+if [[ "$COMMAND" = "all" || "$COMMAND" = "make" ]]
+then
+	# Running make (for application and the bsp due to dependencies)
+	make_cmd="make --directory=$APP_DIR"
+	echo "Executing" $cmd
+	$make_cmd || {
+	    echo "make failed"
+	    exit 1
+	}
+fi
 
 # Downloading the code
 #
@@ -169,27 +187,38 @@ $cmd || {
 # Philosopher cpu instance and philosopher jtag_uart instances set 
 # to 1 higher than the philosopher number. 
 
-#cmd="nios2-download -g -r --jdi $SOPC_DIR/$JDI_FILE --cpu_name $PHILOSOPHER_DOWNLOAD_CPU_NAME --cable $CABLE_NUMBER $APP_DIR/$ELF_NAME"
-retrys=5
-for ((i = 0; i < 5; ++i))
-do
-	cmd="nios2-download -g -r --instance $CPU_INSTANCE_NUMBER --cable $CABLE_NUMBER $APP_DIR/$ELF_NAME"
-	echo "Executing" $cmd
-	$cmd || {
-		echo "failed to download the software .elf file"
-	    exit 1
-	    continue
-	}
-	break
-done
+if [[ "$COMMAND" = "all" || "$COMMAND" = "download" ]]
+then
+	#cmd="nios2-download -g -r --jdi $SOPC_DIR/$JDI_FILE --cpu_name $PHILOSOPHER_DOWNLOAD_CPU_NAME --cable $CABLE_NUMBER $APP_DIR/$ELF_NAME"
+	download_cmd="nios2-download -g -r --instance $CPU_INSTANCE_NUMBER --cable $CABLE_NUMBER $APP_DIR/$ELF_NAME"
+	retrys=5
+	for ((i = 0; i < 5; ++i))
+	do
+		echo "Executing" $open_terminal_cmd
+		$download_cmd || {
+			echo "failed to download the software .elf file"
+		    continue
+		}
+		exit 1
+	done
+fi
 
-# # Opening terminal connection
-# cmd="nios2-terminal --cable=$CABLE_NUMBER --instance=$JTAG_UART_INSTANCE_NUMBER"
-# echo "Executing" $cmd
-# $cmd || {
-#     echo "failed to open the Nios II terminal"
-#     exit 1
-# }
+
+if [[ "$COMMAND" = "all" || "$COMMAND" = "open-terminal" ]]
+then
+	# Opening terminal connection
+	open_terminal_cmd="nios2-terminal --cable=$CABLE_NUMBER --instance=$JTAG_UART_INSTANCE_NUMBER"
+	retrys=5
+	for ((i = 0; i < 5; ++i))
+	do
+		echo "Executing" $open_terminal_cmd
+		$open_terminal_cmd || {
+		    echo "failed to open the Nios II terminal"
+		    continue
+		}
+		exit 1
+	done
+fi
 
 #*******************************************************************************
 #*                                                                             *

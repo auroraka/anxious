@@ -17,62 +17,124 @@
 #include <system.h>
 #include <unistd.h>
 #include <io.h>
+#include <time.h>
 
-unsigned *sdram = (unsigned *)SDRAM_CONTROLLER_0_BASE;
+unsigned *sdram = (unsigned *) SDRAM_CONTROLLER_0_BASE;
+unsigned *model = (unsigned *) MODEL_MEMORY_BASE;
+unsigned *frame = (unsigned *) RECOG_CPU_MEMORY_BASE;
+unsigned *row = (unsigned *) RECOG_CPU_MEMORY_BASE + (640 * 480 / 2 / 2 / 8);
 
-#ifndef START_ROW
-#define START_ROW 0
-#endif
+#define SDRAM(x, y) sdram[(2 << 19) + ((y) << 10) + (x)]
+#define set_frame(x, y, val) ((frame[(y) * 10 + ((x) >> 5)] &= ~(1 << ((x) >> 5))) |= (val) << ((x) >> 5))
+#define get_frame(x, y) ((frame[(y) * 10 + ((x) >> 5)] >> ((x) >> 5)) & 1)
 
-#ifndef ROW_CNT
-#define ROW_CNT 100
-#endif
+#define START_ROW (CPU_ID * 240)
+#define ROW_CNT 240
+
+unsigned max(unsigned a, unsigned b) {
+	return x ^ ((x ^ y) & -(x < y));
+}
+
+unsigned min(unsigned a, unsigned b) {
+	return y ^ ((x ^ y) & -(x < y));
+}
+
+unsigned H_l = 29, S_l = 86, V_l = 6;
+unsigned H_r = 64, S_r = 255, V_r = 255;
+
+unsigned check_range(unsigned pixel) {
+	unsigned R, G, B, H, S, V, delta;
+	
+	R = ((pixel >> 20) & 0x3FF) >> 2;
+	G = ((pixel >> 10) & 0x3FF) >> 2;
+	B = (pixel & 0x3FF) >> 2;
+	V = max(max(R, G), B);
+	if (V < V_l || V_r < V) return 0;
+	
+	delta = V - min(min(R, G), B);
+	S = (delta << 8) / V;
+	if (S < S_l || S_r < S) return 0;
+	
+	// coef = 60 * 255 / 360 = 42.5
+	if (R == V) H = (G - B) * 42 / delta;
+	else if (G == V) H = (B - R) * 42 / delta + 85;
+	else H = (R - G) * 42 / delta + 170;
+	if (H > 255) H = 255 - H;
+	if (H < H_l || H_r < H) return 0;
+	return 1;
+}
 
 int main() {
-	/* printf("SDRAM Memory Test.\n"); */
-	/* int i, n = 10; */
-	/* for (i = 0; i < n; ++i) { */
-		/* sdram[i] = (unsigned)i; */
-	/* } */
-	/* for (i = 0; i < n; ++i) { */
-		/* printf("sdram[%d] = %u\n", i, sdram[i]); */
-	/* } */
-
-/*	printf("Camera.\n");
-	usleep(1000 * 1000);
-	int i, j, cnt = 0, error = 0, bank;
-	unsigned d, r, g, b;
-	for (bank = 0; bank < 3; ++bank) {
-		cnt = 0;
-		error = 0;
-		for (i = 0; i < 480; ++i) {
-			for (j = 0; j < 640; ++j) {
-				d = sdram[(bank << 19) + (i << 10) + j];
-				r = d & 0xFF;
-				g = (d & 0xFF00) >> 8;
-				b = (d & 0xFF0000) >> 16;
-				if (r != g || r != b || g != b) {
-		//				printf("Check error at (%d, %d)\n", i, j);
-					++error;
-				}
-				if (r == 0 && g == 0 && b == 0)
-					++cnt;
+	
+	#if CPU_ID == 0
+	while (1) {
+		int i, j;
+		unsigned pixel;
+		for (j = 0; j < 480; ++j) {
+			for (i = 0; i < 640; ++i) {
+				pixel = SDRAM(i, j);
+				row[i >> 1] += (((pixel >> 16) & 0xFF) << 20)
+				               + (((pixel >> 8) & 0xFF) << 10)
+				               + (pixel & 0xFF);
+			}
+			if ((j & 1) == 1) {
+				for (i = 0; i < (640 >> 1); ++i)
+					set_frame(i, j >> 1, check_range(row[i]));
 			}
 		}
-		printf("Bank %d:\n", bank);
-		printf("\tBlack count: %d\n", cnt);
-		printf("\tError count: %d\n", error);
-	}*/
-	
-	int i, j;
-	unsigned r, g, b;
-	for (i = START_ROW; i < START_ROW + ROW_CNT; ++i)
-		for (j = 0; j < 640; ++j) {
-			r = j * (255.0 / 640);
-			g = r;
-			b = r;
-			sdram[(2 << 19) + (i << 10) + j] = (r << 16) + (g << 8) + b;
+		printf("HSV & inRange: %f\n", (float) clock() / CLOCKS_PER_SEC);
+		
+		unsigned *first = row, *last = row + 10, *swp_tmp;
+		int delta;
+		memset(first, 0xFF, 320);
+		for (j = 0; j < 240; ++j) {
+			delta = j * 10;
+			
+			pixel = frame[delta];
+			last[0] = pixel & ((pixel >> 1) | ((frame[delta + 1] & 1) << 31)) & ((pixel << 1) | 1);
+			for (i = 0; i < 10; ++i) {
+				pixel = frame[delta + i];
+				last[i] = pixel & ((pixel >> 1) | ((frame[delta + 1] & 1) << 31)) & ((pixel << 1) | (frame[delta - 1] >> 31));
+			}
+			pixel = frame[delta + 9];
+			last[9] = pixel & ((pixel >> 1) | (1 << 31)) & ((pixel << 1) | (frame[8] >> 31));
+			
+			memcpy(last, frame + j * 10, 320);
+			for (i = 0; i < 10; ++i)
+				frame[j * 10 + i] &= frame[(j + 1) * 10 + i] & first[i];
+			swp_tmp = first;
+			first = last;
+			last = swp_tmp;
 		}
+		
+		memset(first, 0xFF, 320);
+		for (j = 0; j < 240; ++j) {
+			delta = j * 10;
+			
+			pixel = frame[delta];
+			last[0] = pixel | ((pixel >> 1) | ((frame[delta + 1] & 1) << 31)) | (pixel << 1);
+			for (i = 0; i < 10; ++i) {
+				pixel = frame[delta + i];
+				last[i] = pixel | ((pixel >> 1) | ((frame[delta + 1] & 1) << 31)) | ((pixel << 1) | (frame[delta - 1] >> 31));
+			}
+			pixel = frame[delta + 9];
+			last[9] = pixel | (pixel >> 1) | ((pixel << 1) | (frame[8] >> 31));
+			
+			memcpy(last, frame + j * 10, 320);
+			for (i = 0; i < 10; ++i)
+				frame[j * 10 + i] |= frame[(j + 1) * 10 + i] | first[i];
+			swp_tmp = first;
+			first = last;
+			last = swp_tmp;
+		}
+		
+		printf("Erode & dilate: %f\n", (float) clock() / CLOCKS_PER_SEC);
+		
+		for (j = 0; j < 480; ++j)
+			for (i = 0; i < 640; ++i)
+				SDRAM(i, j) = get_frame(i >> 1, j >> 1);
+	}
+	#endif
 
 	return 0;
 }
