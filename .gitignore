@@ -56,10 +56,6 @@ qsys/src/*
 !qsys/src/*.vhd
 
 !qsys/software/
-qsys/software/*/*
-qsys/software/*.*
-!qsys/software/*/*.c
-!qsys/software/*/*.h
-!qsys/software/*/Makefile
-qsys/software/*_bsp/*
-!qsys/software/*/*.bsp
+qsys/software/*
+!qsys/software/*.sh
+!qsys/software/src/
