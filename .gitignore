@@ -55,7 +55,5 @@ qsys/src/*
 !qsys/src/*.v
 !qsys/src/*.vhd
 
-!qsys/software/
-qsys/software/*
-!qsys/software/*.sh
-!qsys/software/src/
+!qsys/software/*
+qsys/software/**/generated*

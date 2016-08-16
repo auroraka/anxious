@@ -215,38 +215,40 @@ assign HEX1 = seg7(black_cnt[7:4]);
 assign HEX0 = seg7(black_cnt[3:0]);
 
 anxious_qsys U_sys (
-	.camera_mm_0_conduit_clk_camera    (clk_camera),  //         camera_mm_0_conduit.clk_camera
-	.camera_mm_0_conduit_enable_n      (SW[1]),       //                            .enable_n
-	.camera_mm_0_conduit_cam_din       (GPIO[26:33]), //                            .cam_din
-	.camera_mm_0_conduit_cam_href      (GPIO[23]),    //                            .cam_href
-	.camera_mm_0_conduit_cam_pclk      (GPIO[24]),    //                            .cam_pclk
-	.camera_mm_0_conduit_cam_pwdn      (GPIO[35]),    //                            .cam_pwdn
-	.camera_mm_0_conduit_cam_reset     (GPIO[34]),    //                            .cam_reset
-	.camera_mm_0_conduit_cam_vsync     (GPIO[22]),    //                            .cam_vsync
-	.camera_mm_0_conduit_cam_xclk      (GPIO[25]),    //                            .cam_xclk
-	.clk_clk                           (clk_qsys),    //                         clk.clk
-	.led_export                        (LEDG[0]),     //                         led.export
-	.new_sdram_controller_0_wire_addr  (DRAM_ADDR),   // new_sdram_controller_0_wire.addr
-	.new_sdram_controller_0_wire_ba    (DRAM_BA),     //                            .ba
-	.new_sdram_controller_0_wire_cas_n (DRAM_CAS_N),  //                            .cas_n
-	.new_sdram_controller_0_wire_cke   (DRAM_CKE),    //                            .cke
-	.new_sdram_controller_0_wire_cs_n  (DRAM_CS_N),   //                            .cs_n
-	.new_sdram_controller_0_wire_dq    (DRAM_DQ),     //                            .dq
-	.new_sdram_controller_0_wire_dqm   (DRAM_DQM),    //                            .dqm
-	.new_sdram_controller_0_wire_ras_n (DRAM_RAS_N),  //                            .ras_n
-	.new_sdram_controller_0_wire_we_n  (DRAM_WE_N),   //                            .we_n
-	.reset_reset_n                     (KEY[0]),      //                       reset.reset_n
-	.vga_mm_0_conduit_vga_b            (VGA_B),       //            vga_mm_0_conduit.vga_b
-	.vga_mm_0_conduit_vga_blank_n      (VGA_BLANK_N), //                            .vga_blank_n
-	.vga_mm_0_conduit_vga_clk          (VGA_CLK),     //                            .vga_clk
-	.vga_mm_0_conduit_vga_g            (VGA_G),       //                            .vga_g
-	.vga_mm_0_conduit_vga_hs           (VGA_HS),      //                            .vga_hs
-	.vga_mm_0_conduit_vga_r            (VGA_R),       //                            .vga_r
-	.vga_mm_0_conduit_vga_sync_n       (VGA_SYNC_N),  //                            .vga_sync_n
-	.vga_mm_0_conduit_vga_vs           (VGA_VS),      //                            .vga_vs
-	.vga_mm_0_conduit_clk_vga          (clk_vga),     //                            .clk_vga
-	.frame_buffer_switcher_0_enable_enable (SW[2]), // frame_buffer_switcher_0_enable.enable
-	.camera_mm_0_black_cnt_readdata    (black_cnt)  //          camera_mm_0_black_cnt.readdata
+	.camera_mm_0_conduit_clk_camera         (clk_camera),  //         camera_mm_0_conduit.clk_camera
+	.camera_mm_0_conduit_enable_n           (SW[1]),       //                            .enable_n
+	.camera_mm_0_conduit_cam_din            (GPIO[26:33]), //                            .cam_din
+	.camera_mm_0_conduit_cam_href           (GPIO[23]),    //                            .cam_href
+	.camera_mm_0_conduit_cam_pclk           (GPIO[24]),    //                            .cam_pclk
+	.camera_mm_0_conduit_cam_pwdn           (GPIO[35]),    //                            .cam_pwdn
+	.camera_mm_0_conduit_cam_reset          (GPIO[34]),    //                            .cam_reset
+	.camera_mm_0_conduit_cam_vsync          (GPIO[22]),    //                            .cam_vsync
+	.camera_mm_0_conduit_cam_xclk           (GPIO[25]),    //                            .cam_xclk
+	.clk_clk                                (clk_qsys),    //                         clk.clk
+	.led_export                             (LEDG[0]),     //                         led.export
+	.new_sdram_controller_0_wire_addr       (DRAM_ADDR),   // new_sdram_controller_0_wire.addr
+	.new_sdram_controller_0_wire_ba         (DRAM_BA),     //                            .ba
+	.new_sdram_controller_0_wire_cas_n      (DRAM_CAS_N),  //                            .cas_n
+	.new_sdram_controller_0_wire_cke        (DRAM_CKE),    //                            .cke
+	.new_sdram_controller_0_wire_cs_n       (DRAM_CS_N),   //                            .cs_n
+	.new_sdram_controller_0_wire_dq         (DRAM_DQ),     //                            .dq
+	.new_sdram_controller_0_wire_dqm        (DRAM_DQM),    //                            .dqm
+	.new_sdram_controller_0_wire_ras_n      (DRAM_RAS_N),  //                            .ras_n
+	.new_sdram_controller_0_wire_we_n       (DRAM_WE_N),   //                            .we_n
+	.reset_reset_n                          (KEY[0]),      //                       reset.reset_n
+	.vga_mm_0_conduit_vga_b                 (VGA_B),       //            vga_mm_0_conduit.vga_b
+	.vga_mm_0_conduit_vga_blank_n           (VGA_BLANK_N), //                            .vga_blank_n
+	.vga_mm_0_conduit_vga_clk               (VGA_CLK),     //                            .vga_clk
+	.vga_mm_0_conduit_vga_g                 (VGA_G),       //                            .vga_g
+	.vga_mm_0_conduit_vga_hs                (VGA_HS),      //                            .vga_hs
+	.vga_mm_0_conduit_vga_r                 (VGA_R),       //                            .vga_r
+	.vga_mm_0_conduit_vga_sync_n            (VGA_SYNC_N),  //                            .vga_sync_n
+	.vga_mm_0_conduit_vga_vs                (VGA_VS),      //                            .vga_vs
+	.vga_mm_0_conduit_clk_vga               (clk_vga),     //                            .clk_vga
+	.frame_buffer_switcher_0_enable_enable  (SW[2]),       // frame_buffer_switcher_0_enable.enable
+	.camera_mm_0_black_cnt_readdata         (black_cnt),   //          camera_mm_0_black_cnt.readdata
+	.camera_sioc_external_connection_export (GPIO[20]),    // camera_sioc_external_connection.export
+	.camera_siod_external_connection_export (GPIO[21])     // camera_siod_external_connection.export
 );
 
 endmodule

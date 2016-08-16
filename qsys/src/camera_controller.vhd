@@ -21,7 +21,6 @@ entity camera_controller is
 
         address     : out std_logic_vector(ADDR_WIDTH - 1 downto 0);
         write       : out std_logic;
-        burstcount  : out std_logic_vector(FIFO_LENGTH_LOG_2 downto 0);
         writedata   : out std_logic_vector(DATA_WIDTH - 1 downto 0);
         waitrequest : in  std_logic;
 
@@ -38,11 +37,11 @@ entity camera_controller is
 
         ---- Exported Connections ----
         enable_n    : in  std_logic;
-        
+
         ---- Frame Buffer Signals ----
         vsync_out   : out std_logic;
         buffer_port : in  std_logic_vector(1 downto 0);
-        
+
         black_cnt   : out std_logic_vector(19 downto 0)
     );
 end entity camera_controller;
@@ -57,7 +56,7 @@ architecture camera_controller_bhv of camera_controller is
     signal col       : unsigned(9 downto 0);
     signal addr      : std_logic_vector(ADDR_WIDTH - 1 downto 0) := (others => '0');
     signal vsync     : std_logic;
-    
+
     signal black_cnt_u : unsigned(19 downto 0);
 begin
     U_camera : entity work.camera port map(
@@ -77,11 +76,11 @@ begin
             ROW_o      => row,
             COL_o      => col,
             VSYNC_o    => vsync,
-            
+
             black_cnt  => black_cnt_u
         );
     black_cnt <= std_logic_vector(black_cnt_u);
-    
+
     addr(20 downto 2) <= std_logic_vector(row) & std_logic_vector(col);
 
     U_buffer : entity work.mm_write_buffer
@@ -97,7 +96,6 @@ begin
             reset_n     => reset_n,
             address     => address(20 downto 0),
             write       => write,
-            burstcount  => burstcount,
             writedata   => writedata,
             waitrequest => waitrequest,
             vsync_out   => vsync_out,
@@ -107,7 +105,7 @@ begin
             s_writedata => cam_data,
             s_addr      => addr(20 downto 0)
         );
-	
+
 	address(26 downto 21) <= BANK & "00" & buffer_port;
 
 end architecture camera_controller_bhv;
