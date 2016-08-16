@@ -49,7 +49,7 @@ architecture camera_controller_st_bhv of camera_controller_24 is
     signal vsync     : std_logic;
 
 begin
-    U_camera : entity work.camera_st port map(
+    U_camera : entity work.camera_24 port map(
             clk_camera => clk_camera,
             reset_n    => reset_n,
             CAM_VSYNC  => CAM_VSYNC,

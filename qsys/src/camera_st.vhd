@@ -6,7 +6,7 @@ use IEEE.numeric_std.all;
 
 use work.NEEE.all;
 
-entity camera_st is
+entity camera_24 is
 	port(
         clk_camera : in  std_logic;
         reset_n    : in  std_logic;
@@ -29,9 +29,9 @@ entity camera_st is
 		COL_o      : out unsigned(9 downto 0);
 		VSYNC_o    : out std_logic
 	);
-end entity camera_st;
+end entity camera_24;
 
-architecture camera_st_bhv of camera_st is
+architecture camera_st_bhv of camera_24 is
 	subtype pixel_type is std_logic_vector(7 downto 0);
 	type type_cap_state is (C_IDLE, C_WAIT, C_BUSY);
 
@@ -149,7 +149,7 @@ begin
         VSYNC_o <= CAM_VSYNC;
         ROW_o <= r.cap_x;
         COL_o <= r.cap_y;
-        WE_O  <= r.we;
+        WE_o  <= r.we;
         DATA_o <= r.dout;
 
         rin <= v; -- apply the new values

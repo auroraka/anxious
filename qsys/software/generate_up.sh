@@ -21,7 +21,7 @@ else
 	COMMAND=$1
 	CPU_ID=$2
 	CABLE_NUMBER="1"
-	if [[ $COMMAND != "all" && $COMMAND != "generate-bsp" && $COMMAND != "generate-makefile" && $COMMAND != "make" && $COMMAND != "download" && $COMMAND != "open-terminal" ]]
+	if [[ $COMMAND != "all" && $COMMAND != "generate-bsp" && $COMMAND != "generate-makefile" && $COMMAND != "make" && $COMMAND != "download" && $COMMAND != "open-terminal" && $COMMAND != "refresh" ]]
 	then
 		SHOW_HELP="1"
 	fi
@@ -46,7 +46,7 @@ then
 	echo "Description:  A script that contains a bunch of app and bsp switches that will generate"
 	echo "the makefiles, compile the code, download the code, open a terminal."
 	echo ""
-	echo "Command can be one of 'all', 'generate-bsp', 'generate-makefile', 'make', 'download', or 'open-terminal'."
+	echo "Command can be one of 'all', 'refresh', 'generate-bsp', 'generate-makefile', 'make', 'download', or 'open-terminal'."
 	echo ""
 	echo "Pass in a jtag cable number if you have multiple jtag programming cables."
 	echo ""
@@ -86,7 +86,7 @@ APP_DIR="render_"$CPU_ID
 BSP_DIR="render_bsp_"$CPU_ID
 
 # Source dir
-SRC_DIR="./src"
+SRC_DIR="./src_up"
 
 echo "Philosopher number is " $CPU_ID
 echo "Philosopher cpu name is " $PHILOSOPHER_CPU_NAME
@@ -99,7 +99,7 @@ echo "ELF name is " $ELF_NAME
 
 # BSP generation configuration
 
-SOPC_DIR=../anxious_qsys.sopcinfo
+SOPC_DIR=../anxious_up.sopcinfo
 OPTIMIZATION_LEVEL="-O2"
 MEMORY_NAME=onchip_memory2_0
 SIMULATION_OPTIMIZED_SUPPORT="false"

@@ -4,7 +4,7 @@
 
 set_global_assignment -name FAMILY "Cyclone IV GX"
 set_global_assignment -name DEVICE EP4CGX150DF31C7
-set_global_assignment -name TOP_LEVEL_ENTITY anxious
+set_global_assignment -name TOP_LEVEL_ENTITY anxious_render
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 12.0
 set_global_assignment -name LAST_QUARTUS_VERSION 15.0.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "20:29:21 AUGUST 07,2016"
@@ -397,6 +397,9 @@ set_global_assignment -name VHDL_INPUT_VERSION VHDL_1993
 set_global_assignment -name ENABLE_SIGNALTAP OFF
 set_global_assignment -name USE_SIGNALTAP_FILE stp1.stp
 
+set_global_assignment -name VERILOG_FILE src/anxious_render.v
+set_global_assignment -name QIP_FILE qsys/anxious_up/synthesis/anxious_up.qip
+set_global_assignment -name VERILOG_FILE src/anxious_up_top.v
 set_global_assignment -name VERILOG_FILE src/anxious_st_top.v
 set_global_assignment -name QIP_FILE qsys/anxious_st/synthesis/anxious_st.qip
 set_global_assignment -name VERILOG_FILE src/anxious.v
@@ -404,6 +407,8 @@ set_global_assignment -name QIP_FILE pll/cam_pll.qip
 set_global_assignment -name QIP_FILE qsys/anxious_qsys/synthesis/anxious_qsys.qip
 set_global_assignment -name SDC_FILE anxious_st.SDC
 set_global_assignment -name SIGNALTAP_FILE stp1.stp
+set_global_assignment -name CDF_FILE anxious_st.cdf
+set_global_assignment -name QIP_FILE divider.qip
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
