@@ -6,9 +6,9 @@ use IEEE.numeric_std.all;
 
 use work.NEEE.all;
 
-entity camera_controller_st is
+entity camera_controller_up_24 is
     generic(
-        DATA_WIDTH        : positive := 16;
+        DATA_WIDTH        : positive := 24;
         FIFO_LENGTH_LOG_2 : positive := 8
     );
     port(
@@ -36,10 +36,10 @@ entity camera_controller_st is
         -- Exported Connections
         enable_n    : in  std_logic
     );
-end entity camera_controller_st;
+end entity camera_controller_up_24;
 
-architecture camera_controller_st_bhv of camera_controller_st is
-    subtype camera_pixel is std_logic_vector(15 downto 0);
+architecture camera_controller_up_bhv of camera_controller_up_24 is
+    subtype camera_pixel is std_logic_vector(23 downto 0);
 
     signal pclk      : std_logic;
     signal cam_we    : std_logic;
@@ -49,7 +49,7 @@ architecture camera_controller_st_bhv of camera_controller_st is
     signal vsync     : std_logic;
 
 begin
-    U_camera : entity work.camera_24 port map(
+    U_camera : entity work.camera port map(
             clk_camera => clk_camera,
             reset_n    => reset_n,
             CAM_VSYNC  => CAM_VSYNC,
@@ -62,13 +62,14 @@ begin
             enable_n   => enable_n,
             CLK_o      => pclk,
             WE_o       => cam_we,
-            DATA_o     => cam_data(15 downto 0),
+            DATA_o     => cam_data,
             ROW_o      => row,
             COL_o      => col,
-            VSYNC_o    => vsync
+            VSYNC_o    => vsync,
+            black_cnt  => open
         );
 
-    U_buffer : entity work.st_write_buffer
+    U_buffer : entity work.up_write_buffer
         generic map (
             DATA_WIDTH        => DATA_WIDTH,
             FIFO_LENGTH_LOG_2 => FIFO_LENGTH_LOG_2
@@ -88,4 +89,4 @@ begin
             s_writedata => cam_data
         );
 
-end architecture camera_controller_st_bhv;
+end architecture camera_controller_up_bhv;

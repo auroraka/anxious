@@ -2,7 +2,7 @@
 #
 # AUTHOR:       soreilly
 # DATA:         05/12/2011
-# DESCRIPTION:  A script that contains a bunch of app and bsp switches that will generate the makefiles,
+# DESCRIPTION:  A script that contains a bunch of app and bsp switches that will generate the makefiles, 
 #		compile the code, download the code, open a terminal.
 #
 #		The first parameter is the philosopher number cpu subsystem to target.
@@ -21,7 +21,7 @@ else
 	COMMAND=$1
 	CPU_ID=$2
 	CABLE_NUMBER="1"
-	if [[ $COMMAND != "all" && $COMMAND != "generate-bsp" && $COMMAND != "generate-makefile" && $COMMAND != "make" && $COMMAND != "download" && $COMMAND != "open-terminal" ]]
+	if [[ $COMMAND != "all" && $COMMAND != "generate-bsp" && $COMMAND != "generate-makefile" && $COMMAND != "make" && $COMMAND != "download" && $COMMAND != "open-terminal" && $COMMAND != "refresh" ]]
 	then
 		SHOW_HELP="1"
 	fi
@@ -46,7 +46,7 @@ then
 	echo "Description:  A script that contains a bunch of app and bsp switches that will generate"
 	echo "the makefiles, compile the code, download the code, open a terminal."
 	echo ""
-	echo "Command can be one of 'all', 'generate-bsp', 'generate-makefile', 'make', 'download', or 'open-terminal'."
+	echo "Command can be one of 'all', 'refresh', 'generate-bsp', 'generate-makefile', 'make', 'download', or 'open-terminal'."
 	echo ""
 	echo "Pass in a jtag cable number if you have multiple jtag programming cables."
 	echo ""
@@ -66,11 +66,11 @@ ELF_NAME=test_code$CPU_ID.elf
 # JDI file name
 JDI_FILE=../../anxious_st.jdi
 
-# Derive Nios II CPU and jtag uart Qsys component names for 1st
+# Derive Nios II CPU and jtag uart Qsys component names for 1st 
 # parameter specified philosopher subsystem number
-# PHILOSOPHER_DOWNLOAD_CPU_NAME is a special case.  nios2-download
-# requires a philosopher cpu name specified without the sub-system
-# name pre-pended.  For this reason, each Nios II CPU component
+# PHILOSOPHER_DOWNLOAD_CPU_NAME is a special case.  nios2-download 
+# requires a philosopher cpu name specified without the sub-system 
+# name pre-pended.  For this reason, each Nios II CPU component 
 # in your Qsys design must have a unique cpu name.
 
 PHILOSOPHER_CPU_NAME="nios2_gen2_"$CPU_ID
@@ -86,7 +86,7 @@ APP_DIR="render_"$CPU_ID
 BSP_DIR="render_bsp_"$CPU_ID
 
 # Source dir
-SRC_DIR="./src"
+SRC_DIR="./src_up"
 
 echo "Philosopher number is " $CPU_ID
 echo "Philosopher cpu name is " $PHILOSOPHER_CPU_NAME
@@ -99,7 +99,7 @@ echo "ELF name is " $ELF_NAME
 
 # BSP generation configuration
 
-SOPC_DIR=../anxious_qsys.sopcinfo
+SOPC_DIR=../anxious_up.sopcinfo
 OPTIMIZATION_LEVEL="-O2"
 MEMORY_NAME=onchip_memory2_0
 SIMULATION_OPTIMIZED_SUPPORT="false"
@@ -166,16 +166,16 @@ fi
 # Downloading the code
 #
 # PHILOSOPHER_DOWNLOAD_CPU_NAME is a special case.  nios2-download --cpu_name
-# switch requires a philosopher cpu name specified without the sub-system
-# name pre-pended.  For this reason, each Nios II CPU component
+# switch requires a philosopher cpu name specified without the sub-system 
+# name pre-pended.  For this reason, each Nios II CPU component 
 # in your Qsys design must have a unique cpu name. For example, For cpu
 # name philosopher_zero_cpu_zero, the name to use for nios2-download
 # is cpu_zero.
 #
-# Alternatively, --instance can be used instead of --cpu-name switch;
-# however, use of --cpu-name does not require Quartus II derived
+# Alternatively, --instance can be used instead of --cpu-name switch; 
+# however, use of --cpu-name does not require Quartus II derived 
 # instance number assignments.  --instance does use the Quartus II
-# derived instance numbers.  --jdi switch is required when using
+# derived instance numbers.  --jdi switch is required when using 
 # --cpu-name switch.  Note that nios2-terminal requires --instance,
 # and does not support --cpu-name switch.  The following cmd
 # assignment shows nios2-download with --instance instead of --cpu-name.
@@ -184,8 +184,8 @@ fi
 #      --cable $CABLE_NUMBER $APP_DIR/$ELF_NAME"
 #
 # In the multiprocessor_tutorial HW design, Quartus II and Qsys happen to assign
-# Philosopher cpu instance and philosopher jtag_uart instances set
-# to 1 higher than the philosopher number.
+# Philosopher cpu instance and philosopher jtag_uart instances set 
+# to 1 higher than the philosopher number. 
 
 if [[ "$COMMAND" = "all" || "$COMMAND" = "download" || "$COMMAND" = "refresh" ]]
 then

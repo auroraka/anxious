@@ -2,8 +2,8 @@ onerror {resume}
 quietly WaveActivateNextPane {} 0
 delete wave *
 
-set tb frame_buffer_sim_tb
-set dut $tb/frame_buffer_sim_inst
+set tb anxious_up_tb
+set dut $tb/anxious_up_tb_inst
 set camera $dut/camera_mm_0
 set sdram $dut/sdram_mm_0
 set frb $dut/frame_buffer_switcher_0
