@@ -113,6 +113,14 @@
          type = "String";
       }
    }
+   element anxious_qsys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
    element camera_mm_0
    {
       datum _sortIndex
@@ -707,12 +715,12 @@
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
   <parameter name="id" value="286331153" />
  </module>
- <module name="vga_mm_0" kind="vga_mm" version="1.0" enabled="1">
+ <module name="vga_mm_0" kind="vga_composer" version="1.0" enabled="1">
   <parameter name="ADDR_WIDTH" value="27" />
-  <parameter name="BANK" value="0" />
+  <parameter name="CAM_BANK" value="0" />
   <parameter name="DATA_WIDTH" value="32" />
   <parameter name="FIFO_LENGTH_LOG_2" value="6" />
-  <parameter name="FRAME_PIXELS" value="307200" />
+  <parameter name="RENDER_BANK" value="1" />
  </module>
  <connection
    kind="avalon"
@@ -726,7 +734,16 @@
  <connection
    kind="avalon"
    version="15.0"
-   start="vga_mm_0.avalon_master"
+   start="vga_mm_0.avalon_master_cam"
+   end="sdram_controller_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="vga_mm_0.avalon_master_render"
    end="sdram_controller_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
@@ -885,17 +902,17 @@
    kind="clock"
    version="15.0"
    start="sys_sdram_pll_0.sys_clk"
-   end="vga_mm_0.clock" />
+   end="frame_buffer_switcher_0.clock" />
  <connection
    kind="clock"
    version="15.0"
    start="sys_sdram_pll_0.sys_clk"
-   end="frame_buffer_switcher_0.clock" />
+   end="vga_mm_0.clock" />
  <connection
    kind="conduit"
    version="15.0"
    start="frame_buffer_switcher_0.read_buffer"
-   end="vga_mm_0.buffer_port">
+   end="vga_mm_0.buffer_port_cam">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
   <parameter name="startPort" value="" />
@@ -905,8 +922,8 @@
  <connection
    kind="conduit"
    version="15.0"
-   start="vga_mm_0.vsync"
-   end="frame_buffer_switcher_0.read_vsync">
+   start="frame_buffer_switcher_0.read_vsync"
+   end="vga_mm_0.vsync_cam">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
   <parameter name="startPort" value="" />
@@ -972,11 +989,6 @@
    kind="reset"
    version="15.0"
    start="clk_50.clk_reset"
-   end="vga_mm_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_50.clk_reset"
    end="frame_buffer_switcher_0.reset" />
  <connection
    kind="reset"
@@ -988,6 +1000,11 @@
    version="15.0"
    start="clk_50.clk_reset"
    end="camera_sioc.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_50.clk_reset"
+   end="vga_mm_0.reset" />
  <connection
    kind="reset"
    version="15.0"
