@@ -2,15 +2,16 @@
 // Created by Kanari on 2016/8/15.
 //
 
-#ifndef RECOGNITION_H
-#define RECOGNITION_H
+#include <system.h>
+#include <unistd.h>
+#include <io.h>
 
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
 #include <assert.h>
 
-#define MEMORY_SIZE 8192
+#define MEMORY_SIZE 16384
 
 #define NDEBUG 1
 
@@ -26,6 +27,8 @@ const unsigned MASK_WIDTH = WIDTH >> 5;
 
 #define RECORD_BORDER 0
 
+volatile unsigned *sdram = (unsigned *) SDRAM_CONTROLLER_0_BASE;
+unsigned *model = (unsigned *) MODEL_MEMORY_BASE;
 unsigned *frame = (unsigned *) RECOG_CPU_MEMORY_BASE;
 unsigned *row = (unsigned *) RECOG_CPU_MEMORY_BASE + (WIDTH * HEIGHT >> 5);
 unsigned *render_buffer_port = (unsigned *) RENDER_BUFFER_PORT_PIO_BASE;
@@ -34,8 +37,9 @@ unsigned *cam_buffer_port = (unsigned *) CAM_BUFFER_PORT_PIO_BASE;
 
 unsigned cam_bank, render_bank;
 
-#define SDRAM_R(x, y) sdram[((cam_bank << 19) | ((y) << 10) | (x)) << 2]
-#define SDRAM_W(x, y) sdram[((1 << 22) | (render_bank << 19) | ((y) << 10) | (x)) << 2]
+#define SDRAM_R(x, y) sdram[(cam_bank << 19) | ((y) << 10) | (x)]
+#define SDRAM_W(x, y, val) (sdram[(1 << 23) | (render_bank << 19) | ((y) << 10) | (x)] = (val))
+#define SDRAM_CLEAR(x, y) (sdram[(1 << 23) | (render_bank << 19) | ((y) << 10) | (x)] = (1 << 24))
 #define get_frame(x, y) ((frame[(y) * MASK_WIDTH + ((x) >> 5)] >> ((x) & 31)) & 1)
 
 unsigned max(unsigned x, unsigned y) {
@@ -311,12 +315,13 @@ int findContour(int sx, int sy, unsigned *pt1, unsigned *pt2) {
 	return area;
 }
 
+int min_x, max_x, min_y, max_y, center_x, center_y;
+
 void floodfill() {
 	queue = row;
 	
 	int i, j, best_area = 0, cur_area;
 	unsigned best_pt1 = 0, best_pt2 = 0, cur_pt1, cur_pt2;
-	int min_x, max_x, min_y, max_y, center_x, center_y;
 	
 	for (j = 0; j < HEIGHT; ++j)
 		for (i = 0; i < WIDTH; ++i)
@@ -329,21 +334,38 @@ void floodfill() {
 				}
 			}
 	
+	for (i = min_x; i <= max_x; ++i) {
+		SDRAM_CLEAR(i, min_y);
+		SDRAM_CLEAR(i, max_y);
+	}
+	for (i = min_y; i <= max_y; ++i) {
+		SDRAM_CLEAR(min_x, i);
+		SDRAM_CLEAR(max_x, i);
+	}
+	for (i = center_x - 1; i <= center_x + 2; ++i)
+		for (j = center_y - 1; j <= center_y + 2; ++j)
+			SDRAM_CLEAR(i, j);
+	
 	render_bank = *render_buffer_port;
+	printf("Writing to bank %d\n", render_bank);
 	
 	min_x = get_x(best_pt1) * 2;
 	min_y = get_y(best_pt1) * 2;
 	max_x = get_x(best_pt2) * 2 + 1;
 	max_y = get_y(best_pt2) * 2 + 1;
 	for (i = min_x; i <= max_x; ++i) {
-		SDRAM_W(i, min_y) = 255 << 8;
-		SDRAM_W(i, max_y) = 255 << 8;
+		SDRAM_W(i, min_y, 255 << 8);
+		SDRAM_W(i, max_y, 255 << 8);
+	}
+	for (i = min_y; i <= max_y; ++i) {
+		SDRAM_W(min_x, i, 255 << 8);
+		SDRAM_W(max_x, i, 255 << 8);
 	}
 	center_x = (min_x + max_x) / 2;
 	center_y = (min_y + max_y) / 2;
-	for (i = center_x; i <= center_x + 1; ++i)
-		for (j = center_y; j <= center_y + 1; ++j)
-			SDRAM_W(i, j) = 255;
+	for (i = center_x - 1; i <= center_x + 2; ++i)
+		for (j = center_y - 1; j <= center_y + 2; ++j)
+			SDRAM_W(i, j, 255);
 	
 	*render_vsync = 1;
 	usleep(1000);
@@ -359,29 +381,42 @@ void floodfill() {
 #undef get_x
 #undef get_y
 
+void clean_sdram() {
+	
+	int i, j, bank;
+	for (bank = 0; bank < 3; ++bank) {
+		for (j = 0; j < RAW_HEIGHT; ++j) {
+			for (i = 0; i < RAW_WIDTH; ++i)
+				sdram[(1 << 23) | (bank << 19) | ((j) << 10) | (i)] = (1 << 24);
+		}
+		printf("Cleaned bank %d\n", bank);
+	}
+}
+
 void recognition() {
 	
+	clean_sdram();
+	
+	int frame_cnt = 0;
 	clock_t start_time, frame_start;
 	while (true) {
 		
 		start_time = clock();
 		frame_start = start_time;
 		cvtColor_inRange();
-		printf("HSV & inRange: %.4f;   ", (float)(clock() - start_time) / CLOCKS_PER_SEC);
+		//printf("HSV & inRange: %dms;   ", (int)((float)(clock() - start_time) / CLOCKS_PER_SEC * 1000));
 		
 		start_time = clock();
 		erode();
 		dilate();
-		printf("Erode & dilate: %.4f;   ", (float)(clock() - start_time) / CLOCKS_PER_SEC);
+		//printf("Erode & dilate: %dms;   ", (int)((float)(clock() - start_time) / CLOCKS_PER_SEC * 1000));
 		
 		start_time = clock();
 		floodfill();
-		printf("Floodfill: %.4f\n", (float)(clock() - start_time) / CLOCKS_PER_SEC);
+		//printf("Floodfill: %dms\n", (int)((float)(clock() - start_time) / CLOCKS_PER_SEC * 1000));
 		
-		printf("Time for frame: %.4f\n", (float)(clock() - frame_start) / CLOCKS_PER_SEC);
+		//printf("Time for frame: %dms\n", (int)((float)(clock() - frame_start) / CLOCKS_PER_SEC * 1000));
+		printf("Frame %d\n", ++frame_cnt);
 	}
 	
 }
-
-
-#endif //RECOGNITION_H

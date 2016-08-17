@@ -229,6 +229,8 @@ anxious_qsys U_sys (
 	.camera_mm_0_conduit_cam_vsync     (GPIO[22]),    //                            .cam_vsync
 	.camera_mm_0_conduit_cam_xclk      (GPIO[25]),    //                            .cam_xclk
 	.camera_mm_0_black_cnt_readdata    (black_cnt),   //          camera_mm_0_black_cnt.readdata
+	.camera_sioc_external_connection_export (GPIO[20]),    // camera_sioc_external_connection.export
+	.camera_siod_external_connection_export (GPIO[21]),    // camera_siod_external_connection.export
 	
 	.clk_clk                           (clk_qsys),    //                         clk.clk
 	.led_export                        (LEDG[0]),     //                         led.export

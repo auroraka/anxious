@@ -100,7 +100,7 @@ begin
         if not disp_ena then
         	rgb := (others => '0');
         elsif vga_render_data(24) then
-        	rgb := vga_cam_data(23 downto 0);
+        	rgb := vga_cam_data(23 downto 0);   --- !!!
         else
         	rgb := vga_render_data(23 downto 0);
         end if;

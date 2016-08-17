@@ -18,17 +18,14 @@
 #include <unistd.h>
 #include <io.h>
 #include <time.h>
-
-unsigned *sdram = (unsigned *) SDRAM_CONTROLLER_0_BASE;
-unsigned *model = (unsigned *) MODEL_MEMORY_BASE;
-
-#if CPU_ID == 0
-	#include "recognition.h"
-#endif
+ 
+#include "sccb.h"
+#include "recognition.h"
 
 int main() {
 	
 #if CPU_ID == 0
+	configure_sccb();
 	recognition();
 #endif
 
