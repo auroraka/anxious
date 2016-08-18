@@ -215,15 +215,15 @@ assign HEX1 = seg7(black_cnt[7:4]);
 assign HEX0 = seg7(black_cnt[3:0]);
 
 anxious_qsys U_sys (
-	.camera_mm_0_conduit_clk_camera         (clk_camera),  //         camera_mm_0_conduit.clk_camera
-	.camera_mm_0_conduit_enable_n           (SW[1]),       //                            .enable_n
-	.camera_mm_0_conduit_cam_din            (GPIO[26:33]), //                            .cam_din
-	.camera_mm_0_conduit_cam_href           (GPIO[23]),    //                            .cam_href
-	.camera_mm_0_conduit_cam_pclk           (GPIO[24]),    //                            .cam_pclk
-	.camera_mm_0_conduit_cam_pwdn           (GPIO[35]),    //                            .cam_pwdn
-	.camera_mm_0_conduit_cam_reset          (GPIO[34]),    //                            .cam_reset
-	.camera_mm_0_conduit_cam_vsync          (GPIO[22]),    //                            .cam_vsync
-	.camera_mm_0_conduit_cam_xclk           (GPIO[25]),    //                            .cam_xclk
+	.camera_st_0_conduit_clk_camera         (clk_camera),  //         camera_mm_0_conduit.clk_camera
+	.camera_st_0_conduit_enable_n           (SW[1]),       //                            .enable_n
+	.camera_st_0_conduit_cam_din            (GPIO[26:33]), //                            .cam_din
+	.camera_st_0_conduit_cam_href           (GPIO[23]),    //                            .cam_href
+	.camera_st_0_conduit_cam_pclk           (GPIO[24]),    //                            .cam_pclk
+	.camera_st_0_conduit_cam_pwdn           (GPIO[35]),    //                            .cam_pwdn
+	.camera_st_0_conduit_cam_reset          (GPIO[34]),    //                            .cam_reset
+	.camera_st_0_conduit_cam_vsync          (GPIO[22]),    //                            .cam_vsync
+	.camera_st_0_conduit_cam_xclk           (GPIO[25]),    //                            .cam_xclk
 	.clk_clk                                (clk_qsys),    //                         clk.clk
 	.led_export                             (LEDG[0]),     //                         led.export
 	.new_sdram_controller_0_wire_addr       (DRAM_ADDR),   // new_sdram_controller_0_wire.addr
@@ -246,7 +246,7 @@ anxious_qsys U_sys (
 	.vga_mm_0_conduit_vga_vs                (VGA_VS),      //                            .vga_vs
 	.vga_mm_0_conduit_clk_vga               (clk_vga),     //                            .clk_vga
 	.frame_buffer_switcher_0_enable_enable  (SW[2]),       // frame_buffer_switcher_0_enable.enable
-	.camera_mm_0_black_cnt_readdata         (black_cnt),   //          camera_mm_0_black_cnt.readdata
+	// .camera_mm_0_black_cnt_readdata         (black_cnt),   //          camera_mm_0_black_cnt.readdata
 	.camera_sioc_external_connection_export (GPIO[20]),    // camera_sioc_external_connection.export
 	.camera_siod_external_connection_export (GPIO[21])     // camera_siod_external_connection.export
 );

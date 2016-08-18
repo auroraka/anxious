@@ -50,10 +50,7 @@ qsys/*/testbench/*_tb/simulation/mentor/*
 !qsys/*/testbench/*_tb/simulation/mentor/*.sv
 qsys/*/testbench/*_tb/simulation/mentor/msim_setup.tcl
 
-!qsys/src/
-qsys/src/*
-!qsys/src/*.v
-!qsys/src/*.vhd
+!qsys/src/*
 
 !qsys/software/*
 qsys/software/**/generated*
