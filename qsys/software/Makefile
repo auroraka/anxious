@@ -110,6 +110,10 @@ make:
 # Philosopher cpu instance and philosopher jtag_uart instances set
 # to 1 higher than the philosopher number.
 
+.PHONY: configure
+configure:
+	-nios2-configure-sof $(QUARTUS_PROJECT_ROOT)/$(QUARTUS_PROJECT_NAME).sof
+
 .PHONY: download
 download:
 	nios2-download -g -r --instance $(CPU_INSTANCE_NUMBER) --cable $(CABLE_NUMBER) $(APP_DIR)/$(ELF_NAME)
