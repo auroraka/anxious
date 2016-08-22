@@ -117,7 +117,7 @@ void cvtColor_inRange() {
 	}
 }
 
-void erode() {
+void erode(unsigned *frame, unsigned *row) {
 	unsigned *first = row, *last = row + MASK_WIDTH, *swp_tmp;
 	unsigned pixel;
 	int delta, i, j;
@@ -146,7 +146,7 @@ void erode() {
 	}
 }
 
-void dilate() {
+void dilate(unsigned *frame, unsigned *row) {
 	unsigned *first = row, *last = row + MASK_WIDTH, *swp_tmp;
 	unsigned pixel;
 	int delta, i, j;
@@ -397,6 +397,8 @@ void recognition() {
 	
 	clean_sdram();
 	
+	render_bank = *render_buffer_port;
+	
 	int frame_cnt = 0;
 	clock_t start_time, frame_start;
 	while (true) {
@@ -407,9 +409,22 @@ void recognition() {
 		//printf("HSV & inRange: %dms;   ", (int)((float)(clock() - start_time) / CLOCKS_PER_SEC * 1000));
 		
 		start_time = clock();
-		erode();
-		dilate();
+		erode(frame, row);
+		dilate(frame, row);
 		//printf("Erode & dilate: %dms;   ", (int)((float)(clock() - start_time) / CLOCKS_PER_SEC * 1000));
+		
+		// int i, j, x, y;
+		// for (j = 0; j < HEIGHT; ++j)
+		// 	for (i = 0; i < WIDTH; ++i)
+		// 		if (get_frame(i, j)) {
+		// 			for (y = j * 2; y <= j * 2 + 1; ++y)
+		// 				for (x = i * 2; x <= i * 2 + 1; ++x)
+		// 					SDRAM_W(x, y, 0xFFFFFF);
+		// 		} else {
+		// 			for (y = j * 2; y <= j * 2 + 1; ++y)
+		// 				for (x = i * 2; x <= i * 2 + 1; ++x)
+		// 					SDRAM_W(x, y, 0x000000);
+		// 		}
 		
 		start_time = clock();
 		floodfill();

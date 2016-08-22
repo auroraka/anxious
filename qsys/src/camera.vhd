@@ -114,7 +114,7 @@ begin
         v.we := '0';
 
         case r.cap_state is
-        when C_IDLE =>
+            when C_IDLE =>
                 black_cnt_r <= r.black_cnt;
                 if enable_n = '0' then
                     v.cap_state := C_WAIT;
@@ -142,6 +142,9 @@ begin
                         when 1 =>
                             v.we    := '1';
                             rgb565_to_rgb888(r.cb, CAM_DIN, v.dout);
+                            if CAM_DIN = "00000000" then
+                                v.black_cnt := r.black_cnt + 1;
+                            end if;
                             -- Mock data for testing (overwrite previous assignments)
                             -- v.dout := cap_y_mock & cap_y_mock & cap_y_mock;
                         when 2 =>
@@ -150,6 +153,9 @@ begin
                         when 3 =>
                             v.we    := '1';
                             rgb565_to_rgb888(r.cr, CAM_DIN, v.dout);
+                            if CAM_DIN = "00000000" then
+                                v.black_cnt := r.black_cnt + 1;
+                            end if;
                             -- Mock data for testing (overwrite previous assignments)
                             -- DATA_o <= cap_y_mock & cap_y_mock & cap_y_mock;
                     end case;
