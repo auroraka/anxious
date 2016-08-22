@@ -274,7 +274,7 @@ anxious_capture U_sys (
 	.reset_reset_n                     (KEY[0]),      //                       reset.reset_n
 
     .vga_composer_0_buffer_port_cam_address      (port_switch),    //             vga_composer_0_buffer_port_cam.address
-	.vga_composer_0_buffer_port_render_address   (2'b01),    //          vga_composer_0_buffer_port_render.address
+	.vga_composer_0_buffer_port_render_address   (port_switch),    //          vga_composer_0_buffer_port_render.address
 	.camera_mm_0_buffer_port_address             (2'b00),    //                    camera_mm_0_buffer_port.address
 	.camera_mm_1_buffer_port_address             (2'b01),    //                    camera_mm_1_buffer_port.address
 

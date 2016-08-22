@@ -62,6 +62,9 @@ BSP_FLAGS := --set hal.max_file_descriptors 4 \
 .PHONY: all
 all: | generate-bsp generate-makefile make download open-terminal
 
+.PHONY: run
+run: | download open-terminal
+
 .PHONY: generate-bsp
 generate-bsp:
 	# make sure the application and bsp directories are blown away first before attempting to regenerate new projects
