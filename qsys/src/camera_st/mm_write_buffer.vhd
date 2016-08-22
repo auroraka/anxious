@@ -2,9 +2,7 @@
 
 -- Accepts a non-stoppable, i.e., do not have `ready' signal Avalon-ST
 -- as input, treats it as pixels of a HEIGHT x WIDTH video.
---
--- Generates address to which the data should be stored on its own.
---
+
 -- Stacks `FIFO_LENGTH` pixel data before issueing continuous
 -- `FIFO_LENGTH` write commands to Avalon-MM system.
 
@@ -15,10 +13,10 @@ use IEEE.numeric_std.all;
 entity mm_write_buffer is
     generic(
         constant DATA_WIDTH        : positive := 32;
-        constant ADDR_WIDTH        : positive := 27;
+        constant AV_ADDR_WIDTH     : positive := 27;
+        constant ST_ADDR_WIDTH     : positive := 21;
         constant FIFO_LENGTH_LOG_2 : positive := 6;
-        constant HEIGHT            : positive := 480;
-        constant WIDTH             : positive := 640;
+        constant FRAME_PIXELS      : positive := 307200;
         constant BANK              : std_logic_vector(1 downto 0) := "00"
     );
     port(
@@ -26,7 +24,7 @@ entity mm_write_buffer is
         clk         : in  std_logic;
         reset_n     : in  std_logic;
 
-        address     : out std_logic_vector(ADDR_WIDTH - 1 downto 0);
+        address     : out std_logic_vector(AV_ADDR_WIDTH - 1 downto 0);
         write       : out std_logic;
         writedata   : out std_logic_vector(DATA_WIDTH - 1 downto 0);
         waitrequest : in  std_logic;
@@ -38,6 +36,11 @@ entity mm_write_buffer is
         st_eop      : in  std_logic;
         st_data     : in  std_logic_vector(DATA_WIDTH - 1 downto 0);
 
+        ---- Address Generator ----
+        addr_fetch  : out std_logic;
+        addr_vsync  : out std_logic;
+        addr_gen    : in  std_logic_vector(ST_ADDR_WIDTH - 1 downto 0);
+
         ---- Frame Buffer Signals ----
         vsync_out   : out std_logic;
         buffer_port : in  std_logic_vector(1 downto 0)
@@ -45,24 +48,21 @@ entity mm_write_buffer is
 end entity mm_write_buffer;
 
 architecture ip of mm_write_buffer is
-    constant FRAME_PIXELS: positive := HEIGHT * WIDTH;
-
-    subtype addr_type is std_logic_vector(ADDR_WIDTH - 1 downto 0);
     subtype data_type is std_logic_vector(DATA_WIDTH - 1 downto 0);
     subtype usedw_type is std_logic_vector(FIFO_LENGTH_LOG_2 - 1 downto 0);
     -- a vector which stores concat(addr, data)
-    subtype addr_data_type is std_logic_vector(ADDR_WIDTH + DATA_WIDTH - 1 downto 0);
+    subtype st_addr_data_type is std_logic_vector(
+        ST_ADDR_WIDTH + DATA_WIDTH - 1 downto 0);
 
     type data_arr_type is array (integer range <>) of data_type;
-    type addr_arr_type is array (integer range <>) of addr_type;
     type usedw_arr_type is array (integer range <>) of usedw_type;
-    type addr_data_arr_type is array (integer range <>) of addr_data_type;
+    type st_addr_data_arr_type is array (integer range <>) of st_addr_data_type;
 
     subtype pair is std_logic_vector(0 to 1);
 
     signal wr, rd, wrempty, wrfull, rdfull, rdempty: pair;
-    signal q: addr_data_arr_type(0 to 1);
-    signal addr_data_reg: addr_data_type;
+    signal q: st_addr_data_arr_type(0 to 1);
+    signal st_addr_data_reg: st_addr_data_type;
     signal wrusedw: usedw_arr_type(0 to 1);
 
     type rdstate_type is (S_WAIT, S_WRITING);
@@ -84,7 +84,7 @@ architecture ip of mm_write_buffer is
     type s_clk_reg_type is record
         wrsel: natural range 0 to 1;
         wr: pair;
-        din: addr_data_type;
+        din: st_addr_data_type;
         wrcnt: unsigned(FIFO_LENGTH_LOG_2 - 1 downto 0);
         failed: std_logic;
         fail_on: natural range 0 to 1;
@@ -132,31 +132,19 @@ begin
         variable rdempty_c: std_logic;
         variable almost_full: boolean;
         variable switching_empty: std_logic;
-        variable avalon_addr_data: addr_data_type;
-        variable st_addr_gen: std_logic_vector(ADDR_WIDTH - 1 downto 0) :=
+        variable avalon_st_addr_data: st_addr_data_type;
+        variable st_addr_gen: std_logic_vector(ST_ADDR_WIDTH - 1 downto 0) :=
             (others => '0');
     begin
         -- default: hold the values
         v := r;
         sv := sr;
 
-        -- row, col, and address generation
-        if st_eop then
-            sv.row := (others => '0');
-            sv.col := (others => '0');
-        end if;
-
-        if st_valid then
-            if sr.col /= WIDTH - 1 then
-                sv.col := sr.col + 1;
-            else
-                sv.col := (others => '0');
-                sv.row := sr.row + 1;
-            end if;
-        end if;
-
-        st_addr_gen(26 downto 0) := BANK & "00" & buffer_port &
-                std_logic_vector(sr.row) & std_logic_vector(sr.col) & "00";
+        -- hand necessary signals to address generator
+        -- get the address generated
+        addr_fetch <= st_valid;
+        addr_vsync <= st_eop;
+        st_addr_gen := addr_gen;
 
         for i in 0 to 1 loop
             sv.wr(i) := '0';
@@ -194,9 +182,11 @@ begin
 
         vsync_out  <= '0';
 
-        avalon_addr_data := q(r.rdsel);
-        address          <= avalon_addr_data(ADDR_WIDTH + DATA_WIDTH - 1 downto DATA_WIDTH);
-        writedata        <= avalon_addr_data(DATA_WIDTH - 1 downto 0);
+        avalon_st_addr_data := q(r.rdsel);
+
+        address(ST_ADDR_WIDTH + 5 downto 0) <= BANK & "00" & buffer_port &
+            avalon_st_addr_data(ST_ADDR_WIDTH + DATA_WIDTH - 1 downto DATA_WIDTH);
+        writedata <= avalon_st_addr_data(DATA_WIDTH - 1 downto 0);
 
         for i in 0 to 1 loop
             rd(i) <= '0';
@@ -229,7 +219,7 @@ begin
             wr(i) <= sr.wr(i);
         end loop;
 
-        addr_data_reg <= sr.din;
+        st_addr_data_reg <= sr.din;
 
         -- apply the new values
         rin <= v;
@@ -239,12 +229,12 @@ begin
     U_fifo_arr_gen: for i in 0 to 1 generate
         U_fifo: entity work.ip_fifo
             generic map (
-                WIDTH        => DATA_WIDTH + ADDR_WIDTH,
+                WIDTH        => DATA_WIDTH + ST_ADDR_WIDTH,
                 LENGTH_LOG_2 => FIFO_LENGTH_LOG_2,
                 SHOW_AHEAD   => "ON"
             ) port map (
                 aclr_n  => reset_n,
-                data    => addr_data_reg,
+                data    => st_addr_data_reg,
                 rdclk   => clk,
                 rdreq   => rd(i),
                 wrclk   => st_clk,
