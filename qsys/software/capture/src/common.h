@@ -7,6 +7,8 @@
 
 #define NDEBUG 1
 
+#define RENDER_CORES 1
+
 typedef unsigned char boolean;
 #define true 1
 #define false 0

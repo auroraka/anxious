@@ -8,9 +8,9 @@
 #ifndef NERVOUS_NIOS_H_
 #define NERVOUS_NIOS_H_
 
-void drawMsg(int bank, char* str, int x, int y);
+void drawMsg(int bank, char *str, int x, int y);
 
-void clearMsg(int bank, char* str, int x, int y);
+void clearMsg(int bank, char *str, int x, int y);
 
 void drawCursor(int bank, int x, int y);
 

@@ -2,34 +2,26 @@
 // Created by Kanari on 2016/8/15.
 //
 
-#include <system.h>
 #include <unistd.h>
-#include <io.h>
 
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
 #include <assert.h>
 
+#include "memory.h"
 #include "recognition.h"
 
 #define MEMORY_SIZE 8192
+#define RECOG_MEMORY RECOG_MEMORY_0_BASE
+#define RECOG_PORT RECOG_PORT_PIO_0_BASE
 
-#define RAW_HEIGHT (480)
-#define RAW_WIDTH (640)
-#define WIDTH (RAW_WIDTH >> 1)
-#define HEIGHT (RAW_HEIGHT >> 1)
-const unsigned MASK_WIDTH = WIDTH >> 5;
+#define FRAME_WIDTH (WIDTH >> 1)
+#define FRAME_HEIGHT (HEIGHT >> 1)
+#define MASK_WIDTH (WIDTH >> 5)
+#define FRAME_SIZE (FRAME_WIDTH * MASK_WIDTH)
 
 #define RECORD_BORDER 0
-
-unsigned cam_bank, render_bank;
-
-#define SDRAM_R(x, y) sdram[(cam_bank << 19) | ((y) << 10) | (x)]
-#define SDRAM_W(x, y, val) (sdram[(1 << 23) | (render_bank << 19) | ((y) << 10) | (x)] = (val))
-#define SDRAM_CLEAR(x, y) (sdram[(1 << 23) | (render_bank << 19) | ((y) << 10) | (x)] = (1 << 24))
-
-#define sdram ((volatile unsigned *)  SDRAM_CONTROLLER_0_BASE)
 
 #define get_frame(x, y) ((frame[(y) * MASK_WIDTH + ((x) >> 5)] >> ((x) & 31)) & 1)
 #define set_frame_0(x, y) (frame[(y) * MASK_WIDTH + ((x) >> 5)] &= ~(1 << ((x) & 31)))
@@ -60,7 +52,7 @@ unsigned check_range(unsigned pixel) {
 	if (!delta) return 0;
 	S = ((delta << 8) - 1) / V;
 	if (S < S_l || S_r < S) return 0;
-
+	
 	// coef = 60 * 256 / 360 = 42.6667
 	if (R == V) H = (unsigned)(((int)G - (int)B) * 42 / (int)delta + 256);
 	else if (G == V) H = (unsigned)(((int)B - (int)R) * 42 / (int)delta + 85 + 256);
@@ -71,25 +63,23 @@ unsigned check_range(unsigned pixel) {
 	return 1;
 }
 
-void cvtColor_inRange(int bank, unsigned *frame, unsigned *row) {
+void cvtColor_inRange(int cam_port, unsigned *frame, unsigned *row) {
 	int i, j;
 	unsigned pixel;
 	
-	cam_bank = bank;
-	
-	for (j = 0; j < RAW_HEIGHT; ++j) {
+	for (j = 0; j < HEIGHT; ++j) {
 		if ((j & 1) == 0) {
-			for (i = 0; i < WIDTH; ++i)
+			for (i = 0; i < FRAME_WIDTH; ++i)
 				row[i] = 0;
 		}
-		for (i = 0; i < RAW_WIDTH; ++i) {
+		for (i = 0; i < WIDTH; ++i) {
 			pixel = SDRAM_R(i, j);
 			row[i >> 1] += (((pixel >> 16) & 0xFF) << 20)
 			               + (((pixel >> 8) & 0xFF) << 10)
 			               + (pixel & 0xFF);
 		}
 		if ((j & 1) == 1) {
-			for (i = 0; i < WIDTH; ++i)
+			for (i = 0; i < FRAME_WIDTH; ++i)
 				set_frame(i, j >> 1, check_range(row[i]));
 		}
 	}
@@ -100,7 +90,7 @@ void erode(unsigned *frame, unsigned *row) {
 	unsigned pixel;
 	int delta, i, j;
 	
-	for (j = 0; j < HEIGHT; ++j) {
+	for (j = 0; j < FRAME_HEIGHT; ++j) {
 		delta = j * MASK_WIDTH;
 		pixel = frame[delta];
 		last[0] = pixel & ((pixel >> 1) | (frame[delta + 1] << 31)) & ((pixel << 1) | 1);
@@ -113,7 +103,7 @@ void erode(unsigned *frame, unsigned *row) {
 		memcpy(frame + delta, last, MASK_WIDTH * sizeof(unsigned));
 	}
 	memset(first, 0xFF, MASK_WIDTH * sizeof(unsigned));
-	for (j = 0; j < HEIGHT; ++j) {
+	for (j = 0; j < FRAME_HEIGHT; ++j) {
 		delta = j * MASK_WIDTH;
 		memcpy(last, frame + delta, MASK_WIDTH * sizeof(unsigned));
 		for (i = 0; i < MASK_WIDTH; ++i)      // valid overflow in last row
@@ -129,7 +119,7 @@ void dilate(unsigned *frame, unsigned *row) {
 	unsigned pixel;
 	int delta, i, j;
 	
-	for (j = 0; j < HEIGHT; ++j) {
+	for (j = 0; j < FRAME_HEIGHT; ++j) {
 		delta = j * MASK_WIDTH;
 		pixel = frame[delta];
 		last[0] = pixel | ((pixel >> 1) | (frame[delta + 1] << 31)) | (pixel << 1);
@@ -138,11 +128,12 @@ void dilate(unsigned *frame, unsigned *row) {
 			last[i] = pixel | ((pixel >> 1) | (frame[delta + i + 1] << 31)) | ((pixel << 1) | (frame[delta + i - 1] >> 31));
 		}
 		pixel = frame[delta + MASK_WIDTH - 1];
-		last[MASK_WIDTH - 1] = pixel | (pixel >> 1) | ((pixel << 1) | (frame[delta + MASK_WIDTH - 2] >> 31));
+		last[MASK_WIDTH - 1] = pixel | (pixel >> 1) | ((pixel << 1) | (frame[delta + MASK_WIDTH
+		                                                                     - 2] >> 31));
 		memcpy(frame + delta, last, MASK_WIDTH * sizeof(unsigned));
 	}
 	memset(first, 0x00, MASK_WIDTH * sizeof(unsigned));
-	for (j = 0; j < HEIGHT; ++j) {
+	for (j = 0; j < FRAME_HEIGHT; ++j) {
 		delta = j * MASK_WIDTH;
 		memcpy(last, frame + delta, MASK_WIDTH * sizeof(unsigned));
 		for (i = 0; i < MASK_WIDTH; ++i)      // valid overflow in last row
@@ -160,8 +151,8 @@ void dilate(unsigned *frame, unsigned *row) {
 #define get_l(p) (((p) >> 10) & 0x3FF)
 #define get_r(p) ((p) & 0x3FF)
 
-#define QUEUE_SIZE (WIDTH * 2)
-#define MAX_BORDER (MEMORY_SIZE - HEIGHT * MASK_WIDTH - QUEUE_SIZE)
+#define QUEUE_SIZE (FRAME_WIDTH * 2)
+#define MAX_BORDER (MEMORY_SIZE - FRAME_HEIGHT * MASK_WIDTH - QUEUE_SIZE)
 unsigned *queue;
 int head, tail;
 
@@ -211,7 +202,7 @@ int scanRow(unsigned *frame, unsigned *queue, int dir, int row, int l, int r) {
 
 int findContour(unsigned *frame, unsigned *queue, int sx, int sy, unsigned *pt1, unsigned *pt2) {
 	int dir, row, l_from, r_from, l, r, area = 0;
-	int min_x = WIDTH, max_x = 0, min_y = HEIGHT, max_y = 0;
+	int min_x = FRAME_WIDTH, max_x = 0, min_y = FRAME_HEIGHT, max_y = 0;
 	
 	head = tail = 0;
 #if RECORD_BORDER
@@ -244,7 +235,7 @@ int findContour(unsigned *frame, unsigned *queue, int sx, int sy, unsigned *pt1,
 		}
 		++l;
 		area += l_from - l;
-		for (r = r_from + 1; r < WIDTH; ++r) {
+		for (r = r_from + 1; r < FRAME_WIDTH; ++r) {
 			if (!get_frame(r, row)) break;
 			set_frame_0(r, row);
 		}
@@ -257,12 +248,12 @@ int findContour(unsigned *frame, unsigned *queue, int sx, int sy, unsigned *pt1,
 		
 		if (row > 0) {
 			if (dir != 1) area += scanRow(frame, queue, 0, row - 1, l, r);
-			else  {
+			else {
 				area += scanRow(frame, queue, 0, row - 1, l, l_from - 1);
 				area += scanRow(frame, queue, 0, row - 1, r_from + 1, r);
 			}
 		}
-		if (row < HEIGHT - 1) {
+		if (row < FRAME_HEIGHT - 1) {
 			if (dir != 0) area += scanRow(frame, queue, 1, row + 1, l, r);
 			else {
 				area += scanRow(frame, queue, 1, row + 1, l, l_from - 1);
@@ -295,8 +286,8 @@ RecogResult floodfill(unsigned *frame, unsigned *queue) {
 	int min_x, max_x, min_y, max_y, center_x, center_y;
 	RecogResult result;
 	
-	for (j = 0; j < HEIGHT; ++j)
-		for (i = 0; i < WIDTH; ++i)
+	for (j = 0; j < FRAME_HEIGHT; ++j)
+		for (i = 0; i < FRAME_WIDTH; ++i)
 			if (get_frame(i, j)) {
 				cur_area = findContour(frame, queue, i, j, &cur_pt1, &cur_pt2);
 				if (cur_area > best_area) {
@@ -324,17 +315,29 @@ RecogResult floodfill(unsigned *frame, unsigned *queue) {
 #undef get_l
 #undef get_r
 
-RecogResult recognize(int bank, unsigned *frame, unsigned *tmp) {
-	cvtColor_inRange(bank, frame, tmp);
+RecogResult recognize_raw(int port) {
+	unsigned *frame = (unsigned *)RECOG_MEMORY + port * FRAME_SIZE;
+	unsigned *tmp = frame + 3 * FRAME_SIZE;
+	
+	cvtColor_inRange(port, frame, tmp);
 	erode(frame, tmp);
 	dilate(frame, tmp);
 	return floodfill(frame, tmp);
 }
 
-void clearResult(int bank, RecogResult *result) {
+RecogResult recognize() {
+	unsigned port = IORD(RECOG_PORT, 0);
+	unsigned *frame = (unsigned *)RECOG_MEMORY + port * FRAME_SIZE;
+	unsigned *tmp = frame + 3 * FRAME_SIZE;
+	
+	erode(frame, tmp);
+	dilate(frame, tmp);
+	return floodfill(frame, tmp);
+}
+
+void clear_result(int render_port, RecogResult *result) {
 	int min_x, max_x, min_y, max_y, center_x, center_y, i, j;
 	unpack_result(result);
-	render_bank = bank;
 	
 	for (i = min_x; i <= max_x; ++i) {
 		SDRAM_CLEAR(i, min_y);
@@ -349,10 +352,9 @@ void clearResult(int bank, RecogResult *result) {
 			SDRAM_CLEAR(i, j);
 }
 
-void drawResult(int bank, RecogResult *result) {
+void draw_result(int render_port, RecogResult *result) {
 	int min_x, max_x, min_y, max_y, center_x, center_y, i, j;
 	unpack_result(result);
-	render_bank = bank;
 	
 	for (i = min_x; i <= max_x; ++i) {
 		SDRAM_W(i, min_y, 255 << 8);

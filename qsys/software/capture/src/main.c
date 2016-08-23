@@ -1,62 +1,35 @@
 /*
- * "Hello World" example.
- *
- * This example prints 'Hello from Nios II' to the STDOUT stream. It runs on
- * the Nios II 'standard', 'full_featured', 'fast', and 'low_cost' example
- * designs. It runs with or without the MicroC/OS-II RTOS and requires a STDOUT
- * device in your system's hardware.
- * The memory footprint of this hosted application is ~69 kbytes by default
- * using the standard reference design.
- *
- * For a reduced footprint version of this template, and an explanation of how
- * to reduce the memory footprint for a given application, see the
- * "small_hello_world" template.
- *
+ * CPU Assignments:
+ *   0, 1 : recognition cores for cameras 0 & 1
+ *   2    : controller core
+ *   > 2  : render cores
  */
 #include <stdio.h>
-#include <system.h>
 #include <unistd.h>
 #include <io.h>
 #include <time.h>
 
 #include "common.h"
-#include "sccb.h"
-#include "recognition.h"
-#if CPU_ID == 1
-#include "display.h"
-#endif
+#include "memory.h"
 
-#define HEIGHT (480)
-#define WIDTH (640)
+#define CPU_ID 2
 
-volatile unsigned *sdram = (unsigned *) SDRAM_CONTROLLER_0_BASE;
-
-volatile unsigned *shared_memory = (unsigned *) SHARED_MEMORY_BASE;
-
-#if CPU_ID == 0
-#define CAPTURE IORD(CAPTURE_PIO_0_BASE, 0)
-#define LED(x) IOWR(LED_PIO_0_BASE, 0, x)
-unsigned bank = 0;
-unsigned *frame = (unsigned *) RECOG_MEMORY_0_BASE;
-unsigned *row = (unsigned *) RECOG_MEMORY_0_BASE + (WIDTH * HEIGHT >> 7);
+#if CPU_ID == 2
+	#include "control.h"
+#elif CPU_ID > 2
+	#include "render.h"
 #else
-#define CAPTURE IORD(CAPTURE_PIO_1_BASE, 0)
-#define LED(x) IOWR(LED_PIO_1_BASE, 0, x)
-unsigned bank = 1;
-unsigned *frame = (unsigned *) RECOG_MEMORY_1_BASE;
-unsigned *row = (unsigned *) RECOG_MEMORY_1_BASE + (WIDTH * HEIGHT >> 7);
+	#include "sccb.h"
+	#include "recognition.h"
+	#include "control.h"
 #endif
 
-void clean_sdram() {
-	int i, j, bank;
-	for (bank = 0; bank < 3; ++bank) {
-		for (j = 0; j < HEIGHT; ++j) {
-			for (i = 0; i < WIDTH; ++i)
-				sdram[(1 << 23) | (bank << 19) | ((j) << 10) | (i)] = (1 << 24);
-		}
-		printf("Cleaned bank %d\n", bank);
-	}
-}
+#if CPU_ID < 2
+//#define CAPTURE IORD(CAPTURE_PIO_0_BASE, 0)
+//#define LED(x) IOWR(LED_PIO_0_BASE, 0, x)
+unsigned port = CPU_ID;
+unsigned *frame = (unsigned *)RECOG_MEMORY_0_BASE;
+unsigned *row = (unsigned *)RECOG_MEMORY_0_BASE + (WIDTH * HEIGHT >> 7);
 
 void capture() {
 	int i, j, state = 1;
@@ -67,7 +40,7 @@ void capture() {
 		printf("[FRAME START]\n");
 		for (j = 0; j < HEIGHT; ++j) {
 			for (i = 0; i < WIDTH; ++i)
-				printf("%u ", sdram[(0 << 23) | (bank << 19) | (j << 10) | i]);
+				printf("%u ", IORD(SDRAM, (0 << 23) | (port << 19) | (j << 10) | i));
 			printf("\n");
 		}
 		printf("[FRAME END]\n");
@@ -76,49 +49,60 @@ void capture() {
 		state = CAPTURE;
 	}
 }
+#endif
 
-#if CPU_ID == 1
-const float f_l = 1117.368, f_r = 1098.564;
-const float c_l = 284.43259, c_r = 260.334;
-const float T = 17.6;
-
-char msg[100];
+#if CPU_ID > 2
+const int MODULO = HEIGHT % RENDER_CORES;
+int ROW_CNT = HEIGHT / RENDER_CORES + ((CPU_ID - 2 < MODULO) ? 1 : 0);
+int ROW_START = CPU_ID - 2 < MODULO ? ROW_CNT * (CPU_ID - 2) : (ROW_CNT + 1) * MODULO + (CPU_ID - 2 - MODULO) * ROW_CNT;
 #endif
 
 int main() {
-	int i, j;
+
+#if CPU_ID == 2
+	// Controller
+	clean_render();
 	
+	int key_state = 1;
+	while (true) {
+		unsigned center_l = SHARED_R(1), center_r = SHARED_R(0);
+		Location loc = find_location(center_l, center_r, true);
+		SHARED_W(2, *(unsigned *)&loc.x);
+		SHARED_W(3, *(unsigned *)&loc.y);
+		SHARED_W(4, *(unsigned *)&loc.z);
+		
+		draw_overlay();
+		
+		if (KEY_R() == 0) {
+			if (key_state == 1) {
+				key_down(0);
+			}
+			key_state = 0;
+		} else key_state = 1;
+	}
+#elif CPU_ID > 2
+	// Renderer
+	render_init(ROW_START, ROW_CNT);
+	while (true) {
+		render(ROW_START, ROW_CNT);
+	}
+#else
+	// Camera recognition
 	configure_sccb();
-
-	for (j = 0; j < HEIGHT; ++j)
-		for (i = 0; i < WIDTH; ++i)
-			sdram[(1 << 23) | (bank << 19) | (j << 10) | i] = 1 << 24;
-
+	
 	RecogResult result, last_result;
 	while (true) {
-		capture();
+//		capture();
 		
 		last_result = result;
-		result = recognize(bank, frame, row);
-		clearResult(bank, &last_result);
-		drawResult(bank, &result);
+//		result = recognize();
+		result = recognize_raw(port, frame, row);
+		clear_result(port, &last_result);
+		draw_result(port, &result);
 		
-#if CPU_ID == 0
-		shared_memory[0] = result.center;
-#else
-		unsigned center_0 = shared_memory[0];
-		int x_l = get_x(result.center), x_r = get_x(center_0);
-		float d = T / ((x_r - c_r) / f_r + (c_l - x_l) / f_l);
-		clearMsg(0, msg, 20, 20);
-		clearMsg(1, msg, 20, 20);
-		// printf("%.1lf\n", d);
-		sprintf(msg, "Left %dx%d\nRight %dx%d\nDistance %d",
-			get_x(result.center), get_y(result.center),
-			get_x(center_0), get_y(center_0), (int)d);
-		drawMsg(0, msg, 20, 20);
-		drawMsg(1, msg, 20, 20);
-#endif
+		SHARED_W(port, result.center);
 	}
-
+#endif
+	
 	return 0;
 }
