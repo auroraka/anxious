@@ -1,7 +1,5 @@
 -- altera vhdl_input_version vhdl_2008
 
--- Accepts `addr_fetch' and `vsync', generates addr_gen(20 downto 0)
-
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
@@ -9,26 +7,34 @@ use IEEE.numeric_std.all;
 entity hsv_addr_gen is
     generic (
         ADDR_BASE  : std_logic_vector(31 downto 0) := (others => '0');
-        ADDR_WIDTH : positive := 16;
+        ADDR_WIDTH : positive := 32;
         HEIGHT     : positive := 480;
         WIDTH      : positive := 640
     );
     port (
-        clk        : in  std_logic;
-        reset_n    : in  std_logic;
+        clk          : in  std_logic;
+        reset_n      : in  std_logic;
 
-        addr_fetch : in  std_logic;
-        addr_vsync : in  std_logic;
-        addr_gen   : out std_logic_vector(ADDR_WIDTH - 1 downto 0)
+        addr_fetch   : in  std_logic;
+        addr_vsync   : in  std_logic;
+        addr_gen     : out std_logic_vector(ADDR_WIDTH - 1 downto 0);
+
+        buffer_port  : in  std_logic_vector(1 downto 0);
+        buffer_vsync : out std_logic
     );
 end entity hsv_addr_gen;
 
 architecture bhv of hsv_addr_gen is
-    constant ADDR_BASE_CLIPPED: unsigned(ADDR_WIDTH - 1 downto 0) :=
+    subtype addr_type is unsigned(ADDR_WIDTH - 1 downto 0);
+
+    constant ADDR_BASE_CLIPPED: addr_type :=
                 unsigned(ADDR_BASE(ADDR_WIDTH - 1 downto 0));
 
+    constant HSV_FRAME_SIZE: addr_type :=
+                to_unsigned(640 * 480 / 8, ADDR_WIDTH);
+
     type reg_type is record
-        addr      : unsigned(ADDR_WIDTH - 1 downto 0);
+        addr      : addr_type;
         vsync_reg : std_logic;
     end record;
 
@@ -52,11 +58,14 @@ begin
 
     P_comb: process(all)
         variable v: reg_type;
+        variable offset: addr_type;
     begin
         -- default: hold the values
         v := r;
 
         v.vsync_reg := addr_vsync;
+
+        buffer_vsync <= addr_vsync;
 
         if addr_fetch then
             v.addr := r.addr + 1;
@@ -68,7 +77,8 @@ begin
             v.addr := ADDR_BASE_CLIPPED;
         end if;
 
-        addr_gen <= std_logic_vector(r.addr);
+        offset := resize(unsigned(buffer_port) * HSV_FRAME_SIZE, ADDR_WIDTH);
+        addr_gen <= std_logic_vector(resize(r.addr + offset, ADDR_WIDTH));
 
         -- apply the new values
         rin <= v;

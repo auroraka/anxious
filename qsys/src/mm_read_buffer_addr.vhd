@@ -10,14 +10,14 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity mm_read_buffer_addr is
-	generic(
-		DATA_WIDTH        : positive;
+    generic(
+        DATA_WIDTH        : positive;
         ADDR_WIDTH        : positive;
-		FIFO_LENGTH_LOG_2 : positive;
-		VIEW_WIDTH        : positive;
-		VIEW_HEIGHT       : positive
-	);
-	port(
+        FIFO_LENGTH_LOG_2 : positive;
+        VIEW_WIDTH        : positive;
+        VIEW_HEIGHT       : positive
+    );
+    port(
         ---- Avalon-MM Master Interface ----
         clk           : in  std_logic;
         reset_n       : in  std_logic;
@@ -35,7 +35,7 @@ entity mm_read_buffer_addr is
         s_read        : in  std_logic;
         s_readdata    : out std_logic_vector(DATA_WIDTH - 1 downto 0);
         s_vsync       : in  std_logic
-	);
+    );
 end entity mm_read_buffer_addr;
 
 architecture bhv of mm_read_buffer_addr is
@@ -91,7 +91,7 @@ architecture bhv of mm_read_buffer_addr is
 
     signal sr: s_clk_reg_type := S_CLK_INIT_REGS;
     signal srin: s_clk_reg_type := S_CLK_INIT_REGS;
-    
+
     signal addr_fetch : std_logic;
 
 begin
@@ -142,7 +142,7 @@ begin
                 end if;
                 wr(r.wrsel) <= readdatavalid;
                 if readdatavalid then
-                	v.wrcnt := (r.wrcnt + 1) mod (2 ** FIFO_LENGTH_LOG_2);
+                    v.wrcnt := (r.wrcnt + 1) mod (2 ** FIFO_LENGTH_LOG_2);
                     if v.wrcnt = 0 then
                         if r.resetreq then
                             v := INIT_REGS;
@@ -191,12 +191,12 @@ begin
         burstcount   <= std_logic_vector(
             to_unsigned(2 ** FIFO_LENGTH_LOG_2, FIFO_LENGTH_LOG_2 + 1));
         read         <= r.read;
-        
+
         -- apply the new values
         rin <= v;
         srin <= sv;
     end process;
-    
+
     P_addr_gen : process(clk, wrreset_n)
         constant MAX_COLS : positive := (VIEW_WIDTH / (2 ** FIFO_LENGTH_LOG_2));
         variable row      : unsigned(8 downto 0) := (others => '0');
@@ -207,21 +207,18 @@ begin
             col := (others => '0');
             vsync_out <= '0';
         elsif rising_edge(clk) then
-        	vsync_out <= '0';
+            vsync_out <= '0';
             if addr_fetch then
                 if col = MAX_COLS - 1 then
                     col := (others => '0');
                     if row = VIEW_HEIGHT - 1 then
                         row := (others => '0');
+                        vsync_out <= '1';
                     else
                         row := row + 1;
                     end if;
                 else
                     col := col + 1;
-                end if;
-                
-                if row = VIEW_HEIGHT - 1 and col = VIEW_WIDTH - 1 then
-                	vsync_out <= '1';
                 end if;
             end if;
         end if;

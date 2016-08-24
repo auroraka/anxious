@@ -1,24 +1,26 @@
 -- altera vhdl_input_version vhdl_2008
 
--- Accepts `addr_fetch' and `vsync', generates addr_gen(20 downto 0)
-
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity default_addr_gen is
     generic (
-        ADDR_WIDTH : positive := 21;
+        ADDR_WIDTH : positive := 27;
         HEIGHT     : positive := 480;
-        WIDTH      : positive := 640
+        WIDTH      : positive := 640;
+        BANK       : std_logic_vector(1 downto 0) := "00"
     );
     port (
-        clk        : in  std_logic;
-        reset_n    : in  std_logic;
+        clk          : in  std_logic;
+        reset_n      : in  std_logic;
 
-        addr_fetch : in  std_logic;
-        addr_vsync : in  std_logic;
-        addr_gen   : out std_logic_vector(ADDR_WIDTH - 1 downto 0)
+        addr_fetch   : in  std_logic;
+        addr_vsync   : in  std_logic;
+        addr_gen     : out std_logic_vector(ADDR_WIDTH - 1 downto 0);
+
+        buffer_port  : in  std_logic_vector(1 downto 0);
+        buffer_vsync : out std_logic
     );
 end entity default_addr_gen;
 
@@ -54,6 +56,8 @@ begin
         -- default: hold the values
         v := r;
 
+        buffer_vsync <= addr_vsync;
+
         v.vsync_reg := addr_vsync;
 
         if addr_fetch then
@@ -72,7 +76,7 @@ begin
             v.col := 0;
         end if;
 
-        addr_gen(20 downto 0) <=
+        addr_gen(26 downto 0) <= BANK & "00" & buffer_port &
             std_logic_vector(to_unsigned(r.row, 9)) &
             std_logic_vector(to_unsigned(r.col, 10)) & "00";
 

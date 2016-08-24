@@ -63,7 +63,7 @@ BSP_FLAGS := --set hal.max_file_descriptors 4 \
 all: | generate-bsp generate-makefile make download open-terminal
 
 .PHONY: run
-run: | download open-terminal
+run: | make download open-terminal
 
 .PHONY: generate-bsp
 generate-bsp:

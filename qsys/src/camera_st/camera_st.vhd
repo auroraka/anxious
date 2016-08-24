@@ -6,7 +6,7 @@ use IEEE.numeric_std.all;
 
 use work.NEEE.all;
 
-entity camera is
+entity camera_st is
     generic(
         constant DATA_WIDTH : positive := 24
     );
@@ -34,9 +34,9 @@ entity camera is
         enable_n   : in  std_logic;    -- Capture enable
         black_cnt  : out unsigned(19 downto 0)
     );
-end entity camera;
+end entity camera_st;
 
-architecture camera_bhv of camera is
+architecture camera_bhv of camera_st is
 	subtype pixel_type is std_logic_vector(7 downto 0);
 	type type_cap_state is (C_IDLE, C_WAIT, C_BUSY);
 

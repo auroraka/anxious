@@ -6,7 +6,8 @@ use IEEE.numeric_std.all;
 
 entity bitpacker is
     generic (
-        constant PACK_LENGTH : positive := 8
+        constant PACK_LENGTH         : positive := 8;
+        constant FIRST_SYMBOL_IN_MSB : natural  := 0
     );
     port (
         clk     : in  std_logic;
@@ -69,8 +70,13 @@ begin
         v.eop := din_eop;
 
         if din_valid then
-            v.shift_data := r.shift_data(r.shift_data'left - 1 downto 0) &
-                din_data(0);
+            if FIRST_SYMBOL_IN_MSB /= 0 then
+                v.shift_data := r.shift_data(r.shift_data'left - 1 downto 0) &
+                    din_data(0);
+            else
+                v.shift_data := din_data(0) &
+                    r.shift_data(r.shift_data'left downto 1);
+            end if;
             if r.cnt = PACK_LENGTH - 1 then
                 v.cnt   := 0;
                 v.valid := '1';
