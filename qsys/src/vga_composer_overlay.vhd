@@ -6,13 +6,14 @@ use IEEE.numeric_std.all;
 
 use work.NEEE.all;
 
-entity vga_composer is
+entity vga_composer_overlay is
 	generic(
 		constant DATA_WIDTH        : positive := 32;
 		constant FIFO_LENGTH_LOG_2 : positive := 6;
         constant ADDR_WIDTH        : positive := 27;
 		constant CAM_BANK          : std_logic_vector(1 downto 0) := "00";
-		constant RENDER_BANK       : std_logic_vector(1 downto 0) := "01"
+		constant RENDER_BANK       : std_logic_vector(1 downto 0) := "01";
+        constant OVERLAY_BANK      : std_logic_vector(1 downto 0) := "10"
 	);
 	port(
         ---- Avalon-MM Master Interface ----
@@ -32,6 +33,13 @@ entity vga_composer is
         render_waitrequest   : in  std_logic;
         render_readdatavalid : in  std_logic; 
         render_burstcount    : out std_logic_vector(FIFO_LENGTH_LOG_2 downto 0);
+        
+        overlay_address       : out std_logic_vector(ADDR_WIDTH - 1 downto 0);
+        overlay_read          : out std_logic;
+        overlay_readdata      : in  std_logic_vector(DATA_WIDTH - 1 downto 0);
+        overlay_waitrequest   : in  std_logic;
+        overlay_readdatavalid : in  std_logic; 
+        overlay_burstcount    : out std_logic_vector(FIFO_LENGTH_LOG_2 downto 0);
 
         ---- VGA ----
 		VGA_B         : out std_logic_vector(7 downto 0);
@@ -53,13 +61,14 @@ entity vga_composer is
         render_vsync_out     : out std_logic;
         render_buffer_port   : in  std_logic_vector(1 downto 0)
 	);
-end entity vga_composer;
+end entity vga_composer_overlay;
 
-architecture bhv of vga_composer is
+architecture bhv of vga_composer_overlay is
     subtype color_type is std_logic_vector(7 downto 0);
 
 	signal vga_cam_data: std_logic_vector(DATA_WIDTH - 1 downto 0);
     signal vga_render_data: std_logic_vector(DATA_WIDTH - 1 downto 0);
+    signal vga_overlay_data: std_logic_vector(DATA_WIDTH - 1 downto 0);
 
     signal disp_ena, next_disp_ena: std_logic;
     signal vsync: std_logic;
@@ -99,10 +108,12 @@ begin
         
         if not disp_ena then
         	rgb := (others => '0');
-        elsif vga_render_data(24) then
-        	rgb := vga_cam_data(23 downto 0);   --- !!!
+        elsif not vga_overlay_data(24) then
+            rgb := vga_overlay_data(23 downto 0);
+        elsif not vga_render_data(24) then
+            rgb := vga_render_data(23 downto 0);
         else
-        	rgb := vga_render_data(23 downto 0);
+            rgb := vga_cam_data(23 downto 0);
         end if;
 
         v.vga_red   := rgb(23 downto 16);
@@ -188,5 +199,33 @@ begin
         );
     
     render_address(26 downto 21) <= RENDER_BANK & "00" & render_buffer_port;
+    
+    U_overlay_buffer: entity work.mm_read_buffer_addr
+        generic map (
+            DATA_WIDTH => DATA_WIDTH,
+            ADDR_WIDTH => 21,
+            FIFO_LENGTH_LOG_2 => FIFO_LENGTH_LOG_2,
+            VIEW_WIDTH => VIEW_WIDTH,
+            VIEW_HEIGHT => VIEW_HEIGHT
+        ) port map (
+            -- Avalon-MM Master Interface --
+            -- signals MUST be identical or that indicates an error
+            clk           => clk,
+            reset_n       => reset_n,
+            address       => overlay_address(20 downto 0),
+            read          => overlay_read,
+            readdata      => overlay_readdata,
+            waitrequest   => overlay_waitrequest,
+            readdatavalid => overlay_readdatavalid,
+            burstcount    => overlay_burstcount,
+            vsync_out     => open,
+            -- End of Avalon-MM Master Interface
+            s_clk         => clk_vga,
+            s_read        => next_disp_ena,
+            s_readdata    => vga_overlay_data,
+            s_vsync       => vsync
+        );
+    
+    overlay_address(26 downto 21) <= OVERLAY_BANK & "00" & "00";
     
 end architecture bhv;

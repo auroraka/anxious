@@ -24,12 +24,12 @@ void erode(unsigned *frame, unsigned *temp);
 
 void dilate(unsigned *frame, unsigned *temp);
 
-RecogResult recognize_raw(int bank, unsigned *frame, unsigned *tmp);
+RecogResult recognize_raw(unsigned port);
 
 RecogResult recognize();
 
-void clear_result(int bank, RecogResult *result);
+void clear_result(unsigned port, RecogResult *result);
 
-void draw_result(int bank, RecogResult *result);
+void draw_result(unsigned port, RecogResult *result);
 
 #endif //RECOGNITION_H

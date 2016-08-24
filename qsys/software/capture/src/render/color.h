@@ -14,7 +14,7 @@ typedef float Color[3];
 #define divcd(A, k, C) (C[0] = A[0] / k, C[1] = A[1] / k, C[2] = A[2] / k)
 #define copyColor(A, C) (C[0] = A[0], C[1] = A[1], C[2] = A[2])
 
-void normalize(Color C) {
+inline static void normalize(Color C) {
 	if (C[0] > 1) C[0] = 1;
 	if (C[1] > 1) C[1] = 1;
 	if (C[2] > 1) C[2] = 1;

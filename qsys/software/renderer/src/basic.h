@@ -7,8 +7,7 @@
 
 typedef unsigned char uchar;
 
-const float SPEC_POWER = 20;
-const int MAX_RAYTRACING_DEP = 1;
+const float SPEC_POWER = 4;
 
 const static float EPS = 1e-6;
 const static float INF = 1e30;

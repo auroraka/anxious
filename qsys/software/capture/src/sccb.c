@@ -9,14 +9,14 @@
 
 #include "CameraOV7670RegisterDefinitions.h"
 
-#define SCCB_DATA CAMERA_SIOD_0_BASE
-#define SCCB_CLK CAMERA_SIOC_0_BASE
+#define SCCB_DATA 0x08012020
+#define SCCB_CLK 0x08012010
 
-#define SDA_DIR_IN()   IOWR_ALTERA_AVALON_PIO_DIRECTION(SCCB_DATA,0)
-#define SDA_DIR_OUT()  IOWR_ALTERA_AVALON_PIO_DIRECTION(SCCB_DATA,1)
-#define SDA_WRITE(data)     IOWR_ALTERA_AVALON_PIO_DATA(SCCB_DATA, data)
-#define SDA_READ()     IORD_ALTERA_AVALON_PIO_DATA(SCCB_DATA)
-#define SCL_WRITE(data)     IOWR_ALTERA_AVALON_PIO_DATA(SCCB_CLK, data)
+#define SDA_DIR_IN() IOWR_ALTERA_AVALON_PIO_DIRECTION(SCCB_DATA, 0)
+#define SDA_DIR_OUT() IOWR_ALTERA_AVALON_PIO_DIRECTION(SCCB_DATA, 1)
+#define SDA_WRITE(data) IOWR_ALTERA_AVALON_PIO_DATA(SCCB_DATA, data)
+#define SDA_READ() IORD_ALTERA_AVALON_PIO_DATA(SCCB_DATA)
+#define SCL_WRITE(data) IOWR_ALTERA_AVALON_PIO_DATA(SCCB_CLK, data)
 
 #define SCCB_ID 0x42
 #define DELAY() usleep(100)
@@ -390,42 +390,42 @@ const alt_u8 ov7670_init_reg_tbl[][2] =
 #include <stdio.h>
 #include <math.h>
 
-const unsigned kXjbRegList[][2] = {
-		{REG_TSLB,  0x14},
-		{REG_COM13, 0x88},
-		{REG_COM7,  0x00},
-		{REG_COM5,  0x61},
-		{REG_COM6,  0x4b},
-		{0x16,      0x02},
-		{REG_MVFP,  0x07},
-		{0x21,      0x02},
-		{0x22,      0x91},
-		{0x29,      0x07},
-		{0x33,      0x0b},
-		{0x35,      0x0b},
-		{0x37,      0x1d},
-		{0x38,      0x71},
-		{0x39,      0x2a},
-		{REG_COM12, 0x78},
-		{0x4d,      0x40},
-		{0x4e,      0x20},
-		{REG_GFIX,  0},
-		{0x6b,      0x4a},
-		{0x74,      0x10},
-		{0x8d,      0x4f},
-		{0x8e,      0},
-		{0x8f,      0},
-		{0x90,      0},
-		{0x91,      0},
-		{0x96,      0},
-		{0x9a,      0},
-		{0xb0,      0x84},
-		{0xb1,      0x0c},
-		{0xb2,      0x0e},
-		{0xb3,      0x82},
-		{0xb8,      0x0a},
-		{0xFF,      0xFF} // End marker
-};
+//const unsigned kXjbRegList[][2] = {
+//		{REG_TSLB,  0x14},
+//		{REG_COM13, 0x88},
+//		{REG_COM7,  0x00},
+//		{REG_COM5,  0x61},
+//		{REG_COM6,  0x4b},
+//		{0x16,      0x02},
+//		{REG_MVFP,  0x07},
+//		{0x21,      0x02},
+//		{0x22,      0x91},
+//		{0x29,      0x07},
+//		{0x33,      0x0b},
+//		{0x35,      0x0b},
+//		{0x37,      0x1d},
+//		{0x38,      0x71},
+//		{0x39,      0x2a},
+//		{REG_COM12, 0x78},
+//		{0x4d,      0x40},
+//		{0x4e,      0x20},
+//		{REG_GFIX,  0},
+//		{0x6b,      0x4a},
+//		{0x74,      0x10},
+//		{0x8d,      0x4f},
+//		{0x8e,      0},
+//		{0x8f,      0},
+//		{0x90,      0},
+//		{0x91,      0},
+//		{0x96,      0},
+//		{0x9a,      0},
+//		{0xb0,      0x84},
+//		{0xb1,      0x0c},
+//		{0xb2,      0x0e},
+//		{0xb3,      0x82},
+//		{0xb8,      0x0a},
+//		{0xFF,      0xFF} // End marker
+//};
 
 const unsigned regsDefault[][2] = { //from the linux driver
 		/* {REG_COM7, COM7_RESET}, */
@@ -606,6 +606,8 @@ const unsigned regsDefault[][2] = { //from the linux driver
 		{0xc8,                      0x30},
 		{0x79,                      0x26},
 		
+		{REG_MVFP,                  0x27},
+		
 		{0xff,                      0xff},    /* END MARKER */
 };
 
@@ -625,21 +627,21 @@ const unsigned regsRGB565[][2] = {
 		{0xff,       0xff}    /* END MARKER */
 };
 
-const unsigned regsYUV422[][2] = {
-		{REG_COM7,   0x0},    /* Selects YUV mode */
-		{REG_RGB444, 0},    /* No RGB444 please */
-		{REG_COM1,   0},
-		{REG_COM15,                COM15_R00FF},
-		{REG_COM9,   0x6A},    /* 128x gain ceiling; 0x8 is reserved bit */
-		{0x4f,       0x80},        /* "matrix coefficient 1" */
-		{0x50,       0x80},        /* "matrix coefficient 2" */
-		{0x51,       0},        /* vb */
-		{0x52,       0x22},        /* "matrix coefficient 4" */
-		{0x53,       0x5e},        /* "matrix coefficient 5" */
-		{0x54,       0x80},        /* "matrix coefficient 6" */
-		{REG_COM13,/*COM13_GAMMA|*/COM13_UVSAT},
-		{0xff,       0xff},
-};
+//const unsigned regsYUV422[][2] = {
+//		{REG_COM7,   0x0},    /* Selects YUV mode */
+//		{REG_RGB444, 0},    /* No RGB444 please */
+//		{REG_COM1,   0},
+//		{REG_COM15,                COM15_R00FF},
+//		{REG_COM9,   0x6A},    /* 128x gain ceiling; 0x8 is reserved bit */
+//		{0x4f,       0x80},        /* "matrix coefficient 1" */
+//		{0x50,       0x80},        /* "matrix coefficient 2" */
+//		{0x51,       0},        /* vb */
+//		{0x52,       0x22},        /* "matrix coefficient 4" */
+//		{0x53,       0x5e},        /* "matrix coefficient 5" */
+//		{0x54,       0x80},        /* "matrix coefficient 6" */
+//		{REG_COM13,/*COM13_GAMMA|*/COM13_UVSAT},
+//		{0xff,       0xff},
+//};
 
 
 const unsigned regsVGA[][2] = {
@@ -652,72 +654,72 @@ const unsigned regsVGA[][2] = {
 		{0xff,     0xff},        /* END MARKER */
 };
 
-const unsigned regsQVGA[][2] = {
-		{REG_COM3, COM3_DCWEN}, // enable downsamp/crop/window
-		
-		{REG_COM14,  0x19},
-		{0x72,       0x11},
-		{0x73,       0xf1},
-		{REG_HSTART, 0x16},
-		{REG_HSTOP,  0x04},
-		{REG_HREF,   0x24},
-		{REG_VSTART, 0x02},
-		{REG_VSTOP,  0x7a},
-		{REG_VREF,   0x0a},
-		{0xff,       0xff},    /* END MARKER */
-};
-
-const unsigned regsMartin[][2] = {
-		//QQVGA RGB444
-		{REG_CLKRC,  0x80},
-		{REG_COM11,  0x0A},
-		{REG_TSLB,   0x04},
-		{REG_COM7,   0x04},
-		
-		//{REG_RGB444, 0x02},
-		//{REG_COM15, 0xd0},
-		{REG_RGB444, 0x00},     // Disable RGB 444?
-		{REG_COM15,  0xD0},      // Set RGB 565?
-		
-		{REG_HSTART, 0x16},
-		{REG_HSTOP,  0x04},
-		{REG_HREF,   0x24},
-		{REG_VSTART, 0x02},
-		{REG_VSTOP,  0x7a},
-		{REG_VREF,   0x0a},
-		{REG_COM10,  0x02},
-		{REG_COM3,   0x04},
-		{REG_COM14,  0x1a},
-		{REG_MVFP,   0x27},
-		{0x72,       0x22},
-		{0x73,       0xf2},
-		
-		// COLOR SETTING
-		{0x4f,       0x80},
-		{0x50,       0x80},
-		{0x51,       0x00},
-		{0x52,       0x22},
-		{0x53,       0x5e},
-		{0x54,       0x80},
-		{0x56,       0x40},
-		{0x58,       0x9e},
-		{0x59,       0x88},
-		{0x5a,       0x88},
-		{0x5b,       0x44},
-		{0x5c,       0x67},
-		{0x5d,       0x49},
-		{0x5e,       0x0e},
-		{0x69,       0x00},
-		{0x6a,       0x40},
-		{0x6b,       0x0a},
-		{0x6c,       0x0a},
-		{0x6d,       0x55},
-		{0x6e,       0x11},
-		{0x6f,       0x9f},
-		
-		{0xb0,       0x84},
-		{0xFF,       0xFF}, // End Marker
-};
+//const unsigned regsQVGA[][2] = {
+//		{REG_COM3, COM3_DCWEN}, // enable downsamp/crop/window
+//
+//		{REG_COM14,  0x19},
+//		{0x72,       0x11},
+//		{0x73,       0xf1},
+//		{REG_HSTART, 0x16},
+//		{REG_HSTOP,  0x04},
+//		{REG_HREF,   0x24},
+//		{REG_VSTART, 0x02},
+//		{REG_VSTOP,  0x7a},
+//		{REG_VREF,   0x0a},
+//		{0xff,       0xff},    /* END MARKER */
+//};
+//
+//const unsigned regsMartin[][2] = {
+//		//QQVGA RGB444
+//		{REG_CLKRC,  0x80},
+//		{REG_COM11,  0x0A},
+//		{REG_TSLB,   0x04},
+//		{REG_COM7,   0x04},
+//
+//		//{REG_RGB444, 0x02},
+//		//{REG_COM15, 0xd0},
+//		{REG_RGB444, 0x00},     // Disable RGB 444?
+//		{REG_COM15,  0xD0},      // Set RGB 565?
+//
+//		{REG_HSTART, 0x16},
+//		{REG_HSTOP,  0x04},
+//		{REG_HREF,   0x24},
+//		{REG_VSTART, 0x02},
+//		{REG_VSTOP,  0x7a},
+//		{REG_VREF,   0x0a},
+//		{REG_COM10,  0x02},
+//		{REG_COM3,   0x04},
+//		{REG_COM14,  0x1a},
+//		{REG_MVFP,   0x27},
+//		{0x72,       0x22},
+//		{0x73,       0xf2},
+//
+//		// COLOR SETTING
+//		{0x4f,       0x80},
+//		{0x50,       0x80},
+//		{0x51,       0x00},
+//		{0x52,       0x22},
+//		{0x53,       0x5e},
+//		{0x54,       0x80},
+//		{0x56,       0x40},
+//		{0x58,       0x9e},
+//		{0x59,       0x88},
+//		{0x5a,       0x88},
+//		{0x5b,       0x44},
+//		{0x5c,       0x67},
+//		{0x5d,       0x49},
+//		{0x5e,       0x0e},
+//		{0x69,       0x00},
+//		{0x6a,       0x40},
+//		{0x6b,       0x0a},
+//		{0x6c,       0x0a},
+//		{0x6d,       0x55},
+//		{0x6e,       0x11},
+//		{0x6f,       0x9f},
+//
+//		{0xb0,       0x84},
+//		{0xFF,       0xFF}, // End Marker
+//};
 
 void sccb_write_reg_list(const unsigned (*regs)[2]) {
 	int i;

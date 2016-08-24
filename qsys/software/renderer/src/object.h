@@ -8,7 +8,6 @@
 struct IntersectResult {
 	Vector N, C;
 	float dist;
-	int front;
 };
 
 #endif

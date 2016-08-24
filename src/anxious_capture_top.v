@@ -181,42 +181,7 @@ cam_pll U_cam_pll (
 	.c3     (clk_vga)
 );
 
-function [6:0] seg7;
-	input [3:0] hex;
-	begin
-		case (hex)
-			4'd0: seg7 = 7'b1000000;
-			4'd1: seg7 = 7'b1111001;
-			4'd2: seg7 = 7'b0100100;
-			4'd3: seg7 = 7'b0110000;
-			4'd4: seg7 = 7'b0011001;
-			4'd5: seg7 = 7'b0010010;
-			4'd6: seg7 = 7'b0000010;
-			4'd7: seg7 = 7'b1111000;
-			4'd8: seg7 = 7'b0000000;
-			4'd9: seg7 = 7'b0011000;
-			4'd10: seg7 = 7'b0001000;
-			4'd11: seg7 = 7'b0000011;
-			4'd12: seg7 = 7'b1000110;
-			4'd13: seg7 = 7'b0100001;
-			4'd14: seg7 = 7'b0000110;
-			4'd15: seg7 = 7'b0001110;
-			default: seg7 = 7'b1000000;
-		endcase
-	end
-endfunction
 
-// reg [19:0] black_cnt_0, black_cnt_1;
-// assign HEX4 = SW[4] ? seg7(black_cnt_0[19:16]) : seg7(black_cnt_1[19:16]);
-// assign HEX3 = SW[4] ? seg7(black_cnt_0[15:12]) : seg7(black_cnt_1[15:12]);
-// assign HEX2 = SW[4] ? seg7(black_cnt_0[11:8]) : seg7(black_cnt_1[11:8]);
-// assign HEX1 = SW[4] ? seg7(black_cnt_0[7:4]) : seg7(black_cnt_1[7:4]);
-// assign HEX0 = SW[4] ? seg7(black_cnt_0[3:0]) : seg7(black_cnt_1[3:0]);
-
-reg [1:0] port_switch;
-assign port_switch = SW[4] ? 2'b00 : 2'b01;
-
-wire render_vsync;
 wire [1:0] render_buffer_port;
 wire [1:0] cam_buffer_port;
 
@@ -233,74 +198,84 @@ wire [1:0] cam_buffer_port;
 
 `define CAM_SIOC_1 GPIO[2]
 `define CAM_SIOD_1 GPIO[3]
-`define CAM_VSYNC_1 (SW[3] ? GPIO[22] : GPIO[4])
-`define CAM_HREF_1 (SW[3] ? GPIO[23] : GPIO[5])
-`define CAM_PCLK_1 (SW[3] ? GPIO[24] : GPIO[6])
+`define CAM_VSYNC_1 GPIO[4]
+`define CAM_HREF_1 GPIO[5]
+`define CAM_PCLK_1 GPIO[6]
 `define CAM_XCLK_1 GPIO[7]
-`define CAM_DIN_1 (SW[3] ? GPIO[26:33] : GPIO[8:15])
-`define CAM_RESET_1 (SW[3] ? GPIO[34] : GPIO[16])
-`define CAM_PWDN_1 (SW[3] ? GPIO[35] : GPIO[17])
+`define CAM_DIN_1 GPIO[8:15]
+`define CAM_RESET_1 GPIO[16]
+`define CAM_PWDN_1 GPIO[17]
 
 
-anxious_capture U_sys (
-	.camera_mm_0_conduit_clk_camera            (clk_camera),   //               camera_mm_0_conduit.clk_camera
-	.camera_mm_0_conduit_enable_n              (SW[1]),        //                                  .enable_n
-	.camera_mm_0_conduit_cam_din               (`CAM_DIN_0),   //                                  .cam_din
-	.camera_mm_0_conduit_cam_href              (`CAM_HREF_0),  //                                  .cam_href
-	.camera_mm_0_conduit_cam_pclk              (`CAM_PCLK_0),  //                                  .cam_pclk
-	.camera_mm_0_conduit_cam_pwdn              (`CAM_PWDN_0),  //                                  .cam_pwdn
-	.camera_mm_0_conduit_cam_reset             (`CAM_RESET_0), //                                  .cam_reset
-	.camera_mm_0_conduit_cam_vsync             (`CAM_VSYNC_0), //                                  .cam_vsync
-	.camera_mm_0_conduit_cam_xclk              (`CAM_XCLK_0),  //                                  .cam_xclk
-	.camera_sioc_0_external_connection_export  (`CAM_SIOC_0),  // camera_sioc_0_external_connection.export
-    .camera_siod_0_external_connection_export  (`CAM_SIOD_0),  // camera_siod_0_external_connection.export
+`define RENDER_CORES 1
+reg [`RENDER_CORES-1:0] render_vsync;
+reg render_vsync_all, render_vsync_any;
+assign render_vsync_all = render_vsync[0];
+assign render_vsync_any = render_vsync[0];
+reg render_start;
 
-    .camera_mm_1_conduit_clk_camera            (clk_camera),   //               camera_mm_0_conduit.clk_camera
-	.camera_mm_1_conduit_enable_n              (SW[2]),        //                                  .enable_n
-	.camera_mm_1_conduit_cam_din               (`CAM_DIN_1),   //                                  .cam_din
-	.camera_mm_1_conduit_cam_href              (`CAM_HREF_1),  //                                  .cam_href
-	.camera_mm_1_conduit_cam_pclk              (`CAM_PCLK_1),  //                                  .cam_pclk
-	.camera_mm_1_conduit_cam_pwdn              (`CAM_PWDN_1),  //                                  .cam_pwdn
-	.camera_mm_1_conduit_cam_reset             (`CAM_RESET_1), //                                  .cam_reset
-	.camera_mm_1_conduit_cam_vsync             (`CAM_VSYNC_1), //                                  .cam_vsync
-	.camera_mm_1_conduit_cam_xclk              (`CAM_XCLK_1),  //                                  .cam_xclk
-	.camera_sioc_1_external_connection_export  (`CAM_SIOC_1),  // camera_sioc_0_external_connection.export
-    .camera_siod_1_external_connection_export  (`CAM_SIOD_1),  // camera_siod_0_external_connection.export
+always @ (posedge clk_qsys) begin
+	if (render_vsync_all == 1'b1) begin
+		render_start <= 1'b1;
+	end else if (render_vsync_any == 1'b0) begin
+		render_start <= 1'b0;
+	end
+end
 
-    .capture_pio_0_external_connection_export  (KEY[2]),  // capture_pio_0_external_connection.export
-    .capture_pio_1_external_connection_export  (KEY[3]),  // capture_pio_1_external_connection.export
 
-	.clk_clk                           (clk_qsys),    //                         clk.clk
-	.reset_reset_n                     (KEY[0]),      //                       reset.reset_n
-
-    .vga_composer_0_buffer_port_cam_address      (port_switch),    //             vga_composer_0_buffer_port_cam.address
-	.vga_composer_0_buffer_port_render_address   (port_switch),    //          vga_composer_0_buffer_port_render.address
-	.camera_mm_0_buffer_port_address             (2'b00),    //                    camera_mm_0_buffer_port.address
-	.camera_mm_1_buffer_port_address             (2'b01),    //                    camera_mm_1_buffer_port.address
-
-    .new_sdram_controller_0_wire_addr  (DRAM_ADDR),   // new_sdram_controller_0_wire.addr
-	.new_sdram_controller_0_wire_ba    (DRAM_BA),     //                            .ba
-	.new_sdram_controller_0_wire_cas_n (DRAM_CAS_N),  //                            .cas_n
-	.new_sdram_controller_0_wire_cke   (DRAM_CKE),    //                            .cke
-	.new_sdram_controller_0_wire_cs_n  (DRAM_CS_N),   //                            .cs_n
-	.new_sdram_controller_0_wire_dq    (DRAM_DQ),     //                            .dq
-	.new_sdram_controller_0_wire_dqm   (DRAM_DQM),    //                            .dqm
-	.new_sdram_controller_0_wire_ras_n (DRAM_RAS_N),  //                            .ras_n
-	.new_sdram_controller_0_wire_we_n  (DRAM_WE_N),   //                            .we_n
-
-	.vga_composer_0_conduit_vga_b            (VGA_B),       //            vga_mm_0_conduit.vga_b
-	.vga_composer_0_conduit_vga_blank_n      (VGA_BLANK_N), //                            .vga_blank_n
-	.vga_composer_0_conduit_vga_clk          (VGA_CLK),     //                            .vga_clk
-	.vga_composer_0_conduit_vga_g            (VGA_G),       //                            .vga_g
-	.vga_composer_0_conduit_vga_hs           (VGA_HS),      //                            .vga_hs
-	.vga_composer_0_conduit_vga_r            (VGA_R),       //                            .vga_r
-	.vga_composer_0_conduit_vga_sync_n       (VGA_SYNC_N),  //                            .vga_sync_n
-	.vga_composer_0_conduit_vga_vs           (VGA_VS),      //                            .vga_vs
-	.vga_composer_0_conduit_clk_vga          (clk_vga),     //                            .clk_vga
-    
-	.led_pio_0_external_connection_export        (LEDG[0]),         //       led_pio_external_connection.export
-	.led_pio_1_external_connection_export        (LEDR[0]),         //       led_pio_external_connection.export
-  
+anxious_capture u0 (
+    .camera_mm_0_buffer_port_address               (2'b00),               //                camera_mm_0_buffer_port.address
+    .camera_mm_0_conduit_clk_camera                (clk_camera),   //               camera_mm_0_conduit.clk_camera
+    .camera_mm_0_conduit_enable_n                  (SW[1]),        //                                  .enable_n
+    .camera_mm_0_conduit_cam_din                   (`CAM_DIN_0),   //                                  .cam_din
+    .camera_mm_0_conduit_cam_href                  (`CAM_HREF_0),  //                                  .cam_href
+    .camera_mm_0_conduit_cam_pclk                  (`CAM_PCLK_0),  //                                  .cam_pclk
+    .camera_mm_0_conduit_cam_pwdn                  (`CAM_PWDN_0),  //                                  .cam_pwdn
+    .camera_mm_0_conduit_cam_reset                 (`CAM_RESET_0), //                                  .cam_reset
+    .camera_mm_0_conduit_cam_vsync                 (`CAM_VSYNC_0), //                                  .cam_vsync
+    .camera_mm_0_conduit_cam_xclk                  (`CAM_XCLK_0),  //                                  .cam_xclk
+    .camera_mm_1_buffer_port_address               (2'b01),               //                camera_mm_1_buffer_port.address
+    .camera_mm_1_conduit_clk_camera                (clk_camera),   //               camera_mm_0_conduit.clk_camera
+    .camera_mm_1_conduit_enable_n                  (SW[2]),        //                                  .enable_n
+    .camera_mm_1_conduit_cam_din                   (`CAM_DIN_1),   //                                  .cam_din
+    .camera_mm_1_conduit_cam_href                  (`CAM_HREF_1),  //                                  .cam_href
+    .camera_mm_1_conduit_cam_pclk                  (`CAM_PCLK_1),  //                                  .cam_pclk
+    .camera_mm_1_conduit_cam_pwdn                  (`CAM_PWDN_1),  //                                  .cam_pwdn
+    .camera_mm_1_conduit_cam_reset                 (`CAM_RESET_1), //                                  .cam_reset
+    .camera_mm_1_conduit_cam_vsync                 (`CAM_VSYNC_1), //                                  .cam_vsync
+    .camera_mm_1_conduit_cam_xclk                  (`CAM_XCLK_1),  //                                  .cam_xclk
+    .camera_sioc_1_external_connection_export      (`CAM_SIOC_1),  // camera_sioc_0_external_connection.export
+    .camera_siod_1_external_connection_export      (`CAM_SIOD_1),  // camera_siod_0_external_connection.export
+    .clk_clk                                       (clk_qsys),                                       //                                    clk.clk
+    .new_sdram_controller_0_wire_addr              (DRAM_ADDR),   // new_sdram_controller_0_wire.addr
+    .new_sdram_controller_0_wire_ba                (DRAM_BA),     //                            .ba
+    .new_sdram_controller_0_wire_cas_n             (DRAM_CAS_N),  //                            .cas_n
+    .new_sdram_controller_0_wire_cke               (DRAM_CKE),    //                            .cke
+    .new_sdram_controller_0_wire_cs_n              (DRAM_CS_N),   //                            .cs_n
+    .new_sdram_controller_0_wire_dq                (DRAM_DQ),     //                            .dq
+    .new_sdram_controller_0_wire_dqm               (DRAM_DQM),    //                            .dqm
+    .new_sdram_controller_0_wire_ras_n             (DRAM_RAS_N),  //                            .ras_n
+    .new_sdram_controller_0_wire_we_n              (DRAM_WE_N),   //                            .we_n
+    .reset_reset_n                                 (KEY[0]),      //                       reset.reset_n
+    .vga_composer_overlay_0_buffer_port_cam_address        (2'b00),    //             vga_composer_0_buffer_port_cam.address
+    .vga_composer_overlay_0_buffer_port_render_address     (2'b00),    //          vga_composer_0_buffer_port_render.address
+    .vga_composer_overlay_0_conduit_vga_b                  (VGA_B),       //            vga_mm_0_conduit.vga_b
+    .vga_composer_overlay_0_conduit_vga_blank_n            (VGA_BLANK_N), //                            .vga_blank_n
+    .vga_composer_overlay_0_conduit_vga_clk                (VGA_CLK),     //                            .vga_clk
+    .vga_composer_overlay_0_conduit_vga_g                  (VGA_G),       //                            .vga_g
+    .vga_composer_overlay_0_conduit_vga_hs                 (VGA_HS),      //                            .vga_hs
+    .vga_composer_overlay_0_conduit_vga_r                  (VGA_R),       //                            .vga_r
+    .vga_composer_overlay_0_conduit_vga_sync_n             (VGA_SYNC_N),  //                            .vga_sync_n
+    .vga_composer_overlay_0_conduit_vga_vs                 (VGA_VS),      //                            .vga_vs
+    .vga_composer_overlay_0_conduit_clk_vga                (clk_vga),     //                            .clk_vga
+    .camera_siod_0_external_connection_export      (`CAM_SIOD_0),  // camera_sioc_0_external_connection.export
+    .camera_sioc_0_external_connection_export      (`CAM_SIOC_0),  // camera_siod_0_external_connection.export
+    .render_start_pio_external_connection_export   (render_start),   //   render_start_pio_external_connection.export
+    .render_port_pio_external_connection_export    (2'b00),    //    render_port_pio_external_connection.export
+    .render_vsync_pio_0_external_connection_export (render_vsync[0]), // render_vsync_pio_0_external_connection.export
+    .recog_port_pio_0_external_connection_export   (2'b00),   //   recog_port_pio_0_external_connection.export
+    .recog_port_pio_1_external_connection_export   (2'b00),   //   recog_port_pio_1_external_connection.export
+    .key_pio_external_connection_export            (KEY[1])             //            key_pio_external_connection.export
 );
 
 endmodule

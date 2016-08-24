@@ -20,7 +20,7 @@ typedef float Vector[3];
 #define dis2(A, B) ((A[0] - B[0]) * (A[0] - B[0]) + (A[1] - B[1]) * (A[1] - B[1]) + (A[2] - B[2]) * (A[2] - B[2]))
 #define dis(A, B) (sqrt((A[0] - B[0]) * (A[0] - B[0]) + (A[1] - B[1]) * (A[1] - B[1]) + (A[2] - B[2]) * (A[2] - B[2])))
 
-void normal(Vector A, Vector C) {
+inline static void normal(Vector A, Vector C) {
 	float l = len(A);
 	C[0] = A[0] / l;
 	C[1] = A[1] / l;
@@ -29,7 +29,7 @@ void normal(Vector A, Vector C) {
 
 #define isZero(A) (fabs(A[0]) < EPS && fabs(A[1]) < EPS && fabs(A[2]) < EPS)
 
-void GetAnVerticalVector(Vector A, Vector ret) {
+inline static void GetAnVerticalVector(Vector A, Vector ret) {
 	Vector tmp;
 	makeVector(0, 0, 1, tmp);
 	mul(A, tmp, ret);

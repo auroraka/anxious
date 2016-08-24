@@ -2,6 +2,8 @@
 // Created by Kanari on 2016/8/15.
 //
 
+#if CPU_ID < 2
+
 #include <unistd.h>
 
 #include <stdio.h>
@@ -12,14 +14,14 @@
 #include "memory.h"
 #include "recognition.h"
 
-#define MEMORY_SIZE 8192
-#define RECOG_MEMORY RECOG_MEMORY_0_BASE
-#define RECOG_PORT RECOG_PORT_PIO_0_BASE
+#define MEMORY_SIZE 16384
+#define RECOG_MEMORY 0x08000000
+#define RECOG_PORT_PIO 0x08012000
 
 #define FRAME_WIDTH (WIDTH >> 1)
 #define FRAME_HEIGHT (HEIGHT >> 1)
-#define MASK_WIDTH (WIDTH >> 5)
-#define FRAME_SIZE (FRAME_WIDTH * MASK_WIDTH)
+#define MASK_WIDTH (FRAME_WIDTH >> 5)
+#define FRAME_SIZE (FRAME_HEIGHT * MASK_WIDTH)
 
 #define RECORD_BORDER 0
 
@@ -128,8 +130,7 @@ void dilate(unsigned *frame, unsigned *row) {
 			last[i] = pixel | ((pixel >> 1) | (frame[delta + i + 1] << 31)) | ((pixel << 1) | (frame[delta + i - 1] >> 31));
 		}
 		pixel = frame[delta + MASK_WIDTH - 1];
-		last[MASK_WIDTH - 1] = pixel | (pixel >> 1) | ((pixel << 1) | (frame[delta + MASK_WIDTH
-		                                                                     - 2] >> 31));
+		last[MASK_WIDTH - 1] = pixel | (pixel >> 1) | ((pixel << 1) | (frame[delta + MASK_WIDTH - 2] >> 31));
 		memcpy(frame + delta, last, MASK_WIDTH * sizeof(unsigned));
 	}
 	memset(first, 0x00, MASK_WIDTH * sizeof(unsigned));
@@ -151,7 +152,7 @@ void dilate(unsigned *frame, unsigned *row) {
 #define get_l(p) (((p) >> 10) & 0x3FF)
 #define get_r(p) ((p) & 0x3FF)
 
-#define QUEUE_SIZE (FRAME_WIDTH * 2)
+#define QUEUE_SIZE (FRAME_WIDTH * 3)
 #define MAX_BORDER (MEMORY_SIZE - FRAME_HEIGHT * MASK_WIDTH - QUEUE_SIZE)
 unsigned *queue;
 int head, tail;
@@ -166,7 +167,7 @@ void addBorder(unsigned p) {
 }
 #endif
 
-int inc(int *x) {
+inline int inc(int *x) {
 	*x = *x + 1 == QUEUE_SIZE ? 0 : *x + 1;
 	assert(x == &head || tail != head);
 	return *x;
@@ -315,7 +316,7 @@ RecogResult floodfill(unsigned *frame, unsigned *queue) {
 #undef get_l
 #undef get_r
 
-RecogResult recognize_raw(int port) {
+RecogResult recognize_raw(unsigned port) {
 	unsigned *frame = (unsigned *)RECOG_MEMORY + port * FRAME_SIZE;
 	unsigned *tmp = frame + 3 * FRAME_SIZE;
 	
@@ -326,7 +327,7 @@ RecogResult recognize_raw(int port) {
 }
 
 RecogResult recognize() {
-	unsigned port = IORD(RECOG_PORT, 0);
+	unsigned port = IORD(RECOG_PORT_PIO, 0);
 	unsigned *frame = (unsigned *)RECOG_MEMORY + port * FRAME_SIZE;
 	unsigned *tmp = frame + 3 * FRAME_SIZE;
 	
@@ -335,7 +336,7 @@ RecogResult recognize() {
 	return floodfill(frame, tmp);
 }
 
-void clear_result(int render_port, RecogResult *result) {
+void clear_result(unsigned render_port, RecogResult *result) {
 	int min_x, max_x, min_y, max_y, center_x, center_y, i, j;
 	unpack_result(result);
 	
@@ -352,7 +353,7 @@ void clear_result(int render_port, RecogResult *result) {
 			SDRAM_CLEAR(i, j);
 }
 
-void draw_result(int render_port, RecogResult *result) {
+void draw_result(unsigned render_port, RecogResult *result) {
 	int min_x, max_x, min_y, max_y, center_x, center_y, i, j;
 	unpack_result(result);
 	
@@ -368,3 +369,5 @@ void draw_result(int render_port, RecogResult *result) {
 		for (j = center_y - 1; j <= center_y + 2; ++j)
 			SDRAM_W(i, j, 255);
 }
+
+#endif

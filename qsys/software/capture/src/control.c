@@ -13,6 +13,7 @@
 #include "common.h"
 #include "display.h"
 #include "control.h"
+#include "render/object.h"
 
 const float focus_x_l = 1117.36809f;
 const float focus_x_r = 1098.56402f, focus_y_r = 1095.74358f;
@@ -47,36 +48,76 @@ enum DRAW_STATE {
 	DRAW_SPHERE_RADIUS
 } draw_state;
 
+float sphere_x, sphere_y, sphere_z;
 point sphere_center;
 float sphere_radius;
 
-void clear_overlay() {
-	
+#define OVERLAY_W(x, y, val) (SDRAM[(2 << 23) | (0 << 19) | ((y) << 10) | (x)] = (val))
+
+void draw_sphere(point center, float radius, unsigned color) {
+	int cx = get_x(center), cy = get_y(center);
+	int dx = 0, dy = (int)radius;
+	double d = 1.25 - radius;
+	while (dx <= dy) {
+		if (d < 0) d += 2 * dx + 3;
+		else d += 2 * (dx - dy) + 5, --dy;
+		++dx;
+		
+		OVERLAY_W(dx + cx, dy + cy, color);
+		OVERLAY_W(dy + cx, dx + cy, color);
+		OVERLAY_W(-dx + cx, dy + cy, color);
+		OVERLAY_W(dy + cx, -dx + cy, color);
+		OVERLAY_W(dx + cx, -dy + cy, color);
+		OVERLAY_W(-dy + cx, dx + cy, color);
+		OVERLAY_W(-dx + cx, -dy + cy, color);
+		OVERLAY_W(-dy + cx, -dx + cy, color);
+	}
+}
+
+void draw_point(point center, unsigned color) {
+	int x = get_x(center), y = get_y(center);
+	OVERLAY_W(x, y, color);
+	if (x > 0) OVERLAY_W(x - 1, y, color);
+	if (y > 0) OVERLAY_W(x, y - 1, color);
+	if (x < WIDTH - 1) OVERLAY_W(x + 1, y, color);
+	if (y < HEIGHT - 1) OVERLAY_W(x, y + 1, color);
 }
 
 void draw_overlay() {
 	point p = SHARED_R(0);
-	clear_overlay();
 	switch (draw_state) {
 		case DRAW_SPHERE_CENTER:
+			draw_point(sphere_center, TRANSPARENT);
 			sphere_center = p;
+			draw_point(sphere_center, WHITE);
 			break;
 		case DRAW_SPHERE_RADIUS:
+			draw_sphere(sphere_center, sphere_radius, TRANSPARENT);
 			int dx = get_x(p) - get_x(sphere_center);
 			int dy = get_y(p) - get_y(sphere_center);
 			sphere_radius = sqrt(dx * dx + dy * dy);
+			draw_sphere(sphere_center, sphere_radius, WHITE);
 			break;
 	}
-	
 }
 
 void key_down(int key_code) {
+	float dx, dy, dz, radius;
 	switch (draw_state) {
 		case DRAW_SPHERE_CENTER:
+			sphere_x = *(float *)&SHARED_R(2);
+			sphere_y = *(float *)&SHARED_R(3);
+			sphere_z = *(float *)&SHARED_R(4);
 			draw_state = DRAW_SPHERE_RADIUS;
 			break;
 		case DRAW_SPHERE_RADIUS:
-			
+			dx = sphere_x - *(float *)&SHARED_R(2);
+			dy = sphere_y - *(float *)&SHARED_R(3);
+			dz = sphere_z - *(float *)&SHARED_R(4);
+			radius = sqrt(dx * dx + dy * dy + dz * dz);
+			add_sphere(sphere_x, sphere_y, sphere_z, radius, WHITE);
+			draw_point(sphere_center, TRANSPARENT);
+			draw_sphere(sphere_center, sphere_radius, TRANSPARENT);
 			draw_state = DRAW_SPHERE_CENTER;
 			break;
 	}

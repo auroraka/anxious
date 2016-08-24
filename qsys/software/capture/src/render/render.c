@@ -1,8 +1,13 @@
-//#define MYLOCAL
+//#define CPU_ID 3
+
+#if CPU_ID > 2
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
+#include <unistd.h>
 
 #include "basic.h"
 #include "vector.h"
@@ -25,18 +30,16 @@ Vector LI_O;
  */
 #ifndef MYLOCAL
 
-#include "sccb.h"
-#include <system.h>
-#include <unistd.h>
-#include <io.h>
-
+// RENDER_VSYNC_PIO_x_BASE
+#define RENDER_VSYNC 0x08001020
+ 
 #define RENDER_PORT() IORD(RENDER_PORT_PIO_BASE, 0)
 #define RENDER_START() IORD(RENDER_START_PIO_BASE, 0)
-#define RENDER_VSYNC(x) IOWR(RENDER_VSYNC_PIO_BASE, 0, x)
+#define VSYNC(x) IOWR(RENDER_VSYNC, 0, x)
 
 #define WRITE_PIX(i, j, r, g, b) SDRAM_W(j, HEIGHT - i, ((r) << 16) | ((g) << 8) | (b))
 #define WRITE_PIXF(i, j, r, g, b) SDRAM_W(j, HEIGHT - i, ((uchar)((r) * 255) << 16) | ((uchar)((g) * 255) << 8) | ((uchar)((b) * 255)))
-#define WRITE_TRANS(i, j) SDRAM_CLEAR(j, PIC_H - i)
+#define WRITE_TRANS(i, j) SDRAM_CLEAR(j, HEIGHT - i)
 
 #endif
 
@@ -67,9 +70,9 @@ void camInit() {
 
 void camLookAt(float i, float j, Vector ret) {
 	Vector tmp, tmp2;
-	muld(CAM.Dy, (2 * i / PIC_H - 1), tmp);
+	muld(CAM.Dy, (2 * i / HEIGHT - 1), tmp);
 	add(CAM.N, tmp, tmp);
-	muld(CAM.Dx, (2 * j / PIC_W - 1), tmp2);
+	muld(CAM.Dx, (2 * j / WIDTH - 1), tmp2);
 	add(tmp, tmp2, ret);
 }
 
@@ -138,8 +141,8 @@ int intersectSphere(int n_sp, Vector ray_O, Vector ray_V) {
 
 int intersectWithSphere(Vector ray_O, Vector ray_V) {
 	float d = 1e30;
-	int ret = -1;
-	for (int i = 0; i < SPTot; i++) {
+	int ret = -1, i;
+	for (i = 0; i < SPTot; i++) {
 		if (intersectSphere(i, ray_O, ray_V)) {
 			if (SP[i].irst.dist < d) {
 				d = SP[i].irst.dist;
@@ -214,6 +217,22 @@ void render_init(int row_start, int row_cnt) {
 	createScene();
 }
 
+void sync_objects() {
+	int i;
+	volatile RawSphere sphere;
+	SPTot = OBJECT_CNT_R();
+	for (i = 0; i < SPTot; ++i) {
+		sphere = get_sphere(i);
+		makeVector(sphere.x, sphere.y, sphere.z, SP[i].O);
+		SP[i].R = sphere.radius;
+		makeColor(1, 1, 1, SP[i].color);
+		SP[i].diff = 0.4;
+		SP[i].spec = 0.8;
+		makeVector(0, 0, 1, SP[i].De);
+		makeVector(0, 1, 0, SP[i].Dc);
+	}
+}
+
 void render(int row_start, int row_cnt) {
 	int render_port, i, j;
 	Vector ray_O;
@@ -223,9 +242,13 @@ void render(int row_start, int row_cnt) {
 	while (!RENDER_START())
 		usleep(100);
 	
-	copyVector(CAM.O, ray_O);
+	VSYNC(0);
 	
 	render_port = RENDER_PORT();
+	copyVector(CAM.O, ray_O);
+	
+	sync_objects();
+	
 	for (i = row_start; i < row_start + row_cnt; i++) {
 		for (j = 0; j < WIDTH; j++) {
 			camLookAt(i, j, ray_V);
@@ -233,11 +256,8 @@ void render(int row_start, int row_cnt) {
 #ifdef MYLOCAL
 			SetColor(&BMP, i, j, color);
 #else
-			if (isZero(color)) {
-				WRITE_TRANS(i, j);
-			} else {
-				WRITE_PIXF(i, j, color[0], color[1], color[2]);
-			}
+			if (isZero(color)) WRITE_TRANS(i, j);
+			else WRITE_PIXF(i, j, color[0], color[1], color[2]);
 #endif
 		}
 	}
@@ -247,8 +267,7 @@ void render(int row_start, int row_cnt) {
 	Output(&BMP, name);
 #endif
 	
-	RENDER_VSYNC(1);
-	usleep(100);
-	RENDER_VSYNC(0);
-	
+	VSYNC(1);
 }
+
+#endif

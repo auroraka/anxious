@@ -12,7 +12,7 @@
 #include "common.h"
 #include "memory.h"
 
-#define CPU_ID 2
+//#define CPU_ID 1
 
 #if CPU_ID == 2
 	#include "control.h"
@@ -21,47 +21,17 @@
 #else
 	#include "sccb.h"
 	#include "recognition.h"
-	#include "control.h"
-#endif
-
-#if CPU_ID < 2
-//#define CAPTURE IORD(CAPTURE_PIO_0_BASE, 0)
-//#define LED(x) IOWR(LED_PIO_0_BASE, 0, x)
-unsigned port = CPU_ID;
-unsigned *frame = (unsigned *)RECOG_MEMORY_0_BASE;
-unsigned *row = (unsigned *)RECOG_MEMORY_0_BASE + (WIDTH * HEIGHT >> 7);
-
-void capture() {
-	int i, j, state = 1;
-	LED(1);
-	if (state == 1 && CAPTURE == 0) {
-		state = CAPTURE;
-		LED(0);
-		printf("[FRAME START]\n");
-		for (j = 0; j < HEIGHT; ++j) {
-			for (i = 0; i < WIDTH; ++i)
-				printf("%u ", IORD(SDRAM, (0 << 23) | (port << 19) | (j << 10) | i));
-			printf("\n");
-		}
-		printf("[FRAME END]\n");
-		LED(1);
-	} else {
-		state = CAPTURE;
-	}
-}
-#endif
-
-#if CPU_ID > 2
-const int MODULO = HEIGHT % RENDER_CORES;
-int ROW_CNT = HEIGHT / RENDER_CORES + ((CPU_ID - 2 < MODULO) ? 1 : 0);
-int ROW_START = CPU_ID - 2 < MODULO ? ROW_CNT * (CPU_ID - 2) : (ROW_CNT + 1) * MODULO + (CPU_ID - 2 - MODULO) * ROW_CNT;
 #endif
 
 int main() {
+	
+	printf("CPU: %d\n", CPU_ID);
 
 #if CPU_ID == 2
 	// Controller
-	clean_render();
+	clean_sdram(1);
+	clean_sdram(2);
+	reset_objects();
 	
 	int key_state = 1;
 	while (true) {
@@ -81,6 +51,10 @@ int main() {
 		} else key_state = 1;
 	}
 #elif CPU_ID > 2
+	const int MODULO = HEIGHT % RENDER_CORES;
+	int ROW_CNT = HEIGHT / RENDER_CORES + ((CPU_ID - 2 < MODULO) ? 1 : 0);
+	int ROW_START = CPU_ID - 2 < MODULO ? ROW_CNT * (CPU_ID - 2) : (ROW_CNT + 1) * MODULO + (CPU_ID - 2 - MODULO) * ROW_CNT;
+
 	// Renderer
 	render_init(ROW_START, ROW_CNT);
 	while (true) {
@@ -89,18 +63,18 @@ int main() {
 #else
 	// Camera recognition
 	configure_sccb();
+	printf("CPU: %d\n", CPU_ID);
 	
 	RecogResult result, last_result;
 	while (true) {
-//		capture();
-		
 		last_result = result;
 //		result = recognize();
-		result = recognize_raw(port, frame, row);
-		clear_result(port, &last_result);
-		draw_result(port, &result);
-		
-		SHARED_W(port, result.center);
+		result = recognize_raw(CPU_ID);
+		SHARED_W(CPU_ID, result.center);
+#if CPU_ID == 0
+		clear_result(CPU_ID, &last_result);
+		draw_result(CPU_ID, &result);
+#endif
 	}
 #endif
 	

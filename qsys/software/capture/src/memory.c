@@ -4,12 +4,12 @@
 
 #include "memory.h"
 
-void clean_render() {
-	int i, j, bank;
-	for (bank = 0; bank < 3; ++bank) {
+void clean_sdram(unsigned bank) {
+	int i, j, port;
+	for (port = 0; port < 3; ++port) {
 		for (j = 0; j < HEIGHT; ++j) {
 			for (i = 0; i < WIDTH; ++i)
-				IOWR(SDRAM, (1 << 23) | (bank << 19) | ((j) << 10) | (i), (1 << 24));
+				SDRAM[(bank << 23) | (port << 19) | ((j) << 10) | (i)] = TRANSPARENT;
 		}
 	}
 }
