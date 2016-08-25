@@ -231,18 +231,17 @@ end
 wire render_buffer_vsync;
 assign render_buffer_vsync = render_vsync_all;
 
-
 anxious_capture u0 (
     .cam_buffer_switcher_enable_enable                  (SW[4]),                  //                  cam_buffer_switcher_enable.enable
     .camera_mm_0_conduit_clk_camera                     (clk_camera),   //               camera_mm_0_conduit.clk_camera
     .camera_mm_0_conduit_enable_n                       (SW[3]),        //                                  .enable_n
-    .camera_mm_0_conduit_cam_din                        (`CAM_DIN_0),   //                                  .cam_din
-    .camera_mm_0_conduit_cam_href                       (`CAM_HREF_0),  //                                  .cam_href
-    .camera_mm_0_conduit_cam_pclk                       (`CAM_PCLK_0),  //                                  .cam_pclk
-    .camera_mm_0_conduit_cam_pwdn                       (`CAM_PWDN_0),  //                                  .cam_pwdn
-    .camera_mm_0_conduit_cam_reset                      (`CAM_RESET_0), //                                  .cam_reset
-    .camera_mm_0_conduit_cam_vsync                      (`CAM_VSYNC_0), //                                  .cam_vsync
-    .camera_mm_0_conduit_cam_xclk                       (`CAM_XCLK_0),  //                                  .cam_xclk
+    .camera_mm_0_conduit_cam_din                        (SW[7] ? `CAM_DIN_1 : `CAM_DIN_0),   //                                  .cam_din
+    .camera_mm_0_conduit_cam_href                       (SW[7] ? `CAM_HREF_1 : `CAM_HREF_0),  //                                  .cam_href
+    .camera_mm_0_conduit_cam_pclk                       (SW[7] ? `CAM_PCLK_1 : `CAM_PCLK_0),  //                                  .cam_pclk
+    // .camera_mm_0_conduit_cam_pwdn                       (`CAM_PWDN_0),  //                                  .cam_pwdn
+    // .camera_mm_0_conduit_cam_reset                      (`CAM_RESET_0), //                                  .cam_reset
+    .camera_mm_0_conduit_cam_vsync                      (SW[7] ? `CAM_VSYNC_1 : `CAM_VSYNC_0), //                                  .cam_vsync
+    // .camera_mm_0_conduit_cam_xclk                       (`CAM_XCLK_0),  //                                  .cam_xclk
     
     .camera_sioc_0_external_connection_export           (`CAM_SIOC_0),           //           camera_sioc_0_external_connection.export
     .camera_sioc_1_external_connection_export           (`CAM_SIOC_1),           //           camera_sioc_1_external_connection.export
@@ -252,10 +251,10 @@ anxious_capture u0 (
     .camera_st_0_conduit_cam_din                        (`CAM_DIN_0),   //                                  .cam_din
     .camera_st_0_conduit_cam_href                       (`CAM_HREF_0),  //                                  .cam_href
     .camera_st_0_conduit_cam_pclk                       (`CAM_PCLK_0),  //                                  .cam_pclk
-//    .camera_st_0_conduit_cam_pwdn                       (`CAM_PWDN_0),  //                                  .cam_pwdn
-//    .camera_st_0_conduit_cam_reset                      (`CAM_RESET_0), //                                  .cam_reset
+    .camera_st_0_conduit_cam_pwdn                       (`CAM_PWDN_0),  //                                  .cam_pwdn
+    .camera_st_0_conduit_cam_reset                      (`CAM_RESET_0), //                                  .cam_reset
     .camera_st_0_conduit_cam_vsync                      (`CAM_VSYNC_0), //                                  .cam_vsync
-//    .camera_st_0_conduit_cam_xclk                       (`CAM_XCLK_0),  //                                  .cam_xclk
+    .camera_st_0_conduit_cam_xclk                       (`CAM_XCLK_0),  //                                  .cam_xclk
     .camera_st_0_conduit_clk_camera                     (clk_camera),   //               camera_mm_0_conduit.clk_camera
     .camera_st_0_conduit_enable_n                       (SW[1]),        //                                  .enable_n
     

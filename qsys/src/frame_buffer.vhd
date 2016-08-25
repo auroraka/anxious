@@ -24,9 +24,9 @@ end entity frame_buffer;
 architecture frame_buffer_bhv of frame_buffer is
 	constant PORT_WIDTH : natural := 2;
 
-	constant DEFAULT_WRITE_PORT : std_logic_vector(PORT_WIDTH - 1 downto 0) := "00";
-	constant DEFAULT_READ_PORT  : std_logic_vector(PORT_WIDTH - 1 downto 0) := "01";
-	constant DEFAULT_IDLE_PORT  : std_logic_vector(PORT_WIDTH - 1 downto 0) := "10";
+	constant DEFAULT_IDLE_PORT  : std_logic_vector(PORT_WIDTH - 1 downto 0) := "00";
+	constant DEFAULT_WRITE_PORT : std_logic_vector(PORT_WIDTH - 1 downto 0) := "01";
+	constant DEFAULT_READ_PORT  : std_logic_vector(PORT_WIDTH - 1 downto 0) := "10";
 
 	subtype PORT_ADDR is std_logic_vector(PORT_WIDTH - 1 downto 0);
 

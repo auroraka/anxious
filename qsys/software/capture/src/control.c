@@ -2,6 +2,8 @@
 // Created by Kanari on 2016/8/15.
 //
 
+//#define CPU_ID 2
+
 #if CPU_ID == 2
 
 #include <unistd.h>

@@ -156,7 +156,7 @@ void dilate(unsigned *frame, unsigned *row) {
 #define get_l(p) (((p) >> 10) & 0x3FF)
 #define get_r(p) ((p) & 0x3FF)
 
-#define QUEUE_SIZE (FRAME_WIDTH * 3)
+#define QUEUE_SIZE (FRAME_WIDTH * 2)
 #define MAX_BORDER (MEMORY_SIZE - FRAME_HEIGHT * MASK_WIDTH - QUEUE_SIZE)
 unsigned *queue;
 int head, tail;
@@ -302,10 +302,14 @@ RecogResult floodfill(unsigned *frame, unsigned *queue) {
 				}
 			}
 	
-	min_x = get_x(best_pt1) * 2;
-	min_y = get_y(best_pt1) * 2;
-	max_x = get_x(best_pt2) * 2 + 1;
-	max_y = get_y(best_pt2) * 2 + 1;
+//	min_x = get_x(best_pt1) * 2;
+//	min_y = get_y(best_pt1) * 2;
+//	max_x = get_x(best_pt2) * 2 + 1;
+//	max_y = get_y(best_pt2) * 2 + 1;
+	min_x = get_x(best_pt1);
+	min_y = get_y(best_pt1);
+	max_x = get_x(best_pt2);
+	max_y = get_y(best_pt2);
 	center_x = (min_x + max_x) / 2;
 	center_y = (min_y + max_y) / 2;
 	result.rect_lu = point(min_x, min_y);
@@ -321,12 +325,19 @@ RecogResult floodfill(unsigned *frame, unsigned *queue) {
 #undef get_r
 
 RecogResult recognize_raw(unsigned port) {
-	unsigned *frame = (unsigned *)RECOG_MEMORY + port * FRAME_SIZE;
-	unsigned *tmp = frame + 3 * FRAME_SIZE;
+	unsigned *frame_from = (unsigned *)RECOG_MEMORY;
+	unsigned *frame = (unsigned *)RECOG_MEMORY + FRAME_SIZE;
+	unsigned *tmp = (unsigned *)RECOG_MEMORY + 2 * FRAME_SIZE;
 	RecogResult result;
 	
-	cvtColor_inRange(port, frame, tmp);
+//	cvtColor_inRange(port, frame, tmp);
+	int i, j;
+	for (j = 0; j < FRAME_HEIGHT; ++j)
+		for (i = 0; i < MASK_WIDTH; ++i)
+			frame[j * MASK_WIDTH + i] = frame_from[j * MASK_WIDTH + i];
 	erode(frame, tmp);
+	erode(frame, tmp);
+	dilate(frame, tmp);
 	dilate(frame, tmp);
 	result = floodfill(frame, tmp);
 	VSYNC(1);

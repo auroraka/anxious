@@ -37,7 +37,7 @@ int main() {
 	int key_state = 1;
 	while (true) {
 		
-		unsigned center_l = SHARED_R(1), center_r = SHARED_R(0);
+		unsigned center_l = SHARED_R(0), center_r = SHARED_R(1);
 		Location loc = find_location(center_l, center_r);
 		SHARED_W(2, *(unsigned *)&loc.x);
 		SHARED_W(3, *(unsigned *)&loc.y);
@@ -55,8 +55,8 @@ int main() {
 	}
 #elif CPU_ID > 2
 	const int MODULO = HEIGHT % RENDER_CORES;
-	int ROW_CNT = HEIGHT / RENDER_CORES + ((CPU_ID - 2 < MODULO) ? 1 : 0);
-	int ROW_START = CPU_ID - 2 < MODULO ? ROW_CNT * (CPU_ID - 2) : (ROW_CNT + 1) * MODULO + (CPU_ID - 2 - MODULO) * ROW_CNT;
+	int ROW_CNT = HEIGHT / RENDER_CORES + ((CPU_ID - 3 < MODULO) ? 1 : 0);
+	int ROW_START = CPU_ID - 3 < MODULO ? ROW_CNT * (CPU_ID - 3) : (ROW_CNT + 1) * MODULO + (CPU_ID - 3 - MODULO) * ROW_CNT;
 
 	// Renderer
 	render_init(ROW_START, ROW_CNT);
@@ -69,11 +69,25 @@ int main() {
 	printf("CPU: %d\n", CPU_ID);
 	
 	RecogResult result;
-	unsigned render_port = 0;
+	int i, j, cnt;
+//	unsigned render_port = 0;
+//	const unsigned MASK_WIDTH = WIDTH >> 5;
+//	volatile unsigned *frame = (unsigned *)0x08000000 + (HEIGHT * MASK_WIDTH);
 	while (true) {
-		result = recognize();
-//		result = recognize_raw(CPU_ID);
+//		result = recognize();
+		result = recognize_raw(CPU_ID);
+//#define get_frame(x, y) ((frame[(y) * MASK_WIDTH + ((x) >> 5)] >> ((x) & 31)) & 1)
 		SHARED_W(CPU_ID, result.center);
+		
+//		for (j = 0; j < 480; ++j)
+//#if CPU_ID == 0
+//			for (i = 0; i < 320; ++i) {
+//#else
+//			for (i = 320; i < 640; ++i) {
+//#endif
+//				if (get_frame(i, j)) SDRAM_W(i, j, WHITE);
+//				else SDRAM_W(i, j, 0);
+//			}
 	}
 #endif
 	

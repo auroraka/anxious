@@ -53,8 +53,8 @@ struct Camera {
 } CAM;
 
 void camInit() {
-	makeVector(-2, 2, 0.5, CAM.O);
-	makeVector(0.6, 1, -0.6, CAM.N);
+	makeVector(0, 0, 0, CAM.O);
+	makeVector(0, 0, -1, CAM.N);
 	CAM.lens_H = 0.75;
 	CAM.lens_W = 1;
 	Vector tmp;
@@ -199,7 +199,7 @@ void createScene() {
 	
 	// light
 	makeVector(3, 3, 3, LI_O);
-	makeColor(0.7, 0.7, 0.7, LI_C);
+	makeColor(300, 300, 400, LI_C);
 	
 	//Bmp
 #ifdef MYLOCAL
@@ -233,15 +233,20 @@ void sync_objects() {
 	}
 }
 
+int frame_cnt = 0;
+
 void render(int row_start, int row_cnt) {
 	int render_port, i, j;
 	Vector ray_O;
 	Vector ray_V;
 	Color color;
 	
+	VSYNC(1);
+	
 	while (!RENDER_START())
 		usleep(100);
 	
+	printf("Rendering frame %d [%d, %d)... ", frame_cnt++, row_start, row_start + row_cnt);
 	VSYNC(0);
 	
 	render_port = RENDER_PORT();
@@ -250,6 +255,7 @@ void render(int row_start, int row_cnt) {
 	sync_objects();
 	
 	for (i = row_start; i < row_start + row_cnt; i++) {
+		if ((i - row_start) % 10 == 9) printf("#");
 		for (j = 0; j < WIDTH; j++) {
 			camLookAt(i, j, ray_V);
 			rayTracing(ray_O, ray_V, color);
@@ -261,6 +267,7 @@ void render(int row_start, int row_cnt) {
 #endif
 		}
 	}
+	printf("\n");
 
 #ifdef MYLOCAL
 	char name[] = "output.bmp";

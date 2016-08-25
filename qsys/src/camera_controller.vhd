@@ -23,7 +23,6 @@ entity camera_controller is
         write       : out std_logic;
         writedata   : out std_logic_vector(DATA_WIDTH - 1 downto 0);
         waitrequest : in  std_logic;
-        lock        : out std_logic;
 
         ---- Camera side ----
         clk_camera  : in  std_logic;
@@ -41,7 +40,9 @@ entity camera_controller is
 
         ---- Frame Buffer Signals ----
         vsync_out   : out std_logic;
-        buffer_port : in  std_logic_vector(1 downto 0)
+        buffer_port : in  std_logic_vector(1 downto 0);
+
+        black_cnt   : out std_logic_vector(19 downto 0)
     );
 end entity camera_controller;
 
@@ -55,6 +56,8 @@ architecture camera_controller_bhv of camera_controller is
     signal col       : unsigned(9 downto 0);
     signal addr      : std_logic_vector(ADDR_WIDTH - 1 downto 0) := (others => '0');
     signal vsync     : std_logic;
+
+    signal black_cnt_u : unsigned(19 downto 0);
 begin
     U_camera : entity work.camera port map(
             clk_camera => clk_camera,
@@ -72,8 +75,11 @@ begin
             DATA_o     => cam_data(23 downto 0),
             ROW_o      => row,
             COL_o      => col,
-            VSYNC_o    => vsync
+            VSYNC_o    => vsync,
+
+            black_cnt  => black_cnt_u
         );
+    black_cnt <= std_logic_vector(black_cnt_u);
 
     addr(20 downto 2) <= std_logic_vector(row) & std_logic_vector(col);
 
@@ -92,7 +98,6 @@ begin
             write       => write,
             writedata   => writedata,
             waitrequest => waitrequest,
-            lock        => lock,
             vsync_out   => vsync_out,
             -- End of Avalon-MM Master Interface --
             s_clk       => pclk,
