@@ -1,4 +1,6 @@
 
+#if CPU_ID < 2
+ 
 #include "sccb.h"
 
 #include <stdio.h>
@@ -9,8 +11,8 @@
 
 #include "CameraOV7670RegisterDefinitions.h"
 
-#define SCCB_DATA 0x08012020
-#define SCCB_CLK 0x08012010
+#define SCCB_CLK 0x08042020
+#define SCCB_DATA 0x08042030
 
 #define SDA_DIR_IN() IOWR_ALTERA_AVALON_PIO_DIRECTION(SCCB_DATA, 0)
 #define SDA_DIR_OUT() IOWR_ALTERA_AVALON_PIO_DIRECTION(SCCB_DATA, 1)
@@ -606,7 +608,7 @@ const unsigned regsDefault[][2] = { //from the linux driver
 		{0xc8,                      0x30},
 		{0x79,                      0x26},
 		
-		{REG_MVFP,                  0x27},
+		{REG_MVFP,                  0x27},  /* flip horizontally */
 		
 		{0xff,                      0xff},    /* END MARKER */
 };
@@ -750,3 +752,5 @@ void configure_sccb() {
 	sccb_write_reg_list(regsVGA);
 	/* sccb_write_reg_list(regsMartin); */
 }
+
+#endif

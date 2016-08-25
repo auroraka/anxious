@@ -27,9 +27,7 @@ entity camera is
         DATA_o     : out std_logic_vector(23 downto 0);
         ROW_o      : out unsigned(8 downto 0);
         COL_o      : out unsigned(9 downto 0);
-        VSYNC_o    : out std_logic;
-
-        black_cnt  : out unsigned(19 downto 0)
+        VSYNC_o    : out std_logic
     );
 end entity camera;
 
@@ -60,9 +58,8 @@ architecture camera_bhv of camera is
         cap_y               : unsigned(9 downto 0);
         cap_count           : natural range 0 to 3;
         vsync_reg, href_reg : std_logic;
-        we: std_logic;
-        dout: std_logic_vector(23 downto 0);
-        black_cnt           : unsigned(19 downto 0);
+        we                  : std_logic;
+        dout                : std_logic_vector(23 downto 0);
     end record;
 
     constant INIT_REGS: reg_type := (
@@ -76,13 +73,11 @@ architecture camera_bhv of camera is
         vsync_reg => '1',
         href_reg => '0',
         we => '0',
-        dout => (others => '0'),
-        black_cnt => (others => '0')
+        dout => (others => '0')
     );
 
     signal r: reg_type := INIT_REGS;
     signal rin: reg_type := INIT_REGS;
-    signal black_cnt_r : unsigned(19 downto 0);
 begin
     P_reg: process(CAM_PCLK, reset_n)
     begin
@@ -90,7 +85,6 @@ begin
             r <= INIT_REGS;
         elsif rising_edge(CAM_PCLK) then
             r <= rin;
-            black_cnt <= black_cnt_r;
         end if;
     end process;
 
@@ -115,13 +109,11 @@ begin
 
         case r.cap_state is
             when C_IDLE =>
-                black_cnt_r <= r.black_cnt;
                 if enable_n = '0' then
                     v.cap_state := C_WAIT;
                 end if;
             when C_WAIT =>
                 if r.vsync_reg and not CAM_VSYNC then
-                    v.black_cnt := (others => '0');
                     v.cap_state := C_BUSY;
                     v.cap_x     := (others => '0');
                     v.cap_y     := (others => '0');
@@ -142,9 +134,6 @@ begin
                         when 1 =>
                             v.we    := '1';
                             rgb565_to_rgb888(r.cb, CAM_DIN, v.dout);
-                            if CAM_DIN = "00000000" then
-                                v.black_cnt := r.black_cnt + 1;
-                            end if;
                             -- Mock data for testing (overwrite previous assignments)
                             -- v.dout := cap_y_mock & cap_y_mock & cap_y_mock;
                         when 2 =>
@@ -153,9 +142,6 @@ begin
                         when 3 =>
                             v.we    := '1';
                             rgb565_to_rgb888(r.cr, CAM_DIN, v.dout);
-                            if CAM_DIN = "00000000" then
-                                v.black_cnt := r.black_cnt + 1;
-                            end if;
                             -- Mock data for testing (overwrite previous assignments)
                             -- DATA_o <= cap_y_mock & cap_y_mock & cap_y_mock;
                     end case;

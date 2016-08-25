@@ -11,7 +11,7 @@ typedef struct {
 	float x, y, z;
 } Location;
 
-Location find_location(point center_l, point center_r, boolean show_msg);
+Location find_location(point center_l, point center_r);
 
 void draw_overlay();
 

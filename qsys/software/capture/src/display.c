@@ -1,3 +1,5 @@
+#if CPU_ID == 2
+
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
@@ -610,7 +612,10 @@ char symbols[] = {'`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-
 
 typedef unsigned char uchar;
 
-unsigned render_port;
+//#define OVERLAY_W(x, y, val) (SDRAM[(2 << 23) | (overlay_port << 19) | ((y) << 10) | (x)] = (val))
+#define OVERLAY_W(x, y, val) (SDRAM[(1 << 23) | (display_overlay_port << 19) | ((y) << 10) | (x)] = (val))
+
+unsigned display_overlay_port = 0;
 
 void drawLowercaseLetter(char c, int x, int y, unsigned color) {
 	int i, j;
@@ -619,12 +624,12 @@ void drawLowercaseLetter(char c, int x, int y, unsigned color) {
 		ty = 0;
 		for (j = 7; j >= 0; j--) {
 			if (((LETTER[c - 'a'][i] >> j) & 1) == 1)
-				SDRAM_W(y + ty, x + tx, color);
+				OVERLAY_W(y + ty, x + tx, color);
 			ty = ty + 1;
 		}
 		for (j = 7; j >= 0; j--) {
 			if (((LETTER[c - 'a'][i + 1] >> j) & 1) == 1)
-				SDRAM_W(y + ty, x + tx, color);
+				OVERLAY_W(y + ty, x + tx, color);
 			ty = ty + 1;
 		}
 		tx = tx + 1;
@@ -638,12 +643,12 @@ void drawUppercaseLetter(char c, int x, int y, unsigned color) {
 		ty = 0;
 		for (j = 7; j >= 0; j--) {
 			if (((LETTER[c - 'A' + 26][i] >> j) & 1) == 1)
-				SDRAM_W(y + ty, x + tx, color);
+				OVERLAY_W(y + ty, x + tx, color);
 			ty = ty + 1;
 		}
 		for (j = 7; j >= 0; j--) {
 			if (((LETTER[c - 'A' + 26][i + 1] >> j) & 1) == 1)
-				SDRAM_W(y + ty, x + tx, color);
+				OVERLAY_W(y + ty, x + tx, color);
 			ty = ty + 1;
 		}
 		tx = tx + 1;
@@ -658,12 +663,12 @@ void drawSymbol(int index, int x, int y, unsigned color) {
 		ty = 0;
 		for (j = 7; j >= 0; j--) {
 			if (((SYMBOL[index][i] >> j) & 1) == 1)
-				SDRAM_W(y + ty, x + tx, color);
+				OVERLAY_W(y + ty, x + tx, color);
 			ty = ty + 1;
 		}
 		for (j = 7; j >= 0; j--) {
 			if (((SYMBOL[index][i + 1] >> j) & 1) == 1)
-				SDRAM_W(y + ty, x + tx, color);
+				OVERLAY_W(y + ty, x + tx, color);
 			ty = ty + 1;
 		}
 		tx = tx + 1;
@@ -677,12 +682,12 @@ void drawDigit(int num, int x, int y, unsigned color) {
 		ty = 0;
 		for (j = 7; j >= 0; j--) {
 			if (((DIGITAL[num][i] >> j) & 1) == 1)
-				SDRAM_W(y + ty, x + tx, color);
+				OVERLAY_W(y + ty, x + tx, color);
 			ty = ty + 1;
 		}
 		for (j = 7; j >= 0; j--) {
 			if (((DIGITAL[num][i + 1] >> j) & 1) == 1)
-				SDRAM_W(y + ty, x + tx, color);
+				OVERLAY_W(y + ty, x + tx, color);
 			ty = ty + 1;
 		}
 		tx = tx + 1;
@@ -706,25 +711,13 @@ void drawChar(char c, int x, int y, unsigned color) {
 	}
 }
 
-void drawMsg(unsigned port, char *str, int x, int y) {
+void drawMsg(unsigned port, char *str, int x, int y, unsigned color) {
 	int i, px = 0, py = 0, len = strlen(str);
-	render_port = port;
+	display_overlay_port = port;
 	for (i = 0; i < len; i++) {
 		if (str[i] == '\n') ++py, px = 0;
 		else {
-			drawChar(str[i], y + py * 20, x + px * 18, 0xFFFFFF);
-			++px;
-		}
-	}
-}
-
-void clearMsg(unsigned port, char *str, int x, int y) {
-	int i, px = 0, py = 0, len = strlen(str);
-	render_port = port;
-	for (i = 0; i < len; i++) {
-		if (str[i] == '\n') ++py, px = 0;
-		else {
-			drawChar(str[i], y + py * 20, x + px * 18, 1 << 24);
+			drawChar(str[i], y + py * 20, x + px * 18, color);
 			++px;
 		}
 	}
@@ -732,18 +725,20 @@ void clearMsg(unsigned port, char *str, int x, int y) {
 
 void drawCursor(unsigned port, int x, int y) {
 	int i, j;
-	render_port = port;
+	display_overlay_port = port;
 	for (i = 0; i < CURSOR_H; i++) {
 		for (j = 0; j < CURSOR_W; j++) {
 			if (CURSOR[i][j] == '#') {
-				SDRAM_W(y + j, x + i, 0x323232);
+				OVERLAY_W(y + j, x + i, 0x323232);
 			} else if (CURSOR[i][j] == '$') {
-				SDRAM_W(y + j, x + i, 0x505050);
+				OVERLAY_W(y + j, x + i, 0x505050);
 			} else if (CURSOR[i][j] == '^') {
-				SDRAM_W(y + j, x + i, 0x7D7D7D);
+				OVERLAY_W(y + j, x + i, 0x7D7D7D);
 			} else if (CURSOR[i][j] == '*') {
-				SDRAM_W(y + j, x + i, 0xFFFFFF);
+				OVERLAY_W(y + j, x + i, 0xFFFFFF);
 			}
 		}
 	}
 }
+
+#endif

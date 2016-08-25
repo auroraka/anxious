@@ -14,12 +14,16 @@
 #include "memory.h"
 #include "recognition.h"
 
-#define MEMORY_SIZE 16384
+#define MEMORY_SIZE 32768
 #define RECOG_MEMORY 0x08000000
-#define RECOG_PORT_PIO 0x08012000
+#define RECOG_PORT_PIO 0x08042010
+#define RECOG_VSYNC_PIO 0x08042000
 
-#define FRAME_WIDTH (WIDTH >> 1)
-#define FRAME_HEIGHT (HEIGHT >> 1)
+#define BUFFER_PORT() IORD(RECOG_PORT_PIO, 0)
+#define VSYNC(x) IOWR(RECOG_VSYNC_PIO, 0, x)
+
+#define FRAME_WIDTH (WIDTH)
+#define FRAME_HEIGHT (HEIGHT)
 #define MASK_WIDTH (FRAME_WIDTH >> 5)
 #define FRAME_SIZE (FRAME_HEIGHT * MASK_WIDTH)
 
@@ -319,21 +323,31 @@ RecogResult floodfill(unsigned *frame, unsigned *queue) {
 RecogResult recognize_raw(unsigned port) {
 	unsigned *frame = (unsigned *)RECOG_MEMORY + port * FRAME_SIZE;
 	unsigned *tmp = frame + 3 * FRAME_SIZE;
+	RecogResult result;
 	
 	cvtColor_inRange(port, frame, tmp);
 	erode(frame, tmp);
 	dilate(frame, tmp);
-	return floodfill(frame, tmp);
+	result = floodfill(frame, tmp);
+	VSYNC(1);
+	usleep(0);
+	VSYNC(0);
+	return result;
 }
 
 RecogResult recognize() {
-	unsigned port = IORD(RECOG_PORT_PIO, 0);
+	unsigned port = BUFFER_PORT();
 	unsigned *frame = (unsigned *)RECOG_MEMORY + port * FRAME_SIZE;
 	unsigned *tmp = frame + 3 * FRAME_SIZE;
+	RecogResult result;
 	
 	erode(frame, tmp);
 	dilate(frame, tmp);
-	return floodfill(frame, tmp);
+	result = floodfill(frame, tmp);
+	VSYNC(1);
+	usleep(0);
+	VSYNC(0);
+	return result;
 }
 
 void clear_result(unsigned render_port, RecogResult *result) {

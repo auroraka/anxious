@@ -12,10 +12,11 @@
 #include "common.h"
 #include "memory.h"
 
-//#define CPU_ID 1
+//#define CPU_ID 2
 
 #if CPU_ID == 2
 	#include "control.h"
+	#include "render/object.h"
 #elif CPU_ID > 2
 	#include "render.h"
 #else
@@ -35,11 +36,13 @@ int main() {
 	
 	int key_state = 1;
 	while (true) {
+		
 		unsigned center_l = SHARED_R(1), center_r = SHARED_R(0);
-		Location loc = find_location(center_l, center_r, true);
+		Location loc = find_location(center_l, center_r);
 		SHARED_W(2, *(unsigned *)&loc.x);
 		SHARED_W(3, *(unsigned *)&loc.y);
 		SHARED_W(4, *(unsigned *)&loc.z);
+//		printf("%d %d %d\n", (int)loc.x, (int)loc.y, (int)loc.z);
 		
 		draw_overlay();
 		
@@ -65,16 +68,12 @@ int main() {
 	configure_sccb();
 	printf("CPU: %d\n", CPU_ID);
 	
-	RecogResult result, last_result;
+	RecogResult result;
+	unsigned render_port = 0;
 	while (true) {
-		last_result = result;
-//		result = recognize();
-		result = recognize_raw(CPU_ID);
+		result = recognize();
+//		result = recognize_raw(CPU_ID);
 		SHARED_W(CPU_ID, result.center);
-#if CPU_ID == 0
-		clear_result(CPU_ID, &last_result);
-		draw_result(CPU_ID, &result);
-#endif
 	}
 #endif
 	

@@ -129,11 +129,59 @@
          type = "String";
       }
    }
-   element camera_mm_0
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element bitpacker_0
    {
       datum _sortIndex
       {
-         value = "7";
+         value = "9";
          type = "int";
       }
       datum sopceditor_expanded
@@ -142,7 +190,33 @@
          type = "boolean";
       }
    }
-   element camera_mm_1
+   element bitpacker_1
+   {
+      datum _sortIndex
+      {
+         value = "24";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
+      }
+   }
+   element cam_buffer_switcher
+   {
+      datum _sortIndex
+      {
+         value = "15";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element camera_mm_0
    {
       datum _sortIndex
       {
@@ -159,7 +233,7 @@
    {
       datum _sortIndex
       {
-         value = "8";
+         value = "16";
          type = "int";
       }
       datum sopceditor_expanded
@@ -172,12 +246,12 @@
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
       {
-         value = "134291472";
+         value = "134488096";
          type = "String";
       }
    }
@@ -185,7 +259,7 @@
    {
       datum _sortIndex
       {
-         value = "15";
+         value = "29";
          type = "int";
       }
       datum sopceditor_expanded
@@ -198,12 +272,12 @@
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
       {
-         value = "134291472";
+         value = "134488096";
          type = "String";
       }
    }
@@ -211,7 +285,7 @@
    {
       datum _sortIndex
       {
-         value = "9";
+         value = "17";
          type = "int";
       }
       datum sopceditor_expanded
@@ -224,12 +298,12 @@
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
       {
-         value = "134291488";
+         value = "134488112";
          type = "String";
       }
    }
@@ -237,7 +311,7 @@
    {
       datum _sortIndex
       {
-         value = "16";
+         value = "30";
          type = "int";
       }
       datum sopceditor_expanded
@@ -250,13 +324,39 @@
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
       {
-         value = "134291488";
+         value = "134488112";
          type = "String";
+      }
+   }
+   element camera_st_0
+   {
+      datum _sortIndex
+      {
+         value = "7";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
+      }
+   }
+   element camera_st_1
+   {
+      datum _sortIndex
+      {
+         value = "22";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element clk
@@ -272,11 +372,63 @@
          type = "boolean";
       }
    }
+   element convert_hsv_0
+   {
+      datum _sortIndex
+      {
+         value = "8";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
+      }
+   }
+   element convert_hsv_1
+   {
+      datum _sortIndex
+      {
+         value = "23";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
+      }
+   }
+   element hsv_addr_gen_0
+   {
+      datum _sortIndex
+      {
+         value = "11";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
+      }
+   }
+   element hsv_addr_gen_1
+   {
+      datum _sortIndex
+      {
+         value = "26";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
+      }
+   }
    element jtag_uart_0
    {
       datum _sortIndex
       {
-         value = "6";
+         value = "13";
          type = "int";
       }
       datum sopceditor_expanded
@@ -294,7 +446,7 @@
       }
       datum baseAddress
       {
-         value = "134291512";
+         value = "134488136";
          type = "String";
       }
    }
@@ -302,7 +454,7 @@
    {
       datum _sortIndex
       {
-         value = "13";
+         value = "28";
          type = "int";
       }
       datum sopceditor_expanded
@@ -320,7 +472,7 @@
       }
       datum baseAddress
       {
-         value = "134291512";
+         value = "134488136";
          type = "String";
       }
    }
@@ -328,7 +480,7 @@
    {
       datum _sortIndex
       {
-         value = "21";
+         value = "35";
          type = "int";
       }
       datum sopceditor_expanded
@@ -341,7 +493,7 @@
    {
       datum baseAddress
       {
-         value = "134221840";
+         value = "134221856";
          type = "String";
       }
    }
@@ -349,7 +501,7 @@
    {
       datum _sortIndex
       {
-         value = "23";
+         value = "42";
          type = "int";
       }
       datum sopceditor_expanded
@@ -370,7 +522,7 @@
    {
       datum _sortIndex
       {
-         value = "27";
+         value = "40";
          type = "int";
       }
       datum sopceditor_expanded
@@ -383,7 +535,7 @@
    {
       datum baseAddress
       {
-         value = "134221824";
+         value = "134221840";
          type = "String";
       }
    }
@@ -404,7 +556,7 @@
    {
       datum baseAddress
       {
-         value = "134289408";
+         value = "134486016";
          type = "String";
       }
    }
@@ -412,12 +564,12 @@
    {
       datum _sortIndex
       {
-         value = "10";
+         value = "18";
          type = "int";
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
       }
    }
@@ -425,7 +577,7 @@
    {
       datum baseAddress
       {
-         value = "134289408";
+         value = "134486016";
          type = "String";
       }
    }
@@ -433,7 +585,7 @@
    {
       datum _sortIndex
       {
-         value = "20";
+         value = "34";
          type = "int";
       }
       datum sopceditor_expanded
@@ -454,7 +606,7 @@
    {
       datum _sortIndex
       {
-         value = "22";
+         value = "41";
          type = "int";
       }
       datum sopceditor_expanded
@@ -475,7 +627,7 @@
    {
       datum _sortIndex
       {
-         value = "18";
+         value = "32";
          type = "int";
       }
    }
@@ -485,6 +637,84 @@
       {
          value = "135266304";
          type = "String";
+      }
+   }
+   element recog_buffer_port_pio_0
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
+      }
+   }
+   element recog_buffer_port_pio_0.s1
+   {
+      datum _lockedAddress
+      {
+         value = "0";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "134488080";
+         type = "String";
+      }
+   }
+   element recog_buffer_port_pio_1
+   {
+      datum _sortIndex
+      {
+         value = "20";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
+      }
+   }
+   element recog_buffer_port_pio_1.s1
+   {
+      datum _lockedAddress
+      {
+         value = "0";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "134488080";
+         type = "String";
+      }
+   }
+   element recog_buffer_switcher_0
+   {
+      datum _sortIndex
+      {
+         value = "12";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
+      }
+   }
+   element recog_buffer_switcher_1
+   {
+      datum _sortIndex
+      {
+         value = "27";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element recog_memory_0
@@ -517,7 +747,7 @@
    {
       datum _sortIndex
       {
-         value = "11";
+         value = "19";
          type = "int";
       }
       datum sopceditor_expanded
@@ -539,11 +769,11 @@
          type = "String";
       }
    }
-   element recog_port_pio_0
+   element recog_vsync_pio_0
    {
       datum _sortIndex
       {
-         value = "5";
+         value = "6";
          type = "int";
       }
       datum sopceditor_expanded
@@ -552,24 +782,19 @@
          type = "boolean";
       }
    }
-   element recog_port_pio_0.s1
+   element recog_vsync_pio_0.s1
    {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
       datum baseAddress
       {
-         value = "134291456";
+         value = "134488064";
          type = "String";
       }
    }
-   element recog_port_pio_1
+   element recog_vsync_pio_1
    {
       datum _sortIndex
       {
-         value = "12";
+         value = "21";
          type = "int";
       }
       datum sopceditor_expanded
@@ -578,29 +803,42 @@
          type = "boolean";
       }
    }
-   element recog_port_pio_1.s1
+   element recog_vsync_pio_1.s1
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
       {
-         value = "134291456";
+         value = "134488064";
          type = "String";
+      }
+   }
+   element render_buffer_switcher
+   {
+      datum _sortIndex
+      {
+         value = "36";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
       }
    }
    element render_port_pio
    {
       datum _sortIndex
       {
-         value = "25";
+         value = "38";
          type = "int";
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
       }
    }
@@ -608,7 +846,7 @@
    {
       datum baseAddress
       {
-         value = "134221840";
+         value = "134221824";
          type = "String";
       }
    }
@@ -616,7 +854,7 @@
    {
       datum _sortIndex
       {
-         value = "26";
+         value = "39";
          type = "int";
       }
       datum sopceditor_expanded
@@ -629,7 +867,7 @@
    {
       datum baseAddress
       {
-         value = "134221824";
+         value = "134221840";
          type = "String";
       }
    }
@@ -637,7 +875,7 @@
    {
       datum _sortIndex
       {
-         value = "24";
+         value = "37";
          type = "int";
       }
       datum sopceditor_expanded
@@ -650,7 +888,7 @@
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
@@ -689,7 +927,7 @@
    {
       datum _sortIndex
       {
-         value = "17";
+         value = "31";
          type = "int";
       }
       datum sopceditor_expanded
@@ -707,7 +945,7 @@
       }
       datum baseAddress
       {
-         value = "134283264";
+         value = "134479872";
          type = "String";
       }
    }
@@ -736,16 +974,42 @@
    {
       datum baseAddress
       {
-         value = "134291504";
+         value = "134488128";
          type = "String";
       }
    }
-   element vga_composer_overlay_0
+   element vga_composer_0
    {
       datum _sortIndex
       {
-         value = "19";
+         value = "33";
          type = "int";
+      }
+   }
+   element vid_write_buffer_0
+   {
+      datum _sortIndex
+      {
+         value = "10";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
+      }
+   }
+   element vid_write_buffer_1
+   {
+      datum _sortIndex
+      {
+         value = "25";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
 }
@@ -770,33 +1034,15 @@
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
-   name="camera_mm_0_black_cnt"
-   internal="camera_mm_0.black_cnt"
+   name="cam_buffer_switcher_enable"
+   internal="cam_buffer_switcher.enable"
    type="conduit"
    dir="end" />
- <interface
-   name="camera_mm_0_buffer_port"
-   internal="camera_mm_0.buffer_port"
-   type="conduit"
-   dir="end" />
+ <interface name="camera_mm_0_black_cnt" internal="camera_mm_0.black_cnt" />
+ <interface name="camera_mm_0_buffer_port" internal="camera_mm_0.buffer_port" />
  <interface
    name="camera_mm_0_conduit"
    internal="camera_mm_0.conduit"
-   type="conduit"
-   dir="end" />
- <interface
-   name="camera_mm_1_black_cnt"
-   internal="camera_mm_1.black_cnt"
-   type="conduit"
-   dir="end" />
- <interface
-   name="camera_mm_1_buffer_port"
-   internal="camera_mm_1.buffer_port"
-   type="conduit"
-   dir="end" />
- <interface
-   name="camera_mm_1_conduit"
-   internal="camera_mm_1.conduit"
    type="conduit"
    dir="end" />
  <interface
@@ -819,6 +1065,16 @@
    internal="camera_siod_1.external_connection"
    type="conduit"
    dir="end" />
+ <interface
+   name="camera_st_0_conduit"
+   internal="camera_st_0.conduit"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="camera_st_1_conduit"
+   internal="camera_st_1.conduit"
+   type="conduit"
+   dir="end" />
  <interface name="clk" internal="clk.clk_in" type="clock" dir="end" />
  <interface
    name="key_pio_external_connection"
@@ -831,13 +1087,53 @@
    type="conduit"
    dir="end" />
  <interface
-   name="recog_port_pio_0_external_connection"
-   internal="recog_port_pio_0.external_connection"
+   name="recog_buffer_port_pio_0_external_connection"
+   internal="recog_buffer_port_pio_0.external_connection"
    type="conduit"
    dir="end" />
  <interface
-   name="recog_port_pio_1_external_connection"
-   internal="recog_port_pio_1.external_connection"
+   name="recog_buffer_port_pio_1_external_connection"
+   internal="recog_buffer_port_pio_1.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="recog_buffer_switcher_0_enable"
+   internal="recog_buffer_switcher_0.enable"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="recog_buffer_switcher_0_read_buffer"
+   internal="recog_buffer_switcher_0.read_buffer"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="recog_buffer_switcher_1_enable"
+   internal="recog_buffer_switcher_1.enable"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="recog_buffer_switcher_1_read_buffer"
+   internal="recog_buffer_switcher_1.read_buffer"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="recog_vsync_pio_0_external_connection"
+   internal="recog_vsync_pio_0.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="recog_vsync_pio_1_external_connection"
+   internal="recog_vsync_pio_1.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="render_buffer_switcher_enable"
+   internal="render_buffer_switcher.enable"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="render_buffer_switcher_write_buffer"
+   internal="render_buffer_switcher.write_buffer"
    type="conduit"
    dir="end" />
  <interface
@@ -857,28 +1153,24 @@
    dir="end" />
  <interface name="reset" internal="clk.clk_in_reset" type="reset" dir="end" />
  <interface
-   name="vga_composer_overlay_0_buffer_port_cam"
-   internal="vga_composer_overlay_0.buffer_port_cam"
+   name="vga_composer_0_conduit"
+   internal="vga_composer_0.conduit"
    type="conduit"
    dir="end" />
- <interface
-   name="vga_composer_overlay_0_buffer_port_render"
-   internal="vga_composer_overlay_0.buffer_port_render"
-   type="conduit"
-   dir="end" />
- <interface
-   name="vga_composer_overlay_0_conduit"
-   internal="vga_composer_overlay_0.conduit"
-   type="conduit"
-   dir="end" />
- <module name="camera_mm_0" kind="camera_mm" version="2.0" enabled="1">
-  <parameter name="ADDR_WIDTH" value="27" />
-  <parameter name="BANK" value="0" />
-  <parameter name="DATA_WIDTH" value="32" />
-  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
-  <parameter name="FRAME_PIXELS" value="307200" />
+ <module name="bitpacker_0" kind="bitpacker" version="1.1" enabled="1">
+  <parameter name="FIRST_SYMBOL_IN_MSB" value="0" />
+  <parameter name="PACK_LENGTH" value="8" />
  </module>
- <module name="camera_mm_1" kind="camera_mm" version="2.0" enabled="1">
+ <module name="bitpacker_1" kind="bitpacker" version="1.1" enabled="1">
+  <parameter name="FIRST_SYMBOL_IN_MSB" value="0" />
+  <parameter name="PACK_LENGTH" value="8" />
+ </module>
+ <module
+   name="cam_buffer_switcher"
+   kind="frame_buffer_switcher"
+   version="2.0"
+   enabled="1" />
+ <module name="camera_mm_0" kind="camera_mm" version="2.1" enabled="1">
   <parameter name="ADDR_WIDTH" value="27" />
   <parameter name="BANK" value="0" />
   <parameter name="DATA_WIDTH" value="32" />
@@ -957,11 +1249,35 @@
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="1" />
  </module>
+ <module name="camera_st_0" kind="camera_st" version="1.0" enabled="1">
+  <parameter name="DATA_WIDTH" value="24" />
+ </module>
+ <module name="camera_st_1" kind="camera_st" version="1.0" enabled="1">
+  <parameter name="DATA_WIDTH" value="24" />
+ </module>
  <module name="clk" kind="clock_source" version="15.0" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module name="convert_hsv_0" kind="convert_hsv" version="1.0" enabled="1">
+  <parameter name="PIPELINE" value="16" />
+ </module>
+ <module name="convert_hsv_1" kind="convert_hsv" version="1.0" enabled="1">
+  <parameter name="PIPELINE" value="16" />
+ </module>
+ <module name="hsv_addr_gen_0" kind="hsv_addr_gen" version="1.0" enabled="1">
+  <parameter name="ADDR_BASE" value="134217728" />
+  <parameter name="ADDR_WIDTH" value="32" />
+  <parameter name="HEIGHT" value="480" />
+  <parameter name="WIDTH" value="640" />
+ </module>
+ <module name="hsv_addr_gen_1" kind="hsv_addr_gen" version="1.0" enabled="1">
+  <parameter name="ADDR_BASE" value="134217728" />
+  <parameter name="ADDR_WIDTH" value="32" />
+  <parameter name="HEIGHT" value="480" />
+  <parameter name="WIDTH" value="640" />
  </module>
  <module
    name="jtag_uart_0"
@@ -1077,7 +1393,7 @@
   <parameter name="dataAddrWidth" value="28" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='recog_memory_0.s1' start='0x8000000' end='0x8010000' /><slave name='shared_memory.s1' start='0x8010000' end='0x8011000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x8011800' end='0x8012000' /><slave name='recog_port_pio_0.s1' start='0x8012000' end='0x8012010' /><slave name='camera_sioc_0.s1' start='0x8012010' end='0x8012020' /><slave name='camera_siod_0.s1' start='0x8012020' end='0x8012030' /><slave name='sysid_qsys_0.control_slave' start='0x8012030' end='0x8012038' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x8012038' end='0x8012040' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='recog_memory_0.s1' start='0x8000000' end='0x8020000' /><slave name='shared_memory.s1' start='0x8040000' end='0x8041000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x8041800' end='0x8042000' /><slave name='recog_vsync_pio_0.s1' start='0x8042000' end='0x8042010' /><slave name='recog_buffer_port_pio_0.s1' start='0x8042010' end='0x8042020' /><slave name='camera_sioc_0.s1' start='0x8042020' end='0x8042030' /><slave name='camera_siod_0.s1' start='0x8042030' end='0x8042040' /><slave name='sysid_qsys_0.control_slave' start='0x8042040' end='0x8042048' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x8042048' end='0x8042050' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -1116,7 +1432,7 @@
   <parameter name="icache_tagramBlockType" value="Automatic" />
   <parameter name="impl" value="Fast" />
   <parameter name="instAddrWidth" value="28" />
-  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_0.debug_mem_slave' start='0x8011800' end='0x8012000' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_0.debug_mem_slave' start='0x8041800' end='0x8042000' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
   <parameter name="instructionMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="instructionMasterHighPerformanceMapParam" value="" />
   <parameter name="instruction_master_high_performance_paddr_base" value="0" />
@@ -1257,7 +1573,7 @@
   <parameter name="dataAddrWidth" value="28" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='recog_memory_1.s1' start='0x8000000' end='0x8010000' /><slave name='shared_memory.s1' start='0x8010000' end='0x8011000' /><slave name='nios2_gen2_1.debug_mem_slave' start='0x8011800' end='0x8012000' /><slave name='recog_port_pio_1.s1' start='0x8012000' end='0x8012010' /><slave name='camera_sioc_1.s1' start='0x8012010' end='0x8012020' /><slave name='camera_siod_1.s1' start='0x8012020' end='0x8012030' /><slave name='sysid_qsys_0.control_slave' start='0x8012030' end='0x8012038' /><slave name='jtag_uart_1.avalon_jtag_slave' start='0x8012038' end='0x8012040' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='recog_memory_1.s1' start='0x8000000' end='0x8020000' /><slave name='shared_memory.s1' start='0x8040000' end='0x8041000' /><slave name='nios2_gen2_1.debug_mem_slave' start='0x8041800' end='0x8042000' /><slave name='recog_vsync_pio_1.s1' start='0x8042000' end='0x8042010' /><slave name='recog_buffer_port_pio_1.s1' start='0x8042010' end='0x8042020' /><slave name='camera_sioc_1.s1' start='0x8042020' end='0x8042030' /><slave name='camera_siod_1.s1' start='0x8042030' end='0x8042040' /><slave name='sysid_qsys_0.control_slave' start='0x8042040' end='0x8042048' /><slave name='jtag_uart_1.avalon_jtag_slave' start='0x8042048' end='0x8042050' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -1296,7 +1612,7 @@
   <parameter name="icache_tagramBlockType" value="Automatic" />
   <parameter name="impl" value="Fast" />
   <parameter name="instAddrWidth" value="28" />
-  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_1.debug_mem_slave' start='0x8011800' end='0x8012000' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_1.debug_mem_slave' start='0x8041800' end='0x8042000' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
   <parameter name="instructionMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="instructionMasterHighPerformanceMapParam" value="" />
   <parameter name="instruction_master_high_performance_paddr_base" value="0" />
@@ -1437,7 +1753,7 @@
   <parameter name="dataAddrWidth" value="28" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_2.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='key_pio.s1' start='0x8001000' end='0x8001010' /><slave name='jtag_uart_2.avalon_jtag_slave' start='0x8001010' end='0x8001018' /><slave name='shared_memory.s1' start='0x8010000' end='0x8011000' /><slave name='sysid_qsys_0.control_slave' start='0x8012030' end='0x8012038' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_2.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='render_port_pio.s1' start='0x8001000' end='0x8001010' /><slave name='key_pio.s1' start='0x8001010' end='0x8001020' /><slave name='jtag_uart_2.avalon_jtag_slave' start='0x8001020' end='0x8001028' /><slave name='shared_memory.s1' start='0x8040000' end='0x8041000' /><slave name='sysid_qsys_0.control_slave' start='0x8042040' end='0x8042048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -1617,7 +1933,7 @@
   <parameter name="dataAddrWidth" value="28" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_3.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='render_start_pio.s1' start='0x8001000' end='0x8001010' /><slave name='render_port_pio.s1' start='0x8001010' end='0x8001020' /><slave name='render_vsync_pio_0.s1' start='0x8001020' end='0x8001030' /><slave name='jtag_uart_3.avalon_jtag_slave' start='0x8001030' end='0x8001038' /><slave name='shared_memory.s1' start='0x8010000' end='0x8011000' /><slave name='sysid_qsys_0.control_slave' start='0x8012030' end='0x8012038' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_3.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='render_port_pio.s1' start='0x8001000' end='0x8001010' /><slave name='render_start_pio.s1' start='0x8001010' end='0x8001020' /><slave name='render_vsync_pio_0.s1' start='0x8001020' end='0x8001030' /><slave name='jtag_uart_3.avalon_jtag_slave' start='0x8001030' end='0x8001038' /><slave name='shared_memory.s1' start='0x8040000' end='0x8041000' /><slave name='sysid_qsys_0.control_slave' start='0x8042040' end='0x8042048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -1803,6 +2119,52 @@
   <parameter name="writable" value="true" />
  </module>
  <module
+   name="recog_buffer_port_pio_0"
+   kind="altera_avalon_pio"
+   version="15.0"
+   enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Input" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="2" />
+ </module>
+ <module
+   name="recog_buffer_port_pio_1"
+   kind="altera_avalon_pio"
+   version="15.0"
+   enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Input" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="2" />
+ </module>
+ <module
+   name="recog_buffer_switcher_0"
+   kind="frame_buffer_switcher"
+   version="2.0"
+   enabled="1" />
+ <module
+   name="recog_buffer_switcher_1"
+   kind="frame_buffer_switcher"
+   version="2.0"
+   enabled="1" />
+ <module
    name="recog_memory_0"
    kind="altera_avalon_onchip_memory2"
    version="15.0"
@@ -1819,7 +2181,7 @@
   <parameter name="initMemContent" value="true" />
   <parameter name="initializationFileName" value="onchip_mem.hex" />
   <parameter name="instanceID" value="NONE" />
-  <parameter name="memorySize" value="65536" />
+  <parameter name="memorySize" value="131072" />
   <parameter name="readDuringWriteMode" value="DONT_CARE" />
   <parameter name="resetrequest_enabled" value="true" />
   <parameter name="simAllowMRAMContentsFile" value="false" />
@@ -1848,7 +2210,7 @@
   <parameter name="initMemContent" value="true" />
   <parameter name="initializationFileName" value="onchip_mem.hex" />
   <parameter name="instanceID" value="NONE" />
-  <parameter name="memorySize" value="65536" />
+  <parameter name="memorySize" value="131072" />
   <parameter name="readDuringWriteMode" value="DONT_CARE" />
   <parameter name="resetrequest_enabled" value="true" />
   <parameter name="simAllowMRAMContentsFile" value="false" />
@@ -1861,7 +2223,7 @@
   <parameter name="writable" value="true" />
  </module>
  <module
-   name="recog_port_pio_0"
+   name="recog_vsync_pio_0"
    kind="altera_avalon_pio"
    version="15.0"
    enabled="1">
@@ -1869,17 +2231,17 @@
   <parameter name="bitModifyingOutReg" value="false" />
   <parameter name="captureEdge" value="false" />
   <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Input" />
+  <parameter name="direction" value="Output" />
   <parameter name="edgeType" value="RISING" />
   <parameter name="generateIRQ" value="false" />
   <parameter name="irqType" value="LEVEL" />
   <parameter name="resetValue" value="0" />
   <parameter name="simDoTestBenchWiring" value="false" />
   <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="2" />
+  <parameter name="width" value="1" />
  </module>
  <module
-   name="recog_port_pio_1"
+   name="recog_vsync_pio_1"
    kind="altera_avalon_pio"
    version="15.0"
    enabled="1">
@@ -1887,15 +2249,20 @@
   <parameter name="bitModifyingOutReg" value="false" />
   <parameter name="captureEdge" value="false" />
   <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Input" />
+  <parameter name="direction" value="Output" />
   <parameter name="edgeType" value="RISING" />
   <parameter name="generateIRQ" value="false" />
   <parameter name="irqType" value="LEVEL" />
   <parameter name="resetValue" value="0" />
   <parameter name="simDoTestBenchWiring" value="false" />
   <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="2" />
+  <parameter name="width" value="1" />
  </module>
+ <module
+   name="render_buffer_switcher"
+   kind="frame_buffer_switcher"
+   version="2.0"
+   enabled="1" />
  <module
    name="render_port_pio"
    kind="altera_avalon_pio"
@@ -2016,17 +2383,30 @@
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
   <parameter name="id" value="286331153" />
  </module>
- <module
-   name="vga_composer_overlay_0"
-   kind="vga_composer_overlay"
-   version="1.0"
-   enabled="1">
+ <module name="vga_composer_0" kind="vga_composer" version="1.1" enabled="1">
   <parameter name="ADDR_WIDTH" value="27" />
   <parameter name="CAM_BANK" value="0" />
   <parameter name="DATA_WIDTH" value="32" />
   <parameter name="FIFO_LENGTH_LOG_2" value="6" />
-  <parameter name="OVERLAY_BANK" value="2" />
   <parameter name="RENDER_BANK" value="1" />
+ </module>
+ <module
+   name="vid_write_buffer_0"
+   kind="vid_write_buffer"
+   version="2.0"
+   enabled="1">
+  <parameter name="ADDR_WIDTH" value="32" />
+  <parameter name="DATA_WIDTH" value="8" />
+  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
+ </module>
+ <module
+   name="vid_write_buffer_1"
+   kind="vid_write_buffer"
+   version="2.0"
+   enabled="1">
+  <parameter name="ADDR_WIDTH" value="32" />
+  <parameter name="DATA_WIDTH" value="8" />
+  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
  </module>
  <connection
    kind="avalon"
@@ -2040,7 +2420,7 @@
  <connection
    kind="avalon"
    version="15.0"
-   start="camera_mm_1.avalon_master"
+   start="vga_composer_0.avalon_master_cam"
    end="sdram_controller_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
@@ -2049,25 +2429,7 @@
  <connection
    kind="avalon"
    version="15.0"
-   start="vga_composer_overlay_0.avalon_master_cam"
-   end="sdram_controller_0.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="15.0"
-   start="vga_composer_overlay_0.avalon_master_overlay"
-   end="sdram_controller_0.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="15.0"
-   start="vga_composer_overlay_0.avalon_master_render"
+   start="vga_composer_0.avalon_master_render"
    end="sdram_controller_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
@@ -2079,7 +2441,7 @@
    start="nios2_gen2_1.data_master"
    end="jtag_uart_1.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08012038" />
+  <parameter name="baseAddress" value="0x08042048" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2097,7 +2459,7 @@
    start="nios2_gen2_0.data_master"
    end="jtag_uart_0.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08012038" />
+  <parameter name="baseAddress" value="0x08042048" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2106,7 +2468,7 @@
    start="nios2_gen2_2.data_master"
    end="jtag_uart_2.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08001010" />
+  <parameter name="baseAddress" value="0x08001020" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2115,7 +2477,7 @@
    start="nios2_gen2_1.data_master"
    end="sysid_qsys_0.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08012030" />
+  <parameter name="baseAddress" value="0x08042040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2124,7 +2486,7 @@
    start="nios2_gen2_0.data_master"
    end="sysid_qsys_0.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08012030" />
+  <parameter name="baseAddress" value="0x08042040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2133,7 +2495,7 @@
    start="nios2_gen2_2.data_master"
    end="sysid_qsys_0.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08012030" />
+  <parameter name="baseAddress" value="0x08042040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2142,7 +2504,7 @@
    start="nios2_gen2_3.data_master"
    end="sysid_qsys_0.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08012030" />
+  <parameter name="baseAddress" value="0x08042040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2151,7 +2513,7 @@
    start="nios2_gen2_1.data_master"
    end="nios2_gen2_1.debug_mem_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08011800" />
+  <parameter name="baseAddress" value="0x08041800" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2178,7 +2540,7 @@
    start="nios2_gen2_0.data_master"
    end="nios2_gen2_0.debug_mem_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08011800" />
+  <parameter name="baseAddress" value="0x08041800" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2205,7 +2567,7 @@
    start="nios2_gen2_1.data_master"
    end="camera_siod_1.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08012020" />
+  <parameter name="baseAddress" value="0x08042030" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2214,7 +2576,7 @@
    start="nios2_gen2_1.data_master"
    end="camera_sioc_1.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08012010" />
+  <parameter name="baseAddress" value="0x08042020" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2232,7 +2594,7 @@
    start="nios2_gen2_1.data_master"
    end="shared_memory.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08010000" />
+  <parameter name="baseAddress" value="0x08040000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2241,7 +2603,7 @@
    start="nios2_gen2_0.data_master"
    end="shared_memory.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08010000" />
+  <parameter name="baseAddress" value="0x08040000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2259,7 +2621,7 @@
    start="nios2_gen2_0.data_master"
    end="camera_siod_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08012020" />
+  <parameter name="baseAddress" value="0x08042030" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2268,7 +2630,7 @@
    start="nios2_gen2_0.data_master"
    end="camera_sioc_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08012010" />
+  <parameter name="baseAddress" value="0x08042020" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2295,7 +2657,7 @@
    start="nios2_gen2_2.data_master"
    end="shared_memory.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08010000" />
+  <parameter name="baseAddress" value="0x08040000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2331,7 +2693,7 @@
    start="nios2_gen2_3.data_master"
    end="shared_memory.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08010000" />
+  <parameter name="baseAddress" value="0x08040000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2358,7 +2720,7 @@
    start="nios2_gen2_3.data_master"
    end="render_port_pio.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08001010" />
+  <parameter name="baseAddress" value="0x08001000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2367,25 +2729,16 @@
    start="nios2_gen2_3.data_master"
    end="render_start_pio.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08001000" />
+  <parameter name="baseAddress" value="0x08001010" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
    kind="avalon"
    version="15.0"
    start="nios2_gen2_0.data_master"
-   end="recog_port_pio_0.s1">
+   end="recog_buffer_port_pio_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08012000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="15.0"
-   start="nios2_gen2_1.data_master"
-   end="recog_port_pio_1.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08012000" />
+  <parameter name="baseAddress" value="0x08042010" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2393,6 +2746,42 @@
    version="15.0"
    start="nios2_gen2_2.data_master"
    end="key_pio.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08001010" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_0.data_master"
+   end="recog_vsync_pio_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08042000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_1.data_master"
+   end="recog_buffer_port_pio_1.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08042010" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_1.data_master"
+   end="recog_vsync_pio_1.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08042000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_2.data_master"
+   end="render_port_pio.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x08001000" />
   <parameter name="defaultConnection" value="false" />
@@ -2403,7 +2792,7 @@
    start="nios2_gen2_1.instruction_master"
    end="nios2_gen2_1.debug_mem_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08011800" />
+  <parameter name="baseAddress" value="0x08041800" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2430,7 +2819,7 @@
    start="nios2_gen2_0.instruction_master"
    end="nios2_gen2_0.debug_mem_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08011800" />
+  <parameter name="baseAddress" value="0x08041800" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2470,6 +2859,54 @@
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
+   kind="avalon"
+   version="15.0"
+   start="vid_write_buffer_0.m0"
+   end="recog_memory_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="vid_write_buffer_1.m0"
+   end="recog_memory_1.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="convert_hsv_0.dout"
+   end="bitpacker_0.din" />
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="convert_hsv_1.dout"
+   end="bitpacker_1.din" />
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="bitpacker_0.dout"
+   end="vid_write_buffer_0.st0" />
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="bitpacker_1.dout"
+   end="vid_write_buffer_1.st0" />
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="camera_st_0.st0"
+   end="convert_hsv_0.din" />
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="camera_st_1.st0"
+   end="convert_hsv_1.din" />
+ <connection
    kind="clock"
    version="15.0"
    start="clk.clk"
@@ -2477,7 +2914,6 @@
  <connection kind="clock" version="15.0" start="clk.clk" end="sysid_qsys_0.clk" />
  <connection kind="clock" version="15.0" start="clk.clk" end="nios2_gen2_1.clk" />
  <connection kind="clock" version="15.0" start="clk.clk" end="jtag_uart_1.clk" />
- <connection kind="clock" version="15.0" start="clk.clk" end="camera_sioc_1.clk" />
  <connection kind="clock" version="15.0" start="clk.clk" end="camera_siod_1.clk" />
  <connection kind="clock" version="15.0" start="clk.clk" end="jtag_uart_3.clk" />
  <connection kind="clock" version="15.0" start="clk.clk" end="nios2_gen2_3.clk" />
@@ -2502,13 +2938,24 @@
    kind="clock"
    version="15.0"
    start="clk.clk"
-   end="recog_port_pio_0.clk" />
+   end="recog_buffer_port_pio_0.clk" />
+ <connection kind="clock" version="15.0" start="clk.clk" end="key_pio.clk" />
  <connection
    kind="clock"
    version="15.0"
    start="clk.clk"
-   end="recog_port_pio_1.clk" />
- <connection kind="clock" version="15.0" start="clk.clk" end="key_pio.clk" />
+   end="recog_vsync_pio_0.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="recog_buffer_port_pio_1.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="recog_vsync_pio_1.clk" />
+ <connection kind="clock" version="15.0" start="clk.clk" end="camera_sioc_1.clk" />
  <connection
    kind="clock"
    version="15.0"
@@ -2518,12 +2965,178 @@
  <connection kind="clock" version="15.0" start="clk.clk" end="shared_memory.clk1" />
  <connection kind="clock" version="15.0" start="clk.clk" end="recog_memory_0.clk1" />
  <connection kind="clock" version="15.0" start="clk.clk" end="camera_mm_0.clock" />
- <connection kind="clock" version="15.0" start="clk.clk" end="camera_mm_1.clock" />
  <connection
    kind="clock"
    version="15.0"
    start="clk.clk"
-   end="vga_composer_overlay_0.clock" />
+   end="vid_write_buffer_1.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="vga_composer_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="recog_buffer_switcher_0.read_clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="cam_buffer_switcher.read_clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="recog_buffer_switcher_1.read_clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="render_buffer_switcher.read_clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="cam_buffer_switcher.write_clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="render_buffer_switcher.write_clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="camera_st_0.clock"
+   end="convert_hsv_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="camera_st_0.clock"
+   end="bitpacker_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="camera_st_0.clock"
+   end="hsv_addr_gen_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="camera_st_1.clock"
+   end="convert_hsv_1.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="camera_st_1.clock"
+   end="bitpacker_1.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="camera_st_1.clock"
+   end="hsv_addr_gen_1.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="camera_st_0.clock"
+   end="vid_write_buffer_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="camera_st_1.clock"
+   end="vid_write_buffer_1.st_clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="camera_st_0.clock"
+   end="vid_write_buffer_0.st_clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="camera_st_0.clock"
+   end="recog_buffer_switcher_0.write_clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="camera_st_1.clock"
+   end="recog_buffer_switcher_1.write_clk" />
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="hsv_addr_gen_0.addr_gen"
+   end="vid_write_buffer_0.addr_gen">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="vid_write_buffer_1.addr_gen"
+   end="hsv_addr_gen_1.addr_gen">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="hsv_addr_gen_0.buffer_switch"
+   end="recog_buffer_switcher_0.write_buffer">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="cam_buffer_switcher.read_buffer"
+   end="vga_composer_0.cam_buffer">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="render_buffer_switcher.read_buffer"
+   end="vga_composer_0.render_buffer">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="recog_buffer_switcher_1.write_buffer"
+   end="hsv_addr_gen_1.buffer_switch">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="camera_mm_0.write_buffer"
+   end="cam_buffer_switcher.write_buffer">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
  <connection
    kind="interrupt"
    version="15.0"
@@ -2577,11 +3190,6 @@
    version="15.0"
    start="clk.clk_reset"
    end="sdram_controller_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk.clk_reset"
-   end="camera_mm_1.reset" />
  <connection
    kind="reset"
    version="15.0"
@@ -2651,18 +3259,98 @@
    kind="reset"
    version="15.0"
    start="clk.clk_reset"
-   end="recog_port_pio_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk.clk_reset"
-   end="recog_port_pio_1.reset" />
+   end="recog_buffer_port_pio_0.reset" />
  <connection kind="reset" version="15.0" start="clk.clk_reset" end="key_pio.reset" />
  <connection
    kind="reset"
    version="15.0"
    start="clk.clk_reset"
-   end="vga_composer_overlay_0.reset" />
+   end="hsv_addr_gen_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="vid_write_buffer_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="convert_hsv_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="camera_st_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="bitpacker_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="recog_buffer_switcher_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="recog_vsync_pio_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="cam_buffer_switcher.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="recog_buffer_switcher_1.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="camera_st_1.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="bitpacker_1.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="convert_hsv_1.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="vid_write_buffer_1.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="hsv_addr_gen_1.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="recog_buffer_port_pio_1.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="recog_vsync_pio_1.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="render_buffer_switcher.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="vga_composer_0.reset" />
  <connection
    kind="reset"
    version="15.0"

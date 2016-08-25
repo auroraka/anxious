@@ -275,61 +275,33 @@ add_interface_port avalon_master_overlay overlay_burstcount burstcount Output "(
 
 
 # 
-# connection point buffer_port_render
+# connection point cam_buffer
 # 
-add_interface buffer_port_render conduit end
-set_interface_property buffer_port_render associatedClock clock
-set_interface_property buffer_port_render associatedReset ""
-set_interface_property buffer_port_render ENABLED true
-set_interface_property buffer_port_render EXPORT_OF ""
-set_interface_property buffer_port_render PORT_NAME_MAP ""
-set_interface_property buffer_port_render CMSIS_SVD_VARIABLES ""
-set_interface_property buffer_port_render SVD_ADDRESS_GROUP ""
+add_interface cam_buffer conduit end
+set_interface_property cam_buffer associatedClock clock
+set_interface_property cam_buffer associatedReset ""
+set_interface_property cam_buffer ENABLED true
+set_interface_property cam_buffer EXPORT_OF ""
+set_interface_property cam_buffer PORT_NAME_MAP ""
+set_interface_property cam_buffer CMSIS_SVD_VARIABLES ""
+set_interface_property cam_buffer SVD_ADDRESS_GROUP ""
 
-add_interface_port buffer_port_render render_buffer_port address Input 2
-
-
-# 
-# connection point vsync_render
-# 
-add_interface vsync_render conduit end
-set_interface_property vsync_render associatedClock clock
-set_interface_property vsync_render associatedReset ""
-set_interface_property vsync_render ENABLED true
-set_interface_property vsync_render EXPORT_OF ""
-set_interface_property vsync_render PORT_NAME_MAP ""
-set_interface_property vsync_render CMSIS_SVD_VARIABLES ""
-set_interface_property vsync_render SVD_ADDRESS_GROUP ""
-
-add_interface_port vsync_render render_vsync_out vsync Output 1
+add_interface_port cam_buffer cam_buffer_port buffer_port Input 2
+add_interface_port cam_buffer cam_vsync_out buffer_vsync Output 1
 
 
 # 
-# connection point buffer_port_cam
+# connection point render_buffer
 # 
-add_interface buffer_port_cam conduit end
-set_interface_property buffer_port_cam associatedClock clock
-set_interface_property buffer_port_cam associatedReset ""
-set_interface_property buffer_port_cam ENABLED true
-set_interface_property buffer_port_cam EXPORT_OF ""
-set_interface_property buffer_port_cam PORT_NAME_MAP ""
-set_interface_property buffer_port_cam CMSIS_SVD_VARIABLES ""
-set_interface_property buffer_port_cam SVD_ADDRESS_GROUP ""
+add_interface render_buffer conduit end
+set_interface_property render_buffer associatedClock clock
+set_interface_property render_buffer associatedReset ""
+set_interface_property render_buffer ENABLED true
+set_interface_property render_buffer EXPORT_OF ""
+set_interface_property render_buffer PORT_NAME_MAP ""
+set_interface_property render_buffer CMSIS_SVD_VARIABLES ""
+set_interface_property render_buffer SVD_ADDRESS_GROUP ""
 
-add_interface_port buffer_port_cam cam_buffer_port address Input 2
-
-
-# 
-# connection point vsync_cam
-# 
-add_interface vsync_cam conduit end
-set_interface_property vsync_cam associatedClock clock
-set_interface_property vsync_cam associatedReset ""
-set_interface_property vsync_cam ENABLED true
-set_interface_property vsync_cam EXPORT_OF ""
-set_interface_property vsync_cam PORT_NAME_MAP ""
-set_interface_property vsync_cam CMSIS_SVD_VARIABLES ""
-set_interface_property vsync_cam SVD_ADDRESS_GROUP ""
-
-add_interface_port vsync_cam cam_vsync_out vsync Output 1
+add_interface_port render_buffer render_buffer_port buffer_port Input 2
+add_interface_port render_buffer render_vsync_out buffer_vsync Output 1
 
