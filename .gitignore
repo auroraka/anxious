@@ -57,3 +57,4 @@ qsys/software/**/generated*
 
 .DS_Store
 **/.DS_Store
+**/.idea

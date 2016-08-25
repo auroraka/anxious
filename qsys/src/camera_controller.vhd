@@ -23,6 +23,7 @@ entity camera_controller is
         write       : out std_logic;
         writedata   : out std_logic_vector(DATA_WIDTH - 1 downto 0);
         waitrequest : in  std_logic;
+        lock        : out std_logic;
 
         ---- Camera side ----
         clk_camera  : in  std_logic;
@@ -98,6 +99,7 @@ begin
             write       => write,
             writedata   => writedata,
             waitrequest => waitrequest,
+            lock        => lock,
             vsync_out   => vsync_out,
             -- End of Avalon-MM Master Interface --
             s_clk       => pclk,

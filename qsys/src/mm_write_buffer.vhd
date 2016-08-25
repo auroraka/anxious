@@ -23,6 +23,7 @@ entity mm_write_buffer is
         write       : out std_logic;
         writedata   : out std_logic_vector(DATA_WIDTH - 1 downto 0);
         waitrequest : in  std_logic;
+        lock        : out std_logic;
         vsync_out   : out std_logic;
 
         ---- Writes from another clock domain  ----
@@ -56,14 +57,17 @@ architecture ip of mm_write_buffer is
     type reg_type is record
         rdsel: natural range 0 to 1;
         rdstate: rdstate_type;
-        pixcnt : natural range 0 to FRAME_PIXELS;
+        pixcnt: natural range 0 to FRAME_PIXELS;
+        burstcnt: unsigned(FIFO_LENGTH_LOG_2 - 1 downto 0);
     end record;
 
     constant INIT_REGS: reg_type := (
         rdsel => 0,
         rdstate => S_WAIT,
-        pixcnt => 0
+        pixcnt => 0,
+        burstcnt => (others => '0')
     );
+    constant MAX_BURSTCNT : unsigned(FIFO_LENGTH_LOG_2 - 1 downto 0) := (others => '1');
 
     signal r: reg_type := INIT_REGS;
     signal rin: reg_type := INIT_REGS;
@@ -168,13 +172,23 @@ begin
         case r.rdstate is
             when S_WAIT =>
                 write <= '0';
+                lock <= '0';
                 if rdfull_c then
                     v.rdstate := S_WRITING;
                 end if;
             when S_WRITING =>
                 write <= not rdempty_c;
+                lock <= '0';
+                if rdempty_c = '0' and r.burstcnt /= MAX_BURSTCNT then
+                    lock <= '1';
+                end if;
                 rd(r.rdsel) <= not waitrequest;
                 if not rdempty_c and not waitrequest then
+                    if r.burstcnt = MAX_BURSTCNT then
+                        v.burstcnt := (others => '0');
+                    else
+                        v.burstcnt := r.burstcnt + 1;
+                    end if;
                     if r.pixcnt = FRAME_PIXELS - 1 then
                         vsync_out <= '1';
                         v.pixcnt := 0;

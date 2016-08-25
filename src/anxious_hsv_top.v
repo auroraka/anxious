@@ -24,6 +24,9 @@ wire [1:0] hsv_render_buffer_port;
 wire hsv_fetch_buffer_vsync;
 wire [1:0] hsv_fetch_buffer_port;
 
+wire cam_vsync;
+wire [1:0] cam_buffer_port;
+
 assign LEDR[0] = hsv_render_buffer_vsync;
 
 anxious_hsv u0 (
@@ -67,8 +70,8 @@ anxious_hsv u0 (
 
 	.reset_reset_n                                      (KEY[0]),                  //                                       reset.reset_n
 
-	.vga_composer_0_cam_buffer_buffer_port              (0),                       //                   vga_composer_0_cam_buffer.buffer_port
-	.vga_composer_0_cam_buffer_buffer_vsync             (),                        //                                            .buffer_vsync
+	.vga_composer_0_cam_buffer_buffer_port              (cam_buffer_port),                       //                   vga_composer_0_cam_buffer.buffer_port
+	.vga_composer_0_cam_buffer_buffer_vsync             (cam_vsync),                        //                                            .buffer_vsync
 
 	.vga_composer_0_conduit_vga_b                       (VGA_B),                   //                      vga_composer_0_conduit.vga_b
 	.vga_composer_0_conduit_vga_blank_n                 (VGA_BLANK_N),             //                                            .vga_blank_n
@@ -80,7 +83,16 @@ anxious_hsv u0 (
 	.vga_composer_0_conduit_vga_vs                      (VGA_VS),                  //                                            .vga_vs
 	.vga_composer_0_conduit_clk_vga                     (clk_vga),                 //                                            .clk_vga
 
-	.frame_buffer_switcher_1_enable_enable              (SW[3])                    //              frame_buffer_switcher_1_enable.enable
+	.frame_buffer_switcher_1_enable_enable              (SW[3]),                   //              frame_buffer_switcher_1_enable.enable
+	
+	.camera_mm_0_conduit_clk_camera                     (clk_camera),              //                         camera_mm_0_conduit.clk_camera
+    .camera_mm_0_conduit_enable_n                       (SW[1]),                   //                                            .enable_n
+    .camera_mm_0_conduit_cam_din                        (`CAM_DIN_0),              //                                            .cam_din
+    .camera_mm_0_conduit_cam_href                       (`CAM_HREF_0),             //                                            .cam_href
+    .camera_mm_0_conduit_cam_pclk                       (`CAM_PCLK_0),             //                                            .cam_pclk
+    .camera_mm_0_conduit_cam_vsync                      (`CAM_VSYNC_0),            //                                            .cam_vsync
+    .camera_mm_0_buffer_port_address                    (cam_buffer_port),                       //                     camera_mm_0_buffer_port.address
+    .camera_mm_0_vsync_vsync                    (cam_vsync),                       //
 );
 
 endmodule

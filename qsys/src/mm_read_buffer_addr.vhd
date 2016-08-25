@@ -27,6 +27,7 @@ entity mm_read_buffer_addr is
         readdata      : in  std_logic_vector(DATA_WIDTH - 1 downto 0);
         waitrequest   : in  std_logic;
         readdatavalid : in  std_logic;
+        lock          : out std_logic;
         burstcount    : out std_logic_vector(FIFO_LENGTH_LOG_2 downto 0);
         vsync_out     : out std_logic;
 
@@ -60,14 +61,17 @@ architecture bhv of mm_read_buffer_addr is
         wrsel: natural range 0 to 1;
         wrcnt: unsigned(FIFO_LENGTH_LOG_2 - 1 downto 0);
         read: std_logic;
+        lock: std_logic;
         resetreq: std_logic;
     end record;
+    constant MAX_BURSTCNT : unsigned(FIFO_LENGTH_LOG_2 - 1 downto 0) := (others => '1');
 
     constant INIT_REGS: reg_type := (
         wrstate => S_WAIT,
         wrsel => 0,
         wrcnt => (others => '0'),
         read => '0',
+        lock => '0',
         resetreq => '0'
     );
 
@@ -132,9 +136,11 @@ begin
             when S_WAIT =>
                 if wrempty(r.wrsel) and not r.resetreq then
                     v.read := '1';
+                    v.lock := '1';
                     v.wrstate := S_READING;
                 else
                     v.read := '0';
+                    v.lock := '0';
                 end if;
             when S_READING =>
                 if not waitrequest then
@@ -143,7 +149,9 @@ begin
                 wr(r.wrsel) <= readdatavalid;
                 if readdatavalid then
                     v.wrcnt := (r.wrcnt + 1) mod (2 ** FIFO_LENGTH_LOG_2);
-                    if v.wrcnt = 0 then
+                    if v.wrcnt = MAX_BURSTCNT then
+                        v.lock := '0';
+                    elsif v.wrcnt = 0 then
                         if r.resetreq then
                             v := INIT_REGS;
                             sv := S_CLK_INIT_REGS;
@@ -191,6 +199,7 @@ begin
         burstcount   <= std_logic_vector(
             to_unsigned(2 ** FIFO_LENGTH_LOG_2, FIFO_LENGTH_LOG_2 + 1));
         read         <= r.read;
+        lock         <= r.lock;
 
         -- apply the new values
         rin <= v;
@@ -222,8 +231,8 @@ begin
                 end if;
             end if;
         end if;
-        address(20 downto 2) <= std_logic_vector(row) & std_logic_vector(col) &
-                                std_logic_vector(to_unsigned(0, FIFO_LENGTH_LOG_2));
+        address(20 downto 0) <= std_logic_vector(row) & std_logic_vector(col) &
+                                std_logic_vector(to_unsigned(0, FIFO_LENGTH_LOG_2)) & "00";
     end process;
 
     U_fifo_arr_gen: for i in 0 to 1 generate

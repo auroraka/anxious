@@ -21,17 +21,19 @@ entity vga_composer is
 
         cam_address       : out std_logic_vector(ADDR_WIDTH - 1 downto 0);
         cam_read          : out std_logic;
-        cam_readdata       : in  std_logic_vector(DATA_WIDTH - 1 downto 0);
+        cam_readdata      : in  std_logic_vector(DATA_WIDTH - 1 downto 0);
         cam_waitrequest   : in  std_logic;
         cam_readdatavalid : in  std_logic;
         cam_burstcount    : out std_logic_vector(FIFO_LENGTH_LOG_2 downto 0);
+        --cam_lock          : out std_logic;
         
         render_address       : out std_logic_vector(ADDR_WIDTH - 1 downto 0);
         render_read          : out std_logic;
-        render_readdata       : in  std_logic_vector(DATA_WIDTH - 1 downto 0);
+        render_readdata      : in  std_logic_vector(DATA_WIDTH - 1 downto 0);
         render_waitrequest   : in  std_logic;
         render_readdatavalid : in  std_logic; 
         render_burstcount    : out std_logic_vector(FIFO_LENGTH_LOG_2 downto 0);
+        --render_lock          : out std_logic;
 
         ---- VGA ----
 		VGA_B         : out std_logic_vector(7 downto 0);
@@ -151,6 +153,7 @@ begin
             waitrequest   => cam_waitrequest,
             readdatavalid => cam_readdatavalid,
             burstcount    => cam_burstcount,
+            --lock          => cam_lock,
             vsync_out     => cam_vsync_out,
             -- End of Avalon-MM Master Interface
             s_clk         => clk_vga,
@@ -179,6 +182,7 @@ begin
             waitrequest   => render_waitrequest,
             readdatavalid => render_readdatavalid,
             burstcount    => render_burstcount,
+            --lock          => render_lock,
             vsync_out     => render_vsync_out,
             -- End of Avalon-MM Master Interface
             s_clk         => clk_vga,

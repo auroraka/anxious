@@ -57,11 +57,43 @@
          type = "String";
       }
    }
+   element anxious_hsv
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_hsv
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_hsv
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
    element bitpacker_0
    {
       datum _sortIndex
       {
          value = "3";
+         type = "int";
+      }
+   }
+   element camera_mm_0
+   {
+      datum _sortIndex
+      {
+         value = "21";
          type = "int";
       }
    }
@@ -343,6 +375,21 @@
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
+   name="camera_mm_0_buffer_port"
+   internal="camera_mm_0.buffer_port"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="camera_mm_0_conduit"
+   internal="camera_mm_0.conduit"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="camera_mm_0_vsync"
+   internal="camera_mm_0.vsync"
+   type="conduit"
+   dir="end" />
+ <interface
    name="camera_sioc_external_connection"
    internal="camera_sioc.external_connection"
    type="conduit"
@@ -426,6 +473,13 @@
  <module name="bitpacker_0" kind="bitpacker" version="1.1" enabled="1">
   <parameter name="FIRST_SYMBOL_IN_MSB" value="0" />
   <parameter name="PACK_LENGTH" value="8" />
+ </module>
+ <module name="camera_mm_0" kind="camera_mm" version="2.1" enabled="1">
+  <parameter name="ADDR_WIDTH" value="27" />
+  <parameter name="BANK" value="0" />
+  <parameter name="DATA_WIDTH" value="32" />
+  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
+  <parameter name="FRAME_PIXELS" value="307200" />
  </module>
  <module
    name="camera_sioc"
@@ -857,7 +911,7 @@
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
   <parameter name="id" value="2004318071" />
  </module>
- <module name="vga_composer_0" kind="vga_composer" version="1.0" enabled="1">
+ <module name="vga_composer_0" kind="vga_composer" version="1.1" enabled="1">
   <parameter name="ADDR_WIDTH" value="27" />
   <parameter name="CAM_BANK" value="0" />
   <parameter name="DATA_WIDTH" value="32" />
@@ -873,6 +927,15 @@
   <parameter name="DATA_WIDTH" value="8" />
   <parameter name="FIFO_LENGTH_LOG_2" value="6" />
  </module>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="camera_mm_0.avalon_master"
+   end="new_sdram_controller_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
  <connection
    kind="avalon"
    version="15.0"
@@ -1109,6 +1172,7 @@
    version="15.0"
    start="clk_0.clk"
    end="vga_composer_0.clock" />
+ <connection kind="clock" version="15.0" start="clk_0.clk" end="camera_mm_0.clock" />
  <connection
    kind="clock"
    version="15.0"
@@ -1279,6 +1343,11 @@
    version="15.0"
    start="clk_0.clk_reset"
    end="frame_buffer_switcher_1.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_0.clk_reset"
+   end="camera_mm_0.reset" />
  <connection
    kind="reset"
    version="15.0"

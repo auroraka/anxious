@@ -70,7 +70,7 @@ int main() {
     volatile unsigned *hsv_frame = hsv_ram + fetch_buffer_port * kHsvFrameSize;
 
     for (j = 0; j < HEIGHT; ++j) {
-      for (i = 0; i < hsv_width; ++i) {
+      for (i = 0; i < hsv_width/2; ++i) {
         unsigned hsv = hsv_frame[j * hsv_width + i];
         for (k = 0; k < kPackLength; ++k) {
           *__sdram(1, render_buffer_port, j, i * kPackLength + k) =
