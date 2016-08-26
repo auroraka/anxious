@@ -31,7 +31,7 @@ Vector LI_O;
 #ifndef MYLOCAL
 
 // RENDER_VSYNC_PIO_x_BASE
-#define RENDER_VSYNC 0x08001020
+#define RENDER_VSYNC 0x08001010
  
 #define RENDER_PORT() IORD(RENDER_PORT_PIO_BASE, 0)
 #define RENDER_START() IORD(RENDER_START_PIO_BASE, 0)
@@ -275,6 +275,7 @@ void render(int row_start, int row_cnt) {
 #endif
 	
 	VSYNC(1);
+	usleep(0);
 }
 
 #endif

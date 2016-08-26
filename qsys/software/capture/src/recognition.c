@@ -48,6 +48,7 @@ unsigned min(unsigned x, unsigned y) {
 	return y ^ ((x ^ y) & -(x < y));
 }
 
+/*
 const unsigned H_l = 29, S_l = 86, V_l = 6;
 const unsigned H_r = 64, S_r = 255, V_r = 255;
 
@@ -96,6 +97,7 @@ void cvtColor_inRange(int cam_port, unsigned *frame, unsigned *row) {
 		}
 	}
 }
+*/
 
 void erode(unsigned *frame, unsigned *row) {
 	unsigned *first = row, *last = row + MASK_WIDTH, *swp_tmp;
@@ -367,6 +369,7 @@ RecogResult recognize() {
 	return result;
 }
 
+/*
 void clear_result(unsigned render_port, RecogResult *result) {
 	int min_x, max_x, min_y, max_y, center_x, center_y, i, j;
 	unpack_result(result);
@@ -400,5 +403,6 @@ void draw_result(unsigned render_port, RecogResult *result) {
 		for (j = center_y - 1; j <= center_y + 2; ++j)
 			SDRAM_W(i, j, 255);
 }
+ */
 
 #endif

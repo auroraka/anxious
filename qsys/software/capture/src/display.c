@@ -612,7 +612,7 @@ char symbols[] = {'`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-
 
 typedef unsigned char uchar;
 
-//#define OVERLAY_W(x, y, val) (SDRAM[(2 << 23) | (overlay_port << 19) | ((y) << 10) | (x)] = (val))
+//#define OVERLAY_W(x, y, val) (SDRAM[(2 << 23) | (display_overlay_port << 19) | ((y) << 10) | (x)] = (val))
 #define OVERLAY_W(x, y, val) (SDRAM[(1 << 23) | (display_overlay_port << 19) | ((y) << 10) | (x)] = (val))
 
 unsigned display_overlay_port = 0;

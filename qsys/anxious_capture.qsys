@@ -217,6 +217,14 @@
          type = "String";
       }
    }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
    element bitpacker_0
    {
       datum _sortIndex
@@ -252,7 +260,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
       }
    }
@@ -468,7 +476,7 @@
    {
       datum _sortIndex
       {
-         value = "36";
+         value = "37";
          type = "int";
       }
    }
@@ -536,7 +544,7 @@
    {
       datum _sortIndex
       {
-         value = "35";
+         value = "36";
          type = "int";
       }
       datum sopceditor_expanded
@@ -549,7 +557,7 @@
    {
       datum baseAddress
       {
-         value = "134221856";
+         value = "134221888";
          type = "String";
       }
    }
@@ -557,7 +565,7 @@
    {
       datum _sortIndex
       {
-         value = "43";
+         value = "47";
          type = "int";
       }
       datum sopceditor_expanded
@@ -578,7 +586,7 @@
    {
       datum _sortIndex
       {
-         value = "41";
+         value = "45";
          type = "int";
       }
       datum sopceditor_expanded
@@ -591,7 +599,7 @@
    {
       datum baseAddress
       {
-         value = "134221840";
+         value = "134221872";
          type = "String";
       }
    }
@@ -641,7 +649,7 @@
    {
       datum _sortIndex
       {
-         value = "34";
+         value = "35";
          type = "int";
       }
       datum sopceditor_expanded
@@ -662,7 +670,7 @@
    {
       datum _sortIndex
       {
-         value = "42";
+         value = "46";
          type = "int";
       }
       datum sopceditor_expanded
@@ -692,6 +700,46 @@
       datum baseAddress
       {
          value = "135266304";
+         type = "String";
+      }
+   }
+   element overlay_buffer_switcher
+   {
+      datum _sortIndex
+      {
+         value = "38";
+         type = "int";
+      }
+   }
+   element overlay_port_pio
+   {
+      datum _sortIndex
+      {
+         value = "40";
+         type = "int";
+      }
+   }
+   element overlay_port_pio.s1
+   {
+      datum baseAddress
+      {
+         value = "134221824";
+         type = "String";
+      }
+   }
+   element overlay_vsync_pio
+   {
+      datum _sortIndex
+      {
+         value = "39";
+         type = "int";
+      }
+   }
+   element overlay_vsync_pio.s1
+   {
+      datum baseAddress
+      {
+         value = "134221840";
          type = "String";
       }
    }
@@ -876,7 +924,7 @@
    {
       datum _sortIndex
       {
-         value = "37";
+         value = "41";
          type = "int";
       }
       datum sopceditor_expanded
@@ -889,7 +937,7 @@
    {
       datum _sortIndex
       {
-         value = "39";
+         value = "43";
          type = "int";
       }
       datum sopceditor_expanded
@@ -902,7 +950,7 @@
    {
       datum baseAddress
       {
-         value = "134221824";
+         value = "134221856";
          type = "String";
       }
    }
@@ -910,7 +958,7 @@
    {
       datum _sortIndex
       {
-         value = "40";
+         value = "44";
          type = "int";
       }
       datum sopceditor_expanded
@@ -923,7 +971,7 @@
    {
       datum baseAddress
       {
-         value = "134221840";
+         value = "134221824";
          type = "String";
       }
    }
@@ -931,7 +979,7 @@
    {
       datum _sortIndex
       {
-         value = "38";
+         value = "42";
          type = "int";
       }
       datum sopceditor_expanded
@@ -949,7 +997,7 @@
       }
       datum baseAddress
       {
-         value = "134221856";
+         value = "134221840";
          type = "String";
       }
    }
@@ -1042,6 +1090,14 @@
          type = "int";
       }
    }
+   element vga_composer_overlay_0
+   {
+      datum _sortIndex
+      {
+         value = "34";
+         type = "int";
+      }
+   }
    element vid_write_buffer_0
    {
       datum _sortIndex
@@ -1081,7 +1137,7 @@
  <parameter name="hdlLanguage" value="VERILOG" />
  <parameter name="hideFromIPCatalog" value="false" />
  <parameter name="lockedInterfaceDefinition" value="" />
- <parameter name="maxAdditionalLatency" value="1" />
+ <parameter name="maxAdditionalLatency" value="2" />
  <parameter name="projectName" value="" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="0" />
@@ -1097,10 +1153,11 @@
  <interface name="camera_mm_0_black_cnt" internal="camera_mm_0.black_cnt" />
  <interface name="camera_mm_0_buffer_port" internal="camera_mm_0.buffer_port" />
  <interface
-   name="camera_mm_0_conduit"
-   internal="camera_mm_0.conduit"
+   name="camera_mm_0_camera_wires"
+   internal="camera_mm_0.camera_wires"
    type="conduit"
    dir="end" />
+ <interface name="camera_mm_0_conduit" internal="camera_mm_0.conduit" />
  <interface
    name="camera_sioc_0_external_connection"
    internal="camera_sioc_0.external_connection"
@@ -1150,6 +1207,26 @@
  <interface
    name="new_sdram_controller_0_wire"
    internal="sdram_controller_0.wire"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="overlay_buffer_switcher_enable"
+   internal="overlay_buffer_switcher.enable"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="overlay_buffer_switcher_write_buffer"
+   internal="overlay_buffer_switcher.write_buffer"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="overlay_port_pio_external_connection"
+   internal="overlay_port_pio.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="overlay_vsync_pio_external_connection"
+   internal="overlay_vsync_pio.external_connection"
    type="conduit"
    dir="end" />
  <interface
@@ -1218,9 +1295,10 @@
    type="conduit"
    dir="end" />
  <interface name="reset" internal="clk.clk_in_reset" type="reset" dir="end" />
+ <interface name="vga_composer_0_conduit" internal="vga_composer_0.conduit" />
  <interface
-   name="vga_composer_0_conduit"
-   internal="vga_composer_0.conduit"
+   name="vga_composer_overlay_0_conduit"
+   internal="vga_composer_overlay_0.conduit"
    type="conduit"
    dir="end" />
  <module name="bitpacker_0" kind="bitpacker" version="1.1" enabled="1">
@@ -1236,12 +1314,17 @@
    kind="frame_buffer_switcher"
    version="2.0"
    enabled="1" />
- <module name="camera_mm_0" kind="camera_mm" version="2.0" enabled="1">
-  <parameter name="ADDR_WIDTH" value="27" />
-  <parameter name="BANK" value="0" />
-  <parameter name="DATA_WIDTH" value="32" />
-  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
-  <parameter name="FRAME_PIXELS" value="307200" />
+ <module name="camera_mm_0" kind="camera_mm" version="1.0" enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
+  <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_M0_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
+  <parameter name="AUTO_M0_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@74fed03a</parameter>
+  <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_mm_0</parameter>
  </module>
  <module
    name="camera_sioc_0"
@@ -1820,7 +1903,7 @@
   <parameter name="dataAddrWidth" value="29" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_2.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='render_port_pio.s1' start='0x8001000' end='0x8001010' /><slave name='key_pio.s1' start='0x8001010' end='0x8001020' /><slave name='jtag_uart_2.avalon_jtag_slave' start='0x8001020' end='0x8001028' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='ir_receiver_0.avalon_slave_0' start='0x10000000' end='0x18000000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_2.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='overlay_port_pio.s1' start='0x8001000' end='0x8001010' /><slave name='overlay_vsync_pio.s1' start='0x8001010' end='0x8001020' /><slave name='render_port_pio.s1' start='0x8001020' end='0x8001030' /><slave name='key_pio.s1' start='0x8001030' end='0x8001040' /><slave name='jtag_uart_2.avalon_jtag_slave' start='0x8001040' end='0x8001048' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='ir_receiver_0.avalon_slave_0' start='0x10000000' end='0x18000000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -2000,7 +2083,7 @@
   <parameter name="dataAddrWidth" value="28" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_3.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='render_port_pio.s1' start='0x8001000' end='0x8001010' /><slave name='render_start_pio.s1' start='0x8001010' end='0x8001020' /><slave name='render_vsync_pio_0.s1' start='0x8001020' end='0x8001030' /><slave name='jtag_uart_3.avalon_jtag_slave' start='0x8001030' end='0x8001038' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_3.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='render_start_pio.s1' start='0x8001000' end='0x8001010' /><slave name='render_vsync_pio_0.s1' start='0x8001010' end='0x8001020' /><slave name='render_port_pio.s1' start='0x8001020' end='0x8001030' /><slave name='jtag_uart_3.avalon_jtag_slave' start='0x8001030' end='0x8001038' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -2184,6 +2267,47 @@
   <parameter name="useNonDefaultInitFile" value="false" />
   <parameter name="useShallowMemBlocks" value="false" />
   <parameter name="writable" value="true" />
+ </module>
+ <module
+   name="overlay_buffer_switcher"
+   kind="frame_buffer_switcher"
+   version="2.0"
+   enabled="1" />
+ <module
+   name="overlay_port_pio"
+   kind="altera_avalon_pio"
+   version="15.0"
+   enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Input" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="2" />
+ </module>
+ <module
+   name="overlay_vsync_pio"
+   kind="altera_avalon_pio"
+   version="15.0"
+   enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="1" />
  </module>
  <module
    name="recog_buffer_port_pio_0"
@@ -2450,11 +2574,23 @@
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
   <parameter name="id" value="286331153" />
  </module>
- <module name="vga_composer_0" kind="vga_composer" version="1.1" enabled="1">
+ <module name="vga_composer_0" kind="vga_composer" version="1.1" enabled="0">
   <parameter name="ADDR_WIDTH" value="27" />
   <parameter name="CAM_BANK" value="0" />
   <parameter name="DATA_WIDTH" value="32" />
   <parameter name="FIFO_LENGTH_LOG_2" value="6" />
+  <parameter name="RENDER_BANK" value="1" />
+ </module>
+ <module
+   name="vga_composer_overlay_0"
+   kind="vga_composer_overlay"
+   version="1.0"
+   enabled="1">
+  <parameter name="ADDR_WIDTH" value="27" />
+  <parameter name="CAM_BANK" value="0" />
+  <parameter name="DATA_WIDTH" value="32" />
+  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
+  <parameter name="OVERLAY_BANK" value="2" />
   <parameter name="RENDER_BANK" value="1" />
  </module>
  <module
@@ -2478,7 +2614,7 @@
  <connection
    kind="avalon"
    version="15.0"
-   start="camera_mm_0.avalon_master"
+   start="vga_composer_overlay_0.avalon_master_cam"
    end="sdram_controller_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
@@ -2488,6 +2624,24 @@
    kind="avalon"
    version="15.0"
    start="vga_composer_0.avalon_master_cam"
+   end="sdram_controller_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="vga_composer_overlay_0.avalon_master_overlay"
+   end="sdram_controller_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="vga_composer_overlay_0.avalon_master_render"
    end="sdram_controller_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
@@ -2535,7 +2689,7 @@
    start="nios2_gen2_2.data_master"
    end="jtag_uart_2.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08001020" />
+  <parameter name="baseAddress" value="0x08001040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2760,7 +2914,7 @@
    start="nios2_gen2_3.data_master"
    end="render_vsync_pio_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08001020" />
+  <parameter name="baseAddress" value="0x08001010" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2769,7 +2923,7 @@
    start="nios2_gen2_3.data_master"
    end="render_port_pio.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08001000" />
+  <parameter name="baseAddress" value="0x08001020" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2778,7 +2932,7 @@
    start="nios2_gen2_3.data_master"
    end="render_start_pio.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08001010" />
+  <parameter name="baseAddress" value="0x08001000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2796,7 +2950,7 @@
    start="nios2_gen2_2.data_master"
    end="key_pio.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08001010" />
+  <parameter name="baseAddress" value="0x08001030" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2832,7 +2986,7 @@
    start="nios2_gen2_2.data_master"
    end="render_port_pio.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08001000" />
+  <parameter name="baseAddress" value="0x08001020" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2860,6 +3014,24 @@
    end="sdram_controller_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_2.data_master"
+   end="overlay_vsync_pio.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08001010" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_2.data_master"
+   end="overlay_port_pio.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08001000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2953,6 +3125,15 @@
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
+   kind="avalon"
+   version="15.0"
+   start="camera_mm_0.m0"
+   end="sdram_controller_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
    kind="avalon_streaming"
    version="15.0"
    start="convert_hsv_0.dout"
@@ -3032,6 +3213,17 @@
    start="clk.clk"
    end="recog_vsync_pio_1.clk" />
  <connection kind="clock" version="15.0" start="clk.clk" end="camera_sioc_1.clk" />
+ <connection kind="clock" version="15.0" start="clk.clk" end="camera_mm_0.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="overlay_vsync_pio.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="overlay_port_pio.clk" />
  <connection
    kind="clock"
    version="15.0"
@@ -3040,18 +3232,22 @@
  <connection kind="clock" version="15.0" start="clk.clk" end="recog_memory_1.clk1" />
  <connection kind="clock" version="15.0" start="clk.clk" end="shared_memory.clk1" />
  <connection kind="clock" version="15.0" start="clk.clk" end="recog_memory_0.clk1" />
- <connection kind="clock" version="15.0" start="clk.clk" end="camera_mm_0.clock" />
  <connection
    kind="clock"
    version="15.0"
    start="clk.clk"
    end="vid_write_buffer_1.clock" />
+ <connection kind="clock" version="15.0" start="clk.clk" end="ir_receiver_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="vga_composer_overlay_0.clock" />
  <connection
    kind="clock"
    version="15.0"
    start="clk.clk"
    end="vga_composer_0.clock" />
- <connection kind="clock" version="15.0" start="clk.clk" end="ir_receiver_0.clock" />
  <connection
    kind="clock"
    version="15.0"
@@ -3076,12 +3272,22 @@
    kind="clock"
    version="15.0"
    start="clk.clk"
-   end="cam_buffer_switcher.write_clk" />
+   end="overlay_buffer_switcher.read_clock" />
  <connection
    kind="clock"
    version="15.0"
    start="clk.clk"
    end="render_buffer_switcher.write_clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="overlay_buffer_switcher.write_clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="camera_mm_0.clk_camara"
+   end="cam_buffer_switcher.write_clk" />
  <connection
    kind="clock"
    version="15.0"
@@ -3173,8 +3379,19 @@
  <connection
    kind="conduit"
    version="15.0"
+   start="vga_composer_overlay_0.overlay_buffer"
+   end="overlay_buffer_switcher.read_buffer">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
    start="cam_buffer_switcher.read_buffer"
-   end="vga_composer_0.cam_buffer">
+   end="vga_composer_overlay_0.cam_buffer">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
   <parameter name="startPort" value="" />
@@ -3185,7 +3402,7 @@
    kind="conduit"
    version="15.0"
    start="render_buffer_switcher.read_buffer"
-   end="vga_composer_0.render_buffer">
+   end="vga_composer_overlay_0.render_buffer">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
   <parameter name="startPort" value="" />
@@ -3206,8 +3423,8 @@
  <connection
    kind="conduit"
    version="15.0"
-   start="camera_mm_0.write_buffer"
-   end="cam_buffer_switcher.write_buffer">
+   start="cam_buffer_switcher.write_buffer"
+   end="camera_mm_0.buffer_switch">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
   <parameter name="startPort" value="" />
@@ -3427,12 +3644,32 @@
    kind="reset"
    version="15.0"
    start="clk.clk_reset"
-   end="vga_composer_0.reset" />
+   end="ir_receiver_0.reset" />
  <connection
    kind="reset"
    version="15.0"
    start="clk.clk_reset"
-   end="ir_receiver_0.reset" />
+   end="overlay_buffer_switcher.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="vga_composer_overlay_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="overlay_vsync_pio.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="overlay_port_pio.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="vga_composer_0.reset" />
  <connection
    kind="reset"
    version="15.0"
@@ -3481,5 +3718,5 @@
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
  <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
- <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
+ <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="2" />
 </system>

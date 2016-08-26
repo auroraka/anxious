@@ -25,7 +25,7 @@ architecture bhv of ir_receiver is
 	component ir_decoder is
 		port(
 			iCLK        : in  std_logic; -- clk 50MHz
-			iRST_n      : in  std_logic; -- reset					
+			iRST_n      : in  std_logic; -- reset
 			iIRDA       : in  std_logic; -- IR code input
 			oDATA_READY : out std_logic; -- data ready
 			oDATA       : out std_logic_vector(31 downto 0) -- decode data output
@@ -65,7 +65,7 @@ begin
 			ir_ready_r   <= '0';
 		elsif rising_edge(clk) then
 			count <= count + 1;
-			if count = 10 then
+			if count = 10000 then
 				count <= 0;
 				if not ir_ready_r and ir_ready then
 					mydata <= ir_data;
@@ -107,4 +107,4 @@ begin
 		end if;
 	end process;
 
-end architecture bhv; 
+end architecture bhv;

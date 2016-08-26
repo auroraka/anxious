@@ -19,16 +19,21 @@
 #include "control.h"
 #include "render/object.h"
 
-const float focus_x_l = 1117.36809f;
+const float focus_x_l = 1117.36809f, focus_y_l = 1115.59155f;
 const float focus_x_r = 1098.56402f, focus_y_r = 1095.74358f;
-const float center_x_l = 284.432591f;
+const float center_x_l = 284.432591f, center_y_l = 205.206010f;
 const float center_x_r = 260.334008f, center_y_r = 307.355809f;
 const float stereo_dist = 17.6; // cm
+
+//#define VSYNC(x) IOWR(OVERLAY_VSYNC_PIO_BASE, 0, (x))
+//#define BUFFER_PORT() IORD(OVERLAY_PORT_PIO_BASE, 0)
+#define BUFFER_PORT() IORD(RENDER_PORT_PIO_BASE, 0)
 
 char msg[100], last_msg[100];
 
 Location find_location(point p_l, point p_r) {
-	int x_l = get_x(p_l), x_r = get_x(p_r);
+	int x_l = WIDTH - get_x(p_l), x_r = WIDTH - get_x(p_r);
+	int y_l = HEIGHT - get_y(p_l), y_r = HEIGHT - get_y(p_r);
 	
 	Location loc;
 	loc.z = stereo_dist / ((x_l - center_x_l) / focus_x_l - (x_r - center_x_r) / focus_x_r);
@@ -37,9 +42,7 @@ Location find_location(point p_l, point p_r) {
 	
 	memcpy(last_msg, msg, sizeof(msg));
 	sprintf(msg, "Left (%3d,%3d)\nRight (%3d,%3d)\nPosition (%3d,%3d,%3d)",
-	        get_x(p_l), get_y(p_l),
-	        get_x(p_r), get_y(p_r),
-	        (int)loc.x, (int)loc.y, (int)loc.z);
+	        x_l, y_l, x_r, y_r, (int)loc.x, (int)loc.y, (int)loc.z);
 	
 	return loc;
 }
@@ -53,7 +56,7 @@ float sphere_x, sphere_y, sphere_z;
 point sphere_center;
 float sphere_radius;
 
-//#define OVERLAY_W(x, y, val) (SDRAM[(2 << 23) | (0 << 19) | ((y) << 10) | (x)] = (val))
+//#define OVERLAY_W(x, y, val) (SDRAM[(2 << 23) | (overlay_port << 19) | ((y) << 10) | (x)] = (val))
 #define OVERLAY_W(x, y, val) (SDRAM[(1 << 23) | (overlay_port << 19) | ((y) << 10) | (x)] = (val))
 
 unsigned overlay_port = 0;
@@ -61,18 +64,18 @@ unsigned overlay_port = 0;
 void draw_sphere(point center, float radius, unsigned color) {
 	int cx = get_x(center), cy = get_y(center);
 	int dx = 0, dy = (int)radius;
-	double d = 1.25 - radius;
+	float d = 1.25f - radius;
 	while (dx <= dy) {
 		if (d < 0) d += 2 * dx + 3;
 		else d += 2 * (dx - dy) + 5, --dy;
 		++dx;
 		
-		OVERLAY_W(dx + cx, dy + cy, color);
-		OVERLAY_W(dy + cx, dx + cy, color);
-		OVERLAY_W(-dx + cx, dy + cy, color);
-		OVERLAY_W(dy + cx, -dx + cy, color);
-		OVERLAY_W(dx + cx, -dy + cy, color);
-		OVERLAY_W(-dy + cx, dx + cy, color);
+		OVERLAY_W( dx + cx,  dy + cy, color);
+		OVERLAY_W( dy + cx,  dx + cy, color);
+		OVERLAY_W(-dx + cx,  dy + cy, color);
+		OVERLAY_W( dy + cx, -dx + cy, color);
+		OVERLAY_W( dx + cx, -dy + cy, color);
+		OVERLAY_W(-dy + cx,  dx + cy, color);
 		OVERLAY_W(-dx + cx, -dy + cy, color);
 		OVERLAY_W(-dy + cx, -dx + cy, color);
 	}
@@ -101,7 +104,7 @@ void draw_overlay() {
 			break;
 	}
 	
-	overlay_port = IORD(RENDER_PORT_PIO_BASE, 0);
+	overlay_port = BUFFER_PORT();
 	
 	drawMsg(overlay_port, msg, 20, 20, WHITE);
 	switch (draw_state) {
@@ -116,6 +119,10 @@ void draw_overlay() {
 			draw_sphere(sphere_center, sphere_radius, WHITE);
 			break;
 	}
+	
+//	VSYNC(1);
+//	usleep(10);
+//	VSYNC(0);
 }
 
 void key_down(int key_code) {
