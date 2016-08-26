@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="$${FILENAME}">
+ <component
+   name="$${FILENAME}"
+   displayName="$${FILENAME}"
+   version="1.0"
+   description=""
+   tags=""
+   categories="System" />
+ <parameter name="bonusData"><![CDATA[bonusData 
+{
+   element $${FILENAME}
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element bitpacker_0
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+   }
+   element camera_mm
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element clk_camera
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+   }
+   element clk_qsys
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+   }
+   element convert_hsv_0
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+   }
+   element hsv_addr_gen_0
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+   }
+   element vid_write_buffer_0
+   {
+      datum _sortIndex
+      {
+         value = "4";
+         type = "int";
+      }
+   }
+}
+]]></parameter>
+ <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
+ <parameter name="device" value="EP4CGX150DF31C7" />
+ <parameter name="deviceFamily" value="Cyclone IV GX" />
+ <parameter name="deviceSpeedGrade" value="7" />
+ <parameter name="fabricMode" value="QSYS" />
+ <parameter name="generateLegacySim" value="false" />
+ <parameter name="generationId" value="0" />
+ <parameter name="globalResetBus" value="false" />
+ <parameter name="hdlLanguage" value="VERILOG" />
+ <parameter name="hideFromIPCatalog" value="false" />
+ <parameter name="lockedInterfaceDefinition" value="" />
+ <parameter name="maxAdditionalLatency" value="1" />
+ <parameter name="projectName" value="" />
+ <parameter name="sopcBorderPoints" value="false" />
+ <parameter name="systemHash" value="0" />
+ <parameter name="testBenchDutName" value="" />
+ <parameter name="timeStamp" value="0" />
+ <parameter name="useTestBenchNamingPattern" value="false" />
+ <instanceScript></instanceScript>
+ <interface
+   name="buffer_switch"
+   internal="hsv_addr_gen_0.buffer_switch"
+   type="conduit"
+   dir="end" />
+ <interface name="clk" internal="clk_qsys.clk_in" type="clock" dir="end" />
+ <interface name="clk_camera" internal="clk_camera.clk_in" type="clock" dir="end" />
+ <interface
+   name="master"
+   internal="vid_write_buffer_0.m0"
+   type="avalon"
+   dir="start" />
+ <interface name="reset" internal="clk_qsys.clk_in_reset" type="reset" dir="end" />
+ <interface
+   name="sink"
+   internal="convert_hsv_0.din"
+   type="avalon_streaming"
+   dir="end" />
+ <module name="bitpacker_0" kind="bitpacker" version="1.1" enabled="1">
+  <parameter name="FIRST_SYMBOL_IN_MSB" value="0" />
+  <parameter name="PACK_LENGTH" value="8" />
+ </module>
+ <module name="clk_camera" kind="clock_source" version="15.0" enabled="1">
+  <parameter name="clockFrequency" value="50000000" />
+  <parameter name="clockFrequencyKnown" value="false" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module name="clk_qsys" kind="clock_source" version="15.0" enabled="1">
+  <parameter name="clockFrequency" value="50000000" />
+  <parameter name="clockFrequencyKnown" value="false" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module name="convert_hsv_0" kind="convert_hsv" version="1.0" enabled="1">
+  <parameter name="PIPELINE" value="16" />
+ </module>
+ <module name="hsv_addr_gen_0" kind="hsv_addr_gen" version="1.0" enabled="1">
+  <parameter name="ADDR_BASE" value="134217728" />
+  <parameter name="ADDR_WIDTH" value="32" />
+  <parameter name="HEIGHT" value="480" />
+  <parameter name="WIDTH" value="640" />
+ </module>
+ <module
+   name="vid_write_buffer_0"
+   kind="vid_write_buffer"
+   version="2.0"
+   enabled="1">
+  <parameter name="ADDR_WIDTH" value="32" />
+  <parameter name="DATA_WIDTH" value="8" />
+  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
+ </module>
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="convert_hsv_0.dout"
+   end="bitpacker_0.din" />
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="bitpacker_0.dout"
+   end="vid_write_buffer_0.st0" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_camera.clk"
+   end="hsv_addr_gen_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_camera.clk"
+   end="convert_hsv_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_qsys.clk"
+   end="vid_write_buffer_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_camera.clk"
+   end="bitpacker_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_camera.clk"
+   end="vid_write_buffer_0.st_clock" />
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="vid_write_buffer_0.addr_gen"
+   end="hsv_addr_gen_0.addr_gen">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_qsys.clk_reset"
+   end="clk_camera.clk_in_reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_qsys.clk_reset"
+   end="convert_hsv_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_qsys.clk_reset"
+   end="vid_write_buffer_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_qsys.clk_reset"
+   end="hsv_addr_gen_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_qsys.clk_reset"
+   end="bitpacker_0.reset" />
+ <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
+ <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
+</system>

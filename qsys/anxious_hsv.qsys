@@ -81,22 +81,6 @@
          type = "String";
       }
    }
-   element bitpacker_0
-   {
-      datum _sortIndex
-      {
-         value = "3";
-         type = "int";
-      }
-   }
-   element camera_mm_0
-   {
-      datum _sortIndex
-      {
-         value = "21";
-         type = "int";
-      }
-   }
    element camera_sioc
    {
       datum _sortIndex
@@ -137,19 +121,35 @@
          type = "int";
       }
    }
+   element camera_st_to_hsv_mm
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+   }
+   element camera_st_to_rgb_mm
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+   }
+   element camera_vga_buffer_switcher
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
    element clk_0
    {
       datum _sortIndex
       {
          value = "0";
-         type = "int";
-      }
-   }
-   element convert_hsv_0
-   {
-      datum _sortIndex
-      {
-         value = "2";
          type = "int";
       }
    }
@@ -161,19 +161,11 @@
          type = "int";
       }
    }
-   element frame_buffer_switcher_1
+   element hsv_buffer_switcher
    {
       datum _sortIndex
       {
-         value = "6";
-         type = "int";
-      }
-   }
-   element hsv_addr_gen_0
-   {
-      datum _sortIndex
-      {
-         value = "5";
+         value = "4";
          type = "int";
       }
    }
@@ -321,6 +313,14 @@
          type = "boolean";
       }
    }
+   element st_naive_multi_0
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+   }
    element sysid_qsys_0
    {
       datum _sortIndex
@@ -342,14 +342,6 @@
       datum _sortIndex
       {
          value = "11";
-         type = "int";
-      }
-   }
-   element vid_write_buffer_0
-   {
-      datum _sortIndex
-      {
-         value = "4";
          type = "int";
       }
    }
@@ -375,21 +367,6 @@
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
-   name="camera_mm_0_buffer_port"
-   internal="camera_mm_0.buffer_port"
-   type="conduit"
-   dir="end" />
- <interface
-   name="camera_mm_0_conduit"
-   internal="camera_mm_0.conduit"
-   type="conduit"
-   dir="end" />
- <interface
-   name="camera_mm_0_vsync"
-   internal="camera_mm_0.vsync"
-   type="conduit"
-   dir="end" />
- <interface
    name="camera_sioc_external_connection"
    internal="camera_sioc.external_connection"
    type="conduit"
@@ -402,6 +379,11 @@
  <interface
    name="camera_st_0_conduit"
    internal="camera_st_0.conduit"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="camera_vga_buffer_switcher_enable"
+   internal="camera_vga_buffer_switcher.enable"
    type="conduit"
    dir="end" />
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
@@ -417,12 +399,12 @@
    dir="end" />
  <interface
    name="frame_buffer_switcher_1_enable"
-   internal="frame_buffer_switcher_1.enable"
+   internal="hsv_buffer_switcher.enable"
    type="conduit"
    dir="end" />
  <interface
    name="frame_buffer_switcher_1_read_buffer"
-   internal="frame_buffer_switcher_1.read_buffer"
+   internal="hsv_buffer_switcher.read_buffer"
    type="conduit"
    dir="end" />
  <interface
@@ -458,29 +440,10 @@
    name="vga_composer_0_buffer_port_render"
    internal="vga_composer_0.buffer_port_render" />
  <interface
-   name="vga_composer_0_cam_buffer"
-   internal="vga_composer_0.cam_buffer"
-   type="conduit"
-   dir="end" />
- <interface
    name="vga_composer_0_conduit"
    internal="vga_composer_0.conduit"
    type="conduit"
    dir="end" />
- <interface
-   name="vid_write_buffer_0_buffer_port"
-   internal="vid_write_buffer_0.buffer_port" />
- <module name="bitpacker_0" kind="bitpacker" version="1.1" enabled="1">
-  <parameter name="FIRST_SYMBOL_IN_MSB" value="0" />
-  <parameter name="PACK_LENGTH" value="8" />
- </module>
- <module name="camera_mm_0" kind="camera_mm" version="2.1" enabled="1">
-  <parameter name="ADDR_WIDTH" value="27" />
-  <parameter name="BANK" value="0" />
-  <parameter name="DATA_WIDTH" value="32" />
-  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
-  <parameter name="FRAME_PIXELS" value="307200" />
- </module>
  <module
    name="camera_sioc"
    kind="altera_avalon_pio"
@@ -520,14 +483,54 @@
  <module name="camera_st_0" kind="camera_st" version="1.0" enabled="1">
   <parameter name="DATA_WIDTH" value="24" />
  </module>
+ <module
+   name="camera_st_to_hsv_mm"
+   kind="camera_st_to_hsv_mm"
+   version="1.0"
+   enabled="1">
+  <parameter name="AUTO_CLK_CAMERA_CLOCK_DOMAIN" value="3" />
+  <parameter name="AUTO_CLK_CAMERA_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_CLK_CAMERA_RESET_DOMAIN" value="3" />
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
+  <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='onchip_memory2_1.s1' start='0x8000000' end='0x8020000' /></address-map>]]></parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@6d5938b2</parameter>
+  <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_st_to_hsv_mm</parameter>
+ </module>
+ <module
+   name="camera_st_to_rgb_mm"
+   kind="camera_st_to_rgb_mm"
+   version="1.0"
+   enabled="1">
+  <parameter name="AUTO_CLK_CAMERA_CLOCK_DOMAIN" value="3" />
+  <parameter name="AUTO_CLK_CAMERA_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_CLK_CAMERA_RESET_DOMAIN" value="3" />
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
+  <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='new_sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@2dbe2e30</parameter>
+  <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_st_to_rgb_mm</parameter>
+ </module>
+ <module
+   name="camera_vga_buffer_switcher"
+   kind="frame_buffer_switcher"
+   version="2.0"
+   enabled="1" />
  <module name="clk_0" kind="clock_source" version="15.0" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
- </module>
- <module name="convert_hsv_0" kind="convert_hsv" version="1.0" enabled="1">
-  <parameter name="PIPELINE" value="16" />
  </module>
  <module
    name="frame_buffer_switcher_0"
@@ -535,16 +538,10 @@
    version="2.0"
    enabled="1" />
  <module
-   name="frame_buffer_switcher_1"
+   name="hsv_buffer_switcher"
    kind="frame_buffer_switcher"
    version="2.0"
    enabled="1" />
- <module name="hsv_addr_gen_0" kind="hsv_addr_gen" version="1.0" enabled="1">
-  <parameter name="ADDR_BASE" value="134217728" />
-  <parameter name="ADDR_WIDTH" value="32" />
-  <parameter name="HEIGHT" value="480" />
-  <parameter name="WIDTH" value="640" />
- </module>
  <module
    name="hsv_fetch_buffer_port"
    kind="altera_avalon_pio"
@@ -728,7 +725,7 @@
   <parameter name="icache_tagramBlockType" value="Automatic" />
   <parameter name="impl" value="Fast" />
   <parameter name="instAddrWidth" value="28" />
-  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='new_sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='onchip_memory2_1.s1' start='0x8000000' end='0x8020000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x8020800' end='0x8021000' /><slave name='onchip_memory2_0.s1' start='0x8080000' end='0x80B2000' /></address-map>]]></parameter>
+  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_0.debug_mem_slave' start='0x8020800' end='0x8021000' /><slave name='onchip_memory2_0.s1' start='0x8080000' end='0x80B2000' /></address-map>]]></parameter>
   <parameter name="instructionMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="instructionMasterHighPerformanceMapParam" value="" />
   <parameter name="instruction_master_high_performance_paddr_base" value="0" />
@@ -904,6 +901,15 @@
   <parameter name="writable" value="true" />
  </module>
  <module
+   name="st_naive_multi_0"
+   kind="st_naive_multi"
+   version="1.0"
+   enabled="1">
+  <parameter name="DIN_DATA_WIDTH" value="24" />
+  <parameter name="DOUT0_DATA_WIDTH" value="24" />
+  <parameter name="DOUT1_DATA_WIDTH" value="32" />
+ </module>
+ <module
    name="sysid_qsys_0"
    kind="altera_avalon_sysid_qsys"
    version="15.0"
@@ -918,24 +924,6 @@
   <parameter name="FIFO_LENGTH_LOG_2" value="6" />
   <parameter name="RENDER_BANK" value="1" />
  </module>
- <module
-   name="vid_write_buffer_0"
-   kind="vid_write_buffer"
-   version="2.0"
-   enabled="1">
-  <parameter name="ADDR_WIDTH" value="32" />
-  <parameter name="DATA_WIDTH" value="8" />
-  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
- </module>
- <connection
-   kind="avalon"
-   version="15.0"
-   start="camera_mm_0.avalon_master"
-   end="new_sdram_controller_0.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
  <connection
    kind="avalon"
    version="15.0"
@@ -1083,45 +1071,36 @@
  <connection
    kind="avalon"
    version="15.0"
-   start="nios2_gen2_0.instruction_master"
+   start="camera_st_to_hsv_mm.master"
+   end="onchip_memory2_1.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="camera_st_to_rgb_mm.master"
    end="new_sdram_controller_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
-   kind="avalon"
+   kind="avalon_streaming"
    version="15.0"
-   start="nios2_gen2_0.instruction_master"
-   end="onchip_memory2_1.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08000000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="15.0"
-   start="vid_write_buffer_0.m0"
-   end="onchip_memory2_1.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08000000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
+   start="st_naive_multi_0.dout0"
+   end="camera_st_to_hsv_mm.sink" />
  <connection
    kind="avalon_streaming"
    version="15.0"
-   start="convert_hsv_0.dout"
-   end="bitpacker_0.din" />
- <connection
-   kind="avalon_streaming"
-   version="15.0"
-   start="bitpacker_0.dout"
-   end="vid_write_buffer_0.st0" />
+   start="st_naive_multi_0.dout1"
+   end="camera_st_to_rgb_mm.sink" />
  <connection
    kind="avalon_streaming"
    version="15.0"
    start="camera_st_0.st0"
-   end="convert_hsv_0.din" />
+   end="st_naive_multi_0.din" />
  <connection kind="clock" version="15.0" start="clk_0.clk" end="nios2_gen2_0.clk" />
  <connection
    kind="clock"
@@ -1156,6 +1135,16 @@
    kind="clock"
    version="15.0"
    start="clk_0.clk"
+   end="camera_st_to_hsv_mm.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_0.clk"
+   end="camera_st_to_rgb_mm.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_0.clk"
    end="onchip_memory2_0.clk1" />
  <connection
    kind="clock"
@@ -1166,13 +1155,7 @@
    kind="clock"
    version="15.0"
    start="clk_0.clk"
-   end="vid_write_buffer_0.clock" />
- <connection
-   kind="clock"
-   version="15.0"
-   start="clk_0.clk"
    end="vga_composer_0.clock" />
- <connection kind="clock" version="15.0" start="clk_0.clk" end="camera_mm_0.clock" />
  <connection
    kind="clock"
    version="15.0"
@@ -1182,7 +1165,12 @@
    kind="clock"
    version="15.0"
    start="clk_0.clk"
-   end="frame_buffer_switcher_1.read_clock" />
+   end="hsv_buffer_switcher.read_clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_0.clk"
+   end="camera_vga_buffer_switcher.read_clock" />
  <connection
    kind="clock"
    version="15.0"
@@ -1192,32 +1180,32 @@
    kind="clock"
    version="15.0"
    start="camera_st_0.clock"
-   end="convert_hsv_0.clock" />
+   end="camera_st_to_hsv_mm.clk_camera" />
  <connection
    kind="clock"
    version="15.0"
    start="camera_st_0.clock"
-   end="bitpacker_0.clock" />
+   end="camera_st_to_rgb_mm.clk_camera" />
  <connection
    kind="clock"
    version="15.0"
    start="camera_st_0.clock"
-   end="hsv_addr_gen_0.clock" />
+   end="st_naive_multi_0.clock" />
  <connection
    kind="clock"
    version="15.0"
    start="camera_st_0.clock"
-   end="vid_write_buffer_0.st_clock" />
+   end="hsv_buffer_switcher.write_clk" />
  <connection
    kind="clock"
    version="15.0"
    start="camera_st_0.clock"
-   end="frame_buffer_switcher_1.write_clk" />
+   end="camera_vga_buffer_switcher.write_clk" />
  <connection
    kind="conduit"
    version="15.0"
-   start="hsv_addr_gen_0.addr_gen"
-   end="vid_write_buffer_0.addr_gen">
+   start="camera_st_to_hsv_mm.buffer_switch"
+   end="hsv_buffer_switcher.write_buffer">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
   <parameter name="startPort" value="" />
@@ -1227,8 +1215,19 @@
  <connection
    kind="conduit"
    version="15.0"
-   start="hsv_addr_gen_0.buffer_switch"
-   end="frame_buffer_switcher_1.write_buffer">
+   start="camera_st_to_rgb_mm.buffer_switch"
+   end="camera_vga_buffer_switcher.write_buffer">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="camera_vga_buffer_switcher.read_buffer"
+   end="vga_composer_0.cam_buffer">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
   <parameter name="startPort" value="" />
@@ -1257,31 +1256,6 @@
    kind="reset"
    version="15.0"
    start="clk_0.clk_reset"
-   end="camera_st_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_0.clk_reset"
-   end="convert_hsv_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_0.clk_reset"
-   end="bitpacker_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_0.clk_reset"
-   end="vid_write_buffer_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_0.clk_reset"
-   end="hsv_addr_gen_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_0.clk_reset"
    end="nios2_gen2_0.reset" />
  <connection
    kind="reset"
@@ -1342,12 +1316,32 @@
    kind="reset"
    version="15.0"
    start="clk_0.clk_reset"
-   end="frame_buffer_switcher_1.reset" />
+   end="hsv_buffer_switcher.reset" />
  <connection
    kind="reset"
    version="15.0"
    start="clk_0.clk_reset"
-   end="camera_mm_0.reset" />
+   end="camera_st_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_0.clk_reset"
+   end="st_naive_multi_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_0.clk_reset"
+   end="camera_st_to_hsv_mm.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_0.clk_reset"
+   end="camera_st_to_rgb_mm.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_0.clk_reset"
+   end="camera_vga_buffer_switcher.reset" />
  <connection
    kind="reset"
    version="15.0"
@@ -1362,31 +1356,6 @@
    kind="reset"
    version="15.0"
    start="nios2_gen2_0.debug_reset_request"
-   end="camera_st_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="nios2_gen2_0.debug_reset_request"
-   end="convert_hsv_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="nios2_gen2_0.debug_reset_request"
-   end="bitpacker_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="nios2_gen2_0.debug_reset_request"
-   end="vid_write_buffer_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="nios2_gen2_0.debug_reset_request"
-   end="hsv_addr_gen_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="nios2_gen2_0.debug_reset_request"
    end="nios2_gen2_0.reset" />
  <connection
    kind="reset"
@@ -1417,7 +1386,7 @@
    kind="reset"
    version="15.0"
    start="nios2_gen2_0.debug_reset_request"
-   end="frame_buffer_switcher_1.reset" />
+   end="hsv_buffer_switcher.reset" />
  <connection
    kind="reset"
    version="15.0"
@@ -1448,6 +1417,11 @@
    version="15.0"
    start="nios2_gen2_0.debug_reset_request"
    end="sysid_qsys_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="nios2_gen2_0.debug_reset_request"
+   end="camera_st_0.reset" />
  <connection
    kind="reset"
    version="15.0"
