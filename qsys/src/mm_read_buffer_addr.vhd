@@ -1,10 +1,5 @@
 -- altera vhdl_input_version vhdl_2008
 
--- Read buffer that prefetchs read addresses and issues read burst commands to
--- Avalon-MM system. The buffer gets next address to read at `s_addr` port,
--- then assert `s_prefetch` for exactly 1 clock cycle when complete to get
--- next address.
-
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
@@ -28,7 +23,6 @@ entity mm_read_buffer_addr is
         waitrequest   : in  std_logic;
         readdatavalid : in  std_logic;
         lock          : out std_logic;
-        burstcount    : out std_logic_vector(FIFO_LENGTH_LOG_2 downto 0);
         vsync_out     : out std_logic;
 
         ---- Reads from another clock domain  ----
@@ -60,19 +54,24 @@ architecture bhv of mm_read_buffer_addr is
         wrstate: wrstate_type;
         wrsel: natural range 0 to 1;
         wrcnt: unsigned(FIFO_LENGTH_LOG_2 - 1 downto 0);
+        cmdcnt: unsigned(FIFO_LENGTH_LOG_2 - 1 downto 0);
         read: std_logic;
         lock: std_logic;
         resetreq: std_logic;
+        resetreq_sync: std_logic;
+        wrreset_n: std_logic;
     end record;
-    constant MAX_BURSTCNT : unsigned(FIFO_LENGTH_LOG_2 - 1 downto 0) := (others => '1');
 
     constant INIT_REGS: reg_type := (
         wrstate => S_WAIT,
         wrsel => 0,
         wrcnt => (others => '0'),
+        cmdcnt => (others => '0'),
         read => '0',
         lock => '0',
-        resetreq => '0'
+        resetreq => '0',
+        resetreq_sync => '0',
+        wrreset_n => '1'
     );
 
     signal r: reg_type := INIT_REGS;
@@ -82,15 +81,14 @@ architecture bhv of mm_read_buffer_addr is
         rdstate: rdstate_type;
         rdsel: natural range 0 to 1;
         rdcnt: unsigned(FIFO_LENGTH_LOG_2 - 1 downto 0);
-        resetreq, resetreq_sync: std_logic;
+        resetreq: std_logic;
     end record;
 
     constant S_CLK_INIT_REGS: s_clk_reg_type := (
         rdstate => S_NORMAL,
         rdsel => 0,
         rdcnt => (others => '0'),
-        resetreq => '0',
-        resetreq_sync => '0'
+        resetreq => '0'
     );
 
     signal sr: s_clk_reg_type := S_CLK_INIT_REGS;
@@ -120,6 +118,8 @@ begin
     P_comb: process(all)
         variable v: reg_type;
         variable sv: s_clk_reg_type;
+
+        variable read_cmd_accepted: std_logic;
     begin
         -- default: hold the values
         v := r;
@@ -129,37 +129,48 @@ begin
             wr(i) <= '0';
             rd(i) <= '0';
         end loop;
+
         addr_fetch <= '0';
-        wrreset_n <= '1';
+        wrreset_n <= r.wrreset_n;
+
+        v.wrreset_n := '1';
 
         case r.wrstate is
             when S_WAIT =>
                 if wrempty(r.wrsel) and not r.resetreq then
+                    v.wrstate := S_READING;
                     v.read := '1';
                     v.lock := '1';
-                    v.wrstate := S_READING;
+                    v.cmdcnt := (others => '0');
                 else
                     v.read := '0';
-                    v.lock := '0';
                 end if;
             when S_READING =>
-                if not waitrequest then
-                    v.read := '0';
+                -- Address phase: issue `FIFO_LENGTH' read commands with `lock'
+                read_cmd_accepted := r.read and not waitrequest;
+                addr_fetch <= read_cmd_accepted;
+                if read_cmd_accepted then
+                    v.cmdcnt := (r.cmdcnt + 1) mod (2 ** FIFO_LENGTH_LOG_2);
+                    if v.cmdcnt = 0 then
+                        v.read := '0';
+                    end if;
+                    if v.cmdcnt = 2 ** FIFO_LENGTH_LOG_2 - 1 then
+                        v.lock := '0';
+                    end if;
                 end if;
+                -- Data phase
                 wr(r.wrsel) <= readdatavalid;
                 if readdatavalid then
                     v.wrcnt := (r.wrcnt + 1) mod (2 ** FIFO_LENGTH_LOG_2);
-                    if v.wrcnt = MAX_BURSTCNT then
-                        v.lock := '0';
-                    elsif v.wrcnt = 0 then
+                    if v.wrcnt = 0 then
                         if r.resetreq then
                             v := INIT_REGS;
-                            sv := S_CLK_INIT_REGS;
-                            wrreset_n <= '0';
+                            -- sv := S_CLK_INIT_REGS;
+                            v.wrreset_n := '0';
+                            v.wrstate := S_WAIT;
                         else
                             v.wrsel   := 1 - r.wrsel;
                             v.wrstate := S_WAIT;
-                            addr_fetch  <= '1';
                         end if;
                     end if;
                 end if;
@@ -169,6 +180,7 @@ begin
             when S_NORMAL =>
                 sv.resetreq := '0';
                 if s_read and rdempty(sr.rdsel) then
+                    sv := S_CLK_INIT_REGS;
                     sv.rdstate := S_SKIP;
                 end if;
             when S_SKIP =>
@@ -178,8 +190,8 @@ begin
                 end if;
         end case;
 
-        v.resetreq := sr.resetreq_sync;
-        sv.resetreq_sync := sr.resetreq; -- 2-stage sync
+        v.resetreq_sync := sr.resetreq;
+        v.resetreq := r.resetreq_sync; -- 2-stage sync
 
         -- use new state to determine the values
         case sv.rdstate is
@@ -196,8 +208,6 @@ begin
                 s_readdata <= (others => '0');
         end case;
 
-        burstcount   <= std_logic_vector(
-            to_unsigned(2 ** FIFO_LENGTH_LOG_2, FIFO_LENGTH_LOG_2 + 1));
         read         <= r.read;
         lock         <= r.lock;
 
@@ -207,9 +217,8 @@ begin
     end process;
 
     P_addr_gen : process(clk, wrreset_n)
-        constant MAX_COLS : positive := (VIEW_WIDTH / (2 ** FIFO_LENGTH_LOG_2));
-        variable row      : unsigned(8 downto 0) := (others => '0');
-        variable col      : unsigned((9 - FIFO_LENGTH_LOG_2) downto 0) := (others => '0');
+        variable row : unsigned(8 downto 0) := (others => '0');
+        variable col : unsigned(9 downto 0) := (others => '0');
     begin
         if not wrreset_n then
             row := (others => '0');
@@ -218,7 +227,7 @@ begin
         elsif rising_edge(clk) then
             vsync_out <= '0';
             if addr_fetch then
-                if col = MAX_COLS - 1 then
+                if col = VIEW_WIDTH - 1 then
                     col := (others => '0');
                     if row = VIEW_HEIGHT - 1 then
                         row := (others => '0');
@@ -231,8 +240,7 @@ begin
                 end if;
             end if;
         end if;
-        address(20 downto 0) <= std_logic_vector(row) & std_logic_vector(col) &
-                                std_logic_vector(to_unsigned(0, FIFO_LENGTH_LOG_2)) & "00";
+        address(20 downto 0) <= std_logic_vector(row) & std_logic_vector(col) & "00";
     end process;
 
     U_fifo_arr_gen: for i in 0 to 1 generate

@@ -24,16 +24,16 @@ entity vga_composer is
         cam_readdata      : in  std_logic_vector(DATA_WIDTH - 1 downto 0);
         cam_waitrequest   : in  std_logic;
         cam_readdatavalid : in  std_logic;
-        cam_burstcount    : out std_logic_vector(FIFO_LENGTH_LOG_2 downto 0);
-        --cam_lock          : out std_logic;
-        
+        -- cam_burstcount    : out std_logic_vector(FIFO_LENGTH_LOG_2 downto 0);
+        cam_lock          : out std_logic;
+
         render_address       : out std_logic_vector(ADDR_WIDTH - 1 downto 0);
         render_read          : out std_logic;
         render_readdata      : in  std_logic_vector(DATA_WIDTH - 1 downto 0);
         render_waitrequest   : in  std_logic;
-        render_readdatavalid : in  std_logic; 
-        render_burstcount    : out std_logic_vector(FIFO_LENGTH_LOG_2 downto 0);
-        --render_lock          : out std_logic;
+        render_readdatavalid : in  std_logic;
+        -- render_burstcount    : out std_logic_vector(FIFO_LENGTH_LOG_2 downto 0);
+        render_lock          : out std_logic;
 
         ---- VGA ----
 		VGA_B         : out std_logic_vector(7 downto 0);
@@ -47,11 +47,11 @@ entity vga_composer is
 
         ---- Exported Connections ----
         clk_vga       : in  std_logic;
-        
+
         ---- Frame Buffer Signals ----
         cam_vsync_out     : out std_logic;
         cam_buffer_port   : in  std_logic_vector(1 downto 0);
-        
+
         render_vsync_out     : out std_logic;
         render_buffer_port   : in  std_logic_vector(1 downto 0)
 	);
@@ -98,7 +98,7 @@ begin
     begin
         -- default: hold the values
         v := r;
-        
+
         if not disp_ena then
         	rgb := (others => '0');
         elsif vga_render_data(24) then
@@ -116,7 +116,7 @@ begin
         VGA_B   <= r.vga_blue;
         VGA_VS  <= vsync;
         VGA_CLK <= clk_vga;
-	    
+
         -- apply the new values
         rin <= v;
     end process;
@@ -152,8 +152,8 @@ begin
             readdata      => cam_readdata,
             waitrequest   => cam_waitrequest,
             readdatavalid => cam_readdatavalid,
-            burstcount    => cam_burstcount,
-            --lock          => cam_lock,
+            -- burstcount    => cam_burstcount,
+            lock          => cam_lock,
             vsync_out     => cam_vsync_out,
             -- End of Avalon-MM Master Interface
             s_clk         => clk_vga,
@@ -161,9 +161,9 @@ begin
             s_readdata    => vga_cam_data,
             s_vsync       => vsync
         );
-    
+
     cam_address(26 downto 21) <= CAM_BANK & "00" & cam_buffer_port;
-        
+
     U_render_buffer: entity work.mm_read_buffer_addr
         generic map (
             DATA_WIDTH => DATA_WIDTH,
@@ -181,8 +181,8 @@ begin
             readdata      => render_readdata,
             waitrequest   => render_waitrequest,
             readdatavalid => render_readdatavalid,
-            burstcount    => render_burstcount,
-            --lock          => render_lock,
+            -- burstcount    => render_burstcount,
+            lock          => render_lock,
             vsync_out     => render_vsync_out,
             -- End of Avalon-MM Master Interface
             s_clk         => clk_vga,
@@ -190,7 +190,7 @@ begin
             s_readdata    => vga_render_data,
             s_vsync       => vsync
         );
-    
+
     render_address(26 downto 21) <= RENDER_BANK & "00" & render_buffer_port;
-    
+
 end architecture bhv;
