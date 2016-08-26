@@ -193,6 +193,30 @@
          type = "String";
       }
    }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
    element bitpacker_0
    {
       datum _sortIndex
@@ -215,7 +239,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
       }
    }
@@ -241,7 +265,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
       }
    }
@@ -267,7 +291,7 @@
       }
       datum baseAddress
       {
-         value = "134488096";
+         value = "134357024";
          type = "String";
       }
    }
@@ -293,7 +317,7 @@
       }
       datum baseAddress
       {
-         value = "134488096";
+         value = "134357024";
          type = "String";
       }
    }
@@ -319,7 +343,7 @@
       }
       datum baseAddress
       {
-         value = "134488112";
+         value = "134357040";
          type = "String";
       }
    }
@@ -345,7 +369,7 @@
       }
       datum baseAddress
       {
-         value = "134488112";
+         value = "134357040";
          type = "String";
       }
    }
@@ -371,7 +395,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
       }
    }
@@ -410,7 +434,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
       }
    }
@@ -436,8 +460,24 @@
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
+      }
+   }
+   element ir_receiver_0
+   {
+      datum _sortIndex
+      {
+         value = "36";
+         type = "int";
+      }
+   }
+   element ir_receiver_0.avalon_slave_0
+   {
+      datum baseAddress
+      {
+         value = "268435456";
+         type = "String";
       }
    }
    element jtag_uart_0
@@ -462,7 +502,7 @@
       }
       datum baseAddress
       {
-         value = "134488136";
+         value = "134357064";
          type = "String";
       }
    }
@@ -488,7 +528,7 @@
       }
       datum baseAddress
       {
-         value = "134488136";
+         value = "134357064";
          type = "String";
       }
    }
@@ -517,7 +557,7 @@
    {
       datum _sortIndex
       {
-         value = "42";
+         value = "43";
          type = "int";
       }
       datum sopceditor_expanded
@@ -538,7 +578,7 @@
    {
       datum _sortIndex
       {
-         value = "40";
+         value = "41";
          type = "int";
       }
       datum sopceditor_expanded
@@ -572,7 +612,7 @@
    {
       datum baseAddress
       {
-         value = "134486016";
+         value = "134354944";
          type = "String";
       }
    }
@@ -593,7 +633,7 @@
    {
       datum baseAddress
       {
-         value = "134486016";
+         value = "134354944";
          type = "String";
       }
    }
@@ -622,7 +662,7 @@
    {
       datum _sortIndex
       {
-         value = "41";
+         value = "42";
          type = "int";
       }
       datum sopceditor_expanded
@@ -677,7 +717,7 @@
       }
       datum baseAddress
       {
-         value = "134488080";
+         value = "134357008";
          type = "String";
       }
    }
@@ -690,7 +730,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
       }
    }
@@ -703,7 +743,7 @@
       }
       datum baseAddress
       {
-         value = "134488080";
+         value = "134357008";
          type = "String";
       }
    }
@@ -729,7 +769,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
       }
    }
@@ -768,7 +808,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
       }
    }
@@ -802,7 +842,7 @@
    {
       datum baseAddress
       {
-         value = "134488064";
+         value = "134356992";
          type = "String";
       }
    }
@@ -815,7 +855,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
       }
    }
@@ -828,7 +868,7 @@
       }
       datum baseAddress
       {
-         value = "134488064";
+         value = "134356992";
          type = "String";
       }
    }
@@ -836,7 +876,7 @@
    {
       datum _sortIndex
       {
-         value = "36";
+         value = "37";
          type = "int";
       }
       datum sopceditor_expanded
@@ -849,7 +889,7 @@
    {
       datum _sortIndex
       {
-         value = "38";
+         value = "39";
          type = "int";
       }
       datum sopceditor_expanded
@@ -870,7 +910,7 @@
    {
       datum _sortIndex
       {
-         value = "39";
+         value = "40";
          type = "int";
       }
       datum sopceditor_expanded
@@ -891,7 +931,7 @@
    {
       datum _sortIndex
       {
-         value = "37";
+         value = "38";
          type = "int";
       }
       datum sopceditor_expanded
@@ -961,7 +1001,7 @@
       }
       datum baseAddress
       {
-         value = "134479872";
+         value = "134348800";
          type = "String";
       }
    }
@@ -990,7 +1030,7 @@
    {
       datum baseAddress
       {
-         value = "134488128";
+         value = "134357056";
          type = "String";
       }
    }
@@ -1024,7 +1064,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
       }
    }
@@ -1092,6 +1132,16 @@
    type="conduit"
    dir="end" />
  <interface name="clk" internal="clk.clk_in" type="clock" dir="end" />
+ <interface
+   name="ir_receiver_0_ir_clock"
+   internal="ir_receiver_0.ir_clock"
+   type="clock"
+   dir="end" />
+ <interface
+   name="ir_receiver_0_irda"
+   internal="ir_receiver_0.IRDA"
+   type="conduit"
+   dir="end" />
  <interface
    name="key_pio_external_connection"
    internal="key_pio.external_connection"
@@ -1295,6 +1345,7 @@
   <parameter name="HEIGHT" value="480" />
   <parameter name="WIDTH" value="640" />
  </module>
+ <module name="ir_receiver_0" kind="ir_receiver" version="1.0" enabled="1" />
  <module
    name="jtag_uart_0"
    kind="altera_avalon_jtag_uart"
@@ -1409,7 +1460,7 @@
   <parameter name="dataAddrWidth" value="28" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='recog_memory_0.s1' start='0x8000000' end='0x8014000' /><slave name='shared_memory.s1' start='0x8040000' end='0x8041000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x8041800' end='0x8042000' /><slave name='recog_vsync_pio_0.s1' start='0x8042000' end='0x8042010' /><slave name='recog_buffer_port_pio_0.s1' start='0x8042010' end='0x8042020' /><slave name='camera_sioc_0.s1' start='0x8042020' end='0x8042030' /><slave name='camera_siod_0.s1' start='0x8042030' end='0x8042040' /><slave name='sysid_qsys_0.control_slave' start='0x8042040' end='0x8042048' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x8042048' end='0x8042050' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='recog_memory_0.s1' start='0x8000000' end='0x8014000' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x8021800' end='0x8022000' /><slave name='recog_vsync_pio_0.s1' start='0x8022000' end='0x8022010' /><slave name='recog_buffer_port_pio_0.s1' start='0x8022010' end='0x8022020' /><slave name='camera_sioc_0.s1' start='0x8022020' end='0x8022030' /><slave name='camera_siod_0.s1' start='0x8022030' end='0x8022040' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x8022048' end='0x8022050' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -1448,7 +1499,7 @@
   <parameter name="icache_tagramBlockType" value="Automatic" />
   <parameter name="impl" value="Fast" />
   <parameter name="instAddrWidth" value="28" />
-  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_0.debug_mem_slave' start='0x8041800' end='0x8042000' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_0.debug_mem_slave' start='0x8021800' end='0x8022000' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
   <parameter name="instructionMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="instructionMasterHighPerformanceMapParam" value="" />
   <parameter name="instruction_master_high_performance_paddr_base" value="0" />
@@ -1589,7 +1640,7 @@
   <parameter name="dataAddrWidth" value="28" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='recog_memory_1.s1' start='0x8000000' end='0x8014000' /><slave name='shared_memory.s1' start='0x8040000' end='0x8041000' /><slave name='nios2_gen2_1.debug_mem_slave' start='0x8041800' end='0x8042000' /><slave name='recog_vsync_pio_1.s1' start='0x8042000' end='0x8042010' /><slave name='recog_buffer_port_pio_1.s1' start='0x8042010' end='0x8042020' /><slave name='camera_sioc_1.s1' start='0x8042020' end='0x8042030' /><slave name='camera_siod_1.s1' start='0x8042030' end='0x8042040' /><slave name='sysid_qsys_0.control_slave' start='0x8042040' end='0x8042048' /><slave name='jtag_uart_1.avalon_jtag_slave' start='0x8042048' end='0x8042050' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='recog_memory_1.s1' start='0x8000000' end='0x8014000' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='nios2_gen2_1.debug_mem_slave' start='0x8021800' end='0x8022000' /><slave name='recog_vsync_pio_1.s1' start='0x8022000' end='0x8022010' /><slave name='recog_buffer_port_pio_1.s1' start='0x8022010' end='0x8022020' /><slave name='camera_sioc_1.s1' start='0x8022020' end='0x8022030' /><slave name='camera_siod_1.s1' start='0x8022030' end='0x8022040' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='jtag_uart_1.avalon_jtag_slave' start='0x8022048' end='0x8022050' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -1628,7 +1679,7 @@
   <parameter name="icache_tagramBlockType" value="Automatic" />
   <parameter name="impl" value="Fast" />
   <parameter name="instAddrWidth" value="28" />
-  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_1.debug_mem_slave' start='0x8041800' end='0x8042000' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_1.debug_mem_slave' start='0x8021800' end='0x8022000' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
   <parameter name="instructionMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="instructionMasterHighPerformanceMapParam" value="" />
   <parameter name="instruction_master_high_performance_paddr_base" value="0" />
@@ -1766,10 +1817,10 @@
   <parameter name="customInstSlavesSystemInfo_nios_a" value="&lt;info/&gt;" />
   <parameter name="customInstSlavesSystemInfo_nios_b" value="&lt;info/&gt;" />
   <parameter name="customInstSlavesSystemInfo_nios_c" value="&lt;info/&gt;" />
-  <parameter name="dataAddrWidth" value="28" />
+  <parameter name="dataAddrWidth" value="29" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_2.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='render_port_pio.s1' start='0x8001000' end='0x8001010' /><slave name='key_pio.s1' start='0x8001010' end='0x8001020' /><slave name='jtag_uart_2.avalon_jtag_slave' start='0x8001020' end='0x8001028' /><slave name='shared_memory.s1' start='0x8040000' end='0x8041000' /><slave name='sysid_qsys_0.control_slave' start='0x8042040' end='0x8042048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_2.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='render_port_pio.s1' start='0x8001000' end='0x8001010' /><slave name='key_pio.s1' start='0x8001010' end='0x8001020' /><slave name='jtag_uart_2.avalon_jtag_slave' start='0x8001020' end='0x8001028' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='ir_receiver_0.avalon_slave_0' start='0x10000000' end='0x18000000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -1949,7 +2000,7 @@
   <parameter name="dataAddrWidth" value="28" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_3.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='render_port_pio.s1' start='0x8001000' end='0x8001010' /><slave name='render_start_pio.s1' start='0x8001010' end='0x8001020' /><slave name='render_vsync_pio_0.s1' start='0x8001020' end='0x8001030' /><slave name='jtag_uart_3.avalon_jtag_slave' start='0x8001030' end='0x8001038' /><slave name='shared_memory.s1' start='0x8040000' end='0x8041000' /><slave name='sysid_qsys_0.control_slave' start='0x8042040' end='0x8042048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_3.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='render_port_pio.s1' start='0x8001000' end='0x8001010' /><slave name='render_start_pio.s1' start='0x8001010' end='0x8001020' /><slave name='render_vsync_pio_0.s1' start='0x8001020' end='0x8001030' /><slave name='jtag_uart_3.avalon_jtag_slave' start='0x8001030' end='0x8001038' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -2457,7 +2508,7 @@
    start="nios2_gen2_1.data_master"
    end="jtag_uart_1.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08042048" />
+  <parameter name="baseAddress" value="0x08022048" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2475,7 +2526,7 @@
    start="nios2_gen2_0.data_master"
    end="jtag_uart_0.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08042048" />
+  <parameter name="baseAddress" value="0x08022048" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2490,10 +2541,19 @@
  <connection
    kind="avalon"
    version="15.0"
+   start="nios2_gen2_2.data_master"
+   end="ir_receiver_0.avalon_slave_0">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x10000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
    start="nios2_gen2_1.data_master"
    end="sysid_qsys_0.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08042040" />
+  <parameter name="baseAddress" value="0x08022040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2502,7 +2562,7 @@
    start="nios2_gen2_0.data_master"
    end="sysid_qsys_0.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08042040" />
+  <parameter name="baseAddress" value="0x08022040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2511,7 +2571,7 @@
    start="nios2_gen2_2.data_master"
    end="sysid_qsys_0.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08042040" />
+  <parameter name="baseAddress" value="0x08022040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2520,7 +2580,7 @@
    start="nios2_gen2_3.data_master"
    end="sysid_qsys_0.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08042040" />
+  <parameter name="baseAddress" value="0x08022040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2529,7 +2589,7 @@
    start="nios2_gen2_1.data_master"
    end="nios2_gen2_1.debug_mem_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08041800" />
+  <parameter name="baseAddress" value="0x08021800" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2556,16 +2616,7 @@
    start="nios2_gen2_0.data_master"
    end="nios2_gen2_0.debug_mem_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08041800" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="15.0"
-   start="nios2_gen2_1.data_master"
-   end="sdram_controller_0.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="baseAddress" value="0x08021800" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2583,7 +2634,7 @@
    start="nios2_gen2_1.data_master"
    end="camera_siod_1.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08042030" />
+  <parameter name="baseAddress" value="0x08022030" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2592,7 +2643,7 @@
    start="nios2_gen2_1.data_master"
    end="camera_sioc_1.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08042020" />
+  <parameter name="baseAddress" value="0x08022020" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2610,16 +2661,7 @@
    start="nios2_gen2_1.data_master"
    end="shared_memory.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08040000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="15.0"
-   start="nios2_gen2_0.data_master"
-   end="shared_memory.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08040000" />
+  <parameter name="baseAddress" value="0x08020000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2637,7 +2679,7 @@
    start="nios2_gen2_0.data_master"
    end="camera_siod_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08042030" />
+  <parameter name="baseAddress" value="0x08022030" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2646,16 +2688,7 @@
    start="nios2_gen2_0.data_master"
    end="camera_sioc_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08042020" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="15.0"
-   start="nios2_gen2_0.data_master"
-   end="sdram_controller_0.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="baseAddress" value="0x08022020" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2673,7 +2706,7 @@
    start="nios2_gen2_2.data_master"
    end="shared_memory.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08040000" />
+  <parameter name="baseAddress" value="0x08020000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2709,7 +2742,7 @@
    start="nios2_gen2_3.data_master"
    end="shared_memory.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08040000" />
+  <parameter name="baseAddress" value="0x08020000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2754,7 +2787,7 @@
    start="nios2_gen2_0.data_master"
    end="recog_buffer_port_pio_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08042010" />
+  <parameter name="baseAddress" value="0x08022010" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2772,7 +2805,7 @@
    start="nios2_gen2_0.data_master"
    end="recog_vsync_pio_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08042000" />
+  <parameter name="baseAddress" value="0x08022000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2781,7 +2814,7 @@
    start="nios2_gen2_1.data_master"
    end="recog_buffer_port_pio_1.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08042010" />
+  <parameter name="baseAddress" value="0x08022010" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2790,7 +2823,7 @@
    start="nios2_gen2_1.data_master"
    end="recog_vsync_pio_1.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08042000" />
+  <parameter name="baseAddress" value="0x08022000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2805,19 +2838,37 @@
  <connection
    kind="avalon"
    version="15.0"
-   start="nios2_gen2_1.instruction_master"
-   end="nios2_gen2_1.debug_mem_slave">
+   start="nios2_gen2_0.data_master"
+   end="shared_memory.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08041800" />
+  <parameter name="baseAddress" value="0x08020000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
    kind="avalon"
    version="15.0"
-   start="nios2_gen2_2.instruction_master"
-   end="nios2_gen2_2.debug_mem_slave">
+   start="nios2_gen2_0.data_master"
+   end="sdram_controller_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08000800" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_1.data_master"
+   end="sdram_controller_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_1.instruction_master"
+   end="nios2_gen2_1.debug_mem_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08021800" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2835,7 +2886,16 @@
    start="nios2_gen2_0.instruction_master"
    end="nios2_gen2_0.debug_mem_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08041800" />
+  <parameter name="baseAddress" value="0x08021800" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_2.instruction_master"
+   end="nios2_gen2_2.debug_mem_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08000800" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2991,6 +3051,7 @@
    version="15.0"
    start="clk.clk"
    end="vga_composer_0.clock" />
+ <connection kind="clock" version="15.0" start="clk.clk" end="ir_receiver_0.clock" />
  <connection
    kind="clock"
    version="15.0"
@@ -3367,6 +3428,11 @@
    version="15.0"
    start="clk.clk_reset"
    end="vga_composer_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="ir_receiver_0.reset" />
  <connection
    kind="reset"
    version="15.0"

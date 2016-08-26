@@ -27,18 +27,18 @@ const float stereo_dist = 17.6; // cm
 
 char msg[100], last_msg[100];
 
-Location find_location(point center_l, point center_r) {
-	int x_l = get_x(center_l), x_r = get_x(center_r);
+Location find_location(point p_l, point p_r) {
+	int x_l = get_x(p_l), x_r = get_x(p_r);
 	
 	Location loc;
 	loc.z = stereo_dist / ((x_l - center_x_l) / focus_x_l - (x_r - center_x_r) / focus_x_r);
 	loc.x = loc.z * (x_r - center_x_r) / focus_x_r;
-	loc.y = loc.z * (get_y(center_r) - center_y_r) / focus_y_r;
+	loc.y = loc.z * (get_y(p_r) - center_y_r) / focus_y_r;
 	
 	memcpy(last_msg, msg, sizeof(msg));
 	sprintf(msg, "Left (%3d,%3d)\nRight (%3d,%3d)\nPosition (%3d,%3d,%3d)",
-	        get_x(center_l), get_y(center_l),
-	        get_x(center_r), get_y(center_r),
+	        get_x(p_l), get_y(p_l),
+	        get_x(p_r), get_y(p_r),
 	        (int)loc.x, (int)loc.y, (int)loc.z);
 	
 	return loc;
@@ -119,6 +119,7 @@ void draw_overlay() {
 }
 
 void key_down(int key_code) {
+	printf("key down: %d\n", key_code);
 	float dx, dy, dz, radius;
 	switch (draw_state) {
 		case DRAW_SPHERE_CENTER:
