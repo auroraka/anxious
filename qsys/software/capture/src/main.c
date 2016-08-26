@@ -34,7 +34,7 @@ int main() {
 	clean_sdram(2);
 	reset_objects();
 	
-	int key_state = 1;
+	unsigned key_state = 1, key_code = 0xFF;
 	while (true) {
 		
 		unsigned center_l = SHARED_R(0), center_r = SHARED_R(1);
@@ -46,9 +46,10 @@ int main() {
 		
 		draw_overlay();
 		
-		if (KEY_R() == 0) {
+		key_code = IR_R();
+		if (key_code != 0xFF) {
 			if (key_state == 1) {
-				key_down(0);
+				key_down(key_code);
 			}
 			key_state = 0;
 		} else key_state = 1;

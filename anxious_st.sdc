@@ -13,8 +13,10 @@ create_clock -period 20 [get_ports CLOCK2_50]
 create_clock -period 20 [get_ports CLOCK3_50]
 
 create_clock -period 41.667 [get_ports {GPIO[24]}]
+create_clock -period 41.667 [get_ports {GPIO[6]}]
 
-set clk_pclk [get_clocks {GPIO[24]}]
+set clk_pclk0 [get_clocks {GPIO[24]}]
+set clk_pclk1 [get_clocks {GPIO[6]}]
 
 #**************************************************************
 # Create Generated Clock
@@ -74,8 +76,10 @@ set_output_delay -clock $clk_vga -min -1.5 $vga_output_ports
 # Set False Path
 #**************************************************************
 
-set_false_path -from $clk_qsys -to $clk_pclk
-set_false_path -from $clk_pclk -to $clk_qsys
+set_false_path -from $clk_qsys -to $clk_pclk0
+set_false_path -from $clk_pclk0 -to $clk_qsys
+set_false_path -from $clk_qsys -to $clk_pclk1
+set_false_path -from $clk_pclk1 -to $clk_qsys
 
 #**************************************************************
 # Set Multicycle Path

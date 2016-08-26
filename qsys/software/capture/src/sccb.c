@@ -1,6 +1,7 @@
 
 #if CPU_ID < 2
  
+#include "memory.h"
 #include "sccb.h"
 
 #include <stdio.h>
@@ -11,8 +12,13 @@
 
 #include "CameraOV7670RegisterDefinitions.h"
 
-#define SCCB_CLK 0x08042020
-#define SCCB_DATA 0x08042030
+#if CPU_ID == 0
+	#define SCCB_CLK CAMERA_SIOC_0_BASE
+	#define SCCB_DATA CAMERA_SIOD_0_BASE
+#else
+	#define SCCB_CLK CAMERA_SIOC_1_BASE
+	#define SCCB_DATA CAMERA_SIOD_1_BASE
+#endif
 
 #define SDA_DIR_IN() IOWR_ALTERA_AVALON_PIO_DIRECTION(SCCB_DATA, 0)
 #define SDA_DIR_OUT() IOWR_ALTERA_AVALON_PIO_DIRECTION(SCCB_DATA, 1)

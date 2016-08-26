@@ -232,94 +232,97 @@ wire render_buffer_vsync;
 assign render_buffer_vsync = render_vsync_all;
 
 anxious_capture u0 (
-    .cam_buffer_switcher_enable_enable                  (SW[4]),                  //                  cam_buffer_switcher_enable.enable
-    .camera_mm_0_conduit_clk_camera                     (clk_camera),   //               camera_mm_0_conduit.clk_camera
-    .camera_mm_0_conduit_enable_n                       (SW[3]),        //                                  .enable_n
-    .camera_mm_0_conduit_cam_din                        (SW[7] ? `CAM_DIN_1 : `CAM_DIN_0),   //                                  .cam_din
-    .camera_mm_0_conduit_cam_href                       (SW[7] ? `CAM_HREF_1 : `CAM_HREF_0),  //                                  .cam_href
-    .camera_mm_0_conduit_cam_pclk                       (SW[7] ? `CAM_PCLK_1 : `CAM_PCLK_0),  //                                  .cam_pclk
-    // .camera_mm_0_conduit_cam_pwdn                       (`CAM_PWDN_0),  //                                  .cam_pwdn
-    // .camera_mm_0_conduit_cam_reset                      (`CAM_RESET_0), //                                  .cam_reset
-    .camera_mm_0_conduit_cam_vsync                      (SW[7] ? `CAM_VSYNC_1 : `CAM_VSYNC_0), //                                  .cam_vsync
-    // .camera_mm_0_conduit_cam_xclk                       (`CAM_XCLK_0),  //                                  .cam_xclk
-    
-    .camera_sioc_0_external_connection_export           (`CAM_SIOC_0),           //           camera_sioc_0_external_connection.export
-    .camera_sioc_1_external_connection_export           (`CAM_SIOC_1),           //           camera_sioc_1_external_connection.export
-    .camera_siod_0_external_connection_export           (`CAM_SIOD_0),           //           camera_siod_0_external_connection.export
-    .camera_siod_1_external_connection_export           (`CAM_SIOD_1),           //           camera_siod_1_external_connection.export
-    
-    .camera_st_0_conduit_cam_din                        (`CAM_DIN_0),   //                                  .cam_din
-    .camera_st_0_conduit_cam_href                       (`CAM_HREF_0),  //                                  .cam_href
-    .camera_st_0_conduit_cam_pclk                       (`CAM_PCLK_0),  //                                  .cam_pclk
-    .camera_st_0_conduit_cam_pwdn                       (`CAM_PWDN_0),  //                                  .cam_pwdn
-    .camera_st_0_conduit_cam_reset                      (`CAM_RESET_0), //                                  .cam_reset
-    .camera_st_0_conduit_cam_vsync                      (`CAM_VSYNC_0), //                                  .cam_vsync
-    .camera_st_0_conduit_cam_xclk                       (`CAM_XCLK_0),  //                                  .cam_xclk
-    .camera_st_0_conduit_clk_camera                     (clk_camera),   //               camera_mm_0_conduit.clk_camera
-    .camera_st_0_conduit_enable_n                       (SW[1]),        //                                  .enable_n
-    
-    .camera_st_1_conduit_cam_din                        (`CAM_DIN_1),   //                                  .cam_din
-    .camera_st_1_conduit_cam_href                       (`CAM_HREF_1),  //                                  .cam_href
-    .camera_st_1_conduit_cam_pclk                       (`CAM_PCLK_1),  //                                  .cam_pclk
-    .camera_st_1_conduit_cam_pwdn                       (`CAM_PWDN_1),  //                                  .cam_pwdn
-    .camera_st_1_conduit_cam_reset                      (`CAM_RESET_1), //                                  .cam_reset
-    .camera_st_1_conduit_cam_vsync                      (`CAM_VSYNC_1), //                                  .cam_vsync
-    .camera_st_1_conduit_cam_xclk                       (`CAM_XCLK_1),  //                                  .cam_xclk
-    .camera_st_1_conduit_clk_camera                     (clk_camera),   //               camera_mm_0_conduit.clk_camera
-    .camera_st_1_conduit_enable_n                       (SW[2]),        //                                  .enable_n
+    .cam_buffer_switcher_enable_enable                  (SW[4]),
+    .camera_mm_0_conduit_clk_camera                     (clk_camera),
+    .camera_mm_0_conduit_enable_n                       (SW[3]),
+    .camera_mm_0_conduit_cam_din                        (`CAM_DIN_0),//(SW[7] ? `CAM_DIN_1 : `CAM_DIN_0),
+    .camera_mm_0_conduit_cam_href                       (`CAM_HREF_0),//(SW[7] ? `CAM_HREF_1 : `CAM_HREF_0),
+    .camera_mm_0_conduit_cam_pclk                       (`CAM_PCLK_0),//(SW[7] ? `CAM_PCLK_1 : `CAM_PCLK_0),
+    // .camera_mm_0_conduit_cam_pwdn                       (`CAM_PWDN_0),
+    // .camera_mm_0_conduit_cam_reset                      (`CAM_RESET_0),
+    .camera_mm_0_conduit_cam_vsync                      (`CAM_VSYNC_0),//(SW[7] ? `CAM_VSYNC_1 : `CAM_VSYNC_0),
+    // .camera_mm_0_conduit_cam_xclk                       (`CAM_XCLK_0),
 
-    .clk_clk                                            (clk_qsys),                                            //                                         clk.clk
+    .camera_sioc_0_external_connection_export           (`CAM_SIOC_0),
+    .camera_sioc_1_external_connection_export           (`CAM_SIOC_1),
+    .camera_siod_0_external_connection_export           (`CAM_SIOD_0),
+    .camera_siod_1_external_connection_export           (`CAM_SIOD_1),
 
-    .key_pio_external_connection_export                 (KEY[1]),                 //                 key_pio_external_connection.export
+    .camera_st_0_conduit_cam_din                        (`CAM_DIN_0),
+    .camera_st_0_conduit_cam_href                       (`CAM_HREF_0),
+    .camera_st_0_conduit_cam_pclk                       (`CAM_PCLK_0),
+    .camera_st_0_conduit_cam_pwdn                       (`CAM_PWDN_0),
+    .camera_st_0_conduit_cam_reset                      (`CAM_RESET_0),
+    .camera_st_0_conduit_cam_vsync                      (`CAM_VSYNC_0),
+    .camera_st_0_conduit_cam_xclk                       (`CAM_XCLK_0),
+    .camera_st_0_conduit_clk_camera                     (clk_camera),
+    .camera_st_0_conduit_enable_n                       (SW[1]),
 
-    .new_sdram_controller_0_wire_addr                   (DRAM_ADDR),   // new_sdram_controller_0_wire.addr
-    .new_sdram_controller_0_wire_ba                     (DRAM_BA),     //                            .ba
-    .new_sdram_controller_0_wire_cas_n                  (DRAM_CAS_N),  //                            .cas_n
-    .new_sdram_controller_0_wire_cke                    (DRAM_CKE),    //                            .cke
-    .new_sdram_controller_0_wire_cs_n                   (DRAM_CS_N),   //                            .cs_n
-    .new_sdram_controller_0_wire_dq                     (DRAM_DQ),     //                            .dq
-    .new_sdram_controller_0_wire_dqm                    (DRAM_DQM),    //                            .dqm
-    .new_sdram_controller_0_wire_ras_n                  (DRAM_RAS_N),  //                            .ras_n
-    .new_sdram_controller_0_wire_we_n                   (DRAM_WE_N),   //                            .we_n
-    
-    .recog_buffer_port_pio_0_external_connection_export (recog_buffer_port_0), // recog_buffer_port_pio_0_external_connection.export
-    .recog_buffer_port_pio_1_external_connection_export (recog_buffer_port_1), // recog_buffer_port_pio_1_external_connection.export
-    .recog_buffer_switcher_0_enable_enable              (SW[5]),              //              frame_buffer_switcher_0_enable.enable
-    .recog_buffer_switcher_0_read_buffer_buffer_port    (recog_buffer_port_0),    //         recog_buffer_switcher_0_read_buffer.buffer_port
-    .recog_buffer_switcher_0_read_buffer_buffer_vsync   (recog_buffer_vsync_0),   //                                            .buffer_vsync
-    .recog_buffer_switcher_1_enable_enable              (SW[5]),              //              recog_buffer_switcher_1_enable.enable
-    .recog_buffer_switcher_1_read_buffer_buffer_port    (recog_buffer_port_1),    //         recog_buffer_switcher_1_read_buffer.buffer_port
-    .recog_buffer_switcher_1_read_buffer_buffer_vsync   (recog_buffer_vsync_1),   //                                            .buffer_vsync
-    .recog_vsync_pio_0_external_connection_export       (recog_buffer_vsync_0),       //       recog_vsync_pio_0_external_connection.export
-    .recog_vsync_pio_1_external_connection_export       (recog_buffer_vsync_1),       //       recog_vsync_pio_1_external_connection.export
-    .render_buffer_switcher_enable_enable               (SW[6]),               //               render_buffer_switcher_enable.enable
-    .render_buffer_switcher_write_buffer_buffer_port    (render_buffer_port),    //         render_buffer_switcher_write_buffer.buffer_port
-    .render_buffer_switcher_write_buffer_buffer_vsync   (render_buffer_vsync),   //                                            .buffer_vsync
-    .render_port_pio_external_connection_export         (render_buffer_port),         //         render_port_pio_external_connection.export
-    .render_start_pio_external_connection_export        (render_start_r),        //        render_start_pio_external_connection.export
-    .render_vsync_pio_0_external_connection_export      (render_vsync[0]),      //      render_vsync_pio_0_external_connection.export
-    
-    .reset_reset_n                                      (KEY[0]),                                      //                                       reset.reset_n
-    
-    .vga_composer_0_conduit_vga_b               (VGA_B),       //            vga_mm_0_conduit.vga_b
-    .vga_composer_0_conduit_vga_blank_n         (VGA_BLANK_N), //                            .vga_blank_n
-    .vga_composer_0_conduit_vga_clk             (VGA_CLK),     //                            .vga_clk
-    .vga_composer_0_conduit_vga_g               (VGA_G),       //                            .vga_g
-    .vga_composer_0_conduit_vga_hs              (VGA_HS),      //                            .vga_hs
-    .vga_composer_0_conduit_vga_r               (VGA_R),       //                            .vga_r
-    .vga_composer_0_conduit_vga_sync_n          (VGA_SYNC_N),  //                            .vga_sync_n
-    .vga_composer_0_conduit_vga_vs              (VGA_VS),      //                            .vga_vs
-    .vga_composer_0_conduit_clk_vga             (clk_vga),     //                            .clk_vga
-    
-    // .vga_composer_overlay_0_conduit_vga_b               (VGA_B),       //            vga_mm_0_conduit.vga_b
-    // .vga_composer_overlay_0_conduit_vga_blank_n         (VGA_BLANK_N), //                            .vga_blank_n
-    // .vga_composer_overlay_0_conduit_vga_clk             (VGA_CLK),     //                            .vga_clk
-    // .vga_composer_overlay_0_conduit_vga_g               (VGA_G),       //                            .vga_g
-    // .vga_composer_overlay_0_conduit_vga_hs              (VGA_HS),      //                            .vga_hs
-    // .vga_composer_overlay_0_conduit_vga_r               (VGA_R),       //                            .vga_r
-    // .vga_composer_overlay_0_conduit_vga_sync_n          (VGA_SYNC_N),  //                            .vga_sync_n
-    // .vga_composer_overlay_0_conduit_vga_vs              (VGA_VS),      //                            .vga_vs
-    // .vga_composer_overlay_0_conduit_clk_vga             (clk_vga),     //                            .clk_vga
+    .camera_st_1_conduit_cam_din                        (`CAM_DIN_1),
+    .camera_st_1_conduit_cam_href                       (`CAM_HREF_1),
+    .camera_st_1_conduit_cam_pclk                       (`CAM_PCLK_1),
+    .camera_st_1_conduit_cam_pwdn                       (`CAM_PWDN_1),
+    .camera_st_1_conduit_cam_reset                      (`CAM_RESET_1),
+    .camera_st_1_conduit_cam_vsync                      (`CAM_VSYNC_1),
+    .camera_st_1_conduit_cam_xclk                       (`CAM_XCLK_1),
+    .camera_st_1_conduit_clk_camera                     (clk_camera),
+    .camera_st_1_conduit_enable_n                       (SW[2]),
+
+    .clk_clk                                            (clk_qsys),
+
+    .ir_receiver_0_ir_clock_clk                         (CLOCK_50),
+    .ir_receiver_0_irda_IRDA                            (IRDA_RXD),
+
+    .key_pio_external_connection_export                 (KEY[1]),
+
+    .new_sdram_controller_0_wire_addr                   (DRAM_ADDR),
+    .new_sdram_controller_0_wire_ba                     (DRAM_BA),
+    .new_sdram_controller_0_wire_cas_n                  (DRAM_CAS_N),
+    .new_sdram_controller_0_wire_cke                    (DRAM_CKE),
+    .new_sdram_controller_0_wire_cs_n                   (DRAM_CS_N),
+    .new_sdram_controller_0_wire_dq                     (DRAM_DQ),
+    .new_sdram_controller_0_wire_dqm                    (DRAM_DQM),
+    .new_sdram_controller_0_wire_ras_n                  (DRAM_RAS_N),
+    .new_sdram_controller_0_wire_we_n                   (DRAM_WE_N),
+
+    .recog_buffer_port_pio_0_external_connection_export (recog_buffer_port_0),
+    .recog_buffer_port_pio_1_external_connection_export (recog_buffer_port_1),
+    .recog_buffer_switcher_0_enable_enable              (SW[5]),
+    .recog_buffer_switcher_0_read_buffer_buffer_port    (recog_buffer_port_0),
+    .recog_buffer_switcher_0_read_buffer_buffer_vsync   (recog_buffer_vsync_0),
+    .recog_buffer_switcher_1_enable_enable              (SW[5]),
+    .recog_buffer_switcher_1_read_buffer_buffer_port    (recog_buffer_port_1),
+    .recog_buffer_switcher_1_read_buffer_buffer_vsync   (recog_buffer_vsync_1),
+    .recog_vsync_pio_0_external_connection_export       (recog_buffer_vsync_0),
+    .recog_vsync_pio_1_external_connection_export       (recog_buffer_vsync_1),
+    .render_buffer_switcher_enable_enable               (SW[6]),
+    .render_buffer_switcher_write_buffer_buffer_port    (render_buffer_port),
+    .render_buffer_switcher_write_buffer_buffer_vsync   (render_buffer_vsync),
+    .render_port_pio_external_connection_export         (render_buffer_port),
+    .render_start_pio_external_connection_export        (render_start_r),
+    .render_vsync_pio_0_external_connection_export      (render_vsync[0]),
+
+    .reset_reset_n                                      (KEY[0]),
+
+    .vga_composer_0_conduit_vga_b               (VGA_B),
+    .vga_composer_0_conduit_vga_blank_n         (VGA_BLANK_N),
+    .vga_composer_0_conduit_vga_clk             (VGA_CLK),
+    .vga_composer_0_conduit_vga_g               (VGA_G),
+    .vga_composer_0_conduit_vga_hs              (VGA_HS),
+    .vga_composer_0_conduit_vga_r               (VGA_R),
+    .vga_composer_0_conduit_vga_sync_n          (VGA_SYNC_N),
+    .vga_composer_0_conduit_vga_vs              (VGA_VS),
+    .vga_composer_0_conduit_clk_vga             (clk_vga),
+
+    // .vga_composer_overlay_0_conduit_vga_b               (VGA_B),
+    // .vga_composer_overlay_0_conduit_vga_blank_n         (VGA_BLANK_N),
+    // .vga_composer_overlay_0_conduit_vga_clk             (VGA_CLK),
+    // .vga_composer_overlay_0_conduit_vga_g               (VGA_G),
+    // .vga_composer_overlay_0_conduit_vga_hs              (VGA_HS),
+    // .vga_composer_overlay_0_conduit_vga_r               (VGA_R),
+    // .vga_composer_overlay_0_conduit_vga_sync_n          (VGA_SYNC_N),
+    // .vga_composer_overlay_0_conduit_vga_vs              (VGA_VS),
+    // .vga_composer_overlay_0_conduit_clk_vga             (clk_vga),
 );
 
 endmodule
