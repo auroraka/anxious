@@ -29,6 +29,7 @@ entity vid_write_buffer is
         write       : out std_logic;
         writedata   : out std_logic_vector(DATA_WIDTH - 1 downto 0);
         waitrequest : in  std_logic;
+        lock        : out std_logic;
 
         ---- Non-stoppable Avalon-ST Interface ----
         st_clk      : in  std_logic;
@@ -66,11 +67,13 @@ architecture ip of vid_write_buffer is
     type reg_type is record
         rdsel: natural range 0 to 1;
         rdstate: rdstate_type;
+        rdcnt: unsigned(FIFO_LENGTH_LOG_2 - 1 downto 0);
     end record;
 
     constant INIT_REGS: reg_type := (
         rdsel => 0,
-        rdstate => S_WAIT
+        rdstate => S_WAIT,
+        rdcnt => (others => '0')
     );
 
     signal r: reg_type := INIT_REGS;
@@ -180,15 +183,27 @@ begin
             rd(i) <= '0';
         end loop;
 
+        lock <= '0';
+
         case r.rdstate is
             when S_WAIT =>
                 write <= '0';
                 if rdfull_c then
                     v.rdstate := S_WRITING;
+                    v.rdcnt := (others => '0');
+                    lock <= '1';
                 end if;
             when S_WRITING =>
                 write <= not rdempty_c;
                 rd(r.rdsel) <= not waitrequest;
+                if r.rdcnt /= 2 ** FIFO_LENGTH_LOG_2 - 1 then
+                    lock <= '1';
+                else
+                    lock <= '0';
+                end if;
+                if not waitrequest then
+                    v.rdcnt := r.rdcnt + 1;
+                end if;
                 if rdempty_c then
                     v.rdsel := 1 - r.rdsel;
                     v.rdstate := S_WAIT;

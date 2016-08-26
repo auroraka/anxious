@@ -39,22 +39,22 @@ add_fileset QUARTUS_SYNTH QUARTUS_SYNTH "" ""
 set_fileset_property QUARTUS_SYNTH TOP_LEVEL default_addr_gen
 set_fileset_property QUARTUS_SYNTH ENABLE_RELATIVE_INCLUDE_PATHS false
 set_fileset_property QUARTUS_SYNTH ENABLE_FILE_OVERWRITE_MODE false
-add_fileset_file NEEE.vhd VHDL PATH NEEE.vhd
-add_fileset_file default_addr_gen.vhd VHDL PATH camera_st/default_addr_gen.vhd TOP_LEVEL_FILE
+add_fileset_file NEEE.vhd VHDL PATH src/NEEE.vhd
+add_fileset_file default_addr_gen.vhd VHDL PATH src/camera_st/default_addr_gen.vhd TOP_LEVEL_FILE
 
 add_fileset SIM_VERILOG SIM_VERILOG "" ""
 set_fileset_property SIM_VERILOG TOP_LEVEL default_addr_gen
 set_fileset_property SIM_VERILOG ENABLE_RELATIVE_INCLUDE_PATHS false
 set_fileset_property SIM_VERILOG ENABLE_FILE_OVERWRITE_MODE true
-add_fileset_file NEEE.vhd VHDL PATH NEEE.vhd
-add_fileset_file default_addr_gen.vhd VHDL PATH camera_st/default_addr_gen.vhd
+add_fileset_file NEEE.vhd VHDL PATH src/NEEE.vhd
+add_fileset_file default_addr_gen.vhd VHDL PATH src/camera_st/default_addr_gen.vhd
 
 add_fileset SIM_VHDL SIM_VHDL "" ""
 set_fileset_property SIM_VHDL TOP_LEVEL default_addr_gen
 set_fileset_property SIM_VHDL ENABLE_RELATIVE_INCLUDE_PATHS false
 set_fileset_property SIM_VHDL ENABLE_FILE_OVERWRITE_MODE true
-add_fileset_file NEEE.vhd VHDL PATH NEEE.vhd
-add_fileset_file default_addr_gen.vhd VHDL PATH camera_st/default_addr_gen.vhd
+add_fileset_file NEEE.vhd VHDL PATH src/NEEE.vhd
+add_fileset_file default_addr_gen.vhd VHDL PATH src/camera_st/default_addr_gen.vhd
 
 
 # 

@@ -17,28 +17,28 @@
          type = "String";
       }
    }
-   element camera_mm_test
-   {
-      datum _originalDeviceFamily
-      {
-         value = "Cyclone IV GX";
-         type = "String";
-      }
-   }
-   element camera_mm_test
-   {
-      datum _originalDeviceFamily
-      {
-         value = "Cyclone IV GX";
-         type = "String";
-      }
-   }
-   element camera_st_0
+   element camera_mm_0
    {
       datum _sortIndex
       {
          value = "1";
          type = "int";
+      }
+   }
+   element camera_mm_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element camera_mm_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
       }
    }
    element clk_0
@@ -49,19 +49,11 @@
          type = "int";
       }
    }
-   element default_addr_gen_0
-   {
-      datum _sortIndex
-      {
-         value = "2";
-         type = "int";
-      }
-   }
    element mm_slave_bfm_0
    {
       datum _sortIndex
       {
-         value = "4";
+         value = "2";
          type = "int";
       }
    }
@@ -71,14 +63,6 @@
       {
          value = "1";
          type = "boolean";
-      }
-   }
-   element vid_write_buffer_0
-   {
-      datum _sortIndex
-      {
-         value = "3";
-         type = "int";
       }
    }
 }
@@ -103,39 +87,34 @@
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
-   name="camera_st_0_conduit"
-   internal="camera_st_0.conduit"
+   name="camera_mm_0_buffer_switch"
+   internal="camera_mm_0.buffer_switch"
    type="conduit"
    dir="end" />
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
+ <interface
+   name="mm_0_camera_wires"
+   internal="camera_mm_0.camera_wires"
+   type="conduit"
+   dir="end" />
  <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
- <interface
-   name="vid_write_buffer_0_buffer_port"
-   internal="vid_write_buffer_0.buffer_port"
-   type="conduit"
-   dir="end" />
- <interface
-   name="vid_write_buffer_0_vsync_out"
-   internal="vid_write_buffer_0.vsync_out"
-   type="conduit"
-   dir="end" />
- <module name="camera_st_0" kind="camera_st" version="1.0" enabled="1">
-  <parameter name="DATA_WIDTH" value="32" />
+ <module name="camera_mm_0" kind="camera_mm" version="1.0" enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
+  <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_M0_ADDRESS_MAP"><![CDATA[<address-map><slave name='mm_slave_bfm_0.s0' start='0x0' end='0x8000000' /></address-map>]]></parameter>
+  <parameter name="AUTO_M0_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@6327bf20</parameter>
+  <parameter name="AUTO_UNIQUE_ID">camera_mm_test_camera_mm_0</parameter>
  </module>
  <module name="clk_0" kind="clock_source" version="15.0" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
- </module>
- <module
-   name="default_addr_gen_0"
-   kind="default_addr_gen"
-   version="1.0"
-   enabled="1">
-  <parameter name="ADDR_WIDTH" value="21" />
-  <parameter name="HEIGHT" value="480" />
-  <parameter name="WIDTH" value="640" />
  </module>
  <module
    name="mm_slave_bfm_0"
@@ -174,7 +153,7 @@
   <parameter name="USE_BYTE_ENABLE" value="0" />
   <parameter name="USE_CLKEN" value="0" />
   <parameter name="USE_DEBUGACCESS" value="0" />
-  <parameter name="USE_LOCK" value="0" />
+  <parameter name="USE_LOCK" value="1" />
   <parameter name="USE_READ" value="0" />
   <parameter name="USE_READRESPONSE" value="0" />
   <parameter name="USE_READ_DATA" value="0" />
@@ -186,63 +165,21 @@
   <parameter name="USE_WRITE_DATA" value="1" />
   <parameter name="VHDL_ID" value="0" />
  </module>
- <module
-   name="vid_write_buffer_0"
-   kind="vid_write_buffer"
-   version="2.0"
-   enabled="1">
-  <parameter name="AV_ADDR_WIDTH" value="27" />
-  <parameter name="BANK" value="0" />
-  <parameter name="DATA_WIDTH" value="32" />
-  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
-  <parameter name="FRAME_PIXELS" value="307200" />
-  <parameter name="ST_ADDR_WIDTH" value="21" />
- </module>
  <connection
    kind="avalon"
    version="15.0"
-   start="vid_write_buffer_0.m0"
+   start="camera_mm_0.m0"
    end="mm_slave_bfm_0.s0">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
-   kind="avalon_streaming"
-   version="15.0"
-   start="camera_st_0.st0"
-   end="vid_write_buffer_0.st0" />
- <connection
    kind="clock"
    version="15.0"
    start="clk_0.clk"
    end="mm_slave_bfm_0.clk" />
- <connection
-   kind="clock"
-   version="15.0"
-   start="clk_0.clk"
-   end="vid_write_buffer_0.clock" />
- <connection
-   kind="clock"
-   version="15.0"
-   start="camera_st_0.clock"
-   end="default_addr_gen_0.clock" />
- <connection
-   kind="clock"
-   version="15.0"
-   start="camera_st_0.clock"
-   end="vid_write_buffer_0.st_clock" />
- <connection
-   kind="conduit"
-   version="15.0"
-   start="vid_write_buffer_0.addr_gen"
-   end="default_addr_gen_0.conduit_addr">
-  <parameter name="endPort" value="" />
-  <parameter name="endPortLSB" value="0" />
-  <parameter name="startPort" value="" />
-  <parameter name="startPortLSB" value="0" />
-  <parameter name="width" value="0" />
- </connection>
+ <connection kind="clock" version="15.0" start="clk_0.clk" end="camera_mm_0.clk" />
  <connection
    kind="reset"
    version="15.0"
@@ -252,17 +189,7 @@
    kind="reset"
    version="15.0"
    start="clk_0.clk_reset"
-   end="camera_st_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_0.clk_reset"
-   end="default_addr_gen_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_0.clk_reset"
-   end="vid_write_buffer_0.reset" />
+   end="camera_mm_0.reset" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
  <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
