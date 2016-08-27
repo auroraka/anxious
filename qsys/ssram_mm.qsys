@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="$${FILENAME}">
+ <component
+   name="$${FILENAME}"
+   displayName="$${FILENAME}"
+   version="1.0"
+   description=""
+   tags=""
+   categories="System" />
+ <parameter name="bonusData"><![CDATA[bonusData 
+{
+   element $${FILENAME}
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element clk_0
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+   }
+   element generic_tristate_controller_0
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+   }
+   element generic_tristate_controller_0.uas
+   {
+      datum baseAddress
+      {
+         value = "0";
+         type = "String";
+      }
+   }
+   element tristate_conduit_bridge_0
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+   }
+}
+]]></parameter>
+ <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
+ <parameter name="device" value="EP4CGX150DF31C7" />
+ <parameter name="deviceFamily" value="Cyclone IV GX" />
+ <parameter name="deviceSpeedGrade" value="7" />
+ <parameter name="fabricMode" value="QSYS" />
+ <parameter name="generateLegacySim" value="false" />
+ <parameter name="generationId" value="0" />
+ <parameter name="globalResetBus" value="false" />
+ <parameter name="hdlLanguage" value="VERILOG" />
+ <parameter name="hideFromIPCatalog" value="false" />
+ <parameter name="lockedInterfaceDefinition" value="" />
+ <parameter name="maxAdditionalLatency" value="1" />
+ <parameter name="projectName" value="" />
+ <parameter name="sopcBorderPoints" value="false" />
+ <parameter name="systemHash" value="0" />
+ <parameter name="testBenchDutName" value="" />
+ <parameter name="timeStamp" value="0" />
+ <parameter name="useTestBenchNamingPattern" value="false" />
+ <instanceScript></instanceScript>
+ <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
+ <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
+ <interface
+   name="slave"
+   internal="generic_tristate_controller_0.uas"
+   type="avalon"
+   dir="end" />
+ <interface
+   name="ssram_wires"
+   internal="tristate_conduit_bridge_0.out"
+   type="conduit"
+   dir="end" />
+ <module name="clk_0" kind="clock_source" version="15.0" enabled="1">
+  <parameter name="clockFrequency" value="50000000" />
+  <parameter name="clockFrequencyKnown" value="false" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module
+   name="generic_tristate_controller_0"
+   kind="altera_generic_tristate_controller"
+   version="15.0"
+   enabled="1">
+  <parameter name="ACTIVE_LOW_BEGINTRANSFER" value="1" />
+  <parameter name="ACTIVE_LOW_BYTEENABLE" value="1" />
+  <parameter name="ACTIVE_LOW_CHIPSELECT" value="1" />
+  <parameter name="ACTIVE_LOW_IRQ" value="0" />
+  <parameter name="ACTIVE_LOW_LOCK" value="0" />
+  <parameter name="ACTIVE_LOW_OUTPUTENABLE" value="1" />
+  <parameter name="ACTIVE_LOW_READ" value="0" />
+  <parameter name="ACTIVE_LOW_RESETREQUEST" value="0" />
+  <parameter name="ACTIVE_LOW_RESET_OUTPUT" value="1" />
+  <parameter name="ACTIVE_LOW_WAITREQUEST" value="0" />
+  <parameter name="ACTIVE_LOW_WRITE" value="1" />
+  <parameter name="ACTIVE_LOW_WRITEBYTEENABLE" value="0" />
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
+  <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
+  <parameter name="CHIPSELECT_THROUGH_READLATENCY" value="1" />
+  <parameter name="INTERFACE_ASSIGNMENT_KEYS">embeddedsw.configuration.isMemoryDevice</parameter>
+  <parameter name="INTERFACE_ASSIGNMENT_VALUES" value="1" />
+  <parameter name="IS_MEMORY_DEVICE" value="1" />
+  <parameter name="MODULE_ASSIGNMENT_KEYS">embeddedsw.configuration.hwClassnameDriverSupportList,embeddedsw.CMacro.SRAM_MEMORY_SIZE,embeddedsw.CMacro.SRAM_MEMORY_UNITS,embeddedsw.CMacro.SSRAM_DATA_WIDTH,embeddedsw.CMacro.SSRAM_READ_LATENCY,embeddedsw.memoryInfo.MEM_INIT_DATA_WIDTH,embeddedsw.memoryInfo.HAS_BYTE_LANE,embeddedsw.memoryInfo.GENERATE_DAT_SYM,embeddedsw.memoryInfo.DAT_SYM_INSTALL_DIR</parameter>
+  <parameter name="MODULE_ASSIGNMENT_VALUES">altera_avalon_lan91c111:altera_avalon_cfi_flash,2,524288,32,2,32,1,1,SIM_DIR</parameter>
+  <parameter name="TCM_ADDRESS_W" value="20" />
+  <parameter name="TCM_BYTEENABLE_W" value="4" />
+  <parameter name="TCM_DATA_HOLD" value="0" />
+  <parameter name="TCM_DATA_W" value="32" />
+  <parameter name="TCM_MAX_PENDING_READ_TRANSACTIONS" value="5" />
+  <parameter name="TCM_READLATENCY" value="4" />
+  <parameter name="TCM_READ_WAIT" value="0" />
+  <parameter name="TCM_SETUP_WAIT" value="0" />
+  <parameter name="TCM_SYMBOLS_PER_WORD" value="4" />
+  <parameter name="TCM_TIMING_UNITS" value="1" />
+  <parameter name="TCM_TURNAROUND_TIME" value="2" />
+  <parameter name="TCM_WRITE_WAIT" value="0" />
+  <parameter name="USE_ADDRESS" value="1" />
+  <parameter name="USE_BEGINTRANSFER" value="1" />
+  <parameter name="USE_BYTEENABLE" value="1" />
+  <parameter name="USE_CHIPSELECT" value="1" />
+  <parameter name="USE_IRQ" value="0" />
+  <parameter name="USE_LOCK" value="0" />
+  <parameter name="USE_OUTPUTENABLE" value="1" />
+  <parameter name="USE_READ" value="0" />
+  <parameter name="USE_READDATA" value="1" />
+  <parameter name="USE_RESETREQUEST" value="0" />
+  <parameter name="USE_RESET_OUTPUT" value="1" />
+  <parameter name="USE_WAITREQUEST" value="0" />
+  <parameter name="USE_WRITE" value="1" />
+  <parameter name="USE_WRITEBYTEENABLE" value="0" />
+  <parameter name="USE_WRITEDATA" value="1" />
+ </module>
+ <module
+   name="tristate_conduit_bridge_0"
+   kind="altera_tristate_conduit_bridge"
+   version="15.0"
+   enabled="1">
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
+  <parameter name="INTERFACE_INFO"><![CDATA[<info><slave name="tcs"><master name="generic_tristate_controller_0.tcm"><pin role="write_n" width="1" type="Output" output_name="tcm_write_n_out" output_enable_name="" input_name="" /><pin role="begintransfer_n" width="1" type="Output" output_name="tcm_begintransfer_n_out" output_enable_name="" input_name="" /><pin role="chipselect_n" width="1" type="Output" output_name="tcm_chipselect_n_out" output_enable_name="" input_name="" /><pin role="outputenable_n" width="1" type="Output" output_name="tcm_outputenable_n_out" output_enable_name="" input_name="" /><pin role="reset_n" width="1" type="Output" output_name="tcm_reset_n_out" output_enable_name="" input_name="" /><pin role="" width="1" type="Invalid" output_name="" output_enable_name="" input_name="" /><pin role="address" width="20" type="Output" output_name="tcm_address_out" output_enable_name="" input_name="" /><pin role="byteenable_n" width="4" type="Output" output_name="tcm_byteenable_n_out" output_enable_name="" input_name="" /><pin role="data" width="32" type="Bidirectional" output_name="tcm_data_out" output_enable_name="tcm_data_outen" input_name="tcm_data_in" /></master></slave></info>]]></parameter>
+ </module>
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_0.clk"
+   end="generic_tristate_controller_0.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_0.clk"
+   end="tristate_conduit_bridge_0.clk" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_0.clk_reset"
+   end="generic_tristate_controller_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_0.clk_reset"
+   end="tristate_conduit_bridge_0.reset" />
+ <connection
+   kind="tristate_conduit"
+   version="15.0"
+   start="generic_tristate_controller_0.tcm"
+   end="tristate_conduit_bridge_0.tcs" />
+ <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
+ <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
+</system>

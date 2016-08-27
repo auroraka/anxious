@@ -62,6 +62,22 @@
 	DRAM_RAS_N,
 	DRAM_WE_N,
 
+	//////////// SSRAM //////////
+	SSRAM_ADSC_N,
+	SSRAM_ADSP_N,
+	SSRAM_ADV_N,
+	SSRAM_BE,
+	SSRAM_CLK,
+	SSRAM_GW_N,
+	SSRAM_OE_N,
+	SSRAM_WE_N,
+	SSRAM0_CE_N,
+	SSRAM1_CE_N,
+
+	//////////// Data and Address bus shared by Flash & SSRAM //////////
+	FS_ADDR,
+	FS_DQ,
+
 	//////////// GPIO, GPIO connect to GPIO Default //////////
 	GPIO,
 
@@ -141,9 +157,32 @@ output			 [3:0]		DRAM_DQM;
 output						DRAM_RAS_N;
 output						DRAM_WE_N;
 
+//////////// SSRAM //////////
+output		          		SSRAM_ADSC_N;
+output		          		SSRAM_ADSP_N;
+output		          		SSRAM_ADV_N;
+output		     [3:0]		SSRAM_BE;
+output		          		SSRAM_CLK;
+output		          		SSRAM_GW_N;
+output		          		SSRAM_OE_N;
+output		          		SSRAM_WE_N;
+output		          		SSRAM0_CE_N;
+output		          		SSRAM1_CE_N;
+
+//////////// Data and Address bus shared by Flash & SSRAM //////////
+output		    [26:1]		FS_ADDR;
+inout 		    [31:0]		FS_DQ;
+
 //////////// GPIO, GPIO connect to GPIO Default //////////
 inout			[0:35]		GPIO;
 
 //////////// Fan Control //////////
 inout						FAN_CTRL;
 
+// SSRAM Fixed Signals
+assign SSRAM_CLK = CLOCK_50;
+assign SSRAM0_CE_N = 1;
+assign SSRAM1_CE_N = 0;
+assign SSRAM_ADV_N = 1;
+assign SSRAM_ADSP_N = 1;
+assign SSRAM_GW_N = 1;
