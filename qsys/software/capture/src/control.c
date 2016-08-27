@@ -33,11 +33,11 @@ const float stereo_dist = 17.6; // cm
 #define BUFFER_PORT() IORD(OVERLAY_PORT_PIO_BASE, 0)
 //#define BUFFER_PORT() IORD(RENDER_PORT_PIO_BASE, 0)
 
-Location find_location(point p_l, point p_r) {
+pointf find_location(point p_l, point p_r) {
 	int x_l = get_x(p_l), x_r = get_x(p_r);
 	int y_l = get_y(p_l), y_r = get_y(p_r);
 	
-	Location loc;
+	pointf loc;
 	loc.z = stereo_dist / ((x_l - center_x_l) / focus_x_l - (x_r - center_x_r) / focus_x_r);
 	loc.x = loc.z * (x_r - center_x_r) / focus_x_r;
 	loc.y = loc.z * (get_y(p_r) - center_y_r) / focus_y_r;

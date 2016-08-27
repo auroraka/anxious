@@ -1331,7 +1331,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_M0_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_M0_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@4ef2c938</parameter>
+  <parameter name="AUTO_M0_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@5aca60c4</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_mm_0</parameter>
  </module>
  <module
@@ -2597,7 +2597,7 @@
   <parameter name="ADDR_WIDTH" value="27" />
   <parameter name="CAM_BANK" value="0" />
   <parameter name="DATA_WIDTH" value="32" />
-  <parameter name="FIFO_LENGTH_LOG_2" value="7" />
+  <parameter name="FIFO_LENGTH_LOG_2" value="8" />
   <parameter name="OVERLAY_BANK" value="2" />
   <parameter name="RENDER_BANK" value="1" />
  </module>

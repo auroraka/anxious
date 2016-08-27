@@ -38,7 +38,7 @@ int main() {
 	while (true) {
 		
 		unsigned center_l = SHARED_R(1), center_r = SHARED_R(0);
-		Location loc = find_location(center_l, center_r);
+		pointf loc = find_location(center_l, center_r);
 		SHARED_W(2, *(unsigned *)&loc.x);
 		SHARED_W(3, *(unsigned *)&loc.y);
 		SHARED_W(4, *(unsigned *)&loc.z);

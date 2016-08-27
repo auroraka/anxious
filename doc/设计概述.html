@@ -1,0 +1,516 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>设计概述</title><style type='text/css'>html, body {overflow-x: initial !important;}html { font-size: 14px; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; line-height: 1.42857143; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); overflow-x: hidden; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { background-color: rgb(181, 214, 252); text-shadow: none; background-position: initial initial; background-repeat: initial initial; }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; padding-bottom: 70px; white-space: pre-wrap; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+@media screen and (max-width: 500px) { 
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+.typora-export #write { margin: 0px auto; }
+#write > p:first-child, #write > ul:first-child, #write > ol:first-child, #write > pre:first-child, #write > blockquote:first-child, #write > div:first-child, #write > table:first-child { margin-top: 30px; }
+img { max-width: 100%; }
+input, button, select, textarea { color: inherit; font-family: inherit; font-size: inherit; font-style: inherit; font-variant-caps: inherit; font-weight: inherit; line-height: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+::before, ::after, * { box-sizing: border-box; }
+#write p, #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write div, #write pre { width: inherit; }
+#write p, #write h1, #write h2, #write h3, #write h4, #write h5, #write h6 { position: relative; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+p { -webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px; }
+.mathjax-block { margin-top: 0px; margin-bottom: 0px; -webkit-margin-before: 0rem; -webkit-margin-after: 0rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: bold; font-style: italic; }
+a { cursor: pointer; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; margin: 4px 0px 0px; }
+tr { page-break-inside: avoid; page-break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; page-break-inside: auto; text-align: left; }
+table.md-table td { min-width: 80px; }
+.CodeMirror-gutters { border-right-width: 0px; background-color: inherit; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+pre { white-space: pre-wrap; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; page-break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background-image: inherit; background-size: inherit; background-attachment: inherit; background-origin: inherit; background-clip: inherit; background-color: inherit; position: relative !important; background-position: inherit inherit; background-repeat: inherit inherit; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+.md-fences .CodeMirror.CodeMirror-wrap { top: -1.6em; margin-bottom: -1.6em; }
+.md-fences.mock-cm { white-space: pre-wrap; }
+.show-fences-line-number .md-fences { padding-left: 0px; }
+.show-fences-line-number .md-fences.mock-cm { padding-left: 40px; }
+.footnotes { color: rgb(136, 136, 136); font-size: 0.9rem; padding-top: 1em; padding-bottom: 1em; }
+.footnotes + .footnotes { margin-top: -1em; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background-color: transparent; text-decoration: none; color: rgb(51, 51, 51); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; line-height: normal; font-weight: normal; text-align: left; box-sizing: content-box; direction: ltr; background-position: initial initial; background-repeat: initial initial; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li p, li .mathjax-block { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; }
+@media print { 
+  html, body { height: 100%; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  h1, h2, h3, h4, h5, h6 { page-break-after: avoid; orphans: 2; }
+  p { orphans: 4; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 1cm; padding-right: 1cm; }
+  .typora-export #write::after { height: 0px; }
+  @page { margin: 20mm 0mm; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 2.86rem; white-space: pre-wrap; background-color: rgb(204, 204, 204); display: block; background-position: initial initial; background-repeat: initial initial; }
+p > .md-image:only-child { display: inline-block; width: 100%; text-align: center; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.mathjax-block { white-space: pre; overflow: hidden; width: 100%; }
+p + .mathjax-block { margin-top: -1.143rem; }
+.mathjax-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: none; box-shadow: none; }
+.task-list { list-style-type: none; }
+.task-list-item { position: relative; padding-left: 1em; }
+.task-list-item input { position: absolute; top: 0px; left: 0px; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc::after, .md-toc-content::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: bold; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) { 
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { color: inherit; font-size: inherit; font-style: inherit; font-weight: inherit; text-decoration: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: '.'; }
+.md-tag { opacity: 0.5; }
+code { text-align: left; }
+h1 .md-tag, h2 .md-tag, h3 .md-tag, h4 .md-tag, h5 .md-tag, h6 .md-tag { font-weight: initial; opacity: 0.35; }
+a.md-header-anchor.md-print-anchor { border: none !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: none !important; background-color: transparent !important; text-shadow: initial !important; background-position: initial initial !important; background-repeat: initial initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.mathjax-block .MathJax_SVG_Display { text-align: center; margin: 1em 0em; position: relative; text-indent: 0px; max-width: none; max-height: none; min-width: 0px; min-height: 0px; width: 100%; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: monospace; }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: normal; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { -webkit-transition: none; transition: none; }
+
+
+@include-when-export url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/**
+ * css forked from https://github.com/GitbookIO/gitbook 
+ * www.gitbook.com
+ * Apache License
+ * https://github.com/GitbookIO/gitbook/blob/master/LICENSE
+ **/
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Open Sans Regular'),url('file:///Users/kanari/Library/Application%20Support/abnerworks.Typora/themes/github/400.woff') format('woff')
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: normal;
+    src: local('Open Sans Italic'),url('file:///Users/kanari/Library/Application%20Support/abnerworks.Typora/themes/github/400i.woff') format('woff')
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: bold;
+    src: local('Open Sans Bold'),url('file:///Users/kanari/Library/Application%20Support/abnerworks.Typora/themes/github/700.woff') format('woff')
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: bold;
+    src: local('Open Sans Bold Italic'),url('file:///Users/kanari/Library/Application%20Support/abnerworks.Typora/themes/github/700i.woff') format('woff')
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write{
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 20px 30px 40px 30px;
+	padding-top: 20px;
+    padding-bottom: 100px;
+}
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+body > *:first-child {
+    margin-top: 0 !important;
+}
+body > *:last-child {
+    margin-bottom: 0 !important;
+}
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    /*background: url("file:///Users/kanari/Library/Application%20Support/images/modules/styleguide/para.png") no-repeat 10px center;*/
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    padding-bottom: .3em;
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+   padding-bottom: .3em;
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 4px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+    border-bottom: 1px solid #ddd;
+}
+
+body > h2:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+body > h1:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0;
+}
+body > h3:first-child,
+body > h4:first-child,
+body > h5:first-child,
+body > h6:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+a:first-child h1,
+a:first-child h2,
+a:first-child h3,
+a:first-child h4,
+a:first-child h5,
+a:first-child h6 {
+    margin-top: 0;
+    padding-top: 0;
+}
+h1 p,
+h2 p,
+h3 p,
+h4 p,
+h5 p,
+h6 p {
+    margin-top: 0;
+}
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dddddd;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+}
+table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n) {
+    background-color: #f8f8f8;
+}
+table tr th {
+    font-weight: bold;
+    border: 1px solid #cccccc;
+    text-align: left;
+    margin: 0;
+    padding: 6px 13px;
+}
+table tr td {
+    border: 1px solid #cccccc;
+    text-align: left;
+    margin: 0;
+    padding: 6px 13px;
+}
+table tr th:first-child,
+table tr td:first-child {
+    margin-top: 0;
+}
+table tr th:last-child,
+table tr td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-gutters {
+    border-right: 1px solid #ddd;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding: 0.2em 1em;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+.task-list{
+	padding-left: 0;
+}
+
+.task-list-item {
+	padding-left:32px;
+}
+
+.task-list-item input {
+  top: 3px;
+  left: 8px;
+}
+
+@media screen and (min-width: 914px) {
+    /*body {
+        width: 854px;
+        margin: 0 auto;
+    }*/
+}
+@media print {
+    html {
+        font-size: 13px;
+    }
+    table,
+    pre {
+        page-break-inside: avoid;
+    }
+    pre {
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag{
+	color: inherit;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+
+</style>
+</head>
+<body class='typora-export ' >
+<div  id='write'  class = 'is-mac'><h2><a name='header-c1' class='md-header-anchor '></a>设计概述</h2><h3><a name='header-c19' class='md-header-anchor '></a>设计意图</h3><p>在3D技术逐渐走入日常生活的现在，三维建模的需求也变得日益庞大。对于模型设计师来说，如果能像在现实中建造模型一样设计三维模型，无疑能简化模型设计的过程。目前一些知名厂商已经提出了基于虚拟现实或增强现实眼镜的通用解决方案，比如微软的HoloLens和Oculus公司的Oculus Rift。但这类解决方案因为其通用性、便携性，以及对硬件配置的极高要求，导致其使用成本高昂，也就很难推广开来。</p><p>而我们希望通过设计专门的硬件系统，以提供低成本和高效的解决方案。具体地说，我们的系统包括一套显示器与摄像头结合的显示设备，以及一支专用的绘制笔。用户利用我们的系统，可以使用绘制笔在空气中绘制3D模型，摄像头捕捉之后可以显示在显示屏上，看上去就好像是在现实中进行三维建模一样。</p><h3><a name='header-c24' class='md-header-anchor '></a>适用范围及针对用户群</h3><p>本设计针对需要进行三维建模的模型设计师，可以改变传统的建模流程，允许模型设计师使用更加直观、符合直觉的设计方法。另外，由于整套系统造价低廉，可以降低三维建模的入门门槛，因此也可以应用于各院校和公司的建模教学和训练中。</p><p>另外，本设计具有较强的可扩展性。如果后期再进行一些PC端的上位机通信程序的开发，则可以将建立的模型导出成传统设计软件所支持的格式，满足实际中的应用。</p><h3><a name='header-c29' class='md-header-anchor '></a>选用Altera器件的原因</h3><p>我们选用Terasic DE2i-150开发板作为开发平台，原因有三：</p><p>第一，该开发板性能强劲，可拓展性强，便于开发。开发板的FPGA核心为Altera Cyclone IV EP4CGX150DF31C，具有多达15万个逻辑单元。开发板上还有丰富的外部接口，以及多种大容量的存储设备。这些设备也都有详尽的配套使用说明书与规格文档，给我们的开发带来了极大的便利。</p><p>第二，我们的系统中需要用到一些算法，如识别绘制笔的算法，以及渲染算法等。这些算法使用传统软件开发的指令式编程方法实现起来较为简单，但使用硬件编程方法则难以实现。而Altera提供的Nios II软核可以在FPGA内部综合出CPU，从而允许我们按照软件编程方法实现算法，极大简化了开发流程。</p><p>第三，该开发板价格低廉，非常符合我们的设计意图。</p><h2><a name='header-c38' class='md-header-anchor '></a>功能描述</h2><p>本设计实现了一个基于FPGA硬件的三维建模辅助系统。系统通过双摄像头确定绘制笔在空间中的坐标，并通过与用户交互进行空间中三维模型的绘制，再将渲染出来的模型叠加在摄像头的图像上，就像是在现实中真正制作了一个模型一样。</p><p>详细地说，本设计实现了以下四个功能：</p><ul><li>识别的算法如下：首先将摄像头的RGB565输入信号转换为HSV格式，并根据设定的阈值进行二值化。接着对二值化之后的图像进行两次腐蚀及膨胀处理，以去掉噪点并填充内部空洞。最后执行floodfill算法寻找最大的连通块。
+<strong>绘制笔的识别：</strong>
+我们的绘制笔具有特定的颜色，可以将其与常见的背景区分开。因此我们寻找图像中具有类似绘制笔颜色的像素块，并以面积最大的像素块作为绘制笔的位置。
+至于具体实现，我们使用硬件实现了HSV转换模块，腐蚀、膨胀以及floodfill算法则使用Nios II CPU实现。为了加速算法，我们使用位运算完成腐蚀和膨胀，并结合floodfill与扫描线方法以减少内存开销。</li><li><strong>绘制笔的定位：</strong>
+综合两个摄像头画面中绘制笔的平面坐标，可以计算出绘制笔在三维空间中的坐标。我们先离线确定了摄像头的内部参数（如焦距等），便可以使用公式计算出绘制笔相对于摄像头的位置。</li><li><strong>三维模型的建立：</strong>
+用户使用一只绘制笔确定模型关键点的三维坐标，同时使用一个红外线遥控器发送指令。用户可以通过遥控器更改物体颜色，选择绘制物体的类别，确定关键点位置等。比如说，用户想要绘制一个球体，则按下遥控器上对应按键确定球心的坐标为当前绘制笔的坐标，然后再确定另一个点为球面上的点。在用户移动绘制笔的过程中，屏幕上会即时显示当前绘制物体的轮廓线。</li><li><strong>三维图像的渲染：</strong>
+用户在绘制了一个物体后，物体会按照用户选定的颜色被渲染。我们使用了三枚Nios II CPU，使用扫描线+深度缓存的方法进行并行渲染。
+</li></ul><h2><a name='header-c41' class='md-header-anchor '></a>性能参数</h2><h3><a name='header-c407' class='md-header-anchor '></a>系统参数</h3><p>FPGA芯片型号：Altera Cyclone IV EP4CGX150DF31C</p><p>Qsys系统时钟频率：100MHz</p><p>SDRAM时钟频率：100MHz，-3ns相位偏移</p><p>VGA参数：640×480@60Hz</p><p>有效识别距离：x轴：±40cm，y轴：±40cm，z轴：0~200cm</p><h3><a name='header-c444' class='md-header-anchor '></a>性能分析</h3><ul><li><strong>识别部分：</strong>摄像头输入数据为30帧/s；HSV转换及二值化模块使用硬件实现，可以进行流水线式运算；腐蚀、膨胀及floodfill使用CPU实现，处理速度约能达到10帧/s。</li><li><strong>渲染部分：</strong>在绘制新物体时，需要首先更新深度缓存并计算法向量，</li></ul><h2><a name='header-c405' class='md-header-anchor '></a>设计结构</h2><h3><a name='header-c42' class='md-header-anchor '></a>总体架构</h3><p> 系统的结构示意图如下：</p><p><img src='Design Hierarchy.png' alt='Design Hierarchy' /></p><p>系统可以主要分为三个部分：</p><ul><li><strong>识别部分：</strong>负责摄像头输入图像的采集、预处理以及绘制笔识别；</li><li><strong>控制与渲染部分：</strong>负责三维图像渲染以及整体调度；</li><li><strong>存储与输出部分：</strong>负责与外部存储设备进行沟通，以及图像的叠加与输出。</li></ul><p>系统一共使用了6枚Nios II软核CPU，每个CPU执行的任务如下：</p><ul><li>CPU 0和1负责识别绘制笔的坐标；</li><li>CPU 2负责整体调度以及GUI的绘制；</li><li>CPU 3至5负责三维图像的并行渲染。</li></ul><p>所有部件均作为Qsys组件存在，不同组件之间通过Avalon-MM或Avalon-ST协议通讯。为了实现一些复杂功能并尽可能挖掘性能，我们使用了许多自定义的部件。</p><h3><a name='header-c76' class='md-header-anchor '></a>数据传输与存储</h3><p>本设计的输入主要来自两个外接摄像头。摄像头的输入被分为两路分开处理：</p><ul><li>两个摄像头的输入按照Avalon-ST协议进行编码，通过自定义的RGB565至HSV转换模块及二值化模块处理后，转换为Avalon-MM协议，存入两块Onchip Memory中。两枚负责识别的CPU会分别读取这两块内存中的信息并识别绘制笔的坐标。</li><li>右侧摄像头的输入按照Avalon-ST协议进行编码后，直接被转换为Avalon-MM协议，作为显示画面存储。</li></ul><p>存储方面，本设计中使用了开发板上的SDRAM和SSRAM两块存储设备。</p><p>SDRAM主要作为显示缓存使用。开发板上两块SDRAM共同工作，组成了32位字宽。该SDRAM有4个库（bank），我们使用了其中三个，分别用于摄像头图像、渲染图像，以及渲染深度缓存的存储。为了防止输出图像出现撕裂现象，图像的存储均使用了三缓存机制。</p><p>SDRAM需要处理多路输入和输出。为了提高效率，充分利用SDRAM连续读写功能，SDRAM的每路输入输出都经过了FIFO缓存，并均进行长度为64的连续访问。由于我们使用了Altera提供的SDRAM Controller IP，这一IP将SDRAM包装成了一个Avalon-MM Slave，但不支持burst。为了防止仲裁机制将正在进行的连续读写打断，我们使用了Avalon-MM Master接口中的lock信号，以确保Master可以保持对Slave的控制。</p><p>SSRAM则用于存储GUI叠加层的图像。这一设计主要是为了缓解SDRAM的读写压力，而且GUI层的颜色种类少，可以对颜色进行编码后压缩存储，以适应SSRAM的空间限制。GUI层同样使用了三缓存机制，并使用双FIFO实现连续访问。</p><p>输出方面，我们需要叠加摄像头、渲染和GUI三层图像。为此，我们设计了VGA Composer自定义模块，包含三个Avalon-ST Sink，分别对应三路数据。VGA Composer根据透明度信息混合三层图像，并配合VGA控制信号输出。</p><h3><a name='header-c476' class='md-header-anchor '></a>基本流程</h3><p>整体逻辑的基本流程可以用下图描述：</p><p><img src='flow_chart.png' alt='' /></p><h2><a name='header-c87' class='md-header-anchor '></a>设计方法</h2><h3><a name='header-c88' class='md-header-anchor '></a>硬件设计</h3><p>硬件设计全部在Qsys中完成。在开发过程中，我们采用了敏捷开发的方法，逐一实现各功能和模块，并整合进整体系统中。我们采用了如下的设计理念：尽可能将功能拆分成相互解耦合的小模块。为此我们设计并实现了许多自定义组件，如下图所示：</p><p><img src='custom_ip.png' alt='' /></p><p>下图中为从摄像头获取图像并存入SDRAM的模块构成的子系统。camera_st<em>0为摄像头控制模块，将获取到的摄像头图像转换为Avalon-ST协议，提供给vid_write_buffer</em>0。vid_write_buffer<em>0是一个跨时域的双FIFO缓存，并实现了从Avalon-ST到Avalon-MM协议的转换，其对外暴露了一个Avalon-MM Master，并在上层系统中连向了SDRAM Controller的MM Slave。此外，vid_write_buffer</em>0还有一个addr_gen的conduit接口，需要由地址生成模块default_addr_gen<em>0提供MM Master的写入地址。default_addr_gen</em>0顾名思义，提供SDRAM使用的默认的行列地址，此外还有一个conduit_buffer的conduit接口，在上层系统中连接到三缓存控制器。</p><p><img src='camera_mm.png' alt='' /></p><p>之所以使用这种看似繁琐而复杂的方法设计许多小部件，而非用一个大组件囊括所有功能，是为了提高组件的可复用性和可拓展性。比如说，我们还需要将摄像头的图像转换为HSV格式后存入Onchip Memory中，我们可以重复利用这些部件构建一个新的子系统，如下图所示。这里我们在上面子系统的基础上加入了convert_hsv<em>0和bitpacker</em>0两个部件，并用hsv_addr_gen<em>0替换了default_addr_gen</em>0。convert_hsv<em>0实现了RGB到HSV的转换以及二值化，其输出为1位字宽的Avalon-ST信号。bitpacker</em>0接收这一信号，并将其打包为8位字宽的信号，以便存入Onchip Memory中。vid_write_buffer<em>0向上层系统暴露的Avalon-MM Master接口连接到了Onchip Memory的MM Slave，而hsv_addr_gen</em>0则是针对Onchip Memory的地址生成部件。</p><p><img src='camera_recog.png' alt='' /></p><p>所有自定义部件均通过ModelSim进行仿真，在一定程度上保证了可靠性和鲁棒性。下图为ModelSim仿真的截图。由于部件大多使用了Avalon-MM或Avalon-ST协议，信号需要遵守协议规范，因此仿真时使用了Altera提供的BFM（Bus Functional Model）进行测试。这一模块可以模拟一个Avalon总线中的模块（MM Master/Slave或ST Source/Sink等），并对外暴露控制的API。当我们对一个Avalon-MM Master进行仿真时，则使用Avalon-MM Slave BFM接受Master发起的传输指令，并判断是否符合规范。</p><p></p><h3><a name='header-c491' class='md-header-anchor '></a>外部设备</h3><p>本设计中使用到了多种类的外部设备，包括两个摄像头、SDRAM以及SSRAM。</p><p>我们使用的摄像头为OmniVision OV7670。这款摄像头以高性价比和高自定义程度著名，是许多低成本硬件系统的首选。两个摄像头均通过GPIO针脚连接到开发板。这款摄像头使用SCCB通讯协议实现对内部寄存器的配置。然而数据手册中将许多寄存器标为保留，网上给出的各种寄存器配置也各不相同。最后我们综合网上给出的若干份配置，经过许多次尝试之后才将摄像头配置成输出RGB565格式的图像。</p><p>SDRAM和SSRAM则集成在了开发板上。我们在一开始遇到了许多显示上的问题，包括画面偏移、缺列等，后来发现都是由SDRAM相关的时序问题导致的。经过探索我们发现，需要将SDRAM的时钟加上-3ns的相位偏移。之后我们将SDRAM的时钟及相关输入输出针脚加入SDC文件中，顺利通过了TimeQuest的时序分析。</p><h3><a name='header-c687' class='md-header-anchor '></a>算法设计</h3><p>识别与渲染算法是本设计的核心之一，也是本设计中的性能瓶颈。因此我们针对使用场景进行了专门设计，尽可能优化算法效率。</p><h4><a name='header-c754' class='md-header-anchor '></a>识别算法</h4><p>识别算法包括两个部分：绘制笔在图像中的识别，以及绘制笔在空间中的定位。</p><p>识别部分我们选择直接在图中搜寻与绘制笔颜色相近的像素构成的连通块。要完成这一任务，首先我们需要设置“颜色相近”的阈值。为了更方便地区分颜色，我们将图像转换为了HSV色彩格式。HSV色彩格式的三个分量H、S、V分别是色相、饱和度、明度，因此可以减少光照条件变化给颜色识别带来的麻烦。</p><p>确定阈值后，我们便可以对图像进行二值化。二值化之后的图像非黑即白，白色为“颜色相近”的像素。然而，图像含有较多噪点和内部空洞，因此我们使用腐蚀和膨胀运算来降噪并填补空洞。所谓腐蚀，即为以一个像素周围九个像素中的最小值替换这个像素的值；膨胀则为以最大值替换。在二值图像上则等同于逻辑与和逻辑或，因此可以用位运算优化。</p><p>剩余需要做的就是找到最大的白色连通块了。一个常用的算法就是floodfill算法，其思路非常简单，从一个白色像素出发，向四连通的白色像素拓展，知道遍历完整个连通块。然而片上内存资源有限，无法直接使用深度或者广度优先搜索。因此我们将基于广度优先搜索的floodfill算法与扫描线算法结合，在队列中存储一行中连续一段白色像素的左右端点，向上下相邻行拓展。这一算法所需的最长队列长度不超过图像宽度的两倍。</p><p>在实现识别部分的算法之前，我们先使用OpenCV开源框架实现了一个简单的Python程序，然后逐渐将其翻译成了C。借助这一框架，我们无需在硬件上进行调试，也可以快速找出算法中出错的部分，节省了宝贵的调试时间。</p><p>识别部分之后就是定位部分。我们已知绘制笔在两个摄像头中的像素坐标，可以参考下图推导其空间坐标的公式。图中<span class="MathJax_Preview"></span><span class="MathJax_SVG" id="MathJax-Element-1-Frame" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.279ex" height="2.577ex" viewBox="0 -806.1 550.5 1109.7" role="img" focusable="false" style="vertical-align: -0.705ex;"><defs><path stroke-width="1" id="E1-MJMATHI-66" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E1-MJMATHI-66" x="0" y="0"></use></g></svg></span><script type="math/tex" id="MathJax-Element-1">f</script>为摄像头焦距，<span class="MathJax_Preview"></span><span class="MathJax_SVG" id="MathJax-Element-3-Frame" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="2.052ex" height="2.461ex" viewBox="0 -956.9 883.6 1059.4" role="img" focusable="false" style="vertical-align: -0.238ex;"><defs><path stroke-width="1" id="E3-MJMATHI-78" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path stroke-width="1" id="E3-MJMATHI-6C" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E3-MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E3-MJMATHI-6C" x="809" y="513"></use></g></svg></span><script type="math/tex" id="MathJax-Element-3">x^l</script>和<span class="MathJax_Preview"></span><span class="MathJax_SVG" id="MathJax-Element-6-Frame" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="2.303ex" height="1.994ex" viewBox="0 -755.9 991.8 858.4" role="img" focusable="false" style="vertical-align: -0.238ex;"><defs><path stroke-width="1" id="E6-MJMATHI-78" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path stroke-width="1" id="E6-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E6-MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E6-MJMATHI-72" x="809" y="513"></use></g></svg></span><script type="math/tex" id="MathJax-Element-6">x^r</script>分别为两摄像头中的横坐标，<span class="MathJax_Preview"></span><span class="MathJax_SVG" id="MathJax-Element-26-Frame" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="3.993ex" height="3.044ex" viewBox="0 -1057.4 1719.3 1310.7" role="img" focusable="false" style="vertical-align: -0.588ex;"><defs><path stroke-width="1" id="E31-MJMATHI-63" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path><path stroke-width="1" id="E31-MJMATHI-6C" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path><path stroke-width="1" id="E31-MJMATHI-65" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path><path stroke-width="1" id="E31-MJMATHI-66" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path><path stroke-width="1" id="E31-MJMATHI-74" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path><path stroke-width="1" id="E31-MJMATHI-78" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E31-MJMATHI-63" x="0" y="0"></use><g transform="translate(433,490)"><use transform="scale(0.707)" xlink:href="#E31-MJMATHI-6C" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E31-MJMATHI-65" x="298" y="0"></use><use transform="scale(0.707)" xlink:href="#E31-MJMATHI-66" x="765" y="0"></use><use transform="scale(0.707)" xlink:href="#E31-MJMATHI-74" x="1315" y="0"></use></g><use transform="scale(0.707)" xlink:href="#E31-MJMATHI-78" x="613" y="-211"></use></g></svg></span><script type="math/tex" id="MathJax-Element-26">c_x^{left}</script>和<span class="MathJax_Preview"></span><span class="MathJax_SVG" id="MathJax-Element-33-Frame" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="4.878ex" height="3.044ex" viewBox="0 -1057.4 2100.1 1310.7" role="img" focusable="false" style="vertical-align: -0.588ex;"><defs><path stroke-width="1" id="E44-MJMATHI-63" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path><path stroke-width="1" id="E44-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path stroke-width="1" id="E44-MJMATHI-69" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path><path stroke-width="1" id="E44-MJMATHI-67" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path><path stroke-width="1" id="E44-MJMATHI-68" d="M137 683Q138 683 209 688T282 694Q294 694 294 685Q294 674 258 534Q220 386 220 383Q220 381 227 388Q288 442 357 442Q411 442 444 415T478 336Q478 285 440 178T402 50Q403 36 407 31T422 26Q450 26 474 56T513 138Q516 149 519 151T535 153Q555 153 555 145Q555 144 551 130Q535 71 500 33Q466 -10 419 -10H414Q367 -10 346 17T325 74Q325 90 361 192T398 345Q398 404 354 404H349Q266 404 205 306L198 293L164 158Q132 28 127 16Q114 -11 83 -11Q69 -11 59 -2T48 16Q48 30 121 320L195 616Q195 629 188 632T149 637H128Q122 643 122 645T124 664Q129 683 137 683Z"></path><path stroke-width="1" id="E44-MJMATHI-74" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path><path stroke-width="1" id="E44-MJMATHI-78" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E44-MJMATHI-63" x="0" y="0"></use><g transform="translate(433,490)"><use transform="scale(0.707)" xlink:href="#E44-MJMATHI-72" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E44-MJMATHI-69" x="451" y="0"></use><use transform="scale(0.707)" xlink:href="#E44-MJMATHI-67" x="797" y="0"></use><use transform="scale(0.707)" xlink:href="#E44-MJMATHI-68" x="1277" y="0"></use><use transform="scale(0.707)" xlink:href="#E44-MJMATHI-74" x="1853" y="0"></use></g><use transform="scale(0.707)" xlink:href="#E44-MJMATHI-78" x="613" y="-211"></use></g></svg></span><script type="math/tex" id="MathJax-Element-33">c_x^{right}</script>为两个摄像头光轴与成像平面相交点对应的横坐标，<span class="MathJax_Preview"></span><span class="MathJax_SVG" id="MathJax-Element-8-Frame" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.636ex" height="1.994ex" viewBox="0 -755.9 704.5 858.4" role="img" focusable="false" style="vertical-align: -0.238ex;"><defs><path stroke-width="1" id="E8-MJMATHI-54" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E8-MJMATHI-54" x="0" y="0"></use></g></svg></span><script type="math/tex" id="MathJax-Element-8">T</script>为摄像头间距，<span class="MathJax_Preview"></span><span class="MathJax_SVG" id="MathJax-Element-10-Frame" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.68ex" height="1.994ex" viewBox="0 -755.9 723.5 858.4" role="img" focusable="false" style="vertical-align: -0.238ex;"><defs><path stroke-width="1" id="E10-MJMATHI-5A" d="M58 8Q58 23 64 35Q64 36 329 334T596 635L586 637Q575 637 512 637H500H476Q442 637 420 635T365 624T311 598T266 548T228 469Q227 466 226 463T224 458T223 453T222 450L221 448Q218 443 202 443Q185 443 182 453L214 561Q228 606 241 651Q249 679 253 681Q256 683 487 683H718Q723 678 723 675Q723 673 717 649Q189 54 188 52L185 49H274Q369 50 377 51Q452 60 500 100T579 247Q587 272 590 277T603 282H607Q628 282 628 271Q547 5 541 2Q538 0 300 0H124Q58 0 58 8Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E10-MJMATHI-5A" x="0" y="0"></use></g></svg></span><script type="math/tex" id="MathJax-Element-10">Z</script>则为绘制笔到摄像头的距离。易知此图中<span class="MathJax_Preview"></span><span class="MathJax_SVG" id="MathJax-Element-78-Frame" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="37.385ex" height="4.445ex" viewBox="0 -1208.2 16096.3 1913.9" role="img" focusable="false" style="vertical-align: -1.639ex;"><defs><path stroke-width="1" id="E130-MJMATHI-5A" d="M58 8Q58 23 64 35Q64 36 329 334T596 635L586 637Q575 637 512 637H500H476Q442 637 420 635T365 624T311 598T266 548T228 469Q227 466 226 463T224 458T223 453T222 450L221 448Q218 443 202 443Q185 443 182 453L214 561Q228 606 241 651Q249 679 253 681Q256 683 487 683H718Q723 678 723 675Q723 673 717 649Q189 54 188 52L185 49H274Q369 50 377 51Q452 60 500 100T579 247Q587 272 590 277T603 282H607Q628 282 628 271Q547 5 541 2Q538 0 300 0H124Q58 0 58 8Z"></path><path stroke-width="1" id="E130-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path stroke-width="1" id="E130-MJMATHI-54" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path><path stroke-width="1" id="E130-MJMATHI-66" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path><path stroke-width="1" id="E130-MJMAIN-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path><path stroke-width="1" id="E130-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path stroke-width="1" id="E130-MJMATHI-78" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path stroke-width="1" id="E130-MJMATHI-6C" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path><path stroke-width="1" id="E130-MJMAIN-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path stroke-width="1" id="E130-MJMATHI-63" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path><path stroke-width="1" id="E130-MJMATHI-65" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path><path stroke-width="1" id="E130-MJMATHI-74" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path><path stroke-width="1" id="E130-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path><path stroke-width="1" id="E130-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path stroke-width="1" id="E130-MJMATHI-69" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path><path stroke-width="1" id="E130-MJMATHI-67" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path><path stroke-width="1" id="E130-MJMATHI-68" d="M137 683Q138 683 209 688T282 694Q294 694 294 685Q294 674 258 534Q220 386 220 383Q220 381 227 388Q288 442 357 442Q411 442 444 415T478 336Q478 285 440 178T402 50Q403 36 407 31T422 26Q450 26 474 56T513 138Q516 149 519 151T535 153Q555 153 555 145Q555 144 551 130Q535 71 500 33Q466 -10 419 -10H414Q367 -10 346 17T325 74Q325 90 361 192T398 345Q398 404 354 404H349Q266 404 205 306L198 293L164 158Q132 28 127 16Q114 -11 83 -11Q69 -11 59 -2T48 16Q48 30 121 320L195 616Q195 629 188 632T149 637H128Q122 643 122 645T124 664Q129 683 137 683Z"></path><path stroke-width="1" id="E130-MJSZ2-28" d="M180 96T180 250T205 541T266 770T353 944T444 1069T527 1150H555Q561 1144 561 1141Q561 1137 545 1120T504 1072T447 995T386 878T330 721T288 513T272 251Q272 133 280 56Q293 -87 326 -209T399 -405T475 -531T536 -609T561 -640Q561 -643 555 -649H527Q483 -612 443 -568T353 -443T266 -270T205 -41Z"></path><path stroke-width="1" id="E130-MJSZ2-29" d="M35 1138Q35 1150 51 1150H56H69Q113 1113 153 1069T243 944T330 771T391 541T416 250T391 -40T330 -270T243 -443T152 -568T69 -649H56Q43 -649 39 -647T35 -637Q65 -607 110 -548Q283 -316 316 56Q324 133 324 251Q324 368 316 445Q278 877 48 1123Q36 1137 35 1138Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E130-MJMATHI-5A" x="0" y="0"></use><use xlink:href="#E130-MJMAIN-3D" x="1001" y="0"></use><use xlink:href="#E130-MJMATHI-54" x="2057" y="0"></use><use xlink:href="#E130-MJMATHI-66" x="2762" y="0"></use><use xlink:href="#E130-MJMAIN-2F" x="3312" y="0"></use><g transform="translate(3979,0)"><use xlink:href="#E130-MJSZ2-28"></use><use xlink:href="#E130-MJMAIN-28" x="597" y="0"></use><g transform="translate(987,0)"><use xlink:href="#E130-MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E130-MJMATHI-6C" x="809" y="513"></use></g><use xlink:href="#E130-MJMAIN-2212" x="2092" y="0"></use><g transform="translate(3093,0)"><use xlink:href="#E130-MJMATHI-63" x="0" y="0"></use><g transform="translate(433,490)"><use transform="scale(0.707)" xlink:href="#E130-MJMATHI-6C" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E130-MJMATHI-65" x="298" y="0"></use><use transform="scale(0.707)" xlink:href="#E130-MJMATHI-66" x="765" y="0"></use><use transform="scale(0.707)" xlink:href="#E130-MJMATHI-74" x="1315" y="0"></use></g><use transform="scale(0.707)" xlink:href="#E130-MJMATHI-78" x="613" y="-211"></use></g><use xlink:href="#E130-MJMAIN-29" x="4812" y="0"></use><use xlink:href="#E130-MJMAIN-2212" x="5424" y="0"></use><use xlink:href="#E130-MJMAIN-28" x="6425" y="0"></use><g transform="translate(6814,0)"><use xlink:href="#E130-MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E130-MJMATHI-72" x="809" y="513"></use></g><use xlink:href="#E130-MJMAIN-2212" x="8028" y="0"></use><g transform="translate(9029,0)"><use xlink:href="#E130-MJMATHI-63" x="0" y="0"></use><g transform="translate(433,490)"><use transform="scale(0.707)" xlink:href="#E130-MJMATHI-72" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E130-MJMATHI-69" x="451" y="0"></use><use transform="scale(0.707)" xlink:href="#E130-MJMATHI-67" x="797" y="0"></use><use transform="scale(0.707)" xlink:href="#E130-MJMATHI-68" x="1277" y="0"></use><use transform="scale(0.707)" xlink:href="#E130-MJMATHI-74" x="1853" y="0"></use></g><use transform="scale(0.707)" xlink:href="#E130-MJMATHI-78" x="613" y="-211"></use></g><use xlink:href="#E130-MJMAIN-29" x="11129" y="0"></use><use xlink:href="#E130-MJSZ2-29" x="11519" y="-1"></use></g></g></svg></span><script type="math/tex" id="MathJax-Element-78">Z=Tf/\left((x^l-c_x^{left})-(x^r-c_x^{right})\right)</script>。</p><p><img src='depth_calculation.png' alt='' /></p><p>而实际上，两个摄像头在两个方向上的的焦距均不等，因此实际使用的公式如下：</p><p><span class="MathJax_Preview"></span><span class="MathJax_SVG" id="MathJax-Element-120-Frame" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="47.93ex" height="4.445ex" viewBox="0 -1208.2 20636.3 1913.9" role="img" focusable="false" style="vertical-align: -1.639ex;"><defs><path stroke-width="1" id="E202-MJMATHI-5A" d="M58 8Q58 23 64 35Q64 36 329 334T596 635L586 637Q575 637 512 637H500H476Q442 637 420 635T365 624T311 598T266 548T228 469Q227 466 226 463T224 458T223 453T222 450L221 448Q218 443 202 443Q185 443 182 453L214 561Q228 606 241 651Q249 679 253 681Q256 683 487 683H718Q723 678 723 675Q723 673 717 649Q189 54 188 52L185 49H274Q369 50 377 51Q452 60 500 100T579 247Q587 272 590 277T603 282H607Q628 282 628 271Q547 5 541 2Q538 0 300 0H124Q58 0 58 8Z"></path><path stroke-width="1" id="E202-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path stroke-width="1" id="E202-MJMATHI-54" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path><path stroke-width="1" id="E202-MJMAIN-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path><path stroke-width="1" id="E202-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path stroke-width="1" id="E202-MJMATHI-78" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path stroke-width="1" id="E202-MJMATHI-6C" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path><path stroke-width="1" id="E202-MJMAIN-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path stroke-width="1" id="E202-MJMATHI-63" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path><path stroke-width="1" id="E202-MJMATHI-65" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path><path stroke-width="1" id="E202-MJMATHI-66" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path><path stroke-width="1" id="E202-MJMATHI-74" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path><path stroke-width="1" id="E202-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path><path stroke-width="1" id="E202-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path stroke-width="1" id="E202-MJMATHI-69" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path><path stroke-width="1" id="E202-MJMATHI-67" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path><path stroke-width="1" id="E202-MJMATHI-68" d="M137 683Q138 683 209 688T282 694Q294 694 294 685Q294 674 258 534Q220 386 220 383Q220 381 227 388Q288 442 357 442Q411 442 444 415T478 336Q478 285 440 178T402 50Q403 36 407 31T422 26Q450 26 474 56T513 138Q516 149 519 151T535 153Q555 153 555 145Q555 144 551 130Q535 71 500 33Q466 -10 419 -10H414Q367 -10 346 17T325 74Q325 90 361 192T398 345Q398 404 354 404H349Q266 404 205 306L198 293L164 158Q132 28 127 16Q114 -11 83 -11Q69 -11 59 -2T48 16Q48 30 121 320L195 616Q195 629 188 632T149 637H128Q122 643 122 645T124 664Q129 683 137 683Z"></path><path stroke-width="1" id="E202-MJSZ2-28" d="M180 96T180 250T205 541T266 770T353 944T444 1069T527 1150H555Q561 1144 561 1141Q561 1137 545 1120T504 1072T447 995T386 878T330 721T288 513T272 251Q272 133 280 56Q293 -87 326 -209T399 -405T475 -531T536 -609T561 -640Q561 -643 555 -649H527Q483 -612 443 -568T353 -443T266 -270T205 -41Z"></path><path stroke-width="1" id="E202-MJSZ2-29" d="M35 1138Q35 1150 51 1150H56H69Q113 1113 153 1069T243 944T330 771T391 541T416 250T391 -40T330 -270T243 -443T152 -568T69 -649H56Q43 -649 39 -647T35 -637Q65 -607 110 -548Q283 -316 316 56Q324 133 324 251Q324 368 316 445Q278 877 48 1123Q36 1137 35 1138Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E202-MJMATHI-5A" x="0" y="0"></use><use xlink:href="#E202-MJMAIN-3D" x="1001" y="0"></use><use xlink:href="#E202-MJMATHI-54" x="2057" y="0"></use><use xlink:href="#E202-MJMAIN-2F" x="2762" y="0"></use><g transform="translate(3429,0)"><use xlink:href="#E202-MJSZ2-28"></use><use xlink:href="#E202-MJMAIN-28" x="597" y="0"></use><g transform="translate(987,0)"><use xlink:href="#E202-MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-6C" x="809" y="-213"></use></g><use xlink:href="#E202-MJMAIN-2212" x="2092" y="0"></use><g transform="translate(3093,0)"><use xlink:href="#E202-MJMATHI-63" x="0" y="0"></use><g transform="translate(433,490)"><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-6C" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-65" x="298" y="0"></use><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-66" x="765" y="0"></use><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-74" x="1315" y="0"></use></g><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-78" x="613" y="-211"></use></g><use xlink:href="#E202-MJMAIN-29" x="4812" y="0"></use><use xlink:href="#E202-MJMAIN-2F" x="5202" y="0"></use><g transform="translate(5702,0)"><use xlink:href="#E202-MJMATHI-66" x="0" y="0"></use><g transform="translate(568,490)"><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-6C" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-65" x="298" y="0"></use><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-66" x="765" y="0"></use><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-74" x="1315" y="0"></use></g><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-78" x="693" y="-211"></use></g><use xlink:href="#E202-MJMAIN-2212" x="7779" y="0"></use><use xlink:href="#E202-MJMAIN-28" x="8780" y="0"></use><g transform="translate(9169,0)"><use xlink:href="#E202-MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-72" x="809" y="-213"></use></g><use xlink:href="#E202-MJMAIN-2212" x="10383" y="0"></use><g transform="translate(11384,0)"><use xlink:href="#E202-MJMATHI-63" x="0" y="0"></use><g transform="translate(433,490)"><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-72" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-69" x="451" y="0"></use><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-67" x="797" y="0"></use><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-68" x="1277" y="0"></use><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-74" x="1853" y="0"></use></g><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-78" x="613" y="-211"></use></g><use xlink:href="#E202-MJMAIN-29" x="13484" y="0"></use><use xlink:href="#E202-MJMAIN-2F" x="13873" y="0"></use><g transform="translate(14374,0)"><use xlink:href="#E202-MJMATHI-66" x="0" y="0"></use><g transform="translate(568,490)"><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-72" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-69" x="451" y="0"></use><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-67" x="797" y="0"></use><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-68" x="1277" y="0"></use><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-74" x="1853" y="0"></use></g><use transform="scale(0.707)" xlink:href="#E202-MJMATHI-78" x="693" y="-211"></use></g><use xlink:href="#E202-MJSZ2-29" x="16609" y="-1"></use></g></g></svg></span><script type="math/tex" id="MathJax-Element-120">Z=T/\left((x_l-c_x^{left})/f_x^{left}-(x_r-c_x^{right})/f_x^{right}\right)</script></p><p><span class="MathJax_Preview"></span><span class="MathJax_SVG" id="MathJax-Element-131-Frame" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="24.915ex" height="4.445ex" viewBox="0 -1208.2 10727.3 1913.9" role="img" focusable="false" style="vertical-align: -1.639ex;"><defs><path stroke-width="1" id="E218-MJMATHI-58" d="M42 0H40Q26 0 26 11Q26 15 29 27Q33 41 36 43T55 46Q141 49 190 98Q200 108 306 224T411 342Q302 620 297 625Q288 636 234 637H206Q200 643 200 645T202 664Q206 677 212 683H226Q260 681 347 681Q380 681 408 681T453 682T473 682Q490 682 490 671Q490 670 488 658Q484 643 481 640T465 637Q434 634 411 620L488 426L541 485Q646 598 646 610Q646 628 622 635Q617 635 609 637Q594 637 594 648Q594 650 596 664Q600 677 606 683H618Q619 683 643 683T697 681T738 680Q828 680 837 683H845Q852 676 852 672Q850 647 840 637H824Q790 636 763 628T722 611T698 593L687 584Q687 585 592 480L505 384Q505 383 536 304T601 142T638 56Q648 47 699 46Q734 46 734 37Q734 35 732 23Q728 7 725 4T711 1Q708 1 678 1T589 2Q528 2 496 2T461 1Q444 1 444 10Q444 11 446 25Q448 35 450 39T455 44T464 46T480 47T506 54Q523 62 523 64Q522 64 476 181L429 299Q241 95 236 84Q232 76 232 72Q232 53 261 47Q262 47 267 47T273 46Q276 46 277 46T280 45T283 42T284 35Q284 26 282 19Q279 6 276 4T261 1Q258 1 243 1T201 2T142 2Q64 2 42 0Z"></path><path stroke-width="1" id="E218-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path stroke-width="1" id="E218-MJMATHI-5A" d="M58 8Q58 23 64 35Q64 36 329 334T596 635L586 637Q575 637 512 637H500H476Q442 637 420 635T365 624T311 598T266 548T228 469Q227 466 226 463T224 458T223 453T222 450L221 448Q218 443 202 443Q185 443 182 453L214 561Q228 606 241 651Q249 679 253 681Q256 683 487 683H718Q723 678 723 675Q723 673 717 649Q189 54 188 52L185 49H274Q369 50 377 51Q452 60 500 100T579 247Q587 272 590 277T603 282H607Q628 282 628 271Q547 5 541 2Q538 0 300 0H124Q58 0 58 8Z"></path><path stroke-width="1" id="E218-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path stroke-width="1" id="E218-MJMATHI-78" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path stroke-width="1" id="E218-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path stroke-width="1" id="E218-MJMAIN-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path stroke-width="1" id="E218-MJMATHI-63" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path><path stroke-width="1" id="E218-MJMATHI-6C" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path><path stroke-width="1" id="E218-MJMATHI-65" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path><path stroke-width="1" id="E218-MJMATHI-66" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path><path stroke-width="1" id="E218-MJMATHI-74" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path><path stroke-width="1" id="E218-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path><path stroke-width="1" id="E218-MJSZ2-28" d="M180 96T180 250T205 541T266 770T353 944T444 1069T527 1150H555Q561 1144 561 1141Q561 1137 545 1120T504 1072T447 995T386 878T330 721T288 513T272 251Q272 133 280 56Q293 -87 326 -209T399 -405T475 -531T536 -609T561 -640Q561 -643 555 -649H527Q483 -612 443 -568T353 -443T266 -270T205 -41Z"></path><path stroke-width="1" id="E218-MJSZ2-29" d="M35 1138Q35 1150 51 1150H56H69Q113 1113 153 1069T243 944T330 771T391 541T416 250T391 -40T330 -270T243 -443T152 -568T69 -649H56Q43 -649 39 -647T35 -637Q65 -607 110 -548Q283 -316 316 56Q324 133 324 251Q324 368 316 445Q278 877 48 1123Q36 1137 35 1138Z"></path><path stroke-width="1" id="E218-MJMAIN-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E218-MJMATHI-58" x="0" y="0"></use><use xlink:href="#E218-MJMAIN-3D" x="1130" y="0"></use><use xlink:href="#E218-MJMATHI-5A" x="2186" y="0"></use><g transform="translate(3076,0)"><use xlink:href="#E218-MJSZ2-28"></use><g transform="translate(597,0)"><use xlink:href="#E218-MJMATHI-78" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E218-MJMATHI-72" x="809" y="513"></use></g><use xlink:href="#E218-MJMAIN-2212" x="1811" y="0"></use><g transform="translate(2812,0)"><use xlink:href="#E218-MJMATHI-63" x="0" y="0"></use><g transform="translate(433,490)"><use transform="scale(0.707)" xlink:href="#E218-MJMATHI-6C" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E218-MJMATHI-65" x="298" y="0"></use><use transform="scale(0.707)" xlink:href="#E218-MJMATHI-66" x="765" y="0"></use><use transform="scale(0.707)" xlink:href="#E218-MJMATHI-74" x="1315" y="0"></use></g><use transform="scale(0.707)" xlink:href="#E218-MJMATHI-78" x="613" y="-211"></use></g><use xlink:href="#E218-MJSZ2-29" x="4531" y="-1"></use></g><use xlink:href="#E218-MJMAIN-2F" x="8372" y="0"></use><g transform="translate(8872,0)"><use xlink:href="#E218-MJMATHI-66" x="0" y="0"></use><g transform="translate(568,490)"><use transform="scale(0.707)" xlink:href="#E218-MJMATHI-6C" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E218-MJMATHI-65" x="298" y="0"></use><use transform="scale(0.707)" xlink:href="#E218-MJMATHI-66" x="765" y="0"></use><use transform="scale(0.707)" xlink:href="#E218-MJMATHI-74" x="1315" y="0"></use></g><use transform="scale(0.707)" xlink:href="#E218-MJMATHI-78" x="693" y="-211"></use></g></g></svg></span><script type="math/tex" id="MathJax-Element-131">X=Z\left(x^r-c_x^{left}\right)/f_x^{left}</script></p><p><span class="MathJax_Preview"></span><span class="MathJax_SVG" id="MathJax-Element-141-Frame" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="24.539ex" height="4.445ex" viewBox="0 -1208.2 10565.4 1913.9" role="img" focusable="false" style="vertical-align: -1.639ex;"><defs><path stroke-width="1" id="E236-MJMATHI-59" d="M66 637Q54 637 49 637T39 638T32 641T30 647T33 664T42 682Q44 683 56 683Q104 680 165 680Q288 680 306 683H316Q322 677 322 674T320 656Q316 643 310 637H298Q242 637 242 624Q242 619 292 477T343 333L346 336Q350 340 358 349T379 373T411 410T454 461Q546 568 561 587T577 618Q577 634 545 637Q528 637 528 647Q528 649 530 661Q533 676 535 679T549 683Q551 683 578 682T657 680Q684 680 713 681T746 682Q763 682 763 673Q763 669 760 657T755 643Q753 637 734 637Q662 632 617 587Q608 578 477 424L348 273L322 169Q295 62 295 57Q295 46 363 46Q379 46 384 45T390 35Q390 33 388 23Q384 6 382 4T366 1Q361 1 324 1T232 2Q170 2 138 2T102 1Q84 1 84 9Q84 14 87 24Q88 27 89 30T90 35T91 39T93 42T96 44T101 45T107 45T116 46T129 46Q168 47 180 50T198 63Q201 68 227 171L252 274L129 623Q128 624 127 625T125 627T122 629T118 631T113 633T105 634T96 635T83 636T66 637Z"></path><path stroke-width="1" id="E236-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path stroke-width="1" id="E236-MJMATHI-5A" d="M58 8Q58 23 64 35Q64 36 329 334T596 635L586 637Q575 637 512 637H500H476Q442 637 420 635T365 624T311 598T266 548T228 469Q227 466 226 463T224 458T223 453T222 450L221 448Q218 443 202 443Q185 443 182 453L214 561Q228 606 241 651Q249 679 253 681Q256 683 487 683H718Q723 678 723 675Q723 673 717 649Q189 54 188 52L185 49H274Q369 50 377 51Q452 60 500 100T579 247Q587 272 590 277T603 282H607Q628 282 628 271Q547 5 541 2Q538 0 300 0H124Q58 0 58 8Z"></path><path stroke-width="1" id="E236-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path stroke-width="1" id="E236-MJMATHI-79" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path stroke-width="1" id="E236-MJMATHI-72" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path stroke-width="1" id="E236-MJMAIN-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path stroke-width="1" id="E236-MJMATHI-63" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path><path stroke-width="1" id="E236-MJMATHI-6C" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path><path stroke-width="1" id="E236-MJMATHI-65" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path><path stroke-width="1" id="E236-MJMATHI-66" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path><path stroke-width="1" id="E236-MJMATHI-74" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path><path stroke-width="1" id="E236-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path><path stroke-width="1" id="E236-MJSZ2-28" d="M180 96T180 250T205 541T266 770T353 944T444 1069T527 1150H555Q561 1144 561 1141Q561 1137 545 1120T504 1072T447 995T386 878T330 721T288 513T272 251Q272 133 280 56Q293 -87 326 -209T399 -405T475 -531T536 -609T561 -640Q561 -643 555 -649H527Q483 -612 443 -568T353 -443T266 -270T205 -41Z"></path><path stroke-width="1" id="E236-MJSZ2-29" d="M35 1138Q35 1150 51 1150H56H69Q113 1113 153 1069T243 944T330 771T391 541T416 250T391 -40T330 -270T243 -443T152 -568T69 -649H56Q43 -649 39 -647T35 -637Q65 -607 110 -548Q283 -316 316 56Q324 133 324 251Q324 368 316 445Q278 877 48 1123Q36 1137 35 1138Z"></path><path stroke-width="1" id="E236-MJMAIN-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E236-MJMATHI-59" x="0" y="0"></use><use xlink:href="#E236-MJMAIN-3D" x="1041" y="0"></use><use xlink:href="#E236-MJMATHI-5A" x="2097" y="0"></use><g transform="translate(2987,0)"><use xlink:href="#E236-MJSZ2-28"></use><g transform="translate(597,0)"><use xlink:href="#E236-MJMATHI-79" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E236-MJMATHI-72" x="706" y="513"></use></g><use xlink:href="#E236-MJMAIN-2212" x="1738" y="0"></use><g transform="translate(2739,0)"><use xlink:href="#E236-MJMATHI-63" x="0" y="0"></use><g transform="translate(433,490)"><use transform="scale(0.707)" xlink:href="#E236-MJMATHI-6C" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E236-MJMATHI-65" x="298" y="0"></use><use transform="scale(0.707)" xlink:href="#E236-MJMATHI-66" x="765" y="0"></use><use transform="scale(0.707)" xlink:href="#E236-MJMATHI-74" x="1315" y="0"></use></g><use transform="scale(0.707)" xlink:href="#E236-MJMATHI-79" x="613" y="-212"></use></g><use xlink:href="#E236-MJSZ2-29" x="4458" y="-1"></use></g><use xlink:href="#E236-MJMAIN-2F" x="8210" y="0"></use><g transform="translate(8711,0)"><use xlink:href="#E236-MJMATHI-66" x="0" y="0"></use><g transform="translate(568,490)"><use transform="scale(0.707)" xlink:href="#E236-MJMATHI-6C" x="0" y="0"></use><use transform="scale(0.707)" xlink:href="#E236-MJMATHI-65" x="298" y="0"></use><use transform="scale(0.707)" xlink:href="#E236-MJMATHI-66" x="765" y="0"></use><use transform="scale(0.707)" xlink:href="#E236-MJMATHI-74" x="1315" y="0"></use></g><use transform="scale(0.707)" xlink:href="#E236-MJMATHI-79" x="693" y="-212"></use></g></g></svg></span><script type="math/tex" id="MathJax-Element-141">Y=Z\left(y^r-c_y^{left}\right)/f_y^{left}</script></p><p>绘制笔的坐标即为<span class="MathJax_Preview"></span><span class="MathJax_SVG" id="MathJax-Element-142-Frame" tabindex="-1" style="font-size: 100%; display: inline-block;"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="9.311ex" height="2.577ex" viewBox="0 -806.1 4008.8 1109.7" role="img" focusable="false" style="vertical-align: -0.705ex;"><defs><path stroke-width="1" id="E238-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path stroke-width="1" id="E238-MJMATHI-58" d="M42 0H40Q26 0 26 11Q26 15 29 27Q33 41 36 43T55 46Q141 49 190 98Q200 108 306 224T411 342Q302 620 297 625Q288 636 234 637H206Q200 643 200 645T202 664Q206 677 212 683H226Q260 681 347 681Q380 681 408 681T453 682T473 682Q490 682 490 671Q490 670 488 658Q484 643 481 640T465 637Q434 634 411 620L488 426L541 485Q646 598 646 610Q646 628 622 635Q617 635 609 637Q594 637 594 648Q594 650 596 664Q600 677 606 683H618Q619 683 643 683T697 681T738 680Q828 680 837 683H845Q852 676 852 672Q850 647 840 637H824Q790 636 763 628T722 611T698 593L687 584Q687 585 592 480L505 384Q505 383 536 304T601 142T638 56Q648 47 699 46Q734 46 734 37Q734 35 732 23Q728 7 725 4T711 1Q708 1 678 1T589 2Q528 2 496 2T461 1Q444 1 444 10Q444 11 446 25Q448 35 450 39T455 44T464 46T480 47T506 54Q523 62 523 64Q522 64 476 181L429 299Q241 95 236 84Q232 76 232 72Q232 53 261 47Q262 47 267 47T273 46Q276 46 277 46T280 45T283 42T284 35Q284 26 282 19Q279 6 276 4T261 1Q258 1 243 1T201 2T142 2Q64 2 42 0Z"></path><path stroke-width="1" id="E238-MJMAIN-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path stroke-width="1" id="E238-MJMATHI-59" d="M66 637Q54 637 49 637T39 638T32 641T30 647T33 664T42 682Q44 683 56 683Q104 680 165 680Q288 680 306 683H316Q322 677 322 674T320 656Q316 643 310 637H298Q242 637 242 624Q242 619 292 477T343 333L346 336Q350 340 358 349T379 373T411 410T454 461Q546 568 561 587T577 618Q577 634 545 637Q528 637 528 647Q528 649 530 661Q533 676 535 679T549 683Q551 683 578 682T657 680Q684 680 713 681T746 682Q763 682 763 673Q763 669 760 657T755 643Q753 637 734 637Q662 632 617 587Q608 578 477 424L348 273L322 169Q295 62 295 57Q295 46 363 46Q379 46 384 45T390 35Q390 33 388 23Q384 6 382 4T366 1Q361 1 324 1T232 2Q170 2 138 2T102 1Q84 1 84 9Q84 14 87 24Q88 27 89 30T90 35T91 39T93 42T96 44T101 45T107 45T116 46T129 46Q168 47 180 50T198 63Q201 68 227 171L252 274L129 623Q128 624 127 625T125 627T122 629T118 631T113 633T105 634T96 635T83 636T66 637Z"></path><path stroke-width="1" id="E238-MJMATHI-5A" d="M58 8Q58 23 64 35Q64 36 329 334T596 635L586 637Q575 637 512 637H500H476Q442 637 420 635T365 624T311 598T266 548T228 469Q227 466 226 463T224 458T223 453T222 450L221 448Q218 443 202 443Q185 443 182 453L214 561Q228 606 241 651Q249 679 253 681Q256 683 487 683H718Q723 678 723 675Q723 673 717 649Q189 54 188 52L185 49H274Q369 50 377 51Q452 60 500 100T579 247Q587 272 590 277T603 282H607Q628 282 628 271Q547 5 541 2Q538 0 300 0H124Q58 0 58 8Z"></path><path stroke-width="1" id="E238-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><use xlink:href="#E238-MJMAIN-28" x="0" y="0"></use><use xlink:href="#E238-MJMATHI-58" x="389" y="0"></use><use xlink:href="#E238-MJMAIN-2C" x="1242" y="0"></use><use xlink:href="#E238-MJMATHI-59" x="1687" y="0"></use><use xlink:href="#E238-MJMAIN-2C" x="2450" y="0"></use><use xlink:href="#E238-MJMATHI-5A" x="2895" y="0"></use><use xlink:href="#E238-MJMAIN-29" x="3619" y="0"></use></g></svg></span><script type="math/tex" id="MathJax-Element-142">(X,Y,Z)</script>。</p><p>焦距等摄像头内部参数可以通过离线的方法测定。我们将摄像头的图像借助Nios II输出到计算机的终端上，并调用OpenCV提供的函数进行测定即可。</p><h4><a name='header-c814' class='md-header-anchor '></a>渲染算法</h4><p>渲染算法使用的是传统的深度缓存方法。这一方法存储每个像素距离视点最近的物体及其距离，以避免每次重新计算。渲染时，只需计算视线与每个像素记录的最近物体的交即可。</p><p>在添加一个物体时，由于我们在定位时已经得知了物体的每个关键点投影到屏幕的坐标，我们便能知道物体在屏幕上的轮廓，从而避免访问轮廓以外的像素。对轮廓内的所有像素，判断新的物体是否比原最近物体更近，并更新深度缓存。</p><p>为了简化计算，渲染并未采用具有物理真实感的渲染模型。像素的光照强度直接由法向量的方向求得，因此立方体同一个面的颜色相同。另一方面，由于浮点运算速度较慢，在不损失计算精度的前提下，我们在尽可能多的地方使用整数运算取代了浮点运算。</p><h2><a name='header-c92' class='md-header-anchor '></a>设计特点</h2><p>本设计的独特之处如下：</p><ol><li><strong>应用广泛、可拓展性强：</strong>本设计虽然是CAD系统，但本质上也可以视为一款简化的AR设备，可拓展性强，而且具有广阔的应用前景。</li><li><strong>快速的数据存取</strong>：系统需要能实时处理双摄像头输入的图像信息，还需要存储渲染的中间信息，对于数据存储和处理的要求都相当高。我们使用了开发板上的外部SDRAM和SSRAM作为VGA的输出显存，并针对VGA输出和渲染算法的特点设计了基于Avalon-MM协议的双FIFO缓存，以充分利用连续访问的特性，加快读写速率。</li><li><strong>极高的实时性</strong>：系统对实时性的要求非常高。出于效率的考虑，我们将一些关键的部件使用硬件实现，包括HSV转换、三缓存控制、图层叠加等。另外，我们用流水线替换了一些耗时的组合逻辑，提高了系统整体的时钟频率。</li><li><strong>严格的时序</strong>：系统结构较为复杂，对时序要求严格。不同的模块的输入输出时钟不同，在许多地方插入了跨时域逻辑。在加入时钟限制后，可以通过TimeQuest时序分析。</li><li><strong>可靠、鲁棒的系统：</strong>所有自定义部件均经过ModelSim仿真测试，在一定程度上保证了可靠性。部件在针对使用场景特化时，也权衡了对其鲁棒性的影响，最终选择了两边兼顾的设计方法。</li><li><strong>基于Nios II的算法开发</strong>：绘制笔的定位与三维渲染使用Nios II软核实现，较之于硬件实现，这种实现更为简便和直观。</li></ol><h2><a name='header-c108' class='md-header-anchor '></a>总结</h2><p>从确定选题到最终完成开发，历时将近四个月。通过这四个月的努力，我们将当初的想法变成了现实。虽然因为时间仓促，有些功能没有来得及实现，也有一些限于资源问题无法实现的功能，也算是有一些遗憾，也还有改进的空间。</p><p>本次大赛让我们对于硬件开发有了更深刻的体会，也让我们充分熟悉了Altera FPGA器件的开发环境。Altera提供的Quartus II以及Qsys软件功能强大，其内置的各类IP也为我们的开发带来了极大的便利，而且具有非常详细的文档和教程。Terasic提供的开发板也便于使用，而且功能丰富，可以充分满足我们的需求。</p><p>最后，感谢Altera公司和Terasic公司为我们提供了参加本次比赛的机会。</p></div>
+</body>
+</html>
