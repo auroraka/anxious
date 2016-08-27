@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="$${FILENAME}">
+ <component
+   name="$${FILENAME}"
+   displayName="$${FILENAME}"
+   version="1.0"
+   description=""
+   tags=""
+   categories="System" />
+ <parameter name="bonusData"><![CDATA[bonusData 
+{
+   element $${FILENAME}
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element addr_gen
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+   }
+   element clk_qsys
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+   }
+   element clk_vga
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+   }
+   element read_buffer
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+   }
+   element vga_composer_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element vga_composer_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element vga_composer_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element vga_composer_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element vga_composer_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element vga_composer_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element vga_composer_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element vga_composer_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+}
+]]></parameter>
+ <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
+ <parameter name="device" value="EP4CGX150DF31C7" />
+ <parameter name="deviceFamily" value="Cyclone IV GX" />
+ <parameter name="deviceSpeedGrade" value="7" />
+ <parameter name="fabricMode" value="QSYS" />
+ <parameter name="generateLegacySim" value="false" />
+ <parameter name="generationId" value="0" />
+ <parameter name="globalResetBus" value="false" />
+ <parameter name="hdlLanguage" value="VERILOG" />
+ <parameter name="hideFromIPCatalog" value="false" />
+ <parameter name="lockedInterfaceDefinition" value="" />
+ <parameter name="maxAdditionalLatency" value="1" />
+ <parameter name="projectName" value="" />
+ <parameter name="sopcBorderPoints" value="false" />
+ <parameter name="systemHash" value="0" />
+ <parameter name="testBenchDutName" value="" />
+ <parameter name="timeStamp" value="0" />
+ <parameter name="useTestBenchNamingPattern" value="false" />
+ <instanceScript></instanceScript>
+ <interface
+   name="buffer_switch"
+   internal="addr_gen.buffer_switch"
+   type="conduit"
+   dir="end" />
+ <interface name="clk" internal="clk_qsys.clk_in" type="clock" dir="end" />
+ <interface name="clk_vga" internal="clk_vga.clk_in" type="clock" dir="end" />
+ <interface
+   name="master"
+   internal="read_buffer.avalon_master"
+   type="avalon"
+   dir="start" />
+ <interface name="reset" internal="clk_qsys.clk_in_reset" type="reset" dir="end" />
+ <interface
+   name="source"
+   internal="read_buffer.source"
+   type="avalon_streaming"
+   dir="start" />
+ <interface
+   name="vga_vsync"
+   internal="read_buffer.vsync"
+   type="conduit"
+   dir="end" />
+ <module
+   name="addr_gen"
+   kind="default_read_addr_gen"
+   version="1.0"
+   enabled="1">
+  <parameter name="ADDR_WIDTH" value="27" />
+  <parameter name="BANK" value="0" />
+  <parameter name="HEIGHT" value="480" />
+  <parameter name="WIDTH" value="640" />
+ </module>
+ <module name="clk_qsys" kind="clock_source" version="15.0" enabled="1">
+  <parameter name="clockFrequency" value="1000000000" />
+  <parameter name="clockFrequencyKnown" value="false" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module name="clk_vga" kind="clock_source" version="15.0" enabled="1">
+  <parameter name="clockFrequency" value="25000000" />
+  <parameter name="clockFrequencyKnown" value="false" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module name="read_buffer" kind="vid_read_buffer" version="1.0" enabled="1">
+  <parameter name="ADDR_WIDTH" value="27" />
+  <parameter name="DATA_WIDTH" value="32" />
+  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
+ </module>
+ <connection kind="clock" version="15.0" start="clk_qsys.clk" end="addr_gen.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_qsys.clk"
+   end="read_buffer.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_vga.clk"
+   end="read_buffer.st_clk" />
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="addr_gen.addr_gen"
+   end="read_buffer.addr_gen">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_qsys.clk_reset"
+   end="clk_vga.clk_in_reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_qsys.clk_reset"
+   end="read_buffer.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_vga.clk_reset"
+   end="read_buffer.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_qsys.clk_reset"
+   end="addr_gen.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_vga.clk_reset"
+   end="addr_gen.reset" />
+ <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
+ <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
+</system>

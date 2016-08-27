@@ -17,15 +17,7 @@
          type = "String";
       }
    }
-   element cam_read_addr_gen
-   {
-      datum _sortIndex
-      {
-         value = "5";
-         type = "int";
-      }
-   }
-   element cam_read_buffer
+   element camera_rgb_to_vga_st
    {
       datum _sortIndex
       {
@@ -53,7 +45,7 @@
    {
       datum _sortIndex
       {
-         value = "6";
+         value = "5";
          type = "int";
       }
    }
@@ -61,7 +53,7 @@
    {
       datum _sortIndex
       {
-         value = "9";
+         value = "7";
          type = "int";
       }
    }
@@ -69,7 +61,7 @@
    {
       datum _sortIndex
       {
-         value = "3";
+         value = "2";
          type = "int";
       }
    }
@@ -81,19 +73,11 @@
          type = "boolean";
       }
    }
-   element render_read_addr_gen
+   element render_rgb_to_vga_st
    {
       datum _sortIndex
       {
-         value = "8";
-         type = "int";
-      }
-   }
-   element render_read_buffer
-   {
-      datum _sortIndex
-      {
-         value = "7";
+         value = "6";
          type = "int";
       }
    }
@@ -165,7 +149,7 @@
    {
       datum _sortIndex
       {
-         value = "2";
+         value = "3";
          type = "int";
       }
    }
@@ -191,15 +175,15 @@
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
-   name="cam_read_buffer_vsync"
-   internal="cam_read_buffer.vsync"
+   name="camera_rgb_to_vga_st_vga_vsync"
+   internal="camera_rgb_to_vga_st.vga_vsync"
    type="conduit"
    dir="end" />
  <interface name="clk" internal="clk_qsys.clk_in" type="clock" dir="end" />
  <interface name="clk_vga" internal="clk_vga.clk_in" type="clock" dir="end" />
  <interface
-   name="render_read_buffer_vsync"
-   internal="render_read_buffer.vsync"
+   name="render_rgb_to_vga_st_vga_vsync"
+   internal="render_rgb_to_vga_st.vga_vsync"
    type="conduit"
    dir="end" />
  <interface name="reset" internal="clk_qsys.clk_in_reset" type="reset" dir="end" />
@@ -209,26 +193,26 @@
    type="conduit"
    dir="end" />
  <module
-   name="cam_read_addr_gen"
-   kind="default_read_addr_gen"
+   name="camera_rgb_to_vga_st"
+   kind="rgb_mm_to_vga_st_bank0"
    version="1.0"
    enabled="1">
-  <parameter name="ADDR_WIDTH" value="27" />
-  <parameter name="BANK" value="0" />
-  <parameter name="HEIGHT" value="480" />
-  <parameter name="WIDTH" value="640" />
- </module>
- <module
-   name="cam_read_buffer"
-   kind="vid_read_buffer"
-   version="1.0"
-   enabled="1">
-  <parameter name="ADDR_WIDTH" value="27" />
-  <parameter name="DATA_WIDTH" value="32" />
-  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="100000000" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_VGA_CLOCK_DOMAIN" value="2" />
+  <parameter name="AUTO_CLK_VGA_CLOCK_RATE" value="25000000" />
+  <parameter name="AUTO_CLK_VGA_RESET_DOMAIN" value="2" />
+  <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='mm_slave_bfm_0.s0' start='0x0' end='0x8000000' /></address-map>]]></parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@71110a0</parameter>
+  <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_rgb_to_vga_st</parameter>
  </module>
  <module name="clk_qsys" kind="clock_source" version="15.0" enabled="1">
-  <parameter name="clockFrequency" value="50000000" />
+  <parameter name="clockFrequency" value="100000000" />
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
@@ -303,23 +287,23 @@
   <parameter name="VHDL_ID" value="0" />
  </module>
  <module
-   name="render_read_addr_gen"
-   kind="default_read_addr_gen"
+   name="render_rgb_to_vga_st"
+   kind="rgb_mm_to_vga_st_bank1"
    version="1.0"
    enabled="1">
-  <parameter name="ADDR_WIDTH" value="27" />
-  <parameter name="BANK" value="0" />
-  <parameter name="HEIGHT" value="480" />
-  <parameter name="WIDTH" value="640" />
- </module>
- <module
-   name="render_read_buffer"
-   kind="vid_read_buffer"
-   version="1.0"
-   enabled="1">
-  <parameter name="ADDR_WIDTH" value="27" />
-  <parameter name="DATA_WIDTH" value="32" />
-  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="100000000" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_VGA_CLOCK_DOMAIN" value="2" />
+  <parameter name="AUTO_CLK_VGA_CLOCK_RATE" value="25000000" />
+  <parameter name="AUTO_CLK_VGA_RESET_DOMAIN" value="2" />
+  <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='mm_slave_bfm_0.s0' start='0x0' end='0x8000000' /></address-map>]]></parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@3cf181e6</parameter>
+  <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_render_rgb_to_vga_st</parameter>
  </module>
  <module
    name="vga_st_composer_0"
@@ -332,7 +316,7 @@
  <connection
    kind="avalon"
    version="15.0"
-   start="cam_read_buffer.avalon_master"
+   start="camera_rgb_to_vga_st.master"
    end="mm_slave_bfm_0.s0">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
@@ -341,7 +325,7 @@
  <connection
    kind="avalon"
    version="15.0"
-   start="render_read_buffer.avalon_master"
+   start="render_rgb_to_vga_st.master"
    end="mm_slave_bfm_0.s0">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
@@ -350,12 +334,12 @@
  <connection
    kind="avalon_streaming"
    version="15.0"
-   start="cam_read_buffer.source"
+   start="camera_rgb_to_vga_st.source"
    end="vga_st_composer_0.sink_camera" />
  <connection
    kind="avalon_streaming"
    version="15.0"
-   start="render_read_buffer.source"
+   start="render_rgb_to_vga_st.source"
    end="vga_st_composer_0.sink_render" />
  <connection
    kind="clock"
@@ -365,28 +349,28 @@
  <connection
    kind="clock"
    version="15.0"
+   start="clk_qsys.clk"
+   end="camera_rgb_to_vga_st.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_qsys.clk"
+   end="render_rgb_to_vga_st.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
    start="clk_vga.clk"
    end="vga_st_composer_0.clk_vga" />
  <connection
    kind="clock"
    version="15.0"
-   start="clk_qsys.clk"
-   end="render_read_buffer.clock" />
+   start="clk_vga.clk"
+   end="camera_rgb_to_vga_st.clk_vga" />
  <connection
    kind="clock"
    version="15.0"
-   start="clk_qsys.clk"
-   end="cam_read_addr_gen.clock" />
- <connection
-   kind="clock"
-   version="15.0"
-   start="clk_qsys.clk"
-   end="cam_read_buffer.clock" />
- <connection
-   kind="clock"
-   version="15.0"
-   start="clk_qsys.clk"
-   end="render_read_addr_gen.clock" />
+   start="clk_vga.clk"
+   end="render_rgb_to_vga_st.clk_vga" />
  <connection
    kind="clock"
    version="15.0"
@@ -398,20 +382,10 @@
    start="clk_qsys.clk"
    end="dummy_buffer_switcher_0.clock" />
  <connection
-   kind="clock"
-   version="15.0"
-   start="clk_vga.clk"
-   end="render_read_buffer.st_clk" />
- <connection
-   kind="clock"
-   version="15.0"
-   start="clk_vga.clk"
-   end="cam_read_buffer.st_clk" />
- <connection
    kind="conduit"
    version="15.0"
-   start="render_read_addr_gen.addr_gen"
-   end="render_read_buffer.addr_gen">
+   start="dummy_buffer_switcher_0.buffer_switcher"
+   end="camera_rgb_to_vga_st.buffer_switch">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
   <parameter name="startPort" value="" />
@@ -421,30 +395,8 @@
  <connection
    kind="conduit"
    version="15.0"
-   start="cam_read_addr_gen.addr_gen"
-   end="cam_read_buffer.addr_gen">
-  <parameter name="endPort" value="" />
-  <parameter name="endPortLSB" value="0" />
-  <parameter name="startPort" value="" />
-  <parameter name="startPortLSB" value="0" />
-  <parameter name="width" value="0" />
- </connection>
- <connection
-   kind="conduit"
-   version="15.0"
-   start="cam_read_addr_gen.buffer_switch"
-   end="dummy_buffer_switcher_0.buffer_switcher">
-  <parameter name="endPort" value="" />
-  <parameter name="endPortLSB" value="0" />
-  <parameter name="startPort" value="" />
-  <parameter name="startPortLSB" value="0" />
-  <parameter name="width" value="0" />
- </connection>
- <connection
-   kind="conduit"
-   version="15.0"
-   start="render_read_addr_gen.buffer_switch"
-   end="dummy_buffer_switcher_1.buffer_switcher">
+   start="dummy_buffer_switcher_1.buffer_switcher"
+   end="render_rgb_to_vga_st.buffer_switch">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
   <parameter name="startPort" value="" />
@@ -474,48 +426,18 @@
  <connection
    kind="reset"
    version="15.0"
-   start="clk_qsys.clk_reset"
-   end="cam_read_buffer.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_vga.clk_reset"
-   end="cam_read_buffer.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_qsys.clk_reset"
-   end="render_read_buffer.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_vga.clk_reset"
-   end="render_read_buffer.reset" />
- <connection
-   kind="reset"
-   version="15.0"
    start="clk_vga.clk_reset"
    end="vga_st_composer_0.reset" />
  <connection
    kind="reset"
    version="15.0"
    start="clk_qsys.clk_reset"
-   end="cam_read_addr_gen.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_vga.clk_reset"
-   end="cam_read_addr_gen.reset" />
+   end="camera_rgb_to_vga_st.reset" />
  <connection
    kind="reset"
    version="15.0"
    start="clk_qsys.clk_reset"
-   end="render_read_addr_gen.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_vga.clk_reset"
-   end="render_read_addr_gen.reset" />
+   end="render_rgb_to_vga_st.reset" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
  <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
