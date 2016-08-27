@@ -1,4 +1,8 @@
 
+#ifndef CPU_ID
+#define CPU_ID 0
+#endif
+
 #if CPU_ID < 2
  
 #include "memory.h"

@@ -74,6 +74,7 @@ int main() {
 	while (true) {
 //		result = recognize();
 		result = recognize_raw(CPU_ID);
+		result.center = point(WIDTH - get_x(result.center) - 1, get_y(result.center));
 		SHARED_W(CPU_ID, result.center);
 	}
 #endif

@@ -1,4 +1,7 @@
-//#define CPU_ID 3
+
+#ifndef CPU_ID
+#define CPU_ID 3
+#endif
 
 #if CPU_ID > 2
 
@@ -86,7 +89,7 @@ struct Sphere {
 	struct IntersectResult irst;
 	Vector O, De, Dc;
 	float R;
-} SP[2];
+} SP[32];
 int SPTot = 0;
 
 void SpInit() {
@@ -219,10 +222,10 @@ void render_init(int row_start, int row_cnt) {
 
 void sync_objects() {
 	int i;
-	volatile RawSphere sphere;
+	RawSphere sphere;
 	SPTot = OBJECT_CNT_R();
 	for (i = 0; i < SPTot; ++i) {
-		sphere = get_sphere(i);
+		get_sphere(i, &sphere);
 		makeVector(sphere.x, sphere.y, sphere.z, SP[i].O);
 		SP[i].R = sphere.radius;
 		makeColor(1, 1, 1, SP[i].color);

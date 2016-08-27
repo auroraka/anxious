@@ -15,8 +15,8 @@ typedef unsigned char boolean;
 
 typedef int point;
 
-#define point(x, y) (unsigned)(((y) << 10) | (x))
-#define get_x(p) ((p) & 0x3FF)
-#define get_y(p) (((p) >> 10) & 0x1FF)
+#define point(x, y) (unsigned)(((y) << 16) | (x))
+#define get_x(p) (unsigned)((p) & 0xFFFF)
+#define get_y(p) (unsigned)(((p) >> 16) & 0xFFFF)
 
 #endif // COMMON_H

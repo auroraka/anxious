@@ -225,6 +225,14 @@
          type = "String";
       }
    }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
    element bitpacker_0
    {
       datum _sortIndex
@@ -1323,7 +1331,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_M0_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_M0_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@74fed03a</parameter>
+  <parameter name="AUTO_M0_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@2c5d76c5</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_mm_0</parameter>
  </module>
  <module
@@ -2589,7 +2597,7 @@
   <parameter name="ADDR_WIDTH" value="27" />
   <parameter name="CAM_BANK" value="0" />
   <parameter name="DATA_WIDTH" value="32" />
-  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
+  <parameter name="FIFO_LENGTH_LOG_2" value="8" />
   <parameter name="OVERLAY_BANK" value="2" />
   <parameter name="RENDER_BANK" value="1" />
  </module>
@@ -2614,7 +2622,7 @@
  <connection
    kind="avalon"
    version="15.0"
-   start="vga_composer_overlay_0.avalon_master_cam"
+   start="vga_composer_0.avalon_master_cam"
    end="sdram_controller_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
@@ -2623,7 +2631,7 @@
  <connection
    kind="avalon"
    version="15.0"
-   start="vga_composer_0.avalon_master_cam"
+   start="vga_composer_overlay_0.avalon_master_cam"
    end="sdram_controller_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
@@ -2641,7 +2649,7 @@
  <connection
    kind="avalon"
    version="15.0"
-   start="vga_composer_overlay_0.avalon_master_render"
+   start="vga_composer_0.avalon_master_render"
    end="sdram_controller_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
@@ -2650,7 +2658,7 @@
  <connection
    kind="avalon"
    version="15.0"
-   start="vga_composer_0.avalon_master_render"
+   start="vga_composer_overlay_0.avalon_master_render"
    end="sdram_controller_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
@@ -2875,15 +2883,6 @@
  <connection
    kind="avalon"
    version="15.0"
-   start="nios2_gen2_2.data_master"
-   end="sdram_controller_0.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="15.0"
    start="nios2_gen2_3.data_master"
    end="onchip_memory2_0.s1">
   <parameter name="arbitrationPriority" value="1" />
@@ -3032,6 +3031,15 @@
    end="overlay_port_pio.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x08001000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_2.data_master"
+   end="sdram_controller_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -3242,12 +3250,12 @@
    kind="clock"
    version="15.0"
    start="clk.clk"
-   end="vga_composer_overlay_0.clock" />
+   end="vga_composer_0.clock" />
  <connection
    kind="clock"
    version="15.0"
    start="clk.clk"
-   end="vga_composer_0.clock" />
+   end="vga_composer_overlay_0.clock" />
  <connection
    kind="clock"
    version="15.0"
@@ -3370,6 +3378,17 @@
    version="15.0"
    start="hsv_addr_gen_0.buffer_switch"
    end="recog_buffer_switcher_0.write_buffer">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="vga_composer_overlay_0.overlay_buffer"
+   end="overlay_buffer_switcher.read_buffer">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
   <parameter name="startPort" value="" />
@@ -3649,7 +3668,7 @@
    kind="reset"
    version="15.0"
    start="clk.clk_reset"
-   end="overlay_buffer_switcher.reset" />
+   end="vga_composer_0.reset" />
  <connection
    kind="reset"
    version="15.0"
@@ -3669,7 +3688,7 @@
    kind="reset"
    version="15.0"
    start="clk.clk_reset"
-   end="vga_composer_0.reset" />
+   end="overlay_buffer_switcher.reset" />
  <connection
    kind="reset"
    version="15.0"

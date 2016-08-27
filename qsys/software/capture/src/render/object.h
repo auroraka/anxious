@@ -13,9 +13,22 @@ struct IntersectResult {
 };
 
 typedef struct {
+	int x, y;
+} pointi;
+
+typedef struct {
+	float x, y, z;
+} pointf;
+
+typedef struct {
 	float x, y, z, radius;
 	unsigned color;
 } RawSphere;
+
+typedef struct {
+	pointf p[4];
+	unsigned color;
+} RawObject;
 
 #define OBJECT_CNT_R() SHARED_R(5)
 #define OBJECT_CNT_W(x) SHARED_W(5, x)
@@ -24,8 +37,10 @@ void reset_objects();
 
 void remove_object(int idx);
 
-void add_sphere(float x, float y, float z, float radius, unsigned color);
+void add_sphere(pointf *center, float radius, unsigned color);
 
-volatile RawSphere get_sphere(int idx);
+void add_cube(pointf center[], unsigned color);
+
+void get_sphere(int idx, RawSphere *sphere);
 
 #endif
