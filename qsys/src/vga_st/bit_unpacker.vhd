@@ -27,7 +27,7 @@ architecture bhv of bit_unpacker is
     constant MULTIPLIER : positive := DIN_WIDTH / DOUT_WIDTH;
 
     type reg_type is record
-        shift_data: std_logic_vector(DOUT_WIDTH - 1 downto 0);
+        shift_data: std_logic_vector(DIN_WIDTH - 1 downto 0);
         cnt: natural range 0 to MULTIPLIER - 1;
     end record;
 
@@ -55,16 +55,20 @@ begin
         -- default: hold the values
         v := r;
 
-        if r.cnt /= 0 then
+        if r.cnt = 0 then
             dout_data <= din_data(DOUT_WIDTH - 1 downto 0);
             v.shift_data := std_logic_vector(to_unsigned(0, DOUT_WIDTH)) &
                 din_data(DIN_WIDTH - 1 downto DOUT_WIDTH);
-            v.cnt := MULTIPLIER - 1;
+            din_ready <= dout_ready;
+            if dout_ready then
+                v.cnt := MULTIPLIER - 1;
+            end if;
         else
             dout_data <= r.shift_data(DOUT_WIDTH - 1 downto 0);
             v.shift_data := std_logic_vector(to_unsigned(0, DOUT_WIDTH)) &
                 r.shift_data(DIN_WIDTH - 1 downto DOUT_WIDTH);
             v.cnt := r.cnt - 1;
+            din_ready <= '0';
         end if;
 
         -- apply the new values

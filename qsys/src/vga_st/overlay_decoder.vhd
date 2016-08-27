@@ -25,22 +25,23 @@ begin
 	begin
 		in_ready <= out_ready;
 		case in_data is
-			when "0000" => out_data <= 32X"003F51B5"; -- Indigo    
-			when "0001" => out_data <= 32X"0000BCD4"; -- Cyan      
-			when "0010" => out_data <= 32X"00EC407A"; -- Pink      
-			when "0011" => out_data <= 32X"00AB47BC"; -- Violet    
-			when "0100" => out_data <= 32X"00009688"; -- Teal      
-			when "0101" => out_data <= 32X"0064FFDA"; -- Pale Teal 
-			when "0110" => out_data <= 32X"004CAF50"; -- Green     
-			when "0111" => out_data <= 32X"002196F3"; -- Blue      
-			when "1000" => out_data <= 32X"00FFD740"; -- Amber     
-			when "1001" => out_data <= 32X"00607D8B"; -- Blue Grey 
-			when "1010" => out_data <= 32X"00424242"; -- Grey      
-			when "1011" => out_data <= 32X"00ECEFF1"; -- White     
+			when "0000" => out_data <= 32X"003F51B5"; -- Indigo
+			when "0001" => out_data <= 32X"0000BCD4"; -- Cyan
+			when "0010" => out_data <= 32X"00EC407A"; -- Pink
+			when "0011" => out_data <= 32X"00AB47BC"; -- Violet
+			when "0100" => out_data <= 32X"00009688"; -- Teal
+			when "0101" => out_data <= 32X"0064FFDA"; -- Pale Teal
+			when "0110" => out_data <= 32X"004CAF50"; -- Green
+			when "0111" => out_data <= 32X"002196F3"; -- Blue
+			when "1000" => out_data <= 32X"00FFD740"; -- Amber
+			when "1001" => out_data <= 32X"00607D8B"; -- Blue Grey
+			when "1010" => out_data <= 32X"00424242"; -- Grey
+			when "1011" => out_data <= 32X"00ECEFF1"; -- White
 			when "1100" => out_data <= 32X"00000000"; -- Black
 			when "1101" => out_data <= 32X"00ECECEC"; -- Window BG
 			when "1110" => out_data <= 32X"00CCCCCC"; -- Window Border
 			when "1111" => out_data <= (24 => '1', others => '0'); -- Transparent
+            when others => null;
 		end case;
 	end process main;
 end architecture bhv;

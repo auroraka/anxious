@@ -180,7 +180,6 @@ inout			[0:35]		GPIO;
 inout						FAN_CTRL;
 
 // SSRAM Fixed Signals
-assign SSRAM_CLK = CLOCK_50;
 assign SSRAM0_CE_N = 1;
 assign SSRAM1_CE_N = 0;
 assign SSRAM_ADV_N = 1;

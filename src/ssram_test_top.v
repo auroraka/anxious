@@ -1,6 +1,8 @@
 module ssram_test_top
 `include "./common.v"
 
+assign SSRAM_CLK = CLOCK_50;
+
 ssram_test u0 (
 	.clk_clk                                        (CLOCK_50),                                        //                    clk.clk
 	.reset_reset_n                                  (KEY[0]),                                  //                  reset.reset_n
