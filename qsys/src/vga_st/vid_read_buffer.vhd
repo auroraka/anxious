@@ -1,22 +1,16 @@
 -- altera vhdl_input_version vhdl_2008
 
--- Read buffer that prefetchs read addresses and issues read burst commands to
--- Avalon-MM system. The buffer gets next address to read at `s_addr` port,
--- then assert `s_prefetch` for exactly 1 clock cycle when complete to get
--- next address.
-
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-entity mm_read_buffer is
-	generic(
-		constant DATA_WIDTH        : positive;
-        constant ADDR_WIDTH        : positive;
-		constant FIFO_LENGTH_LOG_2 : positive;
-		constant FRAME_PIXELS      : positive
-	);
-	port(
+entity vid_read_buffer is
+    generic(
+        DATA_WIDTH        : positive := 32;
+        ADDR_WIDTH        : positive := 27;
+        FIFO_LENGTH_LOG_2 : positive := 6
+    );
+    port(
         ---- Avalon-MM Master Interface ----
         clk           : in  std_logic;
         reset_n       : in  std_logic;
@@ -26,28 +20,27 @@ entity mm_read_buffer is
         readdata      : in  std_logic_vector(DATA_WIDTH - 1 downto 0);
         waitrequest   : in  std_logic;
         readdatavalid : in  std_logic;
-        burstcount    : out std_logic_vector(FIFO_LENGTH_LOG_2 downto 0);
-        vsync_out     : out std_logic;
+        lock          : out std_logic;
 
-        ---- Reads from another clock domain  ----
-        s_clk         : in  std_logic;
-        s_read        : in  std_logic;
-        s_readdata    : out std_logic_vector(DATA_WIDTH - 1 downto 0);
-        s_vsync       : in  std_logic;
+        ---- Avalon-ST Source Interface ----
+        st_clk        : in  std_logic;
+        st_ready      : in  std_logic;
+        st_data       : out std_logic_vector(DATA_WIDTH - 1 downto 0);
 
-        ---- Address generator that works at Avalon clock domain
-        addr_reset_n  : out std_logic;
+        ---- Address Generator ----
         addr_fetch    : out std_logic;
-        addr_gen      : in std_logic_vector(ADDR_WIDTH - 1 downto 0)
-	);
-end entity mm_read_buffer;
+        addr_reset_n  : out std_logic;
+        addr_gen      : in  std_logic_vector(ADDR_WIDTH - 1 downto 0);
 
-architecture bhv of mm_read_buffer is
-    subtype addr_type is std_logic_vector(ADDR_WIDTH - 1 downto 0);
+        ---- vsync from downstream
+        s_vsync       : in  std_logic
+    );
+end entity vid_read_buffer;
+
+architecture bhv of vid_read_buffer is
     subtype data_type is std_logic_vector(DATA_WIDTH - 1 downto 0);
     subtype usedw_type is std_logic_vector(FIFO_LENGTH_LOG_2 - 1 downto 0);
     type data_arr_type is array (integer range <>) of data_type;
-    type addr_arr_type is array (integer range <>) of addr_type;
     type usedw_arr_type is array (integer range <>) of usedw_type;
     subtype pair is std_logic_vector(0 to 1);
 
@@ -59,25 +52,30 @@ architecture bhv of mm_read_buffer is
 
     signal wr, rd, wrempty, wrfull, rdfull, rdempty: pair;
     signal q: data_arr_type(0 to 1);
-    signal data_reg: data_type;
     signal wrusedw: usedw_arr_type(0 to 1);
 
     type reg_type is record
         wrstate: wrstate_type;
         wrsel: natural range 0 to 1;
         wrcnt: unsigned(FIFO_LENGTH_LOG_2 - 1 downto 0);
+        cmdcnt: unsigned(FIFO_LENGTH_LOG_2 - 1 downto 0);
         read: std_logic;
+        lock: std_logic;
         resetreq: std_logic;
-        pixcnt : natural range 0 to FRAME_PIXELS;
+        resetreq_sync: std_logic;
+        wrreset_n: std_logic;
     end record;
 
     constant INIT_REGS: reg_type := (
         wrstate => S_WAIT,
         wrsel => 0,
         wrcnt => (others => '0'),
+        cmdcnt => (others => '0'),
         read => '0',
+        lock => '0',
         resetreq => '0',
-        pixcnt => 0
+        resetreq_sync => '0',
+        wrreset_n => '1'
     );
 
     signal r: reg_type := INIT_REGS;
@@ -87,15 +85,14 @@ architecture bhv of mm_read_buffer is
         rdstate: rdstate_type;
         rdsel: natural range 0 to 1;
         rdcnt: unsigned(FIFO_LENGTH_LOG_2 - 1 downto 0);
-        resetreq, resetreq_sync: std_logic;
+        resetreq: std_logic;
     end record;
 
     constant S_CLK_INIT_REGS: s_clk_reg_type := (
         rdstate => S_NORMAL,
         rdsel => 0,
         rdcnt => (others => '0'),
-        resetreq => '0',
-        resetreq_sync => '0'
+        resetreq => '0'
     );
 
     signal sr: s_clk_reg_type := S_CLK_INIT_REGS;
@@ -111,11 +108,11 @@ begin
         end if;
     end process;
 
-    P_s_clk_regs: process(s_clk, reset_n)
+    P_s_clk_regs: process(st_clk, reset_n)
     begin
         if not reset_n then
             sr <= S_CLK_INIT_REGS;
-        elsif rising_edge(s_clk) then
+        elsif rising_edge(st_clk) then
             sr <= srin;
         end if;
     end process;
@@ -123,6 +120,8 @@ begin
     P_comb: process(all)
         variable v: reg_type;
         variable sv: s_clk_reg_type;
+
+        variable read_cmd_accepted: std_logic;
     begin
         -- default: hold the values
         v := r;
@@ -132,41 +131,49 @@ begin
             wr(i) <= '0';
             rd(i) <= '0';
         end loop;
+
         addr_fetch <= '0';
-        wrreset_n <= '1';
-        
-        vsync_out <= '0';
+
+        wrreset_n <= r.wrreset_n;
+
+        v.wrreset_n := '1';
 
         case r.wrstate is
             when S_WAIT =>
                 if wrempty(r.wrsel) and not r.resetreq then
-                    v.read := '1';
                     v.wrstate := S_READING;
+                    v.read := '1';
+                    v.lock := '1';
+                    v.cmdcnt := (others => '0');
                 else
                     v.read := '0';
                 end if;
             when S_READING =>
-                if not waitrequest then
-                    v.read := '0';
+                -- Address phase: issue `FIFO_LENGTH' read commands with `lock'
+                read_cmd_accepted := r.read and not waitrequest;
+                addr_fetch <= read_cmd_accepted;
+                if read_cmd_accepted then
+                    v.cmdcnt := (r.cmdcnt + 1) mod (2 ** FIFO_LENGTH_LOG_2);
+                    if v.cmdcnt = 0 then
+                        v.read := '0';
+                    end if;
+                    if v.cmdcnt = 2 ** FIFO_LENGTH_LOG_2 - 1 then
+                        v.lock := '0';
+                    end if;
                 end if;
+                -- Data phase
                 wr(r.wrsel) <= readdatavalid;
                 if readdatavalid then
-            		if r.pixcnt = FRAME_PIXELS - 1 then
-		           		vsync_out <= '1';
-		           		v.pixcnt := 0;
-	                else
-	                	v.pixcnt := r.pixcnt + 1;
-	                end if;
-                	v.wrcnt := (r.wrcnt + 1) mod (2 ** FIFO_LENGTH_LOG_2);
+                    v.wrcnt := (r.wrcnt + 1) mod (2 ** FIFO_LENGTH_LOG_2);
                     if v.wrcnt = 0 then
                         if r.resetreq then
                             v := INIT_REGS;
-                            sv := S_CLK_INIT_REGS;
-                            wrreset_n <= '0';
+                            -- sv := S_CLK_INIT_REGS;
+                            v.wrreset_n := '0';
+                            v.wrstate := S_WAIT;
                         else
                             v.wrsel   := 1 - r.wrsel;
                             v.wrstate := S_WAIT;
-                            addr_fetch  <= '1';
                         end if;
                     end if;
                 end if;
@@ -175,7 +182,8 @@ begin
         case sr.rdstate is
             when S_NORMAL =>
                 sv.resetreq := '0';
-                if s_read and rdempty(sr.rdsel) then
+                if st_ready and rdempty(sr.rdsel) then
+                    sv := S_CLK_INIT_REGS;
                     sv.rdstate := S_SKIP;
                 end if;
             when S_SKIP =>
@@ -185,30 +193,30 @@ begin
                 end if;
         end case;
 
-        v.resetreq := sr.resetreq_sync;
-        sv.resetreq_sync := sr.resetreq; -- 2-stage sync
+        v.resetreq_sync := sr.resetreq;
+        v.resetreq := r.resetreq_sync; -- 2-stage sync
 
         -- use new state to determine the values
         case sv.rdstate is
             when S_NORMAL =>
-                s_readdata <= q(sr.rdsel);
-                rd(sr.rdsel) <= s_read;
-                if s_read then
+                st_data <= q(sr.rdsel);
+                rd(sr.rdsel) <= st_ready;
+                if st_ready then
                     sv.rdcnt := (sr.rdcnt + 1) mod (2 ** FIFO_LENGTH_LOG_2);
                     if sv.rdcnt = 0 then
                         sv.rdsel := 1 - sr.rdsel;
                     end if;
                 end if;
             when S_SKIP =>
-                s_readdata <= (others => '0');
+                st_data <= (others => '0');
         end case;
 
-        burstcount   <= std_logic_vector(
-            to_unsigned(2 ** FIFO_LENGTH_LOG_2, FIFO_LENGTH_LOG_2 + 1));
-        addr_reset_n <= wrreset_n;
-        read         <= r.read;
+        read <= r.read;
+        lock <= r.lock;
+
         address      <= addr_gen;
-        
+        addr_reset_n <= r.wrreset_n;
+
         -- apply the new values
         rin <= v;
         srin <= sv;
@@ -223,7 +231,7 @@ begin
             ) port map (
                 aclr_n  => wrreset_n,
                 data    => readdata,
-                rdclk   => s_clk,
+                rdclk   => st_clk,
                 rdreq   => rd(i),
                 wrclk   => clk,
                 wrreq   => wr(i),

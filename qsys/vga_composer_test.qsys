@@ -17,7 +17,23 @@
          type = "String";
       }
    }
-   element clk_0
+   element cam_read_addr_gen
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+   }
+   element cam_read_buffer
+   {
+      datum _sortIndex
+      {
+         value = "4";
+         type = "int";
+      }
+   }
+   element clk_qsys
    {
       datum _sortIndex
       {
@@ -25,11 +41,35 @@
          type = "int";
       }
    }
+   element clk_vga
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+   }
+   element dummy_buffer_switcher_0
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
+   element dummy_buffer_switcher_1
+   {
+      datum _sortIndex
+      {
+         value = "9";
+         type = "int";
+      }
+   }
    element mm_slave_bfm_0
    {
       datum _sortIndex
       {
-         value = "2";
+         value = "3";
          type = "int";
       }
    }
@@ -41,11 +81,91 @@
          type = "boolean";
       }
    }
-   element vga_composer_0
+   element render_read_addr_gen
    {
       datum _sortIndex
       {
-         value = "1";
+         value = "8";
+         type = "int";
+      }
+   }
+   element render_read_buffer
+   {
+      datum _sortIndex
+      {
+         value = "7";
+         type = "int";
+      }
+   }
+   element vga_composer_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element vga_composer_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element vga_composer_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element vga_composer_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element vga_composer_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element vga_composer_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element vga_composer_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element vga_composer_test
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element vga_st_composer_0
+   {
+      datum _sortIndex
+      {
+         value = "2";
          type = "int";
       }
    }
@@ -70,28 +190,68 @@
  <parameter name="timeStamp" value="0" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
- <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
- <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
  <interface
-   name="vga_composer_0_cam_buffer"
-   internal="vga_composer_0.cam_buffer"
+   name="cam_read_buffer_vsync"
+   internal="cam_read_buffer.vsync"
    type="conduit"
    dir="end" />
+ <interface name="clk" internal="clk_qsys.clk_in" type="clock" dir="end" />
+ <interface name="clk_vga" internal="clk_vga.clk_in" type="clock" dir="end" />
  <interface
-   name="vga_composer_0_conduit"
-   internal="vga_composer_0.conduit"
+   name="render_read_buffer_vsync"
+   internal="render_read_buffer.vsync"
    type="conduit"
    dir="end" />
+ <interface name="reset" internal="clk_qsys.clk_in_reset" type="reset" dir="end" />
  <interface
-   name="vga_composer_0_render_buffer"
-   internal="vga_composer_0.render_buffer"
+   name="vga_st_composer_0_conduit"
+   internal="vga_st_composer_0.Conduit"
    type="conduit"
    dir="end" />
- <module name="clk_0" kind="clock_source" version="15.0" enabled="1">
+ <module
+   name="cam_read_addr_gen"
+   kind="default_read_addr_gen"
+   version="1.0"
+   enabled="1">
+  <parameter name="ADDR_WIDTH" value="27" />
+  <parameter name="BANK" value="0" />
+  <parameter name="HEIGHT" value="480" />
+  <parameter name="WIDTH" value="640" />
+ </module>
+ <module
+   name="cam_read_buffer"
+   kind="vid_read_buffer"
+   version="1.0"
+   enabled="1">
+  <parameter name="ADDR_WIDTH" value="27" />
+  <parameter name="DATA_WIDTH" value="32" />
+  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
+ </module>
+ <module name="clk_qsys" kind="clock_source" version="15.0" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module name="clk_vga" kind="clock_source" version="15.0" enabled="1">
+  <parameter name="clockFrequency" value="25000000" />
+  <parameter name="clockFrequencyKnown" value="true" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module
+   name="dummy_buffer_switcher_0"
+   kind="dummy_buffer_switcher"
+   version="1.0"
+   enabled="1">
+  <parameter name="FIXED_BUFFER_PORT" value="0" />
+ </module>
+ <module
+   name="dummy_buffer_switcher_1"
+   kind="dummy_buffer_switcher"
+   version="1.0"
+   enabled="1">
+  <parameter name="FIXED_BUFFER_PORT" value="0" />
  </module>
  <module
    name="mm_slave_bfm_0"
@@ -142,17 +302,37 @@
   <parameter name="USE_WRITE_DATA" value="0" />
   <parameter name="VHDL_ID" value="0" />
  </module>
- <module name="vga_composer_0" kind="vga_composer" version="1.1" enabled="1">
+ <module
+   name="render_read_addr_gen"
+   kind="default_read_addr_gen"
+   version="1.0"
+   enabled="1">
   <parameter name="ADDR_WIDTH" value="27" />
-  <parameter name="CAM_BANK" value="0" />
+  <parameter name="BANK" value="0" />
+  <parameter name="HEIGHT" value="480" />
+  <parameter name="WIDTH" value="640" />
+ </module>
+ <module
+   name="render_read_buffer"
+   kind="vid_read_buffer"
+   version="1.0"
+   enabled="1">
+  <parameter name="ADDR_WIDTH" value="27" />
   <parameter name="DATA_WIDTH" value="32" />
   <parameter name="FIFO_LENGTH_LOG_2" value="6" />
-  <parameter name="RENDER_BANK" value="1" />
+ </module>
+ <module
+   name="vga_st_composer_0"
+   kind="vga_st_composer"
+   version="1.0"
+   enabled="1">
+  <parameter name="DATA_WIDTH" value="32" />
+  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
  </module>
  <connection
    kind="avalon"
    version="15.0"
-   start="vga_composer_0.avalon_master_cam"
+   start="cam_read_buffer.avalon_master"
    end="mm_slave_bfm_0.s0">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
@@ -161,32 +341,181 @@
  <connection
    kind="avalon"
    version="15.0"
-   start="vga_composer_0.avalon_master_render"
+   start="render_read_buffer.avalon_master"
    end="mm_slave_bfm_0.s0">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="cam_read_buffer.source"
+   end="vga_st_composer_0.sink_camera" />
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="render_read_buffer.source"
+   end="vga_st_composer_0.sink_render" />
+ <connection
    kind="clock"
    version="15.0"
-   start="clk_0.clk"
+   start="clk_qsys.clk"
    end="mm_slave_bfm_0.clk" />
  <connection
    kind="clock"
    version="15.0"
-   start="clk_0.clk"
-   end="vga_composer_0.clock" />
+   start="clk_vga.clk"
+   end="vga_st_composer_0.clk_vga" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_qsys.clk"
+   end="render_read_buffer.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_qsys.clk"
+   end="cam_read_addr_gen.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_qsys.clk"
+   end="cam_read_buffer.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_qsys.clk"
+   end="render_read_addr_gen.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_qsys.clk"
+   end="dummy_buffer_switcher_1.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_qsys.clk"
+   end="dummy_buffer_switcher_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_vga.clk"
+   end="render_read_buffer.st_clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_vga.clk"
+   end="cam_read_buffer.st_clk" />
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="render_read_addr_gen.addr_gen"
+   end="render_read_buffer.addr_gen">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="cam_read_addr_gen.addr_gen"
+   end="cam_read_buffer.addr_gen">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="cam_read_addr_gen.buffer_switch"
+   end="dummy_buffer_switcher_0.buffer_switcher">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="render_read_addr_gen.buffer_switch"
+   end="dummy_buffer_switcher_1.buffer_switcher">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
  <connection
    kind="reset"
    version="15.0"
-   start="clk_0.clk_reset"
+   start="clk_qsys.clk_reset"
+   end="clk_vga.clk_in_reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_qsys.clk_reset"
    end="mm_slave_bfm_0.clk_reset" />
  <connection
    kind="reset"
    version="15.0"
-   start="clk_0.clk_reset"
-   end="vga_composer_0.reset" />
+   start="clk_vga.clk_reset"
+   end="mm_slave_bfm_0.clk_reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_qsys.clk_reset"
+   end="vga_st_composer_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_qsys.clk_reset"
+   end="cam_read_buffer.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_vga.clk_reset"
+   end="cam_read_buffer.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_qsys.clk_reset"
+   end="render_read_buffer.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_vga.clk_reset"
+   end="render_read_buffer.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_vga.clk_reset"
+   end="vga_st_composer_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_qsys.clk_reset"
+   end="cam_read_addr_gen.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_vga.clk_reset"
+   end="cam_read_addr_gen.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_qsys.clk_reset"
+   end="render_read_addr_gen.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk_vga.clk_reset"
+   end="render_read_addr_gen.reset" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
  <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
