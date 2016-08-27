@@ -2,8 +2,8 @@
 // Created by Kanari on 2016/8/15.
 //
 
-#ifndef CONTROL_H
-#define CONTROL_H
+#ifndef ANXIOUS_CONTROL_H
+#define ANXIOUS_CONTROL_H
 
 #include "common.h"
 

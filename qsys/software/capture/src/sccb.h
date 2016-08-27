@@ -1,6 +1,6 @@
 
-#ifndef SCCB_H
-#define SCCB_H
+#ifndef ANXIOUS_SCCB_H
+#define ANXIOUS_SCCB_H
 
 void configure_sccb();
 

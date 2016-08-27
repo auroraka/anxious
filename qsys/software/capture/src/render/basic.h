@@ -1,5 +1,5 @@
-#ifndef BASIC_H
-#define BASIC_H
+#ifndef ANXIOUS_RENDER_BASIC_H
+#define ANXIOUS_RENDER_BASIC_H
 
 typedef unsigned char uchar;
 

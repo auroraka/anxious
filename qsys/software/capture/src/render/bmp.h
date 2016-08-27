@@ -1,5 +1,5 @@
-#ifndef BMP_H
-#define BMP_H
+#ifndef ANXIOUS_RENDER_BMP_H
+#define ANXIOUS_RENDER_BMP_H
 
 #include"color.h"
 #include <string.h>

@@ -2,15 +2,13 @@
 // Created by Kanari on 2016/8/24.
 //
 
-#ifndef MEMORY_H
-#define MEMORY_H
+#ifndef ANXIOUS_MEMORY_H
+#define ANXIOUS_MEMORY_H
 
 #include <system.h>
 #include <io.h>
 #include "../generated_bsp_0/system.h"
 #include "../generated_bsp_0/HAL/inc/io.h"
-
-#include "palette.h"
 
 #define HEIGHT (480)
 #define WIDTH (640)

@@ -1145,7 +1145,7 @@
  <parameter name="hdlLanguage" value="VERILOG" />
  <parameter name="hideFromIPCatalog" value="false" />
  <parameter name="lockedInterfaceDefinition" value="" />
- <parameter name="maxAdditionalLatency" value="2" />
+ <parameter name="maxAdditionalLatency" value="3" />
  <parameter name="projectName" value="" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="0" />
@@ -1331,7 +1331,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_M0_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_M0_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@2c5d76c5</parameter>
+  <parameter name="AUTO_M0_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@4ef2c938</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_mm_0</parameter>
  </module>
  <module
@@ -2597,7 +2597,7 @@
   <parameter name="ADDR_WIDTH" value="27" />
   <parameter name="CAM_BANK" value="0" />
   <parameter name="DATA_WIDTH" value="32" />
-  <parameter name="FIFO_LENGTH_LOG_2" value="8" />
+  <parameter name="FIFO_LENGTH_LOG_2" value="7" />
   <parameter name="OVERLAY_BANK" value="2" />
   <parameter name="RENDER_BANK" value="1" />
  </module>
@@ -3398,17 +3398,6 @@
  <connection
    kind="conduit"
    version="15.0"
-   start="vga_composer_overlay_0.overlay_buffer"
-   end="overlay_buffer_switcher.read_buffer">
-  <parameter name="endPort" value="" />
-  <parameter name="endPortLSB" value="0" />
-  <parameter name="startPort" value="" />
-  <parameter name="startPortLSB" value="0" />
-  <parameter name="width" value="0" />
- </connection>
- <connection
-   kind="conduit"
-   version="15.0"
    start="cam_buffer_switcher.read_buffer"
    end="vga_composer_overlay_0.cam_buffer">
   <parameter name="endPort" value="" />
@@ -3737,5 +3726,5 @@
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
  <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
- <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="2" />
+ <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="3" />
 </system>

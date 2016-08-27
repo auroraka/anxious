@@ -1,5 +1,5 @@
-#ifndef COLOR_H
-#define COLOR_H
+#ifndef ANXIOUS_RENDER_COLOR_H
+#define ANXIOUS_RENDER_COLOR_H
 
 #include "basic.h"
 

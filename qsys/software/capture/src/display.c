@@ -618,7 +618,7 @@ char symbols[] = {'`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-
 typedef unsigned char uchar;
 
 //#define OVERLAY_W(x, y, val) (SDRAM[(2 << 23) | (display_overlay_port << 19) | ((y) << 10) | (x)] = (val))
-#define OVERLAY_W(x, y, val) (SDRAM[(2 << 23) | (display_overlay_port << 19) | ((y) << 10) | (x)] = (val))
+#define OVERLAY_W(x, y, val) (SDRAM[(1 << 23) | (display_overlay_port << 19) | ((y) << 10) | (x)] = (val))
 
 unsigned display_overlay_port = 0;
 
@@ -716,13 +716,13 @@ void drawChar(char c, int x, int y, unsigned color) {
 	}
 }
 
-void drawMsg(unsigned port, char *str, int x, int y, unsigned color) {
+void drawMsg(unsigned port, const char *str, int x, int y, unsigned color) {
 	int i, px = 0, py = 0, len = strlen(str);
 	display_overlay_port = port;
 	for (i = 0; i < len; i++) {
 		if (str[i] == '\n') ++py, px = 0;
 		else {
-			drawChar(str[i], y + py * 20, x + px * 18, color);
+			drawChar(str[i], y + py * 20, x + px * 9, color);
 			++px;
 		}
 	}

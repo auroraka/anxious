@@ -5,10 +5,10 @@
  *      Author: ytl
  */
 
-#ifndef NERVOUS_NIOS_H_
-#define NERVOUS_NIOS_H_
+#ifndef ANXIOUS_DISPLAY_H
+#define ANXIOUS_DISPLAY_H
 
-void drawMsg(unsigned bank, char *str, int x, int y, unsigned color);
+void drawMsg(unsigned bank, const char *str, int x, int y, unsigned color);
 
 void drawCursor(unsigned bank, int x, int y);
 

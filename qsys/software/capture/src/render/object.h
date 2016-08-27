@@ -1,5 +1,5 @@
-#ifndef PRIMITIVE_H
-#define PRIMITIVE_H
+#ifndef ANXIOUS_RENDER_OBJECT_H
+#define ANXIOUS_RENDER_OBJECT_H
 
 #include "color.h"
 #include "vector.h"

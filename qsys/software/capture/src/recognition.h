@@ -2,8 +2,8 @@
 // Created by Kanari on 2016/8/15.
 //
 
-#ifndef RECOGNITION_H
-#define RECOGNITION_H
+#ifndef ANXIOUS_RECOGNITION_H
+#define ANXIOUS_RECOGNITION_H
 
 #include "common.h"
 

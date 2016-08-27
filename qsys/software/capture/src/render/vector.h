@@ -1,5 +1,5 @@
-#ifndef VECTOR3_H
-#define VECTOR3_H
+#ifndef ANXIOUS_RENDER_VECTOR_H
+#define ANXIOUS_RENDER_VECTOR_H
 
 #include "basic.h"
 #include <math.h>

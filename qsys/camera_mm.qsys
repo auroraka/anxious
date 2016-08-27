@@ -139,7 +139,7 @@
    enabled="1">
   <parameter name="ADDR_WIDTH" value="27" />
   <parameter name="DATA_WIDTH" value="32" />
-  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
+  <parameter name="FIFO_LENGTH_LOG_2" value="7" />
  </module>
  <connection
    kind="avalon_streaming"
