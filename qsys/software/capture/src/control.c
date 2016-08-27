@@ -75,8 +75,10 @@ inline void OVERLAY_W_v(int x, int y, unsigned val) {
 	SDRAM[(1 << 23) | (overlay_port << 19) | ((y) << 10) | (x)] = (val);
 }
 
+int store_x,store_y,store_r;
 void draw_sphere(pointi c, float radius, unsigned color) {
 	int cx = c.x, cy = c.y;
+	store_x=cx;store_y=cy;store_r=radius;
 //void draw_sphere(int cx, int cy, float radius, unsigned color) {
 	int dx = 0, dy = (int)radius;
 	float d = 1.25f - radius;
@@ -155,9 +157,14 @@ static float sphere_radius;
 static pointi p[8];
 static pointf pf[4], df[4];
 
-#define Xf *(float *)&SHARED_R(2)
-#define Yf *(float *)&SHARED_R(3)
-#define Zf *(float *)&SHARED_R(4)
+inline float get_shared_float(int idx){
+	unsigned val = SHARED_R(idx);
+	return *(float *)&val;
+}
+
+#define Xf get_shared_float(2)
+#define Yf get_shared_float(3)
+#define Zf get_shared_float(4)
 #define store_pf(idx) (pf[idx].x = Xf, pf[idx].y = Yf, pf[idx].z = Zf)
 #define store_df(idx, a, b) (df[idx].x = pf[a].x - pf[b].x, df[idx].y = pf[a].y - pf[b].y, df[idx].z = pf[a].z - pf[b].z)
 
@@ -428,40 +435,47 @@ void key_down(int key_code) {
 	} else {
 		switch (draw_state) {
 			case DRAW_POINT:
-				pf[0].x = *(float *)&SHARED_R(2);
-				pf[0].y = *(float *)&SHARED_R(3);
-				pf[0].z = *(float *)&SHARED_R(4);
+				pf[0].x = get_shared_float(2);
+				pf[0].y = get_shared_float(3);
+				pf[0].z = get_shared_float(4);
 				printf("0: (%d,%d,%d)\n", (int)pf[0].x, (int)pf[0].y, (int)pf[0].z);
 				if (key_code == IR_1) draw_state = DRAW_SPHERE_RADIUS;
 				else if (key_code == IR_2) draw_state = DRAW_CUBE_LINE;
 				break;
 			case DRAW_SPHERE_RADIUS:
-				dx = pf[0].x - *(float *)&SHARED_R(2);
-				dy = pf[0].y - *(float *)&SHARED_R(3);
-				dz = pf[0].z - *(float *)&SHARED_R(4);
-				radius = sqrt(dx * dx + dy * dy + dz * dz);
-				add_sphere(&pf[0], radius, WHITE);
+				// dx = pf[0].x - get_shared_float(2);
+				// dy = pf[0].y - get_shared_float(3);
+				// dz = pf[0].z - get_shared_float(4);
+				// radius = sqrt(dx * dx + dy * dy + dz * dz);
+				// add_sphere(&pf[0], radius, WHITE);
+				// draw_overlay_frame(TRANSPARENT);
+				// draw_state = DRAW_POINT;
+				
+				pf[0].x=store_x;
+				pf[0].y=store_y;
+				radius=store_r;
+				add_sphere2d(&pf[0], store_r, WHITE);
 				draw_overlay_frame(TRANSPARENT);
 				draw_state = DRAW_POINT;
 				break;
 			case DRAW_CUBE_LINE:
-				pf[1].x = *(float *)&SHARED_R(2);
-				pf[1].y = *(float *)&SHARED_R(3);
-				pf[1].z = *(float *)&SHARED_R(4);
+				pf[1].x = get_shared_float(2);
+				pf[1].y = get_shared_float(3);
+				pf[1].z = get_shared_float(4);
 				printf("1: (%d,%d,%d)\n", (int)pf[1].x, (int)pf[1].y, (int)pf[1].z);
 				draw_state = DRAW_CUBE_AREA;
 				break;
 			case DRAW_CUBE_AREA:
-				pf[2].x = *(float *)&SHARED_R(2);
-				pf[2].y = *(float *)&SHARED_R(3);
-				pf[2].z = *(float *)&SHARED_R(4);
+				pf[2].x = get_shared_float(2);
+				pf[2].y = get_shared_float(3);
+				pf[2].z = get_shared_float(4);
 				printf("2: (%d,%d,%d)\n", (int)pf[2].x, (int)pf[2].y, (int)pf[2].z);
 				draw_state = DRAW_CUBE_VOLUME;
 				break;
 			case DRAW_CUBE_VOLUME:
-				pf[3].x = *(float *)&SHARED_R(2);
-				pf[3].y = *(float *)&SHARED_R(3);
-				pf[3].z = *(float *)&SHARED_R(4);
+				pf[3].x = get_shared_float(2);
+				pf[3].y = get_shared_float(3);
+				pf[3].z = get_shared_float(4);
 				printf("3: (%d,%d,%d)\n", (int)pf[3].x, (int)pf[3].y, (int)pf[3].z);
 				add_cube(pf, WHITE);
 				draw_overlay_frame(TRANSPARENT);

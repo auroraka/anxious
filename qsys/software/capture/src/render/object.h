@@ -39,6 +39,8 @@ void remove_object(int idx);
 
 void add_sphere(pointf *center, float radius, unsigned color);
 
+void add_sphere2d(pointf *center, float radius, unsigned color);
+
 void add_cube(pointf center[], unsigned color);
 
 void get_sphere(int idx, RawSphere *sphere);
