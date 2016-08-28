@@ -16,7 +16,10 @@ cam_pll U_cam_pll (
 	.c3     (clk_vga)
 );
 
-assign SSRAM_CLK = clk_qsys;
+assign SSRAM_CLK = DRAM_CLK;
+
+wire [1:0] overlay_buffer_port;
+wire overlay_buffer_vsync;
 
 anxious_overlay u0 (
 	.bank0_0_vga_vsync_s_vsync                      (VGA_VS),        //         bank0_0_vga_vsync.s_vsync
@@ -54,7 +57,13 @@ anxious_overlay u0 (
 	.ssram_mm_0_ssram_wires_tcm_data_out            (FS_DQ),         //                          .tcm_data_out
 	.ssram_mm_0_ssram_wires_tcm_address_out         (FS_ADDR[21:2]), //                          .tcm_address_out
 	.ssram_mm_0_ssram_wires_tcm_reset_n_out         (),              //                          .tcm_reset_n_out
-	.ssram_mm_0_ssram_wires_tcm_begintransfer_n_out (SSRAM_ADSC_N)   //                          .tcm_begintransfer_n_out
+	.ssram_mm_0_ssram_wires_tcm_begintransfer_n_out (SSRAM_ADSC_N),  //                          .tcm_begintransfer_n_out
+
+	.overlay_buffer_switcher_write_buffer_buffer_port  (overlay_buffer_port),  //     overlay_buffer_switcher_write_buffer.buffer_port
+	.overlay_buffer_switcher_write_buffer_buffer_vsync (overlay_buffer_vsync), //                                         .buffer_vsync
+	.overlay_buffer_switcher_enable_enable             (SW[1]),             //           overlay_buffer_switcher_enable.enable
+	.overlay_buffer_port_external_connection_export    (overlay_buffer_port),    //  overlay_buffer_port_external_connection.export
+	.overlay_buffer_vsync_external_connection_export   (overlay_buffer_vsync)    // overlay_buffer_vsync_external_connection.export
 );
 
 endmodule

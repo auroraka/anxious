@@ -25,8 +25,12 @@
 
 volatile unsigned* sram = (volatile unsigned *)SSRAM_MM_0_GENERIC_TRISTATE_CONTROLLER_0_BASE;
 
-void set_sram(int x, int y, unsigned col) {
-  int cnt = x * WIDTH + y;
+volatile unsigned* overlay_buffer_port = (volatile unsigned *)OVERLAY_BUFFER_PORT_BASE;
+
+volatile unsigned* overlay_buffer_vsync = (volatile unsigned *)OVERLAY_BUFFER_VSYNC_BASE;
+
+void set_sram(int buffer_port, int x, int y, unsigned col) {
+  int cnt = buffer_port * HEIGHT * WIDTH + x * WIDTH + y;
   int offset = cnt / 8;
   int bit = cnt % 8;
   unsigned val = IORD(sram, offset);
@@ -37,12 +41,25 @@ void set_sram(int x, int y, unsigned col) {
 int main() {
   int col, row;
   int shift = 0;
+  printf("Starting...\n");
+  for (col = 0; col < (1 << 19); ++col) {
+    IOWR(sram, col, 0x33333333);
+  }
+  printf("Cleaned.\n");
+  usleep(1000* 1000* 3);
   for (;;) {
+    IOWR(overlay_buffer_vsync, 0, 0);
+    int buffer_port = IORD(overlay_buffer_port, 0);
+    printf("buffer_port = %d\n", buffer_port);
+    // int buffer_port = 0;
     for (row = 0; row < HEIGHT; ++row) {
       for (col = 0; col < WIDTH; ++col) {
-        set_sram(row, col, (col - shift) / 40);
+        set_sram(buffer_port, row, col, (col + 640 - shift) % 640 / 40);
       }
     }
+    IOWR(overlay_buffer_vsync, 0, 1);
+    usleep(0);
+    // break;
     shift = (shift + 1) % 640;
   }
   return 0;
