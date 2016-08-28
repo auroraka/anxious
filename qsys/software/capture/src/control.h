@@ -13,6 +13,8 @@
 
 pointf find_location(point center_l, point center_r);
 
+void controller_init();
+
 void clear_ssram();
 
 void draw_overlay();

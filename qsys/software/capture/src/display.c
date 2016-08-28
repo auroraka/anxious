@@ -622,15 +622,15 @@ typedef unsigned char uchar;
 
 static unsigned display_overlay_port = 0;
 
-static volatile unsigned* sram = (volatile unsigned *)SSRAM_MM_0_GENERIC_TRISTATE_CONTROLLER_0_BASE;
+static volatile unsigned *sram = (volatile unsigned *)SSRAM_MM_0_GENERIC_TRISTATE_CONTROLLER_0_BASE;
 
 inline static void OVERLAY_W(int x, int y, unsigned col) {
-  int cnt = display_overlay_port * HEIGHT * WIDTH + y * WIDTH + x;
-  int offset = cnt / 8;
-  int bit = cnt % 8;
-  unsigned val = IORD(sram, offset);
-  val = val & (~(0xF << (bit * 4))) | (col << (bit * 4));
-  IOWR(sram, offset, val);
+	int cnt = display_overlay_port * HEIGHT * WIDTH + y * WIDTH + x;
+	int offset = cnt / 8;
+	int bit = cnt % 8;
+	unsigned val = IORD(sram, offset);
+	val = val & (~(0xF << (bit * 4))) | (col << (bit * 4));
+	IOWR(sram, offset, val);
 }
 
 

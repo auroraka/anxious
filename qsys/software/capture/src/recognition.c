@@ -52,9 +52,11 @@ unsigned min(unsigned x, unsigned y) {
 	return y ^ ((x ^ y) & -(x < y));
 }
 
-/*
 const unsigned H_l = 29, S_l = 86, V_l = 6;
 const unsigned H_r = 64, S_r = 255, V_r = 255;
+
+//const unsigned H_l = 20, S_l = 0, V_l = 0;
+//const unsigned H_r = 70, S_r = 255, V_r = 255;
 
 unsigned check_range(unsigned pixel) {
 	register unsigned R, G, B, H, S, V, delta;
@@ -101,7 +103,6 @@ void cvtColor_inRange(int cam_port, unsigned *frame, unsigned *row) {
 		}
 	}
 }
-*/
 
 void erode(unsigned *frame, unsigned *row) {
 	unsigned *first = row, *last = row + MASK_WIDTH, *swp_tmp;
@@ -342,7 +343,7 @@ RecogResult recognize_raw(unsigned port) {
 	unsigned *tmp = (unsigned *)RECOG_MEMORY + 2 * FRAME_SIZE;
 	RecogResult result;
 	
-//	cvtColor_inRange(port, frame, tmp);
+//	cvtColor_inRange(port, frame_from, tmp);
 	int i, j;
 	for (j = 0; j < FRAME_HEIGHT; ++j)
 		for (i = 0; i < MASK_WIDTH; ++i)
@@ -351,6 +352,14 @@ RecogResult recognize_raw(unsigned port) {
 	erode(frame, tmp);
 	dilate(frame, tmp);
 	dilate(frame, tmp);
+	
+//	int render_port = 0;
+//	for (j = 0; j < HEIGHT; ++j)
+//		for (i = 0; i < WIDTH; ++i) {
+//			if (get_frame(i, j)) SDRAM_W(i, j, 0xFFFFFF);
+//			else SDRAM_W(i, j, 0x000000);
+//		}
+	
 	result = floodfill(frame, tmp);
 	VSYNC(1);
 	usleep(0);

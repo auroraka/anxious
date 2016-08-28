@@ -20,7 +20,6 @@
 #include "common.h"
 #include "display.h"
 #include "control.h"
-#include "render/object.h"
 #include "palette.h"
 
 const float focus_x_l = 1117.36809f, focus_y_l = 1115.59155f;
@@ -33,6 +32,8 @@ const float stereo_dist = 17.6; // cm
 #define BUFFER_PORT() IORD(OVERLAY_PORT_PIO_BASE, 0)
 //#define BUFFER_PORT() IORD(RENDER_PORT_PIO_BASE, 0)
 
+static float Xf, Yf, Zf;
+
 pointf find_location(point p_l, point p_r) {
 	int x_l = get_x(p_l), x_r = get_x(p_r);
 	int y_l = get_y(p_l), y_r = get_y(p_r);
@@ -42,6 +43,8 @@ pointf find_location(point p_l, point p_r) {
 	loc.x = loc.z * (x_r - center_x_r) / focus_x_r;
 	loc.y = loc.z * (get_y(p_r) - center_y_r) / focus_y_r;
 	
+	Xf = loc.x, Yf = loc.y, Zf = loc.z;
+
 //	memcpy(last_msg, msg, sizeof(msg));
 //	sprintf(msg, "Left(%3d,%3d) Right(%3d,%3d) Position(%d,%3d,%3d)",
 //	        x_l, y_l, x_r, y_r, (int)loc.x, (int)loc.y, (int)loc.z);
@@ -66,15 +69,15 @@ enum DRAW_STATE {
 
 static unsigned overlay_port = 0;
 
-static volatile unsigned* sram = (volatile unsigned *)SSRAM_MM_0_GENERIC_TRISTATE_CONTROLLER_0_BASE;
+static volatile unsigned *sram = (volatile unsigned *)SSRAM_MM_0_GENERIC_TRISTATE_CONTROLLER_0_BASE;
 
 inline static void set_sram(int buffer_port, int x, int y, unsigned col) {
-  int cnt = buffer_port * HEIGHT * WIDTH + y * WIDTH + x;
-  int offset = cnt / 8;
-  int bit = cnt % 8;
-  unsigned val = IORD(sram, offset);
-  val = val & (~(0xF << (bit * 4))) | (col << (bit * 4));
-  IOWR(sram, offset, val);
+	int cnt = buffer_port * HEIGHT * WIDTH + y * WIDTH + x;
+	int offset = cnt / 8;
+	int bit = cnt % 8;
+	unsigned val = IORD(sram, offset);
+	val = val & (~(0xF << (bit * 4))) | (col << (bit * 4));
+	IOWR(sram, offset, val);
 }
 
 void clear_ssram() {
@@ -88,7 +91,7 @@ void clear_ssram() {
 inline void OVERLAY_W(int x, int y, unsigned val) {
 	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
 		set_sram(overlay_port, WIDTH - x - 1, y, val);
-		//SDRAM[(1 << 23) | (overlay_port << 19) | ((y) << 10) | (WIDTH - x - 1)] = (val);
+	//SDRAM[(1 << 23) | (overlay_port << 19) | ((y) << 10) | (WIDTH - x - 1)] = (val);
 }
 
 inline void OVERLAY_W_v(int x, int y, unsigned val) {
@@ -96,10 +99,13 @@ inline void OVERLAY_W_v(int x, int y, unsigned val) {
 	set_sram(overlay_port, x, y, val);
 }
 
-int store_x,store_y,store_r;
+int store_x, store_y, store_r;
+
 void draw_sphere(pointi c, float radius, unsigned color) {
 	int cx = c.x, cy = c.y;
-	store_x=cx;store_y=cy;store_r=radius;
+	store_x = cx;
+	store_y = cy;
+	store_r = radius;
 //void draw_sphere(int cx, int cy, float radius, unsigned color) {
 	int dx = 0, dy = (int)radius;
 	float d = 1.25f - radius;
@@ -108,18 +114,18 @@ void draw_sphere(pointi c, float radius, unsigned color) {
 		else d += 2 * (dx - dy) + 5, --dy;
 		++dx;
 		
-		OVERLAY_W( dx + cx,  dy + cy, color);
-		OVERLAY_W( dy + cx,  dx + cy, color);
-		OVERLAY_W(-dx + cx,  dy + cy, color);
-		OVERLAY_W( dy + cx, -dx + cy, color);
-		OVERLAY_W( dx + cx, -dy + cy, color);
-		OVERLAY_W(-dy + cx,  dx + cy, color);
+		OVERLAY_W(dx + cx, dy + cy, color);
+		OVERLAY_W(dy + cx, dx + cy, color);
+		OVERLAY_W(-dx + cx, dy + cy, color);
+		OVERLAY_W(dy + cx, -dx + cy, color);
+		OVERLAY_W(dx + cx, -dy + cy, color);
+		OVERLAY_W(-dy + cx, dx + cy, color);
 		OVERLAY_W(-dx + cx, -dy + cy, color);
 		OVERLAY_W(-dy + cx, -dx + cy, color);
 	}
 }
 
-void draw_point(pointi p, unsigned color) {
+void draw_mark(pointi p, unsigned color) {
 	int x = p.x, y = p.y, i;
 //void draw_point(int x, int y, unsigned color) {
 	OVERLAY_W(x, y, color);
@@ -129,6 +135,16 @@ void draw_point(pointi p, unsigned color) {
 		OVERLAY_W(x + i, y, color);
 		OVERLAY_W(x, y + i, color);
 	}
+}
+
+void draw_point(pointi p, unsigned color) {
+	int x = p.x, y = p.y, i;
+//void draw_point(int x, int y, unsigned color) {
+	OVERLAY_W(x, y, color);
+	OVERLAY_W(x - 1, y, color);
+	OVERLAY_W(x, y - 1, color);
+	OVERLAY_W(x + 1, y, color);
+	OVERLAY_W(x, y + 1, color);
 }
 
 inline void swap(int *x, int *y) {
@@ -178,16 +194,15 @@ static float sphere_radius;
 static pointi p[8];
 static pointf pf[4], df[4];
 
-inline float get_shared_float(int idx){
-	unsigned val = SHARED_R(idx);
-	return *(float *)&val;
-}
-
-#define Xf get_shared_float(2)
-#define Yf get_shared_float(3)
-#define Zf get_shared_float(4)
+//inline float get_shared_float(int idx) {
+//	unsigned val = SHARED_R(idx);
+//	return *(float *)&val;
+//}
+//
+//#define Xf get_shared_float(2)
+//#define Yf get_shared_float(3)
+//#define Zf get_shared_float(4)
 #define store_pf(idx) (pf[idx].x = Xf, pf[idx].y = Yf, pf[idx].z = Zf)
-#define store_df(idx, a, b) (df[idx].x = pf[a].x - pf[b].x, df[idx].y = pf[a].y - pf[b].y, df[idx].z = pf[a].z - pf[b].z)
 
 inline pointf addf(pointf pf, pointf df) {
 	pointf ret;
@@ -195,6 +210,42 @@ inline pointf addf(pointf pf, pointf df) {
 	ret.y = pf.y + df.y;
 	ret.z = pf.z + df.z;
 	return ret;
+}
+
+inline pointf subf(pointf pf, pointf df) {
+	pointf ret;
+	ret.x = pf.x - df.x;
+	ret.y = pf.y - df.y;
+	ret.z = pf.z - df.z;
+	return ret;
+}
+
+inline pointf mulf(pointf pf, float k) {
+	pointf ret;
+	ret.x = pf.x * k;
+	ret.y = pf.y * k;
+	ret.z = pf.z * k;
+	return ret;
+}
+
+inline float dotf(pointf pf, pointf df) {
+	return pf.x * df.x + pf.y * df.y + pf.z * df.z;
+}
+
+inline pointf crossf(pointf pf, pointf df) {
+	pointf ret;
+	ret.x = pf.y * df.z - pf.z * df.y;
+	ret.y = pf.z * df.x - pf.x * df.z;
+	ret.z = pf.x * df.y - pf.y * df.x;
+	return ret;
+}
+
+inline float len2f(pointf df) {
+	return dotf(df, df);
+}
+
+inline float lenf(pointf df) {
+	return sqrt(len2f(df));
 }
 
 #undef TRANSPARENT
@@ -217,18 +268,20 @@ void draw_overlay_frame(unsigned color) {
 		case DRAW_SPHERE_RADIUS:
 			if (store) {
 				store_pf(1);
-				store_df(1, 1, 0);
+				df[1] = subf(pf[1], pf[0]);
 				df[1].x = sqrt(df[1].x * df[1].x + df[1].y * df[1].y + df[1].z * df[1].z);
 				df[1].y = df[1].z = 0;
 				p[1] = project_point(addf(pf[0], df[1]));
 				sphere_radius = sqrt((p[1].x - p[0].x) * (p[1].x - p[0].x) + (p[1].y - p[0].y) * (p[1].y - p[0].y));
 			}
+			draw_point(p[0], color);
+			
 			draw_sphere(p[0], sphere_radius, color);
 			break;
 		case DRAW_CUBE_LINE:
 			if (store) {
 				store_pf(1);
-				store_df(1, 1, 0);
+				df[1] = subf(pf[1], pf[0]);
 				p[1] = project_point(pf[1]);
 			}
 			draw_line(p[0], p[1], color);
@@ -236,7 +289,12 @@ void draw_overlay_frame(unsigned color) {
 		case DRAW_CUBE_AREA:
 			if (store) {
 				store_pf(2);
-				store_df(2, 2, 1);
+				df[2] = subf(pf[1], pf[2]);
+				
+				float t = dotf(df[2], df[1]) / len2f(df[1]);
+				pf[2] = addf(pf[2], mulf(df[1], t));
+				df[2] = subf(pf[2], pf[1]);
+				
 				p[2] = project_point(addf(pf[0], df[2]));
 				p[3] = project_point(pf[2]);
 			}
@@ -249,7 +307,12 @@ void draw_overlay_frame(unsigned color) {
 		case DRAW_CUBE_VOLUME:
 			if (store) {
 				store_pf(3);
-				store_df(3, 3, 2);
+				df[3] = subf(pf[3], pf[2]);
+				
+				pointf n = crossf(df[1], df[2]);
+				float t = dotf(df[3], n) / len2f(n);
+				df[3] = mulf(n, t);
+				
 				p[4] = project_point(addf(pf[0], df[3]));
 				p[5] = project_point(addf(pf[1], df[3]));
 				p[6] = project_point(addf(addf(pf[0], df[2]), df[3]));
@@ -290,7 +353,7 @@ enum PALETTE_STATE {
 	PALETTE_SHOULD_SHOW,
 	PALETTE_SHOWN
 } palette_state;
-static int cur_color = 11;
+static unsigned cur_color = 11;
 
 static char msg[100];
 
@@ -382,6 +445,19 @@ void draw_status_bar() {
 	        palette_dark[cur_color] ? WHITE : BLACK);
 }
 
+void controller_init() {
+	palette_state = PALETTE_NOT_SHOWN;
+	draw_state = DRAW_POINT;
+	cur_color = WHITE;
+}
+
+void clear_port(unsigned port) {
+	int i;
+	unsigned offset = port * HEIGHT * WIDTH / 8, cnt = HEIGHT * WIDTH / 8;
+	for (i = 0; i < cnt; ++i)
+		IOWR(sram, offset + i, 0xFFFFFFFF);
+}
+
 void draw_overlay() {
 	if (palette_state == PALETTE_SHOWN) return;
 	
@@ -389,15 +465,12 @@ void draw_overlay() {
 	//draw_point(cur_p, TRANSPARENT);
 	
 	overlay_port = BUFFER_PORT();
-	int i, j;
-	for (j = 0; j < HEIGHT; ++j)
-		for (i = 0; i < WIDTH / 8; ++i)
-			IOWR(sram, overlay_port * HEIGHT * WIDTH / 8 + j * WIDTH / 8 + i, 0xFFFFFFFF);
+	clear_port(overlay_port);
 	int p = SHARED_R(0);
 	cur_p.x = get_x(p), cur_p.y = get_y(p);
 	
 	draw_overlay_frame(cur_color);
-	draw_point(cur_p, 0x2);
+	draw_mark(cur_p, 0x2);
 	draw_status_bar();
 	
 	if (palette_state == PALETTE_SHOULD_SHOW) {
@@ -409,10 +482,6 @@ void draw_overlay() {
 	VSYNC(1);
 	usleep(0);
 	VSYNC(0);
-//	int i, j;
-//	for (j = 0; j < HEIGHT; ++j)
-//		for (i = 0; i < WIDTH; ++i)
-//			SDRAM[(2 << 23) | ((j) << 10) | (i)] = SDRAM[(2 << 23) | (1 << 19) | ((j) << 10) | (i)];
 }
 
 enum IRType {
@@ -449,7 +518,7 @@ void key_down(int key_code) {
 	
 	if (palette_state == PALETTE_SHOWN) {
 		if (key_code >= IR_1 && key_code <= IR_9) {
-			cur_color = key_code - 1;
+			cur_color = (unsigned int)(key_code - 1);
 			palette_state = PALETTE_NOT_SHOWN;
 		} else if (key_code == IR_A) {
 			cur_color = 9;
@@ -463,18 +532,13 @@ void key_down(int key_code) {
 		} else if (key_code == IR_MENU) {
 			palette_state = PALETTE_NOT_SHOWN;
 		}
-		if (palette_state == PALETTE_NOT_SHOWN) {
+		if (palette_state == PALETTE_NOT_SHOWN)
 			printf("Chose color: %s\n", palette_names[cur_color]);
-			clear_palette();
-		}
 	} else if (key_code == IR_MENU) {
 		palette_state = PALETTE_SHOULD_SHOW;
 	} else {
 		switch (draw_state) {
 			case DRAW_POINT:
-				pf[0].x = get_shared_float(2);
-				pf[0].y = get_shared_float(3);
-				pf[0].z = get_shared_float(4);
 				printf("0: (%d,%d,%d)\n", (int)pf[0].x, (int)pf[0].y, (int)pf[0].z);
 				if (key_code == IR_1) draw_state = DRAW_SPHERE_RADIUS;
 				else if (key_code == IR_2) draw_state = DRAW_CUBE_LINE;
@@ -488,34 +552,23 @@ void key_down(int key_code) {
 				// draw_overlay_frame(TRANSPARENT);
 				// draw_state = DRAW_POINT;
 				
-				pf[0].x=store_x;
-				pf[0].y=store_y;
-				radius=store_r;
+				pf[0].x = store_x;
+				pf[0].y = store_y;
+				radius = store_r;
 				add_sphere2d(&pf[0], store_r, WHITE);
-				draw_overlay_frame(TRANSPARENT);
 				draw_state = DRAW_POINT;
 				break;
 			case DRAW_CUBE_LINE:
-				pf[1].x = get_shared_float(2);
-				pf[1].y = get_shared_float(3);
-				pf[1].z = get_shared_float(4);
 				printf("1: (%d,%d,%d)\n", (int)pf[1].x, (int)pf[1].y, (int)pf[1].z);
 				draw_state = DRAW_CUBE_AREA;
 				break;
 			case DRAW_CUBE_AREA:
-				pf[2].x = get_shared_float(2);
-				pf[2].y = get_shared_float(3);
-				pf[2].z = get_shared_float(4);
 				printf("2: (%d,%d,%d)\n", (int)pf[2].x, (int)pf[2].y, (int)pf[2].z);
 				draw_state = DRAW_CUBE_VOLUME;
 				break;
 			case DRAW_CUBE_VOLUME:
-				pf[3].x = get_shared_float(2);
-				pf[3].y = get_shared_float(3);
-				pf[3].z = get_shared_float(4);
 				printf("3: (%d,%d,%d)\n", (int)pf[3].x, (int)pf[3].y, (int)pf[3].z);
 				add_cube(pf, WHITE);
-				draw_overlay_frame(TRANSPARENT);
 				draw_state = DRAW_POINT;
 				break;
 		}
