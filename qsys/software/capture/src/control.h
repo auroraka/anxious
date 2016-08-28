@@ -16,6 +16,8 @@ typedef struct {
 
 Location find_location(point center_l, point center_r);
 
+void clear_ssram();
+
 void draw_overlay();
 
 void key_down(int key_code);

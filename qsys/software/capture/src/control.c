@@ -64,15 +64,36 @@ enum DRAW_STATE {
 	DRAW_CUBE_VOLUME
 } draw_state;
 
-unsigned overlay_port = 0;
+static unsigned overlay_port = 0;
+
+static volatile unsigned* sram = (volatile unsigned *)SSRAM_MM_0_GENERIC_TRISTATE_CONTROLLER_0_BASE;
+
+inline static void set_sram(int buffer_port, int x, int y, unsigned col) {
+  int cnt = buffer_port * HEIGHT * WIDTH + y * WIDTH + x;
+  int offset = cnt / 8;
+  int bit = cnt % 8;
+  unsigned val = IORD(sram, offset);
+  val = val & (~(0xF << (bit * 4))) | (col << (bit * 4));
+  IOWR(sram, offset, val);
+}
+
+void clear_ssram() {
+	int port, i, j;
+	for (port = 0; port < 3; ++port)
+		for (j = 0; j < HEIGHT; ++j)
+			for (i = 0; i < WIDTH; ++i)
+				set_sram(port, i, j, 0xF);
+}
 
 inline void OVERLAY_W(int x, int y, unsigned val) {
 	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
-		SDRAM[(1 << 23) | (overlay_port << 19) | ((y) << 10) | (WIDTH - x - 1)] = (val);
+		set_sram(overlay_port, WIDTH - x - 1, y, val);
+		//SDRAM[(1 << 23) | (overlay_port << 19) | ((y) << 10) | (WIDTH - x - 1)] = (val);
 }
 
 inline void OVERLAY_W_v(int x, int y, unsigned val) {
-	SDRAM[(1 << 23) | (overlay_port << 19) | ((y) << 10) | (x)] = (val);
+	//SDRAM[(1 << 23) | (overlay_port << 19) | ((y) << 10) | (x)] = (val);
+	set_sram(overlay_port, x, y, val);
 }
 
 int store_x,store_y,store_r;
@@ -176,6 +197,9 @@ inline pointf addf(pointf pf, pointf df) {
 	return ret;
 }
 
+#undef TRANSPARENT
+#define TRANSPARENT 0xF
+
 void draw_overlay_frame(unsigned color) {
 	boolean store = (boolean)(color != TRANSPARENT);
 	point cur_p;
@@ -277,6 +301,15 @@ void clear_palette() {
 			OVERLAY_W_v(i, j, TRANSPARENT);
 }
 
+#undef WHITE
+#define WHITE 0xB
+#undef BLACK
+#define BLACK 0xC
+#undef WINDOW_BG_COLOR
+#define WINDOW_BG_COLOR 0xD
+#undef WINDOW_BORDER_COLOR
+#define WINDOW_BORDER_COLOR 0xE
+
 void draw_palette() {
 	int i, j, k, x, y, d;
 	for (j = PALETTE_UP + 1; j < PALETTE_DOWN - 1; ++j)
@@ -297,7 +330,7 @@ void draw_palette() {
 	for (k = 0; k < PALETTE_SIZE; ++k) {
 		for (j = 0; j < PALETTE_HEIGHT; ++j)
 			for (i = 0; i < PALETTE_WIDTH; ++i)
-				OVERLAY_W_v(x + i, y + j, palette_colors[k]);
+				OVERLAY_W_v(x + i, y + j, k);
 		drawMsg(overlay_port, palette_names[k], x + 3, y + 2, palette_dark[k] ? WHITE : BLACK);
 		if (k < 9) number[0] = (char)('1' + k);
 		else number[0] = (char)('A' + (k - 9));
@@ -338,12 +371,12 @@ void draw_status_bar() {
 		for (i = 0; i < WIDTH - PALETTE_WIDTH; ++i)
 			OVERLAY_W_v(i, j, WINDOW_BG_COLOR);
 		for (i = WIDTH - PALETTE_WIDTH; i < WIDTH; ++i)
-			OVERLAY_W_v(i, j, palette_colors[cur_color]);
+			OVERLAY_W_v(i, j, cur_color);
 	}
 	
 	int x = (int)Xf, y = (int)Yf, z = (int)Zf;
 	sprintf(msg, "Position(%3d,%3d,%3d)", x, y, z);
-	drawMsg(overlay_port, msg, 10, HEIGHT - 20, z < 0 ? RED : BLACK);
+	drawMsg(overlay_port, msg, 10, HEIGHT - 20, z < 0 ? 0x2 : BLACK);
 	drawMsg(overlay_port, palette_names[cur_color],
 	        WIDTH - (PALETTE_WIDTH + strlen(palette_names[cur_color]) * 9) / 2, HEIGHT - 20,
 	        palette_dark[cur_color] ? WHITE : BLACK);
@@ -352,15 +385,19 @@ void draw_status_bar() {
 void draw_overlay() {
 	if (palette_state == PALETTE_SHOWN) return;
 	
-	draw_overlay_frame(TRANSPARENT);
-	draw_point(cur_p, TRANSPARENT);
+	//draw_overlay_frame(TRANSPARENT);
+	//draw_point(cur_p, TRANSPARENT);
 	
-//	overlay_port = BUFFER_PORT();
+	overlay_port = BUFFER_PORT();
+	int i, j;
+	for (j = 0; j < HEIGHT; ++j)
+		for (i = 0; i < WIDTH / 8; ++i)
+			IOWR(sram, overlay_port * HEIGHT * WIDTH / 8 + j * WIDTH / 8 + i, 0xFFFFFFFF);
 	int p = SHARED_R(0);
 	cur_p.x = get_x(p), cur_p.y = get_y(p);
 	
-	draw_overlay_frame(palette_colors[cur_color]);
-	draw_point(cur_p, RED);
+	draw_overlay_frame(cur_color);
+	draw_point(cur_p, 0x2);
 	draw_status_bar();
 	
 	if (palette_state == PALETTE_SHOULD_SHOW) {
@@ -369,9 +406,9 @@ void draw_overlay() {
 		palette_state = PALETTE_SHOWN;
 	}
 	
-//	VSYNC(1);
-//	usleep(0);
-//	VSYNC(0);
+	VSYNC(1);
+	usleep(0);
+	VSYNC(0);
 //	int i, j;
 //	for (j = 0; j < HEIGHT; ++j)
 //		for (i = 0; i < WIDTH; ++i)

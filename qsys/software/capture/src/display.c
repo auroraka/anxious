@@ -618,9 +618,21 @@ char symbols[] = {'`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-
 typedef unsigned char uchar;
 
 //#define OVERLAY_W(x, y, val) (SDRAM[(2 << 23) | (display_overlay_port << 19) | ((y) << 10) | (x)] = (val))
-#define OVERLAY_W(x, y, val) (SDRAM[(1 << 23) | (display_overlay_port << 19) | ((y) << 10) | (x)] = (val))
+//#define OVERLAY_W(x, y, val) (SDRAM[(1 << 23) | (display_overlay_port << 19) | ((y) << 10) | (x)] = (val))
 
-unsigned display_overlay_port = 0;
+static unsigned display_overlay_port = 0;
+
+static volatile unsigned* sram = (volatile unsigned *)SSRAM_MM_0_GENERIC_TRISTATE_CONTROLLER_0_BASE;
+
+inline static void OVERLAY_W(int x, int y, unsigned col) {
+  int cnt = display_overlay_port * HEIGHT * WIDTH + y * WIDTH + x;
+  int offset = cnt / 8;
+  int bit = cnt % 8;
+  unsigned val = IORD(sram, offset);
+  val = val & (~(0xF << (bit * 4))) | (col << (bit * 4));
+  IOWR(sram, offset, val);
+}
+
 
 void drawLowercaseLetter(char c, int x, int y, unsigned color) {
 	int i, j;
