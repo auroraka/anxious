@@ -79,7 +79,7 @@ generate-bsp:
 .PHONY: generate-makefile
 generate-makefile:
 	# generate the application in the $APP_DIR
-	nios2-app-generate-makefile --app-dir $(APP_DIR) --bsp-dir $(BSP_DIR) --elf-name $(ELF_NAME) --src-rdir $(SRC_DIR) --set APP_CFLAGS_OPTIMIZATION $(OPTIMIZATION_LEVEL) --set CFLAGS \"-DCPU_ID=$(CPU_ID)\"
+	nios2-app-generate-makefile --app-dir $(APP_DIR) --bsp-dir $(BSP_DIR) --elf-name $(ELF_NAME) --src-rdir $(SRC_DIR) --set APP_CFLAGS_OPTIMIZATION $(OPTIMIZATION_LEVEL) --set APP_CFLAGS_USER_FLAGS $(CFLAGS_USER_FLAGS) --set CFLAGS \"-DCPU_ID=$(CPU_ID)\"
 
 .PHONY: make
 make:
@@ -121,6 +121,9 @@ download:
 .PHONY: open-terminal
 open-terminal:
 	nios2-terminal --cable=$(CABLE_NUMBER) --instance=$(JTAG_UART_INSTANCE_NUMBER)
+
+.PHONY: redownload
+redownload: | generate-makefile make download open-terminal
 
 .PHONY: help
 help:

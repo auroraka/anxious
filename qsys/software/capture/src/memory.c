@@ -5,6 +5,7 @@
 #if CPU_ID == 2
 
 #include "memory.h"
+#include "common.h"
 
 void clean_sdram(unsigned bank) {
 	int i, j, port;

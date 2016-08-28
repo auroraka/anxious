@@ -30,6 +30,15 @@ void add_sphere(pointf *center, float radius, unsigned color) {
 	raw_objects[cnt].color = color;
 	OBJECT_CNT_W(cnt + 1);
 }
+void add_sphere2d(pointf *center, float radius, unsigned color) {
+	int cnt = OBJECT_CNT_R();
+	printf("Sphere: (%d,%d) radius=%d\n", (int)center->x, (int)center->y,(int)radius);
+	raw_objects[cnt].p[0].x = center->x;
+	raw_objects[cnt].p[0].y = center->y;
+	raw_objects[cnt].p[1].x = radius;
+	raw_objects[cnt].color = color;
+	OBJECT_CNT_W(cnt + 1);
+}
 
 void add_cube(pointf pf[], unsigned color) {
 	int cnt = OBJECT_CNT_R();
@@ -40,6 +49,10 @@ void add_cube(pointf pf[], unsigned color) {
 }
 
 void get_sphere(int idx, RawSphere *sphere) {
-	memcpy(sphere, raw_objects[idx].p, sizeof(float) * 4);
+	//memcpy(sphere, raw_objects[idx].p, sizeof(float) * 4);
+	sphere->x=raw_objects[idx].p[0].x;
+	sphere->y=raw_objects[idx].p[0].y;
+	sphere->z=raw_objects[idx].p[0].z;
+	sphere->radius=raw_objects[idx].p[1].x;
 	sphere->color = raw_objects[idx].color;
 }

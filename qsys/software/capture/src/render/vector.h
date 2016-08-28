@@ -8,6 +8,7 @@ typedef float Vector[3];
 
 #define makeVector(x, y, z, C) (C[0] = x, C[1] = y, C[2] = z)
 #define copyVector(A, C) (C[0] = A[0], C[1] = A[1], C[2] = A[2])
+#define copyNegVector(A,C) (C[0]=-A[0],C[1]=-A[1],C[2]=-A[2])
 #define add(A, B, C) (C[0] = A[0] + B[0], C[1] = A[1] + B[1], C[2] = A[2] + B[2])
 #define sub(A, B, C) (C[0] = A[0] - B[0], C[1] = A[1] - B[1], C[2] = A[2] - B[2])
 #define muld(A, k, C) (C[0] = A[0] * k, C[1] = A[1] * k, C[2] = A[2] * k)
@@ -19,6 +20,7 @@ typedef float Vector[3];
 #define len(A) (sqrt(A[0] * A[0] + A[1] * A[1] + A[2] * A[2]))
 #define dis2(A, B) ((A[0] - B[0]) * (A[0] - B[0]) + (A[1] - B[1]) * (A[1] - B[1]) + (A[2] - B[2]) * (A[2] - B[2]))
 #define dis(A, B) (sqrt((A[0] - B[0]) * (A[0] - B[0]) + (A[1] - B[1]) * (A[1] - B[1]) + (A[2] - B[2]) * (A[2] - B[2])))
+#define cross(A,B,C) 	(C[0] = A[1] * B[2] - A[2] * B[1],C[1] = A[2] * B[0] - A[0] * B[2],C[2] = A[0] * B[1] - A[1] * B[0])
 
 inline static void normal(Vector A, Vector C) {
 	float l = len(A);

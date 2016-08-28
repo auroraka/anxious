@@ -33,6 +33,7 @@ int main() {
 	reset_objects();
 	clean_sdram(1);
 	clean_sdram(2);
+	clear_ssram();
 	
 	unsigned key_state = 1, key_code = 0xFF;
 	while (true) {
