@@ -53,6 +53,8 @@ end
 wire render_buffer_vsync;
 assign render_buffer_vsync = render_vsync_all;
 
+assign SSRAM_CLK = DRAM_CLK;
+
 anxious_capture u0 (
     .cam_buffer_switcher_enable_enable                  (SW[4]),
     
@@ -109,7 +111,11 @@ anxious_capture u0 (
     .new_sdram_controller_0_wire_we_n                   (DRAM_WE_N),
     
     .overlay_buffer_switcher_enable_enable              (SW[7]),
-
+    .overlay_buffer_switcher_write_buffer_buffer_port   (overlay_buffer_port),
+    .overlay_buffer_switcher_write_buffer_buffer_vsync  (overlay_buffer_vsync),
+    .overlay_port_pio_external_connection_export        (overlay_buffer_port),
+    .overlay_vsync_pio_external_connection_export       (overlay_buffer_vsync),
+    
     .recog_buffer_port_pio_0_external_connection_export (recog_buffer_port_0),
     .recog_buffer_port_pio_1_external_connection_export (recog_buffer_port_1),
     .recog_buffer_switcher_0_enable_enable              (SW[5]),
@@ -120,6 +126,7 @@ anxious_capture u0 (
     .recog_buffer_switcher_1_read_buffer_buffer_vsync   (recog_buffer_vsync_1),
     .recog_vsync_pio_0_external_connection_export       (recog_buffer_vsync_0),
     .recog_vsync_pio_1_external_connection_export       (recog_buffer_vsync_1),
+    
     .render_buffer_switcher_enable_enable               (SW[6]),
     .render_buffer_switcher_write_buffer_buffer_port    (render_buffer_port),
     .render_buffer_switcher_write_buffer_buffer_vsync   (render_buffer_vsync),
@@ -128,31 +135,29 @@ anxious_capture u0 (
     .render_vsync_pio_0_external_connection_export      (render_vsync[0]),
 
     .reset_reset_n                                      (KEY[0]),
-
-//    .vga_composer_0_conduit_vga_b               (VGA_B),
-//    .vga_composer_0_conduit_vga_blank_n         (VGA_BLANK_N),
-//    .vga_composer_0_conduit_vga_clk             (VGA_CLK),
-//    .vga_composer_0_conduit_vga_g               (VGA_G),
-//    .vga_composer_0_conduit_vga_hs              (VGA_HS),
-//    .vga_composer_0_conduit_vga_r               (VGA_R),
-//    .vga_composer_0_conduit_vga_sync_n          (VGA_SYNC_N),
-//    .vga_composer_0_conduit_vga_vs              (VGA_VS),
-//    .vga_composer_0_conduit_clk_vga             (clk_vga),
-
-    .vga_composer_overlay_0_conduit_vga_b               (VGA_B),
-    .vga_composer_overlay_0_conduit_vga_blank_n         (VGA_BLANK_N),
-    .vga_composer_overlay_0_conduit_vga_clk             (VGA_CLK),
-    .vga_composer_overlay_0_conduit_vga_g               (VGA_G),
-    .vga_composer_overlay_0_conduit_vga_hs              (VGA_HS),
-    .vga_composer_overlay_0_conduit_vga_r               (VGA_R),
-    .vga_composer_overlay_0_conduit_vga_sync_n          (VGA_SYNC_N),
-    .vga_composer_overlay_0_conduit_vga_vs              (VGA_VS),
-    .vga_composer_overlay_0_conduit_clk_vga             (clk_vga),
     
-    .overlay_vsync_pio_external_connection_export       (overlay_buffer_vsync),
-    .overlay_port_pio_external_connection_export        (overlay_buffer_port),
-    .overlay_buffer_switcher_write_buffer_buffer_port   (overlay_buffer_port),
-    .overlay_buffer_switcher_write_buffer_buffer_vsync  (overlay_buffer_vsync),
+    // .ssram_mm_0_ssram_wires_tcm_chipselect_n_out        (),
+    .ssram_mm_0_ssram_wires_tcm_byteenable_n_out        (SSRAM_BE),
+    .ssram_mm_0_ssram_wires_tcm_outputenable_n_out      (SSRAM_OE_N),
+    .ssram_mm_0_ssram_wires_tcm_write_n_out             (SSRAM_WE_N),
+    .ssram_mm_0_ssram_wires_tcm_data_out                (FS_DQ),
+    .ssram_mm_0_ssram_wires_tcm_address_out             (FS_ADDR[21:2]),
+    // .ssram_mm_0_ssram_wires_tcm_reset_n_out             (),
+    .ssram_mm_0_ssram_wires_tcm_begintransfer_n_out     (SSRAM_ADSC_N),
+
+    .vga_st_composer_overlay_0_conduit_vga_b            (VGA_B),
+    .vga_st_composer_overlay_0_conduit_vga_blank_n      (VGA_BLANK_N),
+    .vga_st_composer_overlay_0_conduit_vga_clk          (VGA_CLK),
+    .vga_st_composer_overlay_0_conduit_vga_g            (VGA_G),
+    .vga_st_composer_overlay_0_conduit_vga_hs           (VGA_HS),
+    .vga_st_composer_overlay_0_conduit_vga_r            (VGA_R),
+    .vga_st_composer_overlay_0_conduit_vga_sync_n       (VGA_SYNC_N),
+    .vga_st_composer_overlay_0_conduit_vga_vs           (VGA_VS),
+    
+    .clk_vga_clk                                        (clk_vga),
+    .vid_read_buffer_0_vsync_s_vsync                    (VGA_VS),
+    .render_mm_to_st_vga_vsync_s_vsync                  (VGA_VS),
+    .cam_mm_to_st_vga_vsync_s_vsync                     (VGA_VS),
 );
 
 endmodule

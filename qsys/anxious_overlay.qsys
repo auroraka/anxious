@@ -17,6 +17,14 @@
          type = "String";
       }
    }
+   element anxious_overlay
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
    element bit_unpacker_0
    {
       datum _sortIndex
@@ -53,7 +61,7 @@
    {
       datum baseAddress
       {
-         value = "528416";
+         value = "528384";
          type = "String";
       }
    }
@@ -89,51 +97,19 @@
          type = "String";
       }
    }
-   element overlay_buffer_port
-   {
-      datum _sortIndex
-      {
-         value = "16";
-         type = "int";
-      }
-   }
-   element overlay_buffer_port.s1
-   {
-      datum baseAddress
-      {
-         value = "528400";
-         type = "String";
-      }
-   }
-   element overlay_buffer_switcher
-   {
-      datum _sortIndex
-      {
-         value = "7";
-         type = "int";
-      }
-   }
-   element overlay_buffer_vsync
-   {
-      datum _sortIndex
-      {
-         value = "17";
-         type = "int";
-      }
-   }
-   element overlay_buffer_vsync.s1
-   {
-      datum baseAddress
-      {
-         value = "528384";
-         type = "String";
-      }
-   }
    element overlay_decoder_0
    {
       datum _sortIndex
       {
          value = "3";
+         type = "int";
+      }
+   }
+   element overlay_dummy_buffer_switcher
+   {
+      datum _sortIndex
+      {
+         value = "7";
          type = "int";
       }
    }
@@ -242,7 +218,7 @@
    {
       datum baseAddress
       {
-         value = "528424";
+         value = "528392";
          type = "String";
       }
    }
@@ -290,26 +266,6 @@
    dir="end" />
  <interface name="clk" internal="clk_qsys.clk_in" type="clock" dir="end" />
  <interface name="clk_vga" internal="clk_vga.clk_in" type="clock" dir="end" />
- <interface
-   name="overlay_buffer_port_external_connection"
-   internal="overlay_buffer_port.external_connection"
-   type="conduit"
-   dir="end" />
- <interface
-   name="overlay_buffer_switcher_enable"
-   internal="overlay_buffer_switcher.enable"
-   type="conduit"
-   dir="end" />
- <interface
-   name="overlay_buffer_switcher_write_buffer"
-   internal="overlay_buffer_switcher.write_buffer"
-   type="conduit"
-   dir="end" />
- <interface
-   name="overlay_buffer_vsync_external_connection"
-   internal="overlay_buffer_vsync.external_connection"
-   type="conduit"
-   dir="end" />
  <interface name="reset" internal="clk_qsys.clk_in_reset" type="reset" dir="end" />
  <interface
    name="sdram_controller_0_wire"
@@ -325,6 +281,11 @@
    name="vga_st_composer_0_conduit"
    internal="vga_st_composer_0.Conduit"
    type="conduit"
+   dir="end" />
+ <interface
+   name="vid_read_buffer_0_reset"
+   internal="vid_read_buffer_0.reset"
+   type="reset"
    dir="end" />
  <interface
    name="vid_read_buffer_0_vsync"
@@ -390,7 +351,7 @@
   <parameter name="dataAddrWidth" value="31" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='onchip_memory2_0.s1' start='0x40000' end='0x72000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x80800' end='0x81000' /><slave name='overlay_buffer_vsync.s1' start='0x81000' end='0x81010' /><slave name='overlay_buffer_port.s1' start='0x81010' end='0x81020' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x81020' end='0x81028' /><slave name='sysid_qsys_0.control_slave' start='0x81028' end='0x81030' /><slave name='ssram_mm_0_generic_tristate_controller_0.uas' start='0x40000000' end='0x40100000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='onchip_memory2_0.s1' start='0x40000' end='0x72000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x80800' end='0x81000' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x81000' end='0x81008' /><slave name='sysid_qsys_0.control_slave' start='0x81008' end='0x81010' /><slave name='ssram_mm_0_generic_tristate_controller_0.uas' start='0x40000000' end='0x40100000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -576,51 +537,17 @@
   <parameter name="writable" value="true" />
  </module>
  <module
-   name="overlay_buffer_port"
-   kind="altera_avalon_pio"
-   version="15.0"
-   enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="false" />
-  <parameter name="clockRate" value="100000000" />
-  <parameter name="direction" value="Input" />
-  <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="false" />
-  <parameter name="irqType" value="LEVEL" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="false" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="2" />
- </module>
- <module
-   name="overlay_buffer_switcher"
-   kind="frame_buffer_switcher"
-   version="2.0"
-   enabled="1" />
- <module
-   name="overlay_buffer_vsync"
-   kind="altera_avalon_pio"
-   version="15.0"
-   enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="false" />
-  <parameter name="clockRate" value="100000000" />
-  <parameter name="direction" value="Output" />
-  <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="false" />
-  <parameter name="irqType" value="LEVEL" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="false" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="1" />
- </module>
- <module
    name="overlay_decoder_0"
    kind="overlay_decoder"
    version="1.0"
    enabled="1" />
+ <module
+   name="overlay_dummy_buffer_switcher"
+   kind="dummy_buffer_switcher"
+   version="1.0"
+   enabled="1">
+  <parameter name="FIXED_BUFFER_PORT" value="0" />
+ </module>
  <module
    name="overlay_read_addr_gen_0"
    kind="overlay_read_addr_gen"
@@ -654,7 +581,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@5b6c3c02</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@7cc135bc</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_rgb_mm_to_vga_st_bank0</parameter>
  </module>
  <module
@@ -736,7 +663,7 @@
    start="nios2_gen2_0.data_master"
    end="jtag_uart_0.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00081020" />
+  <parameter name="baseAddress" value="0x00081000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -745,7 +672,7 @@
    start="nios2_gen2_0.data_master"
    end="sysid_qsys_0.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00081028" />
+  <parameter name="baseAddress" value="0x00081008" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -764,24 +691,6 @@
    end="onchip_memory2_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00040000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="15.0"
-   start="nios2_gen2_0.data_master"
-   end="overlay_buffer_port.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00081010" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="15.0"
-   start="nios2_gen2_0.data_master"
-   end="overlay_buffer_vsync.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00081000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -870,16 +779,6 @@
    kind="clock"
    version="15.0"
    start="clk_qsys.clk"
-   end="overlay_buffer_port.clk" />
- <connection
-   kind="clock"
-   version="15.0"
-   start="clk_qsys.clk"
-   end="overlay_buffer_vsync.clk" />
- <connection
-   kind="clock"
-   version="15.0"
-   start="clk_qsys.clk"
    end="onchip_memory2_0.clk1" />
  <connection
    kind="clock"
@@ -915,22 +814,17 @@
    kind="clock"
    version="15.0"
    start="clk_qsys.clk"
-   end="rgb_dummy_buffer_switcher.clock" />
+   end="overlay_dummy_buffer_switcher.clock" />
  <connection
    kind="clock"
    version="15.0"
    start="clk_qsys.clk"
-   end="overlay_buffer_switcher.read_clock" />
+   end="rgb_dummy_buffer_switcher.clock" />
  <connection
    kind="clock"
    version="15.0"
    start="clk_vga.clk"
    end="vid_read_buffer_0.st_clk" />
- <connection
-   kind="clock"
-   version="15.0"
-   start="clk_qsys.clk"
-   end="overlay_buffer_switcher.write_clk" />
  <connection
    kind="conduit"
    version="15.0"
@@ -945,8 +839,8 @@
  <connection
    kind="conduit"
    version="15.0"
-   start="overlay_read_addr_gen_0.buffer_switch"
-   end="overlay_buffer_switcher.read_buffer">
+   start="overlay_dummy_buffer_switcher.buffer_switcher"
+   end="overlay_read_addr_gen_0.buffer_switch">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
   <parameter name="startPort" value="" />
@@ -1020,16 +914,6 @@
    kind="reset"
    version="15.0"
    start="clk_qsys.clk_reset"
-   end="vid_read_buffer_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_vga.clk_reset"
-   end="vid_read_buffer_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_qsys.clk_reset"
    end="rgb_mm_to_vga_st_bank0.reset" />
  <connection
    kind="reset"
@@ -1086,36 +970,6 @@
    version="15.0"
    start="clk_vga.clk_reset"
    end="ssram_mm_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_qsys.clk_reset"
-   end="overlay_buffer_switcher.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_vga.clk_reset"
-   end="overlay_buffer_switcher.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_qsys.clk_reset"
-   end="overlay_buffer_port.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_vga.clk_reset"
-   end="overlay_buffer_port.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_qsys.clk_reset"
-   end="overlay_buffer_vsync.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_vga.clk_reset"
-   end="overlay_buffer_vsync.reset" />
  <connection
    kind="reset"
    version="15.0"
@@ -1156,11 +1010,6 @@
    version="15.0"
    start="nios2_gen2_0.debug_reset_request"
    end="vga_st_composer_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="nios2_gen2_0.debug_reset_request"
-   end="vid_read_buffer_0.reset" />
  <connection
    kind="reset"
    version="15.0"

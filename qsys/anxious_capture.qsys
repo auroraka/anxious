@@ -233,6 +233,38 @@
          type = "String";
       }
    }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element bit_unpacker_0
+   {
+      datum _sortIndex
+      {
+         value = "55";
+         type = "int";
+      }
+   }
    element bitpacker_0
    {
       datum _sortIndex
@@ -255,7 +287,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
@@ -272,6 +304,14 @@
          type = "boolean";
       }
    }
+   element cam_mm_to_st
+   {
+      datum _sortIndex
+      {
+         value = "49";
+         type = "int";
+      }
+   }
    element camera_mm_0
    {
       datum _sortIndex
@@ -281,7 +321,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
@@ -411,7 +451,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
@@ -426,6 +466,14 @@
       {
          value = "1";
          type = "boolean";
+      }
+   }
+   element clk_vga
+   {
+      datum _sortIndex
+      {
+         value = "51";
+         type = "int";
       }
    }
    element convert_hsv_0
@@ -450,7 +498,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
@@ -476,7 +524,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
@@ -620,7 +668,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
@@ -641,7 +689,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
@@ -683,7 +731,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
@@ -702,6 +750,11 @@
          value = "32";
          type = "int";
       }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
+      }
    }
    element onchip_memory2_0.s1
    {
@@ -719,6 +772,14 @@
          type = "int";
       }
    }
+   element overlay_decoder_0
+   {
+      datum _sortIndex
+      {
+         value = "56";
+         type = "int";
+      }
+   }
    element overlay_port_pio
    {
       datum _sortIndex
@@ -733,6 +794,14 @@
       {
          value = "134221824";
          type = "String";
+      }
+   }
+   element overlay_read_addr_gen_0
+   {
+      datum _sortIndex
+      {
+         value = "54";
+         type = "int";
       }
    }
    element overlay_vsync_pio
@@ -786,7 +855,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
@@ -825,7 +894,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
@@ -864,7 +933,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
@@ -911,7 +980,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
@@ -941,6 +1010,14 @@
          type = "boolean";
       }
    }
+   element render_mm_to_st
+   {
+      datum _sortIndex
+      {
+         value = "50";
+         type = "int";
+      }
+   }
    element render_port_pio
    {
       datum _sortIndex
@@ -950,7 +1027,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
@@ -1044,7 +1121,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
@@ -1058,6 +1135,27 @@
       datum baseAddress
       {
          value = "134348800";
+         type = "String";
+      }
+   }
+   element ssram_mm_0
+   {
+      datum _sortIndex
+      {
+         value = "52";
+         type = "int";
+      }
+   }
+   element ssram_mm_0.slave
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "136314880";
          type = "String";
       }
    }
@@ -1078,7 +1176,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
@@ -1106,6 +1204,22 @@
          type = "int";
       }
    }
+   element vga_st_composer_overlay_0
+   {
+      datum _sortIndex
+      {
+         value = "48";
+         type = "int";
+      }
+   }
+   element vid_read_buffer_0
+   {
+      datum _sortIndex
+      {
+         value = "53";
+         type = "int";
+      }
+   }
    element vid_write_buffer_0
    {
       datum _sortIndex
@@ -1128,7 +1242,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
@@ -1156,6 +1270,11 @@
  <interface
    name="cam_buffer_switcher_enable"
    internal="cam_buffer_switcher.enable"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="cam_mm_to_st_vga_vsync"
+   internal="cam_mm_to_st.vga_vsync"
    type="conduit"
    dir="end" />
  <interface name="camera_mm_0_black_cnt" internal="camera_mm_0.black_cnt" />
@@ -1197,6 +1316,7 @@
    type="conduit"
    dir="end" />
  <interface name="clk" internal="clk.clk_in" type="clock" dir="end" />
+ <interface name="clk_vga" internal="clk_vga.clk_in" type="clock" dir="end" />
  <interface
    name="ir_receiver_0_ir_clock"
    internal="ir_receiver_0.ir_clock"
@@ -1288,6 +1408,11 @@
    type="conduit"
    dir="end" />
  <interface
+   name="render_mm_to_st_vga_vsync"
+   internal="render_mm_to_st.vga_vsync"
+   type="conduit"
+   dir="end" />
+ <interface
    name="render_port_pio_external_connection"
    internal="render_port_pio.external_connection"
    type="conduit"
@@ -1303,12 +1428,29 @@
    type="conduit"
    dir="end" />
  <interface name="reset" internal="clk.clk_in_reset" type="reset" dir="end" />
+ <interface
+   name="ssram_mm_0_ssram_wires"
+   internal="ssram_mm_0.ssram_wires"
+   type="conduit"
+   dir="end" />
  <interface name="vga_composer_0_conduit" internal="vga_composer_0.conduit" />
  <interface
    name="vga_composer_overlay_0_conduit"
-   internal="vga_composer_overlay_0.conduit"
+   internal="vga_composer_overlay_0.conduit" />
+ <interface
+   name="vga_st_composer_overlay_0_conduit"
+   internal="vga_st_composer_overlay_0.Conduit"
    type="conduit"
    dir="end" />
+ <interface
+   name="vid_read_buffer_0_vsync"
+   internal="vid_read_buffer_0.vsync"
+   type="conduit"
+   dir="end" />
+ <module name="bit_unpacker_0" kind="bit_unpacker" version="1.0" enabled="1">
+  <parameter name="DIN_WIDTH" value="8" />
+  <parameter name="DOUT_WIDTH" value="4" />
+ </module>
  <module name="bitpacker_0" kind="bitpacker" version="1.1" enabled="1">
   <parameter name="FIRST_SYMBOL_IN_MSB" value="0" />
   <parameter name="PACK_LENGTH" value="8" />
@@ -1322,6 +1464,25 @@
    kind="frame_buffer_switcher"
    version="2.0"
    enabled="1" />
+ <module
+   name="cam_mm_to_st"
+   kind="rgb_mm_to_vga_st_bank0"
+   version="1.0"
+   enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_VGA_CLOCK_DOMAIN" value="2" />
+  <parameter name="AUTO_CLK_VGA_CLOCK_RATE" value="25000000" />
+  <parameter name="AUTO_CLK_VGA_RESET_DOMAIN" value="2" />
+  <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@73f0e696</parameter>
+  <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_cam_mm_to_st</parameter>
+ </module>
  <module name="camera_mm_0" kind="camera_mm" version="1.0" enabled="1">
   <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
   <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
@@ -1331,7 +1492,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_M0_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_M0_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@5aca60c4</parameter>
+  <parameter name="AUTO_M0_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@2096e299</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_mm_0</parameter>
  </module>
  <module
@@ -1414,6 +1575,12 @@
  </module>
  <module name="clk" kind="clock_source" version="15.0" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
+  <parameter name="clockFrequencyKnown" value="true" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module name="clk_vga" kind="clock_source" version="15.0" enabled="1">
+  <parameter name="clockFrequency" value="25000000" />
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
@@ -1911,7 +2078,7 @@
   <parameter name="dataAddrWidth" value="29" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_2.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='overlay_port_pio.s1' start='0x8001000' end='0x8001010' /><slave name='overlay_vsync_pio.s1' start='0x8001010' end='0x8001020' /><slave name='render_port_pio.s1' start='0x8001020' end='0x8001030' /><slave name='key_pio.s1' start='0x8001030' end='0x8001040' /><slave name='jtag_uart_2.avalon_jtag_slave' start='0x8001040' end='0x8001048' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='ir_receiver_0.avalon_slave_0' start='0x10000000' end='0x18000000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_2.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='overlay_port_pio.s1' start='0x8001000' end='0x8001010' /><slave name='overlay_vsync_pio.s1' start='0x8001010' end='0x8001020' /><slave name='render_port_pio.s1' start='0x8001020' end='0x8001030' /><slave name='key_pio.s1' start='0x8001030' end='0x8001040' /><slave name='jtag_uart_2.avalon_jtag_slave' start='0x8001040' end='0x8001048' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='ssram_mm_0_generic_tristate_controller_0.uas' start='0x8200000' end='0x8300000' /><slave name='ir_receiver_0.avalon_slave_0' start='0x10000000' end='0x18000000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -2282,6 +2449,11 @@
    version="2.0"
    enabled="1" />
  <module
+   name="overlay_decoder_0"
+   kind="overlay_decoder"
+   version="1.0"
+   enabled="1" />
+ <module
    name="overlay_port_pio"
    kind="altera_avalon_pio"
    version="15.0"
@@ -2298,6 +2470,16 @@
   <parameter name="simDoTestBenchWiring" value="false" />
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="2" />
+ </module>
+ <module
+   name="overlay_read_addr_gen_0"
+   kind="overlay_read_addr_gen"
+   version="1.0"
+   enabled="1">
+  <parameter name="ADDR_BASE" value="136314880" />
+  <parameter name="ADDR_WIDTH" value="32" />
+  <parameter name="HEIGHT" value="480" />
+  <parameter name="WIDTH" value="640" />
  </module>
  <module
    name="overlay_vsync_pio"
@@ -2463,6 +2645,25 @@
    version="2.0"
    enabled="1" />
  <module
+   name="render_mm_to_st"
+   kind="rgb_mm_to_vga_st_bank1"
+   version="1.0"
+   enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_VGA_CLOCK_DOMAIN" value="2" />
+  <parameter name="AUTO_CLK_VGA_CLOCK_RATE" value="25000000" />
+  <parameter name="AUTO_CLK_VGA_RESET_DOMAIN" value="2" />
+  <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@5444e6c7</parameter>
+  <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_render_mm_to_st</parameter>
+ </module>
+ <module
    name="render_port_pio"
    kind="altera_avalon_pio"
    version="15.0"
@@ -2574,6 +2775,16 @@
   <parameter name="useShallowMemBlocks" value="false" />
   <parameter name="writable" value="true" />
  </module>
+ <module name="ssram_mm_0" kind="ssram_mm" version="1.0" enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
+  <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_ssram_mm_0</parameter>
+ </module>
  <module
    name="sysid_qsys_0"
    kind="altera_avalon_sysid_qsys"
@@ -2593,13 +2804,30 @@
    name="vga_composer_overlay_0"
    kind="vga_composer_overlay"
    version="1.0"
-   enabled="1">
+   enabled="0">
   <parameter name="ADDR_WIDTH" value="27" />
   <parameter name="CAM_BANK" value="0" />
   <parameter name="DATA_WIDTH" value="32" />
-  <parameter name="FIFO_LENGTH_LOG_2" value="8" />
+  <parameter name="FIFO_LENGTH_LOG_2" value="7" />
   <parameter name="OVERLAY_BANK" value="2" />
   <parameter name="RENDER_BANK" value="1" />
+ </module>
+ <module
+   name="vga_st_composer_overlay_0"
+   kind="vga_st_composer_overlay"
+   version="1.0"
+   enabled="1">
+  <parameter name="DATA_WIDTH" value="32" />
+  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
+ </module>
+ <module
+   name="vid_read_buffer_0"
+   kind="vid_read_buffer"
+   version="1.0"
+   enabled="1">
+  <parameter name="ADDR_WIDTH" value="32" />
+  <parameter name="DATA_WIDTH" value="8" />
+  <parameter name="FIFO_LENGTH_LOG_2" value="6" />
  </module>
  <module
    name="vid_write_buffer_0"
@@ -2619,6 +2847,15 @@
   <parameter name="DATA_WIDTH" value="8" />
   <parameter name="FIFO_LENGTH_LOG_2" value="6" />
  </module>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="vid_read_buffer_0.avalon_master"
+   end="ssram_mm_0.slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08200000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
  <connection
    kind="avalon"
    version="15.0"
@@ -3045,6 +3282,15 @@
  <connection
    kind="avalon"
    version="15.0"
+   start="nios2_gen2_2.data_master"
+   end="ssram_mm_0.slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08200000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
    start="nios2_gen2_1.instruction_master"
    end="nios2_gen2_1.debug_mem_slave">
   <parameter name="arbitrationPriority" value="1" />
@@ -3142,6 +3388,24 @@
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
+   kind="avalon"
+   version="15.0"
+   start="cam_mm_to_st.master"
+   end="sdram_controller_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="render_mm_to_st.master"
+   end="sdram_controller_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
    kind="avalon_streaming"
    version="15.0"
    start="convert_hsv_0.dout"
@@ -3164,6 +3428,26 @@
  <connection
    kind="avalon_streaming"
    version="15.0"
+   start="vid_read_buffer_0.source"
+   end="bit_unpacker_0.sink" />
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="cam_mm_to_st.source"
+   end="vga_st_composer_overlay_0.sink_camera" />
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="render_mm_to_st.source"
+   end="vga_st_composer_overlay_0.sink_render" />
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="bit_unpacker_0.source"
+   end="overlay_decoder_0.st_in" />
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
    start="camera_st_0.st0"
    end="convert_hsv_0.din" />
  <connection
@@ -3171,6 +3455,11 @@
    version="15.0"
    start="camera_st_1.st0"
    end="convert_hsv_1.din" />
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="overlay_decoder_0.st_out"
+   end="vga_st_composer_overlay_0.sink_overlay" />
  <connection
    kind="clock"
    version="15.0"
@@ -3232,6 +3521,9 @@
    version="15.0"
    start="clk.clk"
    end="overlay_port_pio.clk" />
+ <connection kind="clock" version="15.0" start="clk.clk" end="ssram_mm_0.clk" />
+ <connection kind="clock" version="15.0" start="clk.clk" end="render_mm_to_st.clk" />
+ <connection kind="clock" version="15.0" start="clk.clk" end="cam_mm_to_st.clk" />
  <connection
    kind="clock"
    version="15.0"
@@ -3240,6 +3532,21 @@
  <connection kind="clock" version="15.0" start="clk.clk" end="recog_memory_1.clk1" />
  <connection kind="clock" version="15.0" start="clk.clk" end="shared_memory.clk1" />
  <connection kind="clock" version="15.0" start="clk.clk" end="recog_memory_0.clk1" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_vga.clk"
+   end="render_mm_to_st.clk_vga" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_vga.clk"
+   end="cam_mm_to_st.clk_vga" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_vga.clk"
+   end="vga_st_composer_overlay_0.clk_vga" />
  <connection
    kind="clock"
    version="15.0"
@@ -3256,6 +3563,26 @@
    version="15.0"
    start="clk.clk"
    end="vga_composer_overlay_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="vid_read_buffer_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_vga.clk"
+   end="bit_unpacker_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_vga.clk"
+   end="overlay_decoder_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="overlay_read_addr_gen_0.clock" />
  <connection
    kind="clock"
    version="15.0"
@@ -3281,6 +3608,11 @@
    version="15.0"
    start="clk.clk"
    end="overlay_buffer_switcher.read_clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk_vga.clk"
+   end="vid_read_buffer_0.st_clk" />
  <connection
    kind="clock"
    version="15.0"
@@ -3376,6 +3708,17 @@
  <connection
    kind="conduit"
    version="15.0"
+   start="vid_read_buffer_0.addr_gen"
+   end="overlay_read_addr_gen_0.addr_gen">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
    start="hsv_addr_gen_0.buffer_switch"
    end="recog_buffer_switcher_0.write_buffer">
   <parameter name="endPort" value="" />
@@ -3389,6 +3732,39 @@
    version="15.0"
    start="vga_composer_overlay_0.overlay_buffer"
    end="overlay_buffer_switcher.read_buffer">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="overlay_buffer_switcher.read_buffer"
+   end="overlay_read_addr_gen_0.buffer_switch">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="cam_buffer_switcher.read_buffer"
+   end="cam_mm_to_st.buffer_switch">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="render_buffer_switcher.read_buffer"
+   end="render_mm_to_st.buffer_switch">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
   <parameter name="startPort" value="" />
@@ -3467,6 +3843,11 @@
    end="jtag_uart_3.irq">
   <parameter name="irqNumber" value="0" />
  </connection>
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="clk_vga.clk_in_reset" />
  <connection
    kind="reset"
    version="15.0"
@@ -3678,6 +4059,46 @@
    version="15.0"
    start="clk.clk_reset"
    end="overlay_buffer_switcher.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="ssram_mm_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="vga_st_composer_overlay_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="cam_mm_to_st.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="render_mm_to_st.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="vid_read_buffer_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="bit_unpacker_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="overlay_read_addr_gen_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="overlay_decoder_0.reset" />
  <connection
    kind="reset"
    version="15.0"
