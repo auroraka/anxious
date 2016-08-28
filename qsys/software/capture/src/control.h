@@ -21,4 +21,5 @@ void draw_overlay();
 
 void key_down(int key_code);
 
+
 #endif //CONTROL_H

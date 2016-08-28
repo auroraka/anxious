@@ -11,6 +11,13 @@
 static Color BG_C = { 0.5,0.5,0.5 };
 static Vector LI_O = { 300,300,250 };
 
+const static float focus_x_l = 1117.36809f, focus_y_l = 1115.59155f;
+const static float focus_x_r = 1098.56402f, focus_y_r = 1095.74358f;
+const static float center_x_l = 284.432591f, center_y_l = 205.206010f;
+const static float center_x_r = 260.334008f, center_y_r = 307.355809f;
+const static float stereo_dist = 17.6; // cm
+
+
 void getColor(Vector _N, Vector C, Color _color, Color ret) {
 	Vector N;
 	copyVector(_N, N);
@@ -120,18 +127,28 @@ void drawTriangle(Pos v1, Pos v2, Pos v3, Color color) {
 		}
 	}
 }
+bool getPos_online(Vector A,Pos B) {
+	B[0]=(int)round(focus_x_r * A[0] / A[2] + center_x_r);
+	B[1]=(int)round(focus_y_r * A[1] / A[2] + center_y_r);
+	B[2]=A[2];
+	return 0<=B[0] && B[0]<=PIC_W && 0<=B[1] && B[1]<=PIC_H;
+}
 
 void renderTriangle(Vector A, Vector B, Vector C, Color color) {
 	Pos X, Y, Z;
-	if (!getPos(A, X)) return;
-	if (!getPos(B, Y)) return;
-	if (!getPos(C, Z)) return;
+	if (!getPos_online(A, X)) return;
+	if (!getPos_online(B, Y)) return;
+	if (!getPos_online(C, Z)) return;
+	//if (!getPos(A, X)) return;
+	//if (!getPos(B, Y)) return;
+	//if (!getPos(C, Z)) return;
 	drawTriangle(X, Y, Z, color);
 }
 void renderRect(Vector A, Vector B, Vector C, Vector D, Color color) {
 	renderTriangle(A, B, C, color);
 	renderTriangle(A, C, D, color);
 }
+
 void renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 	Vector P[8];
 	Color col;
@@ -180,6 +197,7 @@ void renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 	mulcd(col, 3, col);
 	renderRect(P[2], P[3], P[7], P[6], col);
 }
+
 
 void drawSphereLine(Pos2 p, int r, int x1, int x2, int y, Color color) {
 	//printf("%d %d %d\n", x1, x2, y);

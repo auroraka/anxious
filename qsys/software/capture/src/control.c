@@ -22,11 +22,11 @@
 #include "control.h"
 #include "palette.h"
 
-const float focus_x_l = 1117.36809f, focus_y_l = 1115.59155f;
-const float focus_x_r = 1098.56402f, focus_y_r = 1095.74358f;
-const float center_x_l = 284.432591f, center_y_l = 205.206010f;
-const float center_x_r = 260.334008f, center_y_r = 307.355809f;
-const float stereo_dist = 17.6; // cm
+const static float focus_x_l = 1117.36809f, focus_y_l = 1115.59155f;
+const static float focus_x_r = 1098.56402f, focus_y_r = 1095.74358f;
+const static float center_x_l = 284.432591f, center_y_l = 205.206010f;
+const static float center_x_r = 260.334008f, center_y_r = 307.355809f;
+const static float stereo_dist = 17.6; // cm
 
 #define VSYNC(x) IOWR(OVERLAY_VSYNC_PIO_BASE, 0, (x))
 #define BUFFER_PORT() IORD(OVERLAY_PORT_PIO_BASE, 0)
@@ -99,13 +99,14 @@ inline void OVERLAY_W_v(int x, int y, unsigned val) {
 	set_sram(overlay_port, x, y, val);
 }
 
-int store_x, store_y, store_r;
+int store_x, store_y, store_r;unsigned store_color;
 
 void draw_sphere(pointi c, float radius, unsigned color) {
 	int cx = c.x, cy = c.y;
 	store_x = cx;
 	store_y = cy;
 	store_r = radius;
+	store_color=color;
 //void draw_sphere(int cx, int cy, float radius, unsigned color) {
 	int dx = 0, dy = (int)radius;
 	float d = 1.25f - radius;
@@ -251,6 +252,7 @@ inline float lenf(pointf df) {
 #undef TRANSPARENT
 #define TRANSPARENT 0xF
 
+pointf store_cube[5];
 void draw_overlay_frame(unsigned color) {
 	boolean store = (boolean)(color != TRANSPARENT);
 	point cur_p;
@@ -332,6 +334,11 @@ void draw_overlay_frame(unsigned color) {
 			draw_line(p[1], p[5], color);
 			draw_line(p[2], p[6], color);
 			draw_line(p[3], p[7], color);
+			store_cube[0]=pf[0];
+			store_cube[1]=df[1];
+			store_cube[2]=df[2];
+			store_cube[3]=df[3];
+			store_color=color;
 			break;
 	}
 }
@@ -555,11 +562,12 @@ void key_down(int key_code) {
 				pf[0].x = store_x;
 				pf[0].y = store_y;
 				radius = store_r;
-				add_sphere2d(&pf[0], store_r, WHITE);
+				add_sphere2d(&pf[0], store_r, store_color);
 				draw_state = DRAW_POINT;
 				break;
 			case DRAW_CUBE_LINE:
-				printf("1: (%d,%d,%d)\n", (int)pf[1].x, (int)pf[1].y, (int)pf[1].z);
+				add_cube(store_cube,store_color);
+				//printf("1: (%d,%d,%d)\n", (int)pf[1].x, (int)pf[1].y, (int)pf[1].z);
 				draw_state = DRAW_CUBE_AREA;
 				break;
 			case DRAW_CUBE_AREA:

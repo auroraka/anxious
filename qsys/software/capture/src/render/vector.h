@@ -39,4 +39,5 @@ inline static void GetAnVerticalVector(Vector A, Vector ret) {
 	else normal(ret, ret);
 }
 
+
 #endif

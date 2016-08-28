@@ -5,6 +5,7 @@
 #include "vector.h"
 #include "basic.h"
 #include "../common.h"
+#include "../memory.h"
 
 struct IntersectResult {
 	Vector N, C;
@@ -30,8 +31,8 @@ typedef struct {
 	unsigned color;
 } RawObject;
 
-#define OBJECT_CNT_R() SHARED_R(5)
-#define OBJECT_CNT_W(x) SHARED_W(5, x)
+#define OBJECT_CNT_R() SHARED_R(666)
+#define OBJECT_CNT_W(x) SHARED_W(666, x)
 
 void reset_objects();
 
@@ -44,5 +45,8 @@ void add_sphere2d(pointf *center, float radius, unsigned color);
 void add_cube(pointf center[], unsigned color);
 
 void get_sphere(int idx, RawSphere *sphere);
+
+
+static volatile RawObject *raw_objects = (volatile RawObject *)((unsigned *)SHARED_MEMORY_BASE + 6);
 
 #endif
