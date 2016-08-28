@@ -1098,6 +1098,10 @@
         <li style="margin: 0.6em 0px; position: relative;"><p><strong>三维图像的渲染：</strong></p>
         <p>用户在绘制了一个物体后，物体会按照用户选定的颜色被渲染。我们使用了三枚Nios II CPU，使用扫描线+深度缓存的方法进行并行渲染。</p></li>
     </ul>
+    <p style="-webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px;">整体设计的实物图如下：</p>
+    <p style="-webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px; text-align: center;"><img src="/attachment/member/2016/CN335-765fa24c4bc67ffd/image/final/system.jpg" width="800" height="516" alt="" /></p>
+    <p style="-webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px;">开发板与摄像头图片如下：</p>
+    <p style="-webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px; text-align: center;"><img src="/attachment/member/2016/CN335-765fa24c4bc67ffd/image/final/camera_and_board.jpg" width="800" height="598" alt="" /></p>
 </div>
 
 <div style="max-width: 800px; font-size: 14px; margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; line-height: 1.42857143; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); overflow-x: hidden;">
@@ -1108,9 +1112,15 @@
         <li style="margin: 0.6em 0px; position: relative;"><strong>SDRAM时钟频率：</strong>100MHz，-3ns相位偏移</li>
         <li style="margin: 0.6em 0px; position: relative;"><strong>VGA参数：</strong>640×480@60Hz</li>
         <li style="margin: 0.6em 0px; position: relative;"><strong>有效识别距离：</strong>x轴：±40cm，y轴：±40cm，z轴：0~200cm</li>
+        <li style="margin: 0.6em 0px; position: relative;"><p><strong>系统资源消耗：</strong></p>
+        <p style="-webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px; text-align: center;"><img src="/attachment/member/2016/CN335-765fa24c4bc67ffd/image/final/resource.png" width="423" height="378" alt="" /></p>
+        </li>
     </ul>
     <h3 style="position: relative; margin-top: 1rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.4; cursor: text; font-size: 1.5em; line-height: 1.43;">性能分析</h3>
-    
+    <ul style="padding-left: 30px; margin: 0.8em 0;">
+        <li style="margin: 0.6em 0px; position: relative;"><strong>识别部分：</strong>摄像头输入数据为30帧/s；HSV转换及二值化模块使用硬件实现，可以进行流水线式运算；腐蚀、膨胀及floodfill使用CPU实现，处理速度约能达到10帧/s。</li>
+        <li style="margin: 0.6em 0px; position: relative;"><strong>渲染部分：</strong>在绘制新物体时只需进行增量绘制。绘制时需要首先更新深度缓存并计算法向量，然后再将计算得到的颜色写入SDRAM。绘制一个物体大概需要1秒的时间。</li>
+    </ul>
 </div>
 
 <div style="max-width: 800px; font-size: 14px; margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1rem; line-height: 1.42857143; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); overflow-x: hidden;">
@@ -1158,6 +1168,8 @@
     <p style="-webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px; text-align: center;"><img src="/attachment/member/2016/CN335-765fa24c4bc67ffd/image/final/camera_recog.png" width="630" height="480" alt="" /></p>
     <p style="-webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px;">所有自定义部件均通过ModelSim进行仿真，在一定程度上保证了可靠性和鲁棒性。下图为ModelSim仿真的截图。由于部件大多使用了Avalon-MM或Avalon-ST协议，信号需要遵守协议规范，因此仿真时使用了Altera提供的BFM（Bus Functional Model）进行测试。这一模块可以模拟一个Avalon总线中的模块（MM Master/Slave或ST Source/Sink等），并对外暴露控制的API。当我们对一个Avalon-MM Master进行仿真时，则使用Avalon-MM Slave BFM接受Master发起的传输指令，并判断是否符合规范。</p>
     <p style="-webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px; text-align: center;"><img src="/attachment/member/2016/CN335-765fa24c4bc67ffd/image/final/modelsim.jpg" width="1000" height="540" alt="" /></p>
+    <p style="-webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px;">整体Qsys系统如下图所示。可以看出这是一个十分复杂而庞大的系统，但由于部件之间充分解耦，可以分开进行单元测试，因此在将不同部件合为整体时没有遇到问题。</p>
+    <p style="-webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px; text-align: center;"><img src="/attachment/member/2016/CN335-765fa24c4bc67ffd/image/final/qsys.png" width="1000" height="2203" alt="" /></p>
     
     <h3 style="position: relative; margin-top: 1rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.4; cursor: text; font-size: 1.5em; line-height: 1.43;">外部设备</h3>
     <p style="-webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px;">本设计中使用到了多种类的外部设备，包括两个摄像头、SDRAM以及SSRAM。</p>
