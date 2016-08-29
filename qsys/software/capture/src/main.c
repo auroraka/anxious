@@ -36,17 +36,6 @@ int main() {
 	clear_ssram();
 	controller_init();
 	
-	int i, j, cam_port = 0;
-	unsigned r = 0, g = 0, b = 0, val;
-	for (i = WIDTH/2-5; i < WIDTH/2+5; ++i)
-		for (j = HEIGHT/2-5; j < HEIGHT/2+5; ++j) {
-			val = SDRAM_R(i, j);
-			r += (val >> 16) & 0xFF;
-			g += (val >> 8) & 0xFF;
-			b += val & 0xFF;
-		}
-	printf("%d %d %d\n", r / 121, g / 121, b / 121);
-	
 	unsigned key_state = 1, key_code = 0xFF;
 	while (true) {
 		

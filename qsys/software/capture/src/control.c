@@ -203,7 +203,7 @@ static pointf pf[4], df[4];
 //#define Xf get_shared_float(2)
 //#define Yf get_shared_float(3)
 //#define Zf get_shared_float(4)
-#define store_pf(idx) (pf[idx].x = Xf, pf[idx].y = Yf, pf[idx].z = Zf)
+#define store_pf(idx) if (Zf > 0) (pf[idx].x = Xf, pf[idx].y = Yf, pf[idx].z = Zf)
 
 inline pointf addf(pointf pf, pointf df) {
 	pointf ret;
@@ -242,7 +242,7 @@ inline pointf crossf(pointf pf, pointf df) {
 }
 
 inline float len2f(pointf df) {
-	return dotf(df, df);
+	return df.x * df.x + df.y * df.y + df.z * df.z;
 }
 
 inline float lenf(pointf df) {
@@ -254,9 +254,8 @@ inline float lenf(pointf df) {
 
 pointf store_cube[5];
 void draw_overlay_frame(unsigned color) {
-	boolean store = (boolean)(color != TRANSPARENT);
-	point cur_p;
-	if (store) cur_p = SHARED_R(0);
+	boolean store = true;
+	point cur_p = SHARED_R(0);
 	
 	switch (draw_state) {
 		case DRAW_POINT:
@@ -310,7 +309,6 @@ void draw_overlay_frame(unsigned color) {
 			if (store) {
 				store_pf(3);
 				df[3] = subf(pf[3], pf[2]);
-				
 				pointf n = crossf(df[1], df[2]);
 				float t = dotf(df[3], n) / len2f(n);
 				df[3] = mulf(n, t);
@@ -543,7 +541,10 @@ void key_down(int key_code) {
 			printf("Chose color: %s\n", palette_names[cur_color]);
 	} else if (key_code == IR_MENU) {
 		palette_state = PALETTE_SHOULD_SHOW;
-	} else {
+	} else if (key_code==IR_POWER){
+		reset_objects();
+	}
+	 else {
 		switch (draw_state) {
 			case DRAW_POINT:
 				printf("0: (%d,%d,%d)\n", (int)pf[0].x, (int)pf[0].y, (int)pf[0].z);
@@ -566,8 +567,7 @@ void key_down(int key_code) {
 				draw_state = DRAW_POINT;
 				break;
 			case DRAW_CUBE_LINE:
-				add_cube(store_cube,store_color);
-				//printf("1: (%d,%d,%d)\n", (int)pf[1].x, (int)pf[1].y, (int)pf[1].z);
+				printf("1: (%d,%d,%d)\n", (int)pf[1].x, (int)pf[1].y, (int)pf[1].z);
 				draw_state = DRAW_CUBE_AREA;
 				break;
 			case DRAW_CUBE_AREA:
@@ -576,7 +576,7 @@ void key_down(int key_code) {
 				break;
 			case DRAW_CUBE_VOLUME:
 				printf("3: (%d,%d,%d)\n", (int)pf[3].x, (int)pf[3].y, (int)pf[3].z);
-				add_cube(pf, WHITE);
+				add_cube(store_cube,store_color);
 				draw_state = DRAW_POINT;
 				break;
 		}

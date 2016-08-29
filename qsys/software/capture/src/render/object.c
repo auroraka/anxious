@@ -9,7 +9,18 @@
 
 
 void reset_objects() {
+	printf("delete all objects\n");
+	int cnt = OBJECT_CNT_R();
+	int i,j;
+	for (i=0;i<cnt;i++){
+		for (j=0;j<4;j++){
+			raw_objects[i].p[j].x=0;
+			raw_objects[i].p[j].y=0;
+			raw_objects[i].p[j].z=0;
+		}
+	}
 	OBJECT_CNT_W(0);
+	clean_sdram(1);
 }
 
 void remove_object(int idx) {
@@ -17,6 +28,7 @@ void remove_object(int idx) {
 	for (i = idx + 1; i < cnt; ++i)
 		raw_objects[i] = raw_objects[i + 1];
 	OBJECT_CNT_W(cnt - 1);
+	clean_sdram(1);
 }
 
 void add_sphere(pointf *center, float radius, unsigned color) {

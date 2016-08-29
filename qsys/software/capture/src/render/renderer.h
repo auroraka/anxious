@@ -122,14 +122,14 @@ void drawTriangle(Pos v1, Pos v2, Pos v3, Color color) {
 			if (CalcWeight(i, j, v1, v2, v3, k, &a, &b, &c)) {
 				//zNowBuffer = a * v1[2] + b * v2[2] + c * v3[2];
 				//setColorXY(i, j, color);
-				bufferColor(i, j, color, a * v1[2] + b * v2[2] + c * v3[2]);
+				bufferColor(i, j, color, (a * v1[2] + b * v2[2] + c * v3[2]));
 			}
 		}
 	}
 }
 bool getPos_online(Vector A,Pos B) {
-	B[0]=(int)round(focus_x_r * A[0] / A[2] + center_x_r);
-	B[1]=(int)round(focus_y_r * A[1] / A[2] + center_y_r);
+	B[0]=PIC_W-(int)round(focus_x_r * A[0] / A[2] + center_x_r);
+	B[1]=PIC_H-(int)round(focus_y_r * A[1] / A[2] + center_y_r);
 	B[2]=A[2];
 	return 0<=B[0] && B[0]<=PIC_W && 0<=B[1] && B[1]<=PIC_H;
 }
@@ -165,7 +165,7 @@ void renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 	copyNegVector(Y, nY);
 	copyNegVector(Z, nZ);
 
-	Vector R,tmp;
+	Vector tmp;
 	muld(X, 0.5, tmp);
 	add(O, tmp, O);
 	muld(Y, 0.5, tmp);
@@ -173,29 +173,49 @@ void renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 	muld(Z, 0.5, tmp);
 	add(O, tmp, O);
 
-	getColor(nY, R, col, col);
-	mulcd(col, 3, col);
-	renderRect(P[0], P[1], P[2], P[3], col);
+	Vector R={1,0.8,0.7};
 
-	getColor(Y, R, col, col);
-	mulcd(col, 3, col);
-	renderRect(P[4], P[5], P[6], P[7], col);
+	float k=1;
 
-	getColor(nX, R, col, col);
-	mulcd(col, 3, col);
+	getColorNR(nX, R, color, col);//x
+	mulcd(col, k, col);
+	normalize(col);
 	renderRect(P[0], P[4], P[7], P[3], col);
 
-	getColor(X, R, col, col);
-	mulcd(col, 3, col);
+
+
+	getColorNR(nZ, R, color, col);//z
+	mulcd(col, k, col);
+	normalize(col);
+	renderRect(P[2], P[3], P[7], P[6], col);
+
+	getColorNR(Y, R, color, col);//y
+	mulcd(col, k, col);
+	normalize(col);
+	renderRect(P[4], P[5], P[6], P[7], col);
+
+	getColorNR(X, R, color, col);//nx
+	mulcd(col, k, col);
+	normalize(col);
 	renderRect(P[1], P[2], P[6], P[5], col);
 
-	getColor(nZ, R, col, col);
-	mulcd(col, 3, col);
+	getColorNR(nY, R, color, col);//ny
+	mulcd(col, k, col);
+	normalize(col);
+	renderRect(P[0], P[1], P[2], P[3], col);
+	
+
+
+
+
+	getColorNR(Z, R, color, col);//nz
+	mulcd(col, k, col);
+	normalize(col);
 	renderRect(P[0], P[1], P[5], P[4], col);
 
-	getColor(Z, R, col, col);
-	mulcd(col, 3, col);
-	renderRect(P[2], P[3], P[7], P[6], col);
+	
+
+
 }
 
 
@@ -215,7 +235,8 @@ void drawSphereLine(Pos2 p, int r, int x1, int x2, int y, Color color) {
 		N[2] += 0.5;
 		normal(N, N);
 		getColorNR(N, R, color, col);
-		setColorXY(i, j, col);
+		//setColorXY(i, j, col);
+		bufferColor(i,j,col,-b);
 		//printf("%d %d\n", i, j);
 	}
 }

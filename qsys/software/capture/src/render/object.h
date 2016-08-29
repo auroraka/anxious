@@ -46,6 +46,7 @@ void add_cube(pointf center[], unsigned color);
 
 void get_sphere(int idx, RawSphere *sphere);
 
+void delete_all();
 
 static volatile RawObject *raw_objects = (volatile RawObject *)((unsigned *)SHARED_MEMORY_BASE + 6);
 
