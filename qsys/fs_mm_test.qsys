@@ -17,22 +17,6 @@
          type = "String";
       }
    }
-   element cfi_flash
-   {
-      datum _sortIndex
-      {
-         value = "7";
-         type = "int";
-      }
-   }
-   element cfi_flash.uas
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-   }
    element clk_0
    {
       datum _sortIndex
@@ -41,28 +25,28 @@
          type = "int";
       }
    }
-   element fl_adapter
+   element fs_mm_0
    {
       datum _sortIndex
       {
-         value = "8";
+         value = "5";
          type = "int";
       }
    }
-   element fs_pin_sharer
+   element fs_mm_0.cfi_flash_uas
    {
-      datum _sortIndex
+      datum _lockedAddress
       {
-         value = "9";
-         type = "int";
+         value = "1";
+         type = "boolean";
       }
    }
-   element fs_tristate_conduit_bridge
+   element fs_mm_0.ssram_uas
    {
-      datum _sortIndex
+      datum baseAddress
       {
-         value = "10";
-         type = "int";
+         value = "67108864";
+         type = "String";
       }
    }
    element jtag_uart_0
@@ -110,30 +94,6 @@
       datum baseAddress
       {
          value = "68419584";
-         type = "String";
-      }
-   }
-   element sram_adapter
-   {
-      datum _sortIndex
-      {
-         value = "6";
-         type = "int";
-      }
-   }
-   element ssram
-   {
-      datum _sortIndex
-      {
-         value = "5";
-         type = "int";
-      }
-   }
-   element ssram.uas
-   {
-      datum baseAddress
-      {
-         value = "67108864";
          type = "String";
       }
    }
@@ -199,99 +159,23 @@
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
- <interface
-   name="fl_wires"
-   internal="fs_tristate_conduit_bridge.out"
-   type="conduit"
-   dir="end" />
+ <interface name="fs_wires" internal="fs_mm_0.fs_wires" type="conduit" dir="end" />
  <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
- <module
-   name="cfi_flash"
-   kind="altera_generic_tristate_controller"
-   version="15.0"
-   enabled="1">
-  <parameter name="ACTIVE_LOW_BEGINTRANSFER" value="0" />
-  <parameter name="ACTIVE_LOW_BYTEENABLE" value="0" />
-  <parameter name="ACTIVE_LOW_CHIPSELECT" value="1" />
-  <parameter name="ACTIVE_LOW_IRQ" value="0" />
-  <parameter name="ACTIVE_LOW_LOCK" value="0" />
-  <parameter name="ACTIVE_LOW_OUTPUTENABLE" value="1" />
-  <parameter name="ACTIVE_LOW_READ" value="0" />
-  <parameter name="ACTIVE_LOW_RESETREQUEST" value="0" />
-  <parameter name="ACTIVE_LOW_RESET_OUTPUT" value="0" />
-  <parameter name="ACTIVE_LOW_WAITREQUEST" value="0" />
-  <parameter name="ACTIVE_LOW_WRITE" value="1" />
-  <parameter name="ACTIVE_LOW_WRITEBYTEENABLE" value="0" />
-  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
-  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
-  <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
-  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
-  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
-  <parameter name="CHIPSELECT_THROUGH_READLATENCY" value="0" />
-  <parameter name="INTERFACE_ASSIGNMENT_KEYS">embeddedsw.configuration.isFlash,embeddedsw.configuration.isMemoryDevice,embeddedsw.configuration.isNonVolatileStorage</parameter>
-  <parameter name="INTERFACE_ASSIGNMENT_VALUES" value="1,1,1" />
-  <parameter name="IS_MEMORY_DEVICE" value="1" />
-  <parameter name="MODULE_ASSIGNMENT_KEYS">embeddedsw.configuration.hwClassnameDriverSupportList,embeddedsw.configuration.hwClassnameDriverSupportDefault,embeddedsw.CMacro.SETUP_VALUE,embeddedsw.CMacro.WAIT_VALUE,embeddedsw.CMacro.HOLD_VALUE,embeddedsw.CMacro.TIMING_UNITS,embeddedsw.CMacro.SIZE,embeddedsw.memoryInfo.MEM_INIT_DATA_WIDTH,embeddedsw.memoryInfo.HAS_BYTE_LANE,embeddedsw.memoryInfo.IS_FLASH,embeddedsw.memoryInfo.GENERATE_DAT_SYM,embeddedsw.memoryInfo.GENERATE_FLASH,embeddedsw.memoryInfo.DAT_SYM_INSTALL_DIR,embeddedsw.memoryInfo.FLASH_INSTALL_DIR</parameter>
-  <parameter name="MODULE_ASSIGNMENT_VALUES">altera_avalon_lan91c111:altera_avalon_cfi_flash,altera_avalon_cfi_flash,60,160,60,ns,67108864u,16,1,1,1,1,SIM_DIR,APP_DIR</parameter>
-  <parameter name="TCM_ADDRESS_W" value="26" />
-  <parameter name="TCM_BYTEENABLE_W" value="2" />
-  <parameter name="TCM_DATA_HOLD" value="60" />
-  <parameter name="TCM_DATA_W" value="16" />
-  <parameter name="TCM_MAX_PENDING_READ_TRANSACTIONS" value="3" />
-  <parameter name="TCM_READLATENCY" value="2" />
-  <parameter name="TCM_READ_WAIT" value="160" />
-  <parameter name="TCM_SETUP_WAIT" value="60" />
-  <parameter name="TCM_SYMBOLS_PER_WORD" value="2" />
-  <parameter name="TCM_TIMING_UNITS" value="0" />
-  <parameter name="TCM_TURNAROUND_TIME" value="2" />
-  <parameter name="TCM_WRITE_WAIT" value="160" />
-  <parameter name="USE_ADDRESS" value="1" />
-  <parameter name="USE_BEGINTRANSFER" value="0" />
-  <parameter name="USE_BYTEENABLE" value="0" />
-  <parameter name="USE_CHIPSELECT" value="1" />
-  <parameter name="USE_IRQ" value="0" />
-  <parameter name="USE_LOCK" value="0" />
-  <parameter name="USE_OUTPUTENABLE" value="1" />
-  <parameter name="USE_READ" value="0" />
-  <parameter name="USE_READDATA" value="1" />
-  <parameter name="USE_RESETREQUEST" value="0" />
-  <parameter name="USE_RESET_OUTPUT" value="0" />
-  <parameter name="USE_WAITREQUEST" value="0" />
-  <parameter name="USE_WRITE" value="1" />
-  <parameter name="USE_WRITEBYTEENABLE" value="0" />
-  <parameter name="USE_WRITEDATA" value="1" />
- </module>
  <module name="clk_0" kind="clock_source" version="15.0" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
  </module>
- <module name="fl_adapter" kind="fl_adapter" version="1.0" enabled="1" />
- <module
-   name="fs_pin_sharer"
-   kind="altera_tristate_conduit_pin_sharer"
-   version="15.0"
-   enabled="1">
+ <module name="fs_mm_0" kind="fs_mm" version="1.0" enabled="1">
   <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
   <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
   <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
   <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
-  <parameter name="INTERFACE_INFO"><![CDATA[<info><slave name="tcs0"><master name="sram_adapter.tcm"><pin role="write_n" width="1" type="Output" output_name="tcm_write_n_out" output_enable_name="" input_name="" /><pin role="begintransfer_n" width="1" type="Output" output_name="tcm_begintransfer_n_out" output_enable_name="" input_name="" /><pin role="chipselect_n" width="1" type="Output" output_name="tcm_chipselect_n_out" output_enable_name="" input_name="" /><pin role="outputenable_n" width="1" type="Output" output_name="tcm_outputenable_n_out" output_enable_name="" input_name="" /><pin role="reset_n" width="1" type="Output" output_name="tcm_reset_n_out" output_enable_name="" input_name="" /><pin role="" width="1" type="Invalid" output_name="" output_enable_name="" input_name="" /><pin role="data" width="32" type="Bidirectional" output_name="tcm_data_out" output_enable_name="tcm_data_outen" input_name="tcm_data_in" /><pin role="address" width="26" type="Output" output_name="tcm_address_out" output_enable_name="" input_name="" /><pin role="byteenable_n" width="4" type="Output" output_name="tcm_byteenable_n_out" output_enable_name="" input_name="" /></master></slave><slave name="tcs1"><master name="fl_adapter.tcm"><pin role="write_n" width="1" type="Output" output_name="tcm_write_n_out" output_enable_name="" input_name="" /><pin role="chipselect_n" width="1" type="Output" output_name="tcm_chipselect_n_out" output_enable_name="" input_name="" /><pin role="outputenable_n" width="1" type="Output" output_name="tcm_outputenable_n_out" output_enable_name="" input_name="" /><pin role="" width="1" type="Invalid" output_name="" output_enable_name="" input_name="" /><pin role="data" width="32" type="Bidirectional" output_name="tcm_data_out" output_enable_name="tcm_data_outen" input_name="tcm_data_in" /><pin role="address" width="26" type="Output" output_name="tcm_address_out" output_enable_name="" input_name="" /></master></slave></info>]]></parameter>
-  <parameter name="MODULE_ORIGIN_LIST">fl_adapter.tcm,fl_adapter.tcm,fl_adapter.tcm,fl_adapter.tcm,fl_adapter.tcm,sram_adapter.tcm,sram_adapter.tcm,sram_adapter.tcm,sram_adapter.tcm,sram_adapter.tcm,sram_adapter.tcm,sram_adapter.tcm,sram_adapter.tcm</parameter>
-  <parameter name="NUM_INTERFACES" value="2" />
-  <parameter name="SHARED_SIGNAL_LIST">fs_addr,fl_oe_n,fl_we_n,fs_data,fl_ce_n,sram_ce_n,sram_be_n,sram_oe_n,sram_we_n,fs_data,fs_addr,sram_reset_n,sram_begintransfer_n</parameter>
-  <parameter name="SIGNAL_ORIGIN_LIST">address,outputenable_n,write_n,data,chipselect_n,chipselect_n,byteenable_n,outputenable_n,write_n,data,address,reset_n,begintransfer_n</parameter>
- </module>
- <module
-   name="fs_tristate_conduit_bridge"
-   kind="altera_tristate_conduit_bridge"
-   version="15.0"
-   enabled="1">
-  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
-  <parameter name="INTERFACE_INFO"><![CDATA[<info><slave name="tcs"><master name="fs_pin_sharer.tcm"><pin role="" width="1" type="Invalid" output_name="" output_enable_name="" input_name="" /><pin role="fl_oe_n" width="1" type="Output" output_name="fl_oe_n" output_enable_name="" input_name="" /><pin role="fl_we_n" width="1" type="Output" output_name="fl_we_n" output_enable_name="" input_name="" /><pin role="fl_ce_n" width="1" type="Output" output_name="fl_ce_n" output_enable_name="" input_name="" /><pin role="sram_ce_n" width="1" type="Output" output_name="sram_ce_n" output_enable_name="" input_name="" /><pin role="sram_be_n" width="4" type="Output" output_name="sram_be_n" output_enable_name="" input_name="" /><pin role="sram_oe_n" width="1" type="Output" output_name="sram_oe_n" output_enable_name="" input_name="" /><pin role="sram_we_n" width="1" type="Output" output_name="sram_we_n" output_enable_name="" input_name="" /><pin role="fs_data" width="32" type="Bidirectional" output_name="fs_data" output_enable_name="fs_data_outen" input_name="fs_data_in" /><pin role="fs_addr" width="26" type="Output" output_name="fs_addr" output_enable_name="" input_name="" /><pin role="sram_reset_n" width="1" type="Output" output_name="sram_reset_n" output_enable_name="" input_name="" /><pin role="sram_begintransfer_n" width="1" type="Output" output_name="sram_begintransfer_n" output_enable_name="" input_name="" /></master></slave></info>]]></parameter>
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_fs_mm_0</parameter>
  </module>
  <module
    name="jtag_uart_0"
@@ -336,7 +220,7 @@
   <parameter name="dataAddrWidth" value="27" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='cfi_flash.uas' start='0x0' end='0x4000000' /><slave name='ssram.uas' start='0x4000000' end='0x4100000' /><slave name='onchip_memory2_0.s1' start='0x4140000' end='0x4172000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x4180800' end='0x4181000' /><slave name='sysid_qsys_0.control_slave' start='0x4181000' end='0x4181008' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x4181008' end='0x4181010' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='fs_mm_0_cfi_flash.uas' start='0x0' end='0x4000000' /><slave name='fs_mm_0_ssram.uas' start='0x4000000' end='0x4100000' /><slave name='onchip_memory2_0.s1' start='0x4140000' end='0x4172000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x4180800' end='0x4181000' /><slave name='sysid_qsys_0.control_slave' start='0x4181000' end='0x4181008' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x4181008' end='0x4181010' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -375,7 +259,7 @@
   <parameter name="icache_tagramBlockType" value="Automatic" />
   <parameter name="impl" value="Fast" />
   <parameter name="instAddrWidth" value="27" />
-  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='cfi_flash.uas' start='0x0' end='0x4000000' /><slave name='onchip_memory2_0.s1' start='0x4140000' end='0x4172000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x4180800' end='0x4181000' /></address-map>]]></parameter>
+  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='fs_mm_0_cfi_flash.uas' start='0x0' end='0x4000000' /><slave name='onchip_memory2_0.s1' start='0x4140000' end='0x4172000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x4180800' end='0x4181000' /></address-map>]]></parameter>
   <parameter name="instructionMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="instructionMasterHighPerformanceMapParam" value="" />
   <parameter name="instruction_master_high_performance_paddr_base" value="0" />
@@ -410,7 +294,7 @@
   <parameter name="ocimem_ramInit" value="false" />
   <parameter name="regfile_ramBlockType" value="Automatic" />
   <parameter name="resetOffset" value="0" />
-  <parameter name="resetSlave" value="cfi_flash.uas" />
+  <parameter name="resetSlave">fs_mm_0_cfi_flash.uas</parameter>
   <parameter name="resetrequest_enabled" value="true" />
   <parameter name="setting_HBreakTest" value="false" />
   <parameter name="setting_HDLSimCachesCleared" value="true" />
@@ -521,63 +405,6 @@
   <parameter name="useShallowMemBlocks" value="false" />
   <parameter name="writable" value="true" />
  </module>
- <module name="sram_adapter" kind="sram_adapter" version="1.0" enabled="1" />
- <module
-   name="ssram"
-   kind="altera_generic_tristate_controller"
-   version="15.0"
-   enabled="1">
-  <parameter name="ACTIVE_LOW_BEGINTRANSFER" value="1" />
-  <parameter name="ACTIVE_LOW_BYTEENABLE" value="1" />
-  <parameter name="ACTIVE_LOW_CHIPSELECT" value="1" />
-  <parameter name="ACTIVE_LOW_IRQ" value="0" />
-  <parameter name="ACTIVE_LOW_LOCK" value="0" />
-  <parameter name="ACTIVE_LOW_OUTPUTENABLE" value="1" />
-  <parameter name="ACTIVE_LOW_READ" value="0" />
-  <parameter name="ACTIVE_LOW_RESETREQUEST" value="0" />
-  <parameter name="ACTIVE_LOW_RESET_OUTPUT" value="1" />
-  <parameter name="ACTIVE_LOW_WAITREQUEST" value="0" />
-  <parameter name="ACTIVE_LOW_WRITE" value="1" />
-  <parameter name="ACTIVE_LOW_WRITEBYTEENABLE" value="0" />
-  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
-  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
-  <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
-  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
-  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
-  <parameter name="CHIPSELECT_THROUGH_READLATENCY" value="1" />
-  <parameter name="INTERFACE_ASSIGNMENT_KEYS">embeddedsw.configuration.isMemoryDevice</parameter>
-  <parameter name="INTERFACE_ASSIGNMENT_VALUES" value="1" />
-  <parameter name="IS_MEMORY_DEVICE" value="1" />
-  <parameter name="MODULE_ASSIGNMENT_KEYS">embeddedsw.configuration.hwClassnameDriverSupportList,embeddedsw.CMacro.SRAM_MEMORY_SIZE,embeddedsw.CMacro.SRAM_MEMORY_UNITS,embeddedsw.CMacro.SSRAM_DATA_WIDTH,embeddedsw.CMacro.SSRAM_READ_LATENCY,embeddedsw.memoryInfo.MEM_INIT_DATA_WIDTH,embeddedsw.memoryInfo.HAS_BYTE_LANE,embeddedsw.memoryInfo.GENERATE_DAT_SYM,embeddedsw.memoryInfo.DAT_SYM_INSTALL_DIR</parameter>
-  <parameter name="MODULE_ASSIGNMENT_VALUES">altera_avalon_lan91c111:altera_avalon_cfi_flash,2,524288,32,2,32,1,1,SIM_DIR</parameter>
-  <parameter name="TCM_ADDRESS_W" value="20" />
-  <parameter name="TCM_BYTEENABLE_W" value="4" />
-  <parameter name="TCM_DATA_HOLD" value="0" />
-  <parameter name="TCM_DATA_W" value="32" />
-  <parameter name="TCM_MAX_PENDING_READ_TRANSACTIONS" value="5" />
-  <parameter name="TCM_READLATENCY" value="4" />
-  <parameter name="TCM_READ_WAIT" value="0" />
-  <parameter name="TCM_SETUP_WAIT" value="0" />
-  <parameter name="TCM_SYMBOLS_PER_WORD" value="4" />
-  <parameter name="TCM_TIMING_UNITS" value="1" />
-  <parameter name="TCM_TURNAROUND_TIME" value="2" />
-  <parameter name="TCM_WRITE_WAIT" value="0" />
-  <parameter name="USE_ADDRESS" value="1" />
-  <parameter name="USE_BEGINTRANSFER" value="1" />
-  <parameter name="USE_BYTEENABLE" value="1" />
-  <parameter name="USE_CHIPSELECT" value="1" />
-  <parameter name="USE_IRQ" value="0" />
-  <parameter name="USE_LOCK" value="0" />
-  <parameter name="USE_OUTPUTENABLE" value="1" />
-  <parameter name="USE_READ" value="0" />
-  <parameter name="USE_READDATA" value="1" />
-  <parameter name="USE_RESETREQUEST" value="0" />
-  <parameter name="USE_RESET_OUTPUT" value="1" />
-  <parameter name="USE_WAITREQUEST" value="0" />
-  <parameter name="USE_WRITE" value="1" />
-  <parameter name="USE_WRITEBYTEENABLE" value="0" />
-  <parameter name="USE_WRITEDATA" value="1" />
- </module>
  <module
    name="sysid_qsys_0"
    kind="altera_avalon_sysid_qsys"
@@ -593,6 +420,15 @@
    end="jtag_uart_0.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x04181008" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_0.data_master"
+   end="fs_mm_0.cfi_flash_uas">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -626,7 +462,7 @@
    kind="avalon"
    version="15.0"
    start="nios2_gen2_0.data_master"
-   end="ssram.uas">
+   end="fs_mm_0.ssram_uas">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x04000000" />
   <parameter name="defaultConnection" value="false" />
@@ -634,8 +470,8 @@
  <connection
    kind="avalon"
    version="15.0"
-   start="nios2_gen2_0.data_master"
-   end="cfi_flash.uas">
+   start="nios2_gen2_0.instruction_master"
+   end="fs_mm_0.cfi_flash_uas">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
@@ -658,33 +494,15 @@
   <parameter name="baseAddress" value="0x04140000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
- <connection
-   kind="avalon"
-   version="15.0"
-   start="nios2_gen2_0.instruction_master"
-   end="cfi_flash.uas">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
  <connection kind="clock" version="15.0" start="clk_0.clk" end="nios2_gen2_0.clk" />
  <connection kind="clock" version="15.0" start="clk_0.clk" end="jtag_uart_0.clk" />
  <connection kind="clock" version="15.0" start="clk_0.clk" end="sysid_qsys_0.clk" />
- <connection kind="clock" version="15.0" start="clk_0.clk" end="ssram.clk" />
- <connection kind="clock" version="15.0" start="clk_0.clk" end="cfi_flash.clk" />
- <connection
-   kind="clock"
-   version="15.0"
-   start="clk_0.clk"
-   end="fs_tristate_conduit_bridge.clk" />
- <connection kind="clock" version="15.0" start="clk_0.clk" end="fs_pin_sharer.clk" />
- <connection kind="clock" version="15.0" start="clk_0.clk" end="sram_adapter.clk" />
+ <connection kind="clock" version="15.0" start="clk_0.clk" end="fs_mm_0.clk" />
  <connection
    kind="clock"
    version="15.0"
    start="clk_0.clk"
    end="onchip_memory2_0.clk1" />
- <connection kind="clock" version="15.0" start="clk_0.clk" end="fl_adapter.clock" />
  <connection
    kind="interrupt"
    version="15.0"
@@ -707,22 +525,11 @@
    version="15.0"
    start="clk_0.clk_reset"
    end="sysid_qsys_0.reset" />
- <connection kind="reset" version="15.0" start="clk_0.clk_reset" end="ssram.reset" />
  <connection
    kind="reset"
    version="15.0"
    start="clk_0.clk_reset"
-   end="cfi_flash.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_0.clk_reset"
-   end="fs_pin_sharer.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk_0.clk_reset"
-   end="fs_tristate_conduit_bridge.reset" />
+   end="fs_mm_0.reset" />
  <connection
    kind="reset"
    version="15.0"
@@ -747,52 +554,12 @@
    kind="reset"
    version="15.0"
    start="nios2_gen2_0.debug_reset_request"
-   end="ssram.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="nios2_gen2_0.debug_reset_request"
-   end="cfi_flash.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="nios2_gen2_0.debug_reset_request"
-   end="fs_pin_sharer.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="nios2_gen2_0.debug_reset_request"
-   end="fs_tristate_conduit_bridge.reset" />
+   end="fs_mm_0.reset" />
  <connection
    kind="reset"
    version="15.0"
    start="nios2_gen2_0.debug_reset_request"
    end="onchip_memory2_0.reset1" />
- <connection
-   kind="tristate_conduit"
-   version="15.0"
-   start="fs_pin_sharer.tcm"
-   end="fs_tristate_conduit_bridge.tcs" />
- <connection
-   kind="tristate_conduit"
-   version="15.0"
-   start="cfi_flash.tcm"
-   end="fl_adapter.tcs" />
- <connection
-   kind="tristate_conduit"
-   version="15.0"
-   start="ssram.tcm"
-   end="sram_adapter.tcs" />
- <connection
-   kind="tristate_conduit"
-   version="15.0"
-   start="sram_adapter.tcm"
-   end="fs_pin_sharer.tcs0" />
- <connection
-   kind="tristate_conduit"
-   version="15.0"
-   start="fl_adapter.tcm"
-   end="fs_pin_sharer.tcs1" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
  <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />

@@ -74,6 +74,14 @@
 	SSRAM0_CE_N,
 	SSRAM1_CE_N,
 
+	//////////// Flash //////////
+	FL_CE_N,
+	FL_OE_N,
+	FL_RESET_N,
+	FL_RY,
+	FL_WE_N,
+	FL_WP_N,
+
 	//////////// Data and Address bus shared by Flash & SSRAM //////////
 	FS_ADDR,
 	FS_DQ,
@@ -169,6 +177,14 @@ output		          		SSRAM_WE_N;
 output		          		SSRAM0_CE_N;
 output		          		SSRAM1_CE_N;
 
+//////////// Flash //////////
+output		          		FL_CE_N;
+output		          		FL_OE_N;
+output		          		FL_RESET_N;
+input 		          		FL_RY;
+output		          		FL_WE_N;
+output		          		FL_WP_N;
+
 //////////// Data and Address bus shared by Flash & SSRAM //////////
 output		    [26:1]		FS_ADDR;
 inout 		    [31:0]		FS_DQ;
@@ -185,3 +201,7 @@ assign SSRAM1_CE_N = 0;
 assign SSRAM_ADV_N = 1;
 assign SSRAM_ADSP_N = 1;
 assign SSRAM_GW_N = 1;
+
+// Flash Fixed Signals
+assign FL_WP_N = 1'b1;
+assign FL_RESET_N = 1'b1;
