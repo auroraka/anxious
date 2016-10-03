@@ -135,7 +135,7 @@ flash:
 .PHONY: do_flash
 do_flash: | make
 	elf2flash --input="$(APP_DIR)/$(ELF_NAME)" --output="$(APP_DIR)/$(FLASH_NAME)" --boot="$(SOPC_KIT_NIOS2)/components/altera_nios2/boot_loader_cfi.srec" --base=$(FLASH_BASE) --end=$(FLASH_END) --reset=$(FLASH_RESET) --verbose
-	nios2-flash-programmer "$(APP_DIR)/$(FLASH_NAME)" --base=$(FLASH_BASE) --program --verbose
+	nios2-flash-programmer "$(APP_DIR)/$(FLASH_NAME)" --instance=$(JTAG_UART_INSTANCE_NUMBER) --base=$(FLASH_BASE) --program --verbose
 
 .PHONY: help
 help:

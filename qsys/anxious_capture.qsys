@@ -261,7 +261,7 @@
    {
       datum _sortIndex
       {
-         value = "55";
+         value = "56";
          type = "int";
       }
    }
@@ -502,6 +502,35 @@
          type = "boolean";
       }
    }
+   element fs_mm_0
+   {
+      datum _sortIndex
+      {
+         value = "53";
+         type = "int";
+      }
+   }
+   element fs_mm_0.cfi_flash_uas
+   {
+      datum baseAddress
+      {
+         value = "268435456";
+         type = "String";
+      }
+   }
+   element fs_mm_0.ssram_uas
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "136314880";
+         type = "String";
+      }
+   }
    element hsv_addr_gen_0
    {
       datum _sortIndex
@@ -540,7 +569,7 @@
    {
       datum baseAddress
       {
-         value = "268435456";
+         value = "402653184";
          type = "String";
       }
    }
@@ -776,7 +805,7 @@
    {
       datum _sortIndex
       {
-         value = "56";
+         value = "57";
          type = "int";
       }
    }
@@ -800,7 +829,7 @@
    {
       datum _sortIndex
       {
-         value = "54";
+         value = "55";
          type = "int";
       }
    }
@@ -1216,7 +1245,7 @@
    {
       datum _sortIndex
       {
-         value = "53";
+         value = "54";
          type = "int";
       }
    }
@@ -1317,6 +1346,7 @@
    dir="end" />
  <interface name="clk" internal="clk.clk_in" type="clock" dir="end" />
  <interface name="clk_vga" internal="clk_vga.clk_in" type="clock" dir="end" />
+ <interface name="fs_wires" internal="fs_mm_0.fs_wires" type="conduit" dir="end" />
  <interface
    name="ir_receiver_0_ir_clock"
    internal="ir_receiver_0.ir_clock"
@@ -1428,11 +1458,7 @@
    type="conduit"
    dir="end" />
  <interface name="reset" internal="clk.clk_in_reset" type="reset" dir="end" />
- <interface
-   name="ssram_mm_0_ssram_wires"
-   internal="ssram_mm_0.ssram_wires"
-   type="conduit"
-   dir="end" />
+ <interface name="ssram_mm_0_ssram_wires" internal="ssram_mm_0.ssram_wires" />
  <interface name="vga_composer_0_conduit" internal="vga_composer_0.conduit" />
  <interface
    name="vga_composer_overlay_0_conduit"
@@ -1480,7 +1506,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@73f0e696</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@3894c5c9</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_cam_mm_to_st</parameter>
  </module>
  <module name="camera_mm_0" kind="camera_mm" version="1.0" enabled="1">
@@ -1492,7 +1518,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_M0_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_M0_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@2096e299</parameter>
+  <parameter name="AUTO_M0_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@76b99399</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_mm_0</parameter>
  </module>
  <module
@@ -1590,6 +1616,16 @@
  </module>
  <module name="convert_hsv_1" kind="convert_hsv" version="1.0" enabled="1">
   <parameter name="PIPELINE" value="16" />
+ </module>
+ <module name="fs_mm_0" kind="fs_mm" version="1.0" enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
+  <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_fs_mm_0</parameter>
  </module>
  <module name="hsv_addr_gen_0" kind="hsv_addr_gen" version="1.0" enabled="1">
   <parameter name="ADDR_BASE" value="134217728" />
@@ -1715,10 +1751,10 @@
   <parameter name="customInstSlavesSystemInfo_nios_a" value="&lt;info/&gt;" />
   <parameter name="customInstSlavesSystemInfo_nios_b" value="&lt;info/&gt;" />
   <parameter name="customInstSlavesSystemInfo_nios_c" value="&lt;info/&gt;" />
-  <parameter name="dataAddrWidth" value="28" />
+  <parameter name="dataAddrWidth" value="29" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='recog_memory_0.s1' start='0x8000000' end='0x8014000' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x8021800' end='0x8022000' /><slave name='recog_vsync_pio_0.s1' start='0x8022000' end='0x8022010' /><slave name='recog_buffer_port_pio_0.s1' start='0x8022010' end='0x8022020' /><slave name='camera_sioc_0.s1' start='0x8022020' end='0x8022030' /><slave name='camera_siod_0.s1' start='0x8022030' end='0x8022040' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x8022048' end='0x8022050' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='recog_memory_0.s1' start='0x8000000' end='0x8014000' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x8021800' end='0x8022000' /><slave name='recog_vsync_pio_0.s1' start='0x8022000' end='0x8022010' /><slave name='recog_buffer_port_pio_0.s1' start='0x8022010' end='0x8022020' /><slave name='camera_sioc_0.s1' start='0x8022020' end='0x8022030' /><slave name='camera_siod_0.s1' start='0x8022030' end='0x8022040' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x8022048' end='0x8022050' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x10000000' end='0x14000000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -1756,8 +1792,8 @@
   <parameter name="icache_size" value="4096" />
   <parameter name="icache_tagramBlockType" value="Automatic" />
   <parameter name="impl" value="Fast" />
-  <parameter name="instAddrWidth" value="28" />
-  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_0.debug_mem_slave' start='0x8021800' end='0x8022000' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="instAddrWidth" value="29" />
+  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_0.debug_mem_slave' start='0x8021800' end='0x8022000' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x10000000' end='0x14000000' /></address-map>]]></parameter>
   <parameter name="instructionMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="instructionMasterHighPerformanceMapParam" value="" />
   <parameter name="instruction_master_high_performance_paddr_base" value="0" />
@@ -1792,7 +1828,7 @@
   <parameter name="ocimem_ramInit" value="false" />
   <parameter name="regfile_ramBlockType" value="Automatic" />
   <parameter name="resetOffset" value="0" />
-  <parameter name="resetSlave" value="onchip_memory2_0.s1" />
+  <parameter name="resetSlave">fs_mm_0_cfi_flash.uas</parameter>
   <parameter name="resetrequest_enabled" value="true" />
   <parameter name="setting_HBreakTest" value="false" />
   <parameter name="setting_HDLSimCachesCleared" value="true" />
@@ -1895,10 +1931,10 @@
   <parameter name="customInstSlavesSystemInfo_nios_a" value="&lt;info/&gt;" />
   <parameter name="customInstSlavesSystemInfo_nios_b" value="&lt;info/&gt;" />
   <parameter name="customInstSlavesSystemInfo_nios_c" value="&lt;info/&gt;" />
-  <parameter name="dataAddrWidth" value="28" />
+  <parameter name="dataAddrWidth" value="29" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='recog_memory_1.s1' start='0x8000000' end='0x8014000' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='nios2_gen2_1.debug_mem_slave' start='0x8021800' end='0x8022000' /><slave name='recog_vsync_pio_1.s1' start='0x8022000' end='0x8022010' /><slave name='recog_buffer_port_pio_1.s1' start='0x8022010' end='0x8022020' /><slave name='camera_sioc_1.s1' start='0x8022020' end='0x8022030' /><slave name='camera_siod_1.s1' start='0x8022030' end='0x8022040' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='jtag_uart_1.avalon_jtag_slave' start='0x8022048' end='0x8022050' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='recog_memory_1.s1' start='0x8000000' end='0x8014000' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='nios2_gen2_1.debug_mem_slave' start='0x8021800' end='0x8022000' /><slave name='recog_vsync_pio_1.s1' start='0x8022000' end='0x8022010' /><slave name='recog_buffer_port_pio_1.s1' start='0x8022010' end='0x8022020' /><slave name='camera_sioc_1.s1' start='0x8022020' end='0x8022030' /><slave name='camera_siod_1.s1' start='0x8022030' end='0x8022040' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='jtag_uart_1.avalon_jtag_slave' start='0x8022048' end='0x8022050' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x10000000' end='0x14000000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -1936,8 +1972,8 @@
   <parameter name="icache_size" value="4096" />
   <parameter name="icache_tagramBlockType" value="Automatic" />
   <parameter name="impl" value="Fast" />
-  <parameter name="instAddrWidth" value="28" />
-  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_1.debug_mem_slave' start='0x8021800' end='0x8022000' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="instAddrWidth" value="29" />
+  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_1.debug_mem_slave' start='0x8021800' end='0x8022000' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x10000000' end='0x14000000' /></address-map>]]></parameter>
   <parameter name="instructionMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="instructionMasterHighPerformanceMapParam" value="" />
   <parameter name="instruction_master_high_performance_paddr_base" value="0" />
@@ -1971,8 +2007,8 @@
   <parameter name="ocimem_ramBlockType" value="Automatic" />
   <parameter name="ocimem_ramInit" value="false" />
   <parameter name="regfile_ramBlockType" value="Automatic" />
-  <parameter name="resetOffset" value="102400" />
-  <parameter name="resetSlave" value="onchip_memory2_0.s1" />
+  <parameter name="resetOffset" value="262144" />
+  <parameter name="resetSlave">fs_mm_0_cfi_flash.uas</parameter>
   <parameter name="resetrequest_enabled" value="true" />
   <parameter name="setting_HBreakTest" value="false" />
   <parameter name="setting_HDLSimCachesCleared" value="true" />
@@ -2078,7 +2114,7 @@
   <parameter name="dataAddrWidth" value="29" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_2.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='overlay_port_pio.s1' start='0x8001000' end='0x8001010' /><slave name='overlay_vsync_pio.s1' start='0x8001010' end='0x8001020' /><slave name='render_port_pio.s1' start='0x8001020' end='0x8001030' /><slave name='key_pio.s1' start='0x8001030' end='0x8001040' /><slave name='jtag_uart_2.avalon_jtag_slave' start='0x8001040' end='0x8001048' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='ssram_mm_0_generic_tristate_controller_0.uas' start='0x8200000' end='0x8300000' /><slave name='ir_receiver_0.avalon_slave_0' start='0x10000000' end='0x18000000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_2.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='overlay_port_pio.s1' start='0x8001000' end='0x8001010' /><slave name='overlay_vsync_pio.s1' start='0x8001010' end='0x8001020' /><slave name='render_port_pio.s1' start='0x8001020' end='0x8001030' /><slave name='key_pio.s1' start='0x8001030' end='0x8001040' /><slave name='jtag_uart_2.avalon_jtag_slave' start='0x8001040' end='0x8001048' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='fs_mm_0_ssram.uas' start='0x8200000' end='0x8300000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x10000000' end='0x14000000' /><slave name='ir_receiver_0.avalon_slave_0' start='0x18000000' end='0x20000000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -2116,8 +2152,8 @@
   <parameter name="icache_size" value="4096" />
   <parameter name="icache_tagramBlockType" value="Automatic" />
   <parameter name="impl" value="Fast" />
-  <parameter name="instAddrWidth" value="28" />
-  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_2.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="instAddrWidth" value="29" />
+  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_2.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x10000000' end='0x14000000' /></address-map>]]></parameter>
   <parameter name="instructionMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="instructionMasterHighPerformanceMapParam" value="" />
   <parameter name="instruction_master_high_performance_paddr_base" value="0" />
@@ -2151,8 +2187,8 @@
   <parameter name="ocimem_ramBlockType" value="Automatic" />
   <parameter name="ocimem_ramInit" value="false" />
   <parameter name="regfile_ramBlockType" value="Automatic" />
-  <parameter name="resetOffset" value="204800" />
-  <parameter name="resetSlave" value="onchip_memory2_0.s1" />
+  <parameter name="resetOffset" value="524288" />
+  <parameter name="resetSlave">fs_mm_0_cfi_flash.uas</parameter>
   <parameter name="resetrequest_enabled" value="true" />
   <parameter name="setting_HBreakTest" value="false" />
   <parameter name="setting_HDLSimCachesCleared" value="true" />
@@ -2255,10 +2291,10 @@
   <parameter name="customInstSlavesSystemInfo_nios_a" value="&lt;info/&gt;" />
   <parameter name="customInstSlavesSystemInfo_nios_b" value="&lt;info/&gt;" />
   <parameter name="customInstSlavesSystemInfo_nios_c" value="&lt;info/&gt;" />
-  <parameter name="dataAddrWidth" value="28" />
+  <parameter name="dataAddrWidth" value="29" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_3.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='render_start_pio.s1' start='0x8001000' end='0x8001010' /><slave name='render_vsync_pio_0.s1' start='0x8001010' end='0x8001020' /><slave name='render_port_pio.s1' start='0x8001020' end='0x8001030' /><slave name='jtag_uart_3.avalon_jtag_slave' start='0x8001030' end='0x8001038' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_3.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='render_start_pio.s1' start='0x8001000' end='0x8001010' /><slave name='render_vsync_pio_0.s1' start='0x8001010' end='0x8001020' /><slave name='render_port_pio.s1' start='0x8001020' end='0x8001030' /><slave name='jtag_uart_3.avalon_jtag_slave' start='0x8001030' end='0x8001038' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x10000000' end='0x14000000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -2296,8 +2332,8 @@
   <parameter name="icache_size" value="4096" />
   <parameter name="icache_tagramBlockType" value="Automatic" />
   <parameter name="impl" value="Fast" />
-  <parameter name="instAddrWidth" value="28" />
-  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_3.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /></address-map>]]></parameter>
+  <parameter name="instAddrWidth" value="29" />
+  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='nios2_gen2_3.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x10000000' end='0x14000000' /></address-map>]]></parameter>
   <parameter name="instructionMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="instructionMasterHighPerformanceMapParam" value="" />
   <parameter name="instruction_master_high_performance_paddr_base" value="0" />
@@ -2331,8 +2367,8 @@
   <parameter name="ocimem_ramBlockType" value="Automatic" />
   <parameter name="ocimem_ramInit" value="false" />
   <parameter name="regfile_ramBlockType" value="Automatic" />
-  <parameter name="resetOffset" value="307200" />
-  <parameter name="resetSlave" value="onchip_memory2_0.s1" />
+  <parameter name="resetOffset" value="786432" />
+  <parameter name="resetSlave">fs_mm_0_cfi_flash.uas</parameter>
   <parameter name="resetrequest_enabled" value="true" />
   <parameter name="setting_HBreakTest" value="false" />
   <parameter name="setting_HDLSimCachesCleared" value="true" />
@@ -2660,7 +2696,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@5444e6c7</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@3f9002dc</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_render_mm_to_st</parameter>
  </module>
  <module
@@ -2775,7 +2811,7 @@
   <parameter name="useShallowMemBlocks" value="false" />
   <parameter name="writable" value="true" />
  </module>
- <module name="ssram_mm_0" kind="ssram_mm" version="1.0" enabled="1">
+ <module name="ssram_mm_0" kind="ssram_mm" version="1.0" enabled="0">
   <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
   <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
   <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
@@ -2783,7 +2819,7 @@
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
-  <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_ssram_mm_0</parameter>
+  <parameter name="AUTO_UNIQUE_ID">anxious_capture_ssram_mm_0</parameter>
  </module>
  <module
    name="sysid_qsys_0"
@@ -2852,6 +2888,15 @@
    version="15.0"
    start="vid_read_buffer_0.avalon_master"
    end="ssram_mm_0.slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08200000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="vid_read_buffer_0.avalon_master"
+   end="fs_mm_0.ssram_uas">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x08200000" />
   <parameter name="defaultConnection" value="false" />
@@ -2942,6 +2987,42 @@
    version="15.0"
    start="nios2_gen2_2.data_master"
    end="ir_receiver_0.avalon_slave_0">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x18000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_2.data_master"
+   end="fs_mm_0.cfi_flash_uas">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x10000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_0.data_master"
+   end="fs_mm_0.cfi_flash_uas">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x10000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_1.data_master"
+   end="fs_mm_0.cfi_flash_uas">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x10000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_3.data_master"
+   end="fs_mm_0.cfi_flash_uas">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x10000000" />
   <parameter name="defaultConnection" value="false" />
@@ -3291,6 +3372,51 @@
  <connection
    kind="avalon"
    version="15.0"
+   start="nios2_gen2_2.data_master"
+   end="fs_mm_0.ssram_uas">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08200000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_2.instruction_master"
+   end="fs_mm_0.cfi_flash_uas">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x10000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_0.instruction_master"
+   end="fs_mm_0.cfi_flash_uas">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x10000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_1.instruction_master"
+   end="fs_mm_0.cfi_flash_uas">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x10000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_3.instruction_master"
+   end="fs_mm_0.cfi_flash_uas">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x10000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
    start="nios2_gen2_1.instruction_master"
    end="nios2_gen2_1.debug_mem_slave">
   <parameter name="arbitrationPriority" value="1" />
@@ -3521,9 +3647,10 @@
    version="15.0"
    start="clk.clk"
    end="overlay_port_pio.clk" />
- <connection kind="clock" version="15.0" start="clk.clk" end="ssram_mm_0.clk" />
  <connection kind="clock" version="15.0" start="clk.clk" end="render_mm_to_st.clk" />
  <connection kind="clock" version="15.0" start="clk.clk" end="cam_mm_to_st.clk" />
+ <connection kind="clock" version="15.0" start="clk.clk" end="fs_mm_0.clk" />
+ <connection kind="clock" version="15.0" start="clk.clk" end="ssram_mm_0.clk" />
  <connection
    kind="clock"
    version="15.0"
@@ -4063,11 +4190,6 @@
    kind="reset"
    version="15.0"
    start="clk.clk_reset"
-   end="ssram_mm_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk.clk_reset"
    end="vga_st_composer_overlay_0.reset" />
  <connection
    kind="reset"
@@ -4099,6 +4221,12 @@
    version="15.0"
    start="clk.clk_reset"
    end="overlay_decoder_0.reset" />
+ <connection kind="reset" version="15.0" start="clk.clk_reset" end="fs_mm_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="ssram_mm_0.reset" />
  <connection
    kind="reset"
    version="15.0"

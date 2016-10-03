@@ -69,7 +69,7 @@ enum DRAW_STATE {
 
 static unsigned overlay_port = 0;
 
-static volatile unsigned *sram = (volatile unsigned *)SSRAM_MM_0_GENERIC_TRISTATE_CONTROLLER_0_BASE;
+static volatile unsigned *sram = (volatile unsigned *)FS_MM_0_SSRAM_BASE;
 
 inline static void set_sram(int buffer_port, int x, int y, unsigned col) {
 	int cnt = buffer_port * HEIGHT * WIDTH + y * WIDTH + x;
