@@ -1,10 +1,12 @@
 module ssram_test_top
 `include "./common.v"
 
+wire clk_qsys;
+
 cam_pll U_cam_pll (
 	.inclk0 (CLOCK_50),
 	.c0     (),
-	.c1     (),
+	.c1     (clk_qsys),
 	.c2     (SSRAM_CLK),
 	.c3     ()
 );
@@ -63,7 +65,7 @@ cam_pll U_cam_pll (
 // );
 
 fs_mm_test u0 (
-	.clk_clk                       (CLOCK_50),     //      clk.clk
+	.clk_clk                       (clk_qsys),     //      clk.clk
 	.reset_reset_n                 (KEY[0]),       //    reset.reset_n
 	.fs_wires_sram_we_n            (SSRAM_WE_N),   // fs_wires.sram_we_n
 	.fs_wires_fl_we_n              (FL_WE_N),      //         .fl_we_n

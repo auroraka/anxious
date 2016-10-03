@@ -37,15 +37,25 @@
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "134217728";
+         type = "String";
       }
    }
    element fs_mm_0.ssram_uas
    {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
       datum baseAddress
       {
-         value = "67108864";
+         value = "0";
          type = "String";
       }
    }
@@ -61,7 +71,7 @@
    {
       datum baseAddress
       {
-         value = "68685832";
+         value = "1576968";
          type = "String";
       }
    }
@@ -77,7 +87,7 @@
    {
       datum baseAddress
       {
-         value = "68683776";
+         value = "1574912";
          type = "String";
       }
    }
@@ -93,7 +103,7 @@
    {
       datum baseAddress
       {
-         value = "68419584";
+         value = "1310720";
          type = "String";
       }
    }
@@ -133,7 +143,7 @@
    {
       datum baseAddress
       {
-         value = "68685824";
+         value = "1576960";
          type = "String";
       }
    }
@@ -162,14 +172,14 @@
  <interface name="fs_wires" internal="fs_mm_0.fs_wires" type="conduit" dir="end" />
  <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
  <module name="clk_0" kind="clock_source" version="15.0" enabled="1">
-  <parameter name="clockFrequency" value="50000000" />
+  <parameter name="clockFrequency" value="100000000" />
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
  </module>
  <module name="fs_mm_0" kind="fs_mm" version="1.0" enabled="1">
   <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
-  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="100000000" />
   <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
   <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
@@ -184,7 +194,7 @@
    enabled="1">
   <parameter name="allowMultipleConnections" value="false" />
   <parameter name="avalonSpec" value="2.0" />
-  <parameter name="clkFreq" value="50000000" />
+  <parameter name="clkFreq" value="100000000" />
   <parameter name="hubInstanceID" value="0" />
   <parameter name="readBufferDepth" value="64" />
   <parameter name="readIRQThreshold" value="8" />
@@ -209,7 +219,7 @@
   <parameter name="breakOffset" value="32" />
   <parameter name="breakSlave" value="None" />
   <parameter name="cdx_enabled" value="false" />
-  <parameter name="clockFrequency" value="50000000" />
+  <parameter name="clockFrequency" value="100000000" />
   <parameter name="cpuArchRev" value="1" />
   <parameter name="cpuID" value="0" />
   <parameter name="cpuReset" value="false" />
@@ -217,10 +227,10 @@
   <parameter name="customInstSlavesSystemInfo_nios_a" value="&lt;info/&gt;" />
   <parameter name="customInstSlavesSystemInfo_nios_b" value="&lt;info/&gt;" />
   <parameter name="customInstSlavesSystemInfo_nios_c" value="&lt;info/&gt;" />
-  <parameter name="dataAddrWidth" value="27" />
+  <parameter name="dataAddrWidth" value="28" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='fs_mm_0_cfi_flash.uas' start='0x0' end='0x4000000' /><slave name='fs_mm_0_ssram.uas' start='0x4000000' end='0x4100000' /><slave name='onchip_memory2_0.s1' start='0x4140000' end='0x4172000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x4180800' end='0x4181000' /><slave name='sysid_qsys_0.control_slave' start='0x4181000' end='0x4181008' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x4181008' end='0x4181010' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='fs_mm_0_ssram.uas' start='0x0' end='0x100000' /><slave name='onchip_memory2_0.s1' start='0x140000' end='0x172000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x180800' end='0x181000' /><slave name='sysid_qsys_0.control_slave' start='0x181000' end='0x181008' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x181008' end='0x181010' /><slave name='fs_mm_0_cfi_flash.uas' start='0x8000000' end='0xC000000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -258,8 +268,8 @@
   <parameter name="icache_size" value="4096" />
   <parameter name="icache_tagramBlockType" value="Automatic" />
   <parameter name="impl" value="Fast" />
-  <parameter name="instAddrWidth" value="27" />
-  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='fs_mm_0_cfi_flash.uas' start='0x0' end='0x4000000' /><slave name='onchip_memory2_0.s1' start='0x4140000' end='0x4172000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x4180800' end='0x4181000' /></address-map>]]></parameter>
+  <parameter name="instAddrWidth" value="28" />
+  <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='onchip_memory2_0.s1' start='0x140000' end='0x172000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x180800' end='0x181000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x8000000' end='0xC000000' /></address-map>]]></parameter>
   <parameter name="instructionMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="instructionMasterHighPerformanceMapParam" value="" />
   <parameter name="instruction_master_high_performance_paddr_base" value="0" />
@@ -293,7 +303,7 @@
   <parameter name="ocimem_ramBlockType" value="Automatic" />
   <parameter name="ocimem_ramInit" value="false" />
   <parameter name="regfile_ramBlockType" value="Automatic" />
-  <parameter name="resetOffset" value="0" />
+  <parameter name="resetOffset" value="262144" />
   <parameter name="resetSlave">fs_mm_0_cfi_flash.uas</parameter>
   <parameter name="resetrequest_enabled" value="true" />
   <parameter name="setting_HBreakTest" value="false" />
@@ -419,7 +429,7 @@
    start="nios2_gen2_0.data_master"
    end="jtag_uart_0.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x04181008" />
+  <parameter name="baseAddress" value="0x00181008" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -428,7 +438,7 @@
    start="nios2_gen2_0.data_master"
    end="fs_mm_0.cfi_flash_uas">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="baseAddress" value="0x08000000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -437,7 +447,7 @@
    start="nios2_gen2_0.data_master"
    end="sysid_qsys_0.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x04181000" />
+  <parameter name="baseAddress" value="0x00181000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -446,7 +456,7 @@
    start="nios2_gen2_0.data_master"
    end="nios2_gen2_0.debug_mem_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x04180800" />
+  <parameter name="baseAddress" value="0x00180800" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -455,7 +465,7 @@
    start="nios2_gen2_0.data_master"
    end="onchip_memory2_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x04140000" />
+  <parameter name="baseAddress" value="0x00140000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -464,7 +474,7 @@
    start="nios2_gen2_0.data_master"
    end="fs_mm_0.ssram_uas">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x04000000" />
+  <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -473,7 +483,7 @@
    start="nios2_gen2_0.instruction_master"
    end="fs_mm_0.cfi_flash_uas">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="baseAddress" value="0x08000000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -482,7 +492,7 @@
    start="nios2_gen2_0.instruction_master"
    end="nios2_gen2_0.debug_mem_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x04180800" />
+  <parameter name="baseAddress" value="0x00180800" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -491,7 +501,7 @@
    start="nios2_gen2_0.instruction_master"
    end="onchip_memory2_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x04140000" />
+  <parameter name="baseAddress" value="0x00140000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection kind="clock" version="15.0" start="clk_0.clk" end="nios2_gen2_0.clk" />

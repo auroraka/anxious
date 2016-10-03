@@ -9,6 +9,9 @@ include $(CONFIG)
 # Name of elf file
 ELF_NAME ?= $(PROJECT)_$(CPU_ID).elf
 
+# Name of flash file
+FLASH_NAME ?= $(PROJECT)_$(CPU_ID).flash
+
 # JDI file name
 JDI_FILE ?= $(QUARTUS_PROJECT_ROOT)/$(QUARTUS_PROJECT_NAME).jdi
 
@@ -125,6 +128,15 @@ open-terminal:
 .PHONY: redownload
 redownload: | generate-makefile make download open-terminal
 
+.PHONY: flash
+flash:
+	python flash.py
+
+.PHONY: do_flash
+do_flash: | make
+	elf2flash --input="$(APP_DIR)/$(ELF_NAME)" --output="$(APP_DIR)/$(FLASH_NAME)" --boot="$(SOPC_KIT_NIOS2)/components/altera_nios2/boot_loader_cfi.srec" --base=$(FLASH_BASE) --end=$(FLASH_END) --reset=$(FLASH_RESET) --verbose
+	nios2-flash-programmer "$(APP_DIR)/$(FLASH_NAME)" --base=$(FLASH_BASE) --program --verbose
+
 .PHONY: help
 help:
 	@echo ""
@@ -139,3 +151,5 @@ help:
 	@echo "Pass in a jtag cable number if you have multiple jtag programming cables."
 	@echo ""
 	@echo "Tip: Type 'jtagconfig -n' to see all available jtag cables."
+
+print-%  : ; @echo $* = $($*)
