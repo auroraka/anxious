@@ -36,17 +36,17 @@ void sync_objects() {
 	int i;
 	RawSphere sphere;
 	int cnt = OBJECT_CNT_R();
-	printf("\ncnt:%d\n",cnt);
+	//printf("\ncnt:%d\n",cnt);
 	if (cnt<OBJTot) OBJTot=0;
 	for (i = OBJTot; i <cnt; ++i) {
 		pointf p=raw_objects[i].p[0];
-		printf("get: %d %d %d\n",(int)p.x,(int)p.y,(int)p.z);
+		//printf("get: %d %d %d\n",(int)p.x,(int)p.y,(int)p.z);
 		if (p.z==23333){//sphere
 			int x=PIC_W-raw_objects[i].p[0].x;
 			int y=PIC_H-raw_objects[i].p[0].y;
 			int r=raw_objects[i].p[1].x;
 			unsigned c=raw_objects[i].color;
-			printf("sphere:[id:%d] %d %d %d\n",i,x,y,r);
+			//printf("sphere:[id:%d] %d %d %d\n",i,x,y,r);
 			Pos2 p={x,y};
 			Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
 			if (x-r<0 || x+r>=PIC_W || y-r<0 || y+r>=PIC_H) continue;
@@ -62,11 +62,11 @@ void sync_objects() {
 			makeVector(x.x,x.y,x.z,X);
 			makeVector(z.x,z.y,z.z,Y);
 			makeVector(y.x,y.y,y.z,Z);
-			printf("box:\n");
-			printf("    ");debugVector(O);
-			printf("    ");debugVector(X);
-			printf("    ");debugVector(Y);
-			printf("    ");debugVector(Z);
+			//printf("box:\n");
+			//printf("    ");debugVector(O);
+			//printf("    ");debugVector(X);
+			//printf("    ");debugVector(Y);
+			//printf("    ");debugVector(Z);
 			Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
 			renderBox(O,X,Y,Z,color);
 		}//box
@@ -83,7 +83,7 @@ void render(int row_start, int row_cnt) {
 	while (!RENDER_START())
 		usleep(100);
 	
-	printf("Rendering frame %d [%d, %d)...\n", frame_cnt++, row_start, row_start + row_cnt);
+	//printf("Rendering frame %d [%d, %d)...\n", frame_cnt++, row_start, row_start + row_cnt);
 	VSYNC(0);
 	
 	sync_objects();

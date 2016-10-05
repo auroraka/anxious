@@ -152,7 +152,7 @@ alt_u8 SCCB_WR_Reg(alt_u8 reg, alt_u8 data) {
 	SCCB_Start();                    //启动SCCB传输
 	if (SCCB_WR_Byte(SCCB_ID)) {//写器件ID
 		SCCB_Stop();
-		printf("write device id failed\n");
+		//printf("write device id failed\n");
 		return 1;
 	}
 	//printf("write device id success\n");
@@ -176,7 +176,7 @@ alt_u8 SCCB_WR_Reg(alt_u8 reg, alt_u8 data) {
 	
 	SCCB_Stop();
 	
-	printf("write %x %x\n", reg, data);
+	//printf("write %x %x\n", reg, data);
 	usleep(2000);
 	return 0;
 }
@@ -188,7 +188,7 @@ alt_u8 SCCB_RD_Reg(alt_u8 reg) {
 	SCCB_Start();                //启动SCCB传输
 	if (SCCB_WR_Byte(SCCB_ID)) {//写器件ID
 		SCCB_Stop();
-		printf("write device id failed\n");
+		//printf("write device id failed\n");
 		return 1;
 	}
 	//printf("write device id success\n");
@@ -196,7 +196,7 @@ alt_u8 SCCB_RD_Reg(alt_u8 reg) {
 	
 	if (SCCB_WR_Byte(reg)) {//写寄存器地址
 		SCCB_Stop();
-		printf("write addr failed\n");
+		//printf("write addr failed\n");
 		return 1;
 	}
 	//printf("write addr success\n");
@@ -745,11 +745,11 @@ void sccb_write_reg_list(const unsigned (*regs)[2]) {
 			SCCB_WR_Reg(reg, val);
 		}
 	}
-	printf("%s: %d regs written.\n", __FUNCTION__, i);
+	//printf("%s: %d regs written.\n", __FUNCTION__, i);
 }
 
 void configure_sccb() {
-	printf("Configuring camera through SCCB...\n");
+	//printf("Configuring camera through SCCB...\n");
 	
 	SCCB_WR_Reg(REG_COM7, 0x80); // set COM7[7] => Reset
 	usleep(1000 * 1000 * 3);

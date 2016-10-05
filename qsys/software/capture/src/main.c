@@ -26,7 +26,7 @@
 
 int main() {
 	
-	printf("CPU: %d\n", CPU_ID);
+	//printf("CPU: %d\n", CPU_ID);
 
 #if CPU_ID == 2
 	// Controller
@@ -69,7 +69,7 @@ int main() {
 #else
 	// Camera recognition
 	configure_sccb();
-	printf("CPU: %d\n", CPU_ID);
+	//printf("CPU: %d\n", CPU_ID);
 	
 	RecogResult result;
 	int i, j, cnt;

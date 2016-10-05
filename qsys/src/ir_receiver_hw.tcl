@@ -43,12 +43,14 @@ add_fileset_file ir_decoder.vhd VERILOG PATH ir/ir_decoder.v
 add_fileset_file ir_receiver.vhd VHDL PATH ir/ir_receiver.vhd TOP_LEVEL_FILE
 
 add_fileset SIM_VERILOG SIM_VERILOG "" ""
+set_fileset_property SIM_VERILOG TOP_LEVEL ir_receiver
 set_fileset_property SIM_VERILOG ENABLE_RELATIVE_INCLUDE_PATHS false
 set_fileset_property SIM_VERILOG ENABLE_FILE_OVERWRITE_MODE true
 add_fileset_file ir_decoder.vhd VERILOG PATH ir/ir_decoder.v
 add_fileset_file ir_receiver.vhd VHDL PATH ir/ir_receiver.vhd
 
 add_fileset SIM_VHDL SIM_VHDL "" ""
+set_fileset_property SIM_VHDL TOP_LEVEL ir_receiver
 set_fileset_property SIM_VHDL ENABLE_RELATIVE_INCLUDE_PATHS false
 set_fileset_property SIM_VHDL ENABLE_FILE_OVERWRITE_MODE true
 add_fileset_file ir_decoder.vhd VERILOG PATH ir/ir_decoder.v
