@@ -12,17 +12,16 @@
 
 #include <unistd.h>
 
-#include "basic.h"
-#include "vector.h"
-#include "object.h"
+#include "render.h"
+#include "memory.h"
+#include "common.h"
+#include "palette.h"
 
-#include "../render.h"
-#include "../memory.h"
-#include "../common.h"
-#include "../palette.h"
+#include "render/basic.h"
+#include "render/vector.h"
+#include "render/object.h"
 
-
-#include "renderer.h"
+#include "render/renderer.h"
 
 void render_init(int row_start, int row_cnt) {
 	initBuffer();
@@ -46,7 +45,7 @@ void sync_objects() {
 			int y=PIC_H-raw_objects[i].p[0].y;
 			int r=raw_objects[i].p[1].x;
 			unsigned c=raw_objects[i].color;
-			//printf("sphere:[id:%d] %d %d %d\n",i,x,y,r);
+			printf("sphere:[id:%d] %d %d %d\n",i,x,y,r);
 			Pos2 p={x,y};
 			Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
 			if (x-r<0 || x+r>=PIC_W || y-r<0 || y+r>=PIC_H) continue;
@@ -62,11 +61,11 @@ void sync_objects() {
 			makeVector(x.x,x.y,x.z,X);
 			makeVector(z.x,z.y,z.z,Y);
 			makeVector(y.x,y.y,y.z,Z);
-			//printf("box:\n");
-			//printf("    ");debugVector(O);
-			//printf("    ");debugVector(X);
-			//printf("    ");debugVector(Y);
-			//printf("    ");debugVector(Z);
+			printf("box:\n");
+			printf("    ");debugVector(O);
+			printf("    ");debugVector(X);
+			printf("    ");debugVector(Y);
+			printf("    ");debugVector(Z);
 			Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
 			renderBox(O,X,Y,Z,color);
 		}//box

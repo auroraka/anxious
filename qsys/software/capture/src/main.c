@@ -18,7 +18,7 @@
 	#include "control.h"
 	#include "render/object.h"
 #elif CPU_ID > 2
-	#include "render.h"
+	#include "render/render.h"
 #else
 	#include "sccb.h"
 	#include "recognition.h"

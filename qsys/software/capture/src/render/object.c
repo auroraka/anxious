@@ -58,6 +58,7 @@ void add_cube(pointf pf[], unsigned color) {
 	memcpy(raw_objects[cnt].p, pf, sizeof(float) * 12);
 	raw_objects[cnt].color = color;
 	OBJECT_CNT_W(cnt + 1);
+	printf("obj_cnt= %d\n",OBJECT_CNT_R());
 }
 
 void get_sphere(int idx, RawSphere *sphere) {
