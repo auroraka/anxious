@@ -63,19 +63,16 @@ void getColorNR(Vector _N, Vector _R, Color _color, Color ret) {
 	mulcd(tmp, DIFF, ret);
 
 	float RN = dot(R, N);
-	//printf("%.5lf\n", RN);
 	if (RN > EPS) {
 
 		if (DIFF > EPS) {
 			float diff = DIFF * RN;
 			mulcd(color, diff, tmp);
-			//printf("diff: "); debugVector(tmp);
 			addc(ret, tmp, ret);
 		}
 		if (SPEC > EPS) {
 		float spec = SPEC * pow(RN, SPEC_POWER);
 		mulcd(color, spec, tmp);
-		//printf("spec: "); debugVector(tmp);
 		addc(ret, tmp, ret);
 		}
 	}
@@ -125,6 +122,7 @@ void drawTriangle(Pos v1, Pos v2, Pos v3, Color color) {
 				bufferColor(i, j, color, (a * v1[2] + b * v2[2] + c * v3[2]));
 			}
 		}
+		if (offline_render_status==RENDER_IDLE) return;
 	}
 }
 bool getPos_online(Vector A,Pos B) {
@@ -145,8 +143,11 @@ void renderTriangle(Vector A, Vector B, Vector C, Color color) {
 	drawTriangle(X, Y, Z, color);
 }
 void renderRect(Vector A, Vector B, Vector C, Vector D, Color color) {
+	if (offline_render_status==RENDER_IDLE) return;
 	renderTriangle(A, B, C, color);
+	if (offline_render_status==RENDER_IDLE) return;
 	renderTriangle(A, C, D, color);
+	if (offline_render_status==RENDER_IDLE) return;
 }
 
 void renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
@@ -220,7 +221,6 @@ void renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 
 
 void drawSphereLine(Pos2 p, int r, int x1, int x2, int y, Color color) {
-	//printf("%d %d %d\n", x1, x2, y);
 	int j = y;
 	int r2 = r*r;
 	Vector R = { 1,0.7,0.8 };
@@ -281,12 +281,16 @@ void drawSphereC(Pos2 c, int radius, Color color) {
 		else d += 2 * (dx - dy) + 5, --dy;
 		++dx;
 		drawSphereLine(c, radius, -dx + cx, dx + cx, dy + cy, color);
+		if (offline_render_status==RENDER_IDLE) return;
 		drawSphereLine(c, radius, -dy + cx, dy + cx, dx + cy, color);
+		if (offline_render_status==RENDER_IDLE) return;
 		drawSphereLine(c, radius, -dy + cx, dy + cx, -dx + cy, color);
+		if (offline_render_status==RENDER_IDLE) return;
 		drawSphereLine(c, radius, -dx + cx, dx + cx, -dy + cy, color);
+		if (offline_render_status==RENDER_IDLE) return;
 	}
 }
-void renderSphere(Vector O, double R, Color color) {
+void renderSphere(Vector O, double R, Color color){
 	Pos P, P1; Vector V;
 	if (!getPos(O, P)) return;
 	copyVector(O,V);

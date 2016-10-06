@@ -29,6 +29,9 @@
 #endif
 
 
+static int render_port;
+static int render_time_check;
+static int offline_render_status;
 
 #define MAX_B (10000000)
 
@@ -53,12 +56,16 @@ void _setColor(int i, int j, Color color) {
 #ifdef MYLOCAL
 	_SetColor(&BMP, i, j, color);
 #else
-	int render_port=RENDER_PORT();
 	if (isZero(color)) {
 		WRITE_TRANS(i, j);
 	}
 	else {
 		WRITE_PIXF(i, j, color[0], color[1], color[2]);
+	}
+	render_time_check++;
+	if (render_time_check>=10){
+		render_time_check=0;
+		offline_render_status=RENDER_STATUS_R();
 	}
 #endif
 }
@@ -76,6 +83,7 @@ void bufferColor(int i, int j, Color color, float z) {
 	//}
 }
 void initBuffer() {
+	render_port=RENDER_PORT();
 	// for (int i = 0; i < PIC_H; i++) {
 		// for (int j = 0; j < PIC_W; j++) {
 			// ZBuffer_W( j,i, MAX_B);

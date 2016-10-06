@@ -39,5 +39,8 @@ inline static void GetAnVerticalVector(Vector A, Vector ret) {
 	else normal(ret, ret);
 }
 
+void printv(Vector v){
+	printf("(%d,%d,%d)\n",(int)v[0],(int)v[1],(int)v[2]);
+}
 
 #endif
