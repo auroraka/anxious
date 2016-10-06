@@ -36,7 +36,7 @@ static float Xf, Yf, Zf;
 
 pointf find_location(point p_l, point p_r) {
 	int x_l = get_x(p_l), x_r = get_x(p_r);
-	int y_l = get_y(p_l), y_r = get_y(p_r);
+	//int y_l = get_y(p_l), y_r = get_y(p_r);
 	
 	pointf loc;
 	loc.z = stereo_dist / ((x_l - center_x_l) / focus_x_l - (x_r - center_x_r) / focus_x_r);
@@ -128,7 +128,6 @@ void draw_sphere(pointi c, float radius, unsigned color) {
 
 void draw_mark(pointi p, unsigned color) {
 	int x = p.x, y = p.y, i;
-//void draw_point(int x, int y, unsigned color) {
 	OVERLAY_W(x, y, color);
 	for (i = 1; i < 5; ++i) {
 		OVERLAY_W(x - i, y, color);
@@ -139,8 +138,7 @@ void draw_mark(pointi p, unsigned color) {
 }
 
 void draw_point(pointi p, unsigned color) {
-	int x = p.x, y = p.y, i;
-//void draw_point(int x, int y, unsigned color) {
+	int x = p.x, y = p.y;
 	OVERLAY_W(x, y, color);
 	OVERLAY_W(x - 1, y, color);
 	OVERLAY_W(x, y - 1, color);
@@ -161,7 +159,6 @@ inline int abs(int x) {
 void draw_line(pointi p0, pointi p1, unsigned color) {
 	int x0 = p0.x, y0 = p0.y;
 	int x1 = p1.x, y1 = p1.y;
-//void draw_line(int x0, int y0, int x1, int y1, unsigned color) {
 	int steep = (abs(y1 - y0) > abs(x1 - x0));
 	if (steep) {
 		swap(&x0, &y0);
@@ -519,7 +516,6 @@ enum IRType {
 
 void key_down(int key_code) {
 	printf("key down: %d\n", key_code);
-	float dx, dy, dz, radius;
 	
 	if (palette_state == PALETTE_SHOWN) {
 		if (key_code >= IR_1 && key_code <= IR_9) {
@@ -551,19 +547,10 @@ void key_down(int key_code) {
 				if (key_code == IR_1) draw_state = DRAW_SPHERE_RADIUS;
 				else if (key_code == IR_2) draw_state = DRAW_CUBE_LINE;
 				break;
-			case DRAW_SPHERE_RADIUS:
-				// dx = pf[0].x - get_shared_float(2);
-				// dy = pf[0].y - get_shared_float(3);
-				// dz = pf[0].z - get_shared_float(4);
-				// radius = sqrt(dx * dx + dy * dy + dz * dz);
-				// add_sphere(&pf[0], radius, WHITE);
-				// draw_overlay_frame(TRANSPARENT);
-				// draw_state = DRAW_POINT;
-				
+			case DRAW_SPHERE_RADIUS:				
 				pf[0].x = store_x;
 				pf[0].y = store_y;
-				radius = store_r;
-				add_sphere2d(&pf[0], store_r, store_color);
+				add_sphere2d(store_x,store_y, store_r, store_color);
 				draw_state = DRAW_POINT;
 				break;
 			case DRAW_CUBE_LINE:

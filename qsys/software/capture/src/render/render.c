@@ -12,16 +12,13 @@
 
 #include <unistd.h>
 
+#include "../memory.h"
+#include "../common.h"
+#include "../palette.h"
+
 #include "render.h"
-#include "memory.h"
-#include "common.h"
-#include "palette.h"
-
-#include "render/basic.h"
-#include "render/vector.h"
-#include "render/object.h"
-
-#include "render/renderer.h"
+#include "object.h"
+#include "renderer.h"
 
 void render_init(int row_start, int row_cnt) {
 	initBuffer();
@@ -30,46 +27,67 @@ void render_init(int row_start, int row_cnt) {
 inline void debugVector(Vector A){
 	printf("%d %d %d\n",(int)A[0],(int)A[1],(int)A[2]);
 }
-static int OBJTot=0;
-void sync_objects() {
+
+void printVector(Vector v){
+	printf("(%d,%d,%d)\n",(int)v[0],(int)v[1],(int)v[2]);
+}
+void printReceiveCube(Vector V[]){
+	printf("[Object] receive-cube: ");
 	int i;
-	RawSphere sphere;
-	int cnt = OBJECT_CNT_R();
-	//printf("\ncnt:%d\n",cnt);
-	if (cnt<OBJTot) OBJTot=0;
-	for (i = OBJTot; i <cnt; ++i) {
-		pointf p=raw_objects[i].p[0];
-		//printf("get: %d %d %d\n",(int)p.x,(int)p.y,(int)p.z);
-		if (p.z==23333){//sphere
-			int x=PIC_W-raw_objects[i].p[0].x;
-			int y=PIC_H-raw_objects[i].p[0].y;
-			int r=raw_objects[i].p[1].x;
-			unsigned c=raw_objects[i].color;
-			printf("sphere:[id:%d] %d %d %d\n",i,x,y,r);
-			Pos2 p={x,y};
-			Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
-			if (x-r<0 || x+r>=PIC_W || y-r<0 || y+r>=PIC_H) continue;
-			drawSphereC(p,r,color);
+	for (i=0;i<4;i++) printVector(V[i]);
+	printf("\n");
+}
+
+int ttt=0;
+void sync_objects() {	
+	int status=RENDER_STATUS_R();
+
+	ttt++;
+	if (ttt%5000==0) printf("sync_objects, RENDER_STATUS=%d\n",status);
+
+	if (status==RENDER_IDLE){
+		return;
+	}
+	else if (status==RENDER_CLEAR){
+		RENDER_STATUS_W(RENDER_IDLE);
+		return;
+	}
+	else if (status == RENDER_ADD_SPHERE){
+		int cnt=OBJECT_CNT_R();
+		int x  =OBJECT_R(cnt+1,0);
+		int y  =OBJECT_R(cnt+1,1);
+		int r  =OBJECT_R(cnt+1,2);
+		unsigned c  =OBJECT_R(cnt+1,3);
+		printf("[Object] now-tot: %d\n",cnt);
+		printf("[Object] receive-sphere: (%d,%d) r=%d\n", x,y,r);
+		Pos2 p={x,y};
+		Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
+		if (x-r<0 || x+r>=PIC_W || y-r<0 || y+r>=PIC_H){
+			printf("[Object] render-sphere failed: out of cavans\n");
 		}else{
-			pointf o=raw_objects[i].p[0];
-			pointf x=raw_objects[i].p[1];
-			pointf y=raw_objects[i].p[2];
-			pointf z=raw_objects[i].p[3];
-			unsigned c=raw_objects[i].color;
-			Vector O,X,Y,Z;
-			makeVector(o.x,o.y,o.z,O);
-			makeVector(x.x,x.y,x.z,X);
-			makeVector(z.x,z.y,z.z,Y);
-			makeVector(y.x,y.y,y.z,Z);
-			printf("box:\n");
-			printf("    ");debugVector(O);
-			printf("    ");debugVector(X);
-			printf("    ");debugVector(Y);
-			printf("    ");debugVector(Z);
-			Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
-			renderBox(O,X,Y,Z,color);
-		}//box
-		OBJTot=cnt;
+			printf("[Object] render-sphere: doing\n");
+			OBJECT_CNT_W(cnt+1);			
+			drawSphereC(p,r,color);
+		}
+		RENDER_STATUS_W(RENDER_IDLE);
+	}else if (status ==RENDER_ADD_CUBE){		
+		int cnt=OBJECT_CNT_R();
+		int i,j;IntF x;
+		Vector V[4];
+		for (i=0;i<4;i++){
+			for (j=0;j<3;j++){
+				x.u=OBJECT_R(cnt+1,i*3+j); 
+				V[i][j]=x.f;
+			}
+		}
+		unsigned c=OBJECT_R(cnt+1,12);
+		Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
+		printReceiveCube(V);
+		printf("[Object] now-tot: %d\n",cnt);
+		printf("[Object] render-sphere: doing\n");
+		renderBox(V[0],V[1],V[2],V[3],color);
+		OBJECT_CNT_W(cnt+1);
+		RENDER_STATUS_W(RENDER_IDLE);
 	}
 }
 
@@ -82,10 +100,11 @@ void render(int row_start, int row_cnt) {
 	while (!RENDER_START())
 		usleep(100);
 	
-	//printf("Rendering frame %d [%d, %d)...\n", frame_cnt++, row_start, row_start + row_cnt);
+	
 	VSYNC(0);
 	
 	sync_objects();
+	usleep(5000);
 	
 	VSYNC(1);
 	usleep(0);

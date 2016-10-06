@@ -24,11 +24,49 @@
 	#include "recognition.h"
 #endif
 
+int getRand(){
+	return rand();
+}
+int getCheckNum(){
+	int j;
+	int x=getRand();
+	if (x&1) x^=1;
+	if ((x>>16)&1) x^=(1<<16);
+	for (j=31;j>16;j--) if ((x>>j)&1) x^=(1<<16);
+	for (j=15;j>0;j--) if ((x>>j)&1) x^=1;
+	return x;
+}
+int checkNum(int x){
+	int y=0,z=0,i;
+	for (i=31;i>16;i--) if ((x>>i)&1) z^=1;
+	for (i=15;i>0;i--) if ((x>>i)&1) y^=1;
+	return (y==(x&1)) && (z==((x>>16)&1));
+}
+
 int main() {
 	
 	//printf("CPU: %d\n", CPU_ID);
 
 #if CPU_ID == 2
+	// int i;
+	// for (i=5;i<10;i++){
+		// IntF x;
+		// x.f=(float)(i+0.123);
+		// SHARED_W(i,x.u);	
+		// printf("write %d: i=%d f=%d | %d\n",x.u,(int)x.f,(int)x.u);
+	// }
+	// return 0;
+	
+	// int i;
+	// getCheckNum();
+	// printf("cpu2\n");
+	// for (i=0;i<30;i++){
+		// int x=getCheckNum();
+		// printf("write num[%d]: %d\n",i,x);
+		// SHARED_W(i,x);
+	// }
+	//return 0;
+
 	// Controller
 	reset_objects();
 	clean_sdram(1);
@@ -57,6 +95,29 @@ int main() {
 		} else key_state = 1;
 	}
 #elif CPU_ID > 2
+	// int i;
+	// for (i=5;i<10;i++){
+		 // IntF x;
+		 // x.u=SHARED_R(i);
+		 // printf("check %d: i=%d f=%d [%d]\n",i,x.u,(int)x.f,x.f==(float)(i+0.123));
+		// //unsigned x=SHARED_R(i);
+	// //	printf("check %d: i=%d\n",i,x);
+	// }
+	// return 0;
+	
+	// printf("cpu3\n");
+	// int i;
+	// for (i=0;i<30;i++){
+		// // /printf("read...\n");
+		// int x=SHARED_R(i);
+		// if (checkNum(x)==0){
+			// printf("check faild %d: %d[%d]\n",i,x,checkNum(x));
+		// }
+		// //printf("check num[%d]: %d [%d]\n",i,x,checkNum(x));
+	// }
+	//return 0;
+	
+
 	const int MODULO = HEIGHT % RENDER_CORES;
 	int ROW_CNT = HEIGHT / RENDER_CORES + ((CPU_ID - 3 < MODULO) ? 1 : 0);
 	int ROW_START = CPU_ID - 3 < MODULO ? ROW_CNT * (CPU_ID - 3) : (ROW_CNT + 1) * MODULO + (CPU_ID - 3 - MODULO) * ROW_CNT;
@@ -81,6 +142,7 @@ int main() {
 		SHARED_W(CPU_ID, result.center);
 	}
 #endif
+
 	
 	return 0;
 }
