@@ -7,7 +7,8 @@
 #define RENDER_IDLE (0)
 #define RENDER_CLEAR (1)
 #define RENDER_ADD_SPHERE (2)
-#define RENDER_ADD_CUBE (3)
+#define RENDER_ADD_SPHERE3D (3)
+#define RENDER_ADD_CUBE (4)
 
 #define RENDER_STATUS_R() SHARED_R(5)
 #define RENDER_STATUS_W(x) SHARED_W(5, x)
@@ -39,7 +40,7 @@ void reset_objects();
 
 void remove_object(int idx);
 
-void add_sphere(pointf *center, float radius, unsigned color);
+void add_sphere(pointf *sp, float r, unsigned color);
 
 void add_sphere2d(int x,int y,int r, unsigned color);
 

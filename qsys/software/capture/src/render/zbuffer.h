@@ -73,7 +73,7 @@ void setColorXY(int x, int y, Color color) {
 void bufferColor(int i, int j, Color color, float z) {
 	IntF buf;
 	buf.u=ZBuffer_R(i, j);
-	if (z < buf.f) {
+	if (z > buf.f) {
 		buf.f=z;
 		ZBuffer_W(i, j, buf.u);
 		setColorXY(i, j, color);
@@ -88,7 +88,7 @@ void initBuffer() {
 	inf.f=1e30;
 	for (int i = 0; i < PIC_W; i++) {
 		for (int j = 0; j < PIC_H; j++) {
-			ZBuffer_W( i,j ,inf.u);
+			ZBuffer_W( i,j ,0);
 		}
 	}
 }

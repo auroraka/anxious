@@ -23,7 +23,34 @@ void reset_objects() {
 void remove_object(int idx) {
 }
 
-void add_sphere(pointf *center, float radius, unsigned color) {
+void printPoint(pointf x){
+	printf("(%d,%d,%d) ",(int)x.x,(int)x.y,(int)x.z);
+	
+}
+void printSendSphere3d(pointf pf[]){
+	printf("[Object] send-cube3d: ");
+	printf("o=");printPoint(pf[0]);
+	printf("x=");printPoint(pf[1]);
+	printf("\n");	
+}
+void add_sphere3d(pointf *pf, float r, unsigned color) {
+	int status=RENDER_STATUS_R();
+	if (status!=RENDER_IDLE){
+		printf("[Object] add-sphere3d failed: not ready\n");
+		return;
+	}
+	int cnt=OBJECT_CNT_R();
+	int i;IntF x;
+	for (i=0;i<2;i++){
+		x.f=pf[i].x; OBJECT_W(cnt+1,i*3+0,x.u); 		
+		x.f=pf[i].y; OBJECT_W(cnt+1,i*3+1,x.u); 		
+		x.f=pf[i].z; OBJECT_W(cnt+1,i*3+2,x.u); 		
+	}
+	OBJECT_W(cnt+1,6,color);
+		
+	RENDER_STATUS_W(RENDER_ADD_SPHERE3D);
+	printf("[Object] now-tot: %d\n",cnt);
+	printSendSphere3d(pf);
 }
 void add_sphere2d(int x,int y,int r,unsigned color) {
 	int status=RENDER_STATUS_R();
@@ -47,16 +74,12 @@ void add_sphere2d(int x,int y,int r,unsigned color) {
 	printf("[Object] send-sphere: (%d,%d) r=%d\n", x,y,r);
 }
 
-void printPoint(pointf x){
-	printf("(%d,%d,%d)\n",(int)x.x,(int)x.y,(int)x.z);
-	
-}
 void printSendCube(pointf pf[]){
 	printf("[Object] send-cube: ");
-	printf("o=");pf[0];
-	printf("x=");pf[1];
-	printf("y=");pf[2];
-	printf("z=");pf[3];
+	printf("o=");printPoint(pf[0]);
+	printf("x=");printPoint(pf[1]);
+	printf("y=");printPoint(pf[2]);
+	printf("z=");printPoint(pf[3]);
 	printf("\n");	
 }
 void add_cube(pointf pf[], unsigned color) {
@@ -74,11 +97,10 @@ void add_cube(pointf pf[], unsigned color) {
 	}
 	OBJECT_W(cnt+1,12,color);
 	
-	printSendCube(pf);
 	
 	RENDER_STATUS_W(RENDER_ADD_CUBE);
-	
 	printf("[Object] now-tot: %d\n",cnt);
-	printf("[Object] send-cube: color=%d\n", color);
+	printSendCube(pf);
+	
 }
 

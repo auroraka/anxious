@@ -548,9 +548,8 @@ void key_down(int key_code) {
 				else if (key_code == IR_2) draw_state = DRAW_CUBE_LINE;
 				break;
 			case DRAW_SPHERE_RADIUS:				
-				pf[0].x = store_x;
-				pf[0].y = store_y;
-				add_sphere2d(store_x,store_y, store_r, store_color);
+				//add_sphere2d(store_x,store_y, store_r, store_color);
+				add_sphere3d(pf,store_color);
 				draw_state = DRAW_POINT;
 				break;
 			case DRAW_CUBE_LINE:

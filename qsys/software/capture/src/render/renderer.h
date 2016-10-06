@@ -267,6 +267,27 @@ void drawSphereLine(Pos2 p, int r, int x1, int x2, int y, Color color) {
 		//printf("%d %d\n", i, j);
 	}
 }
+void drawSphereLine3d(Pos p, int r,float k, int x1, int x2, int y, Color color) {
+	int j = y;
+	int r2 = r*r;
+	Vector R = { 1,0.7,0.8 };
+	Vector col;
+	for (int i = x1; i <= x2; i++) {
+		int a2 = (i - p[0])*(i - p[0]) + (j - p[1])*(j - p[1]);
+		float b = sqrt(abs(r2 - a2))*k;
+		Vector N = { i - p[0],j - p[1],b };
+		//printf("%d %d\n", a2, r2);
+		//debugVector(N);
+		normal(N, N);
+		N[2] += 0.5;
+		normal(N, N);
+		getColorNR(N, R, color, col);
+		//setColorXY(i, j, col);
+		bufferColor(i,j,col,p[2]+b);
+		//printf("%d %d\n", i, j);
+	}
+}
+
 //void drawSphere(Pos P, int r,Color color) {
 //	int p0 = round(P[0]);
 //	int p1 = round(P[1]);
@@ -317,16 +338,34 @@ void drawSphereC(Pos2 c, int radius, Color color) {
 		if (offline_render_status==RENDER_IDLE) return;
 	}
 }
-void renderSphere(Vector O, double R, Color color){
-	Pos P, P1; Vector V;
-	if (!getPos(O, P)) return;
-	copyVector(O,V);
-	V[1] += R;
-	if (!getPos(V, P1)) return;
-	int r = abs(P1[1] - P[1]);
-	//drawSphere(P, r,color);
-	Pos2 p = { P[0],P[1] };
-	drawSphereC(p, r, color);
+void drawSphere3d(Pos c, int radius,float k, Color color) {
+	int cx = c[0], cy = c[1];
+	int dx = -1, dy = radius;
+	float d = 1.25f - radius;
+	while (dx <= dy) {
+		if (d < 0) d += 2 * dx + 3;
+		else d += 2 * (dx - dy) + 5, --dy;
+		++dx;
+		drawSphereLine3d(c, radius,k, -dx + cx, dx + cx, dy + cy, color);
+		if (offline_render_status==RENDER_IDLE) return;
+		drawSphereLine3d(c, radius,k, -dy + cx, dy + cx, dx + cy, color);
+		if (offline_render_status==RENDER_IDLE) return;
+		drawSphereLine3d(c, radius, k,-dy + cx, dy + cx, -dx + cy, color);
+		if (offline_render_status==RENDER_IDLE) return;
+		drawSphereLine3d(c, radius, k,-dx + cx, dx + cx, -dy + cy, color);
+		if (offline_render_status==RENDER_IDLE) return;
+	}
+}
+bool renderSphere(Vector O, Vector X, Color color){
+	Pos P,P1;
+	if (!getPos_online(O,P)) return false;
+	if (!getPos_online(X,P1)) return false;
+	float r2d=sqrt((P[0]-P1[0])*(P[0]-P1[0])+(P[1]-P1[1])*(P[1]-P1[1]));
+	if (r2d<EPS) return false;
+	float r3d=dis(O,X);
+	float k=r3d/r2d;
+	drawSphere3d(P, r2d, k,color);
+	return true;
 }
 
 
