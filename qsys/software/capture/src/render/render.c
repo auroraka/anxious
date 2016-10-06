@@ -86,8 +86,10 @@ void sync_objects() {
 		Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
 		printReceiveCube(V);
 		printf("[Object] now-tot: %d\n",cnt);
-		printf("[Object] render-sphere: doing\n");
-		renderBox(V[0],V[1],V[2],V[3],color);
+		printf("[Object] render-cube: doing\n");
+		if (!renderBox(V[0],V[1],V[2],V[3],color)){
+			printf("[Object] render-cube failed: out of cavans\n");
+		}
 		OBJECT_CNT_W(cnt+1);
 		RENDER_STATUS_W(RENDER_IDLE);
 	}

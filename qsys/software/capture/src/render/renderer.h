@@ -150,7 +150,13 @@ void renderRect(Vector A, Vector B, Vector C, Vector D, Color color) {
 	if (offline_render_status==RENDER_IDLE) return;
 }
 
-void renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
+bool checkInCavans(Vector P[]){
+	Pos X;
+	for (int i=0;i<8;i++) if (!getPos_online(P[i],X)) return false;
+	return true;
+}
+
+bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 	Vector P[8];
 	Color col;
 	copyColor(color, col);
@@ -161,6 +167,9 @@ void renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 	for (int i = 0; i < 4; i++) {
 		add(P[i], Y, P[i + 4]);
 	}
+	
+	if (!checkInCavans(P)) return false;
+	
 	Vector nX, nY, nZ;
 	copyNegVector(X, nX);
 	copyNegVector(Y, nY);
@@ -174,49 +183,67 @@ void renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 	muld(Z, 0.5, tmp);
 	add(O, tmp, O);
 
-	Vector R={1,0.8,0.7};
+	Vector R={-5,-5,-5};
+	Vector eye={0,0,100};
 
 	float k=1;
 
-	getColorNR(nX, R, color, col);//x
-	mulcd(col, k, col);
-	normalize(col);
-	renderRect(P[0], P[4], P[7], P[3], col);
+	if (dot(eye,nX)<0){
+		getColorNR(nX, R, color, col);//x
+		mulcd(col, k, col);
+		normalize(col);
+		renderRect(P[0], P[4], P[7], P[3], col);
+	}
+	printf("0: %d %d\n",dot(eye,nX)>0,(int)dot(eye,nX));
+	//usleep(1000*2000);
 
+	if (dot(eye,Z)<0){
+		getColorNR(Z, R, color, col);//z
+		mulcd(col, k, col);
+		normalize(col);
+		renderRect(P[2], P[3], P[7], P[6], col);
+	}
+	printf("1: %d %d\n",dot(eye,Z)>0,(int)dot(eye,Z));
+	//usleep(1000*2000);
 
+	if (dot(eye,Y)<0){
+		getColorNR(Y, R, color, col);//y
+		mulcd(col, k, col);
+		normalize(col);
+		renderRect(P[4], P[5], P[6], P[7], col);
+	}
+	printf("2: %d %d\n",dot(eye,Y)>0,(int)dot(eye,Y));
+	//usleep(1000*2000);
 
-	getColorNR(nZ, R, color, col);//z
-	mulcd(col, k, col);
-	normalize(col);
-	renderRect(P[2], P[3], P[7], P[6], col);
-
-	getColorNR(Y, R, color, col);//y
-	mulcd(col, k, col);
-	normalize(col);
-	renderRect(P[4], P[5], P[6], P[7], col);
-
-	getColorNR(X, R, color, col);//nx
-	mulcd(col, k, col);
-	normalize(col);
-	renderRect(P[1], P[2], P[6], P[5], col);
-
-	getColorNR(nY, R, color, col);//ny
-	mulcd(col, k, col);
-	normalize(col);
-	renderRect(P[0], P[1], P[2], P[3], col);
+	if (dot(eye,X)<0){
+		getColorNR(X, R, color, col);//nx
+		mulcd(col, k, col);
+		normalize(col);
+		renderRect(P[1], P[2], P[6], P[5], col);
+	}
+	printf("3: %d %d\n",dot(eye,X)>0,(int)dot(eye,X));
+	//usleep(1000*2000);
 	
+	if (dot(eye,nY)<0){
+		getColorNR(nY, R, color, col);//ny
+		mulcd(col, k, col);
+		normalize(col);
+		renderRect(P[0], P[1], P[2], P[3], col);
+	}
+	printf("4: %d %d\n",dot(eye,nY)>0,(int)dot(eye,nY));
+	//usleep(1000*2000);
 
 
-
-
-	getColorNR(Z, R, color, col);//nz
-	mulcd(col, k, col);
-	normalize(col);
-	renderRect(P[0], P[1], P[5], P[4], col);
-
+	if (dot(eye,nZ)<0){
+		getColorNR(nZ, R, color, col);//nz
+		mulcd(col, k, col);
+		normalize(col);
+		renderRect(P[0], P[1], P[5], P[4], col);
+	}
+	printf("5: %d %d\n",dot(eye,nZ)>0,(int)dot(eye,nZ));
+	//usleep(1000*2000);
 	
-
-
+	return true;
 }
 
 
