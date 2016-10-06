@@ -57,17 +57,7 @@ assign SSRAM_CLK = DRAM_CLK;
 
 anxious_capture u0 (
     .cam_buffer_switcher_enable_enable                  (SW[4]),
-    
-    .camera_mm_0_camera_wires_cam_din                   (`CAM_DIN_0),
-    .camera_mm_0_camera_wires_cam_href                  (`CAM_HREF_0),
-    .camera_mm_0_camera_wires_cam_pclk                  (`CAM_PCLK_0),
-    // .camera_mm_0_camera_wires_cam_pwdn                  (),
-    // .camera_mm_0_camera_wires_cam_reset                 (),
-    .camera_mm_0_camera_wires_cam_vsync                 (`CAM_VSYNC_0),
-    // .camera_mm_0_camera_wires_cam_xclk                  (),
-    .camera_mm_0_camera_wires_clk_camera                (clk_camera),
-    .camera_mm_0_camera_wires_enable_n                  (SW[3]),
-    
+
     .camera_sioc_0_external_connection_export           (`CAM_SIOC_0),
     .camera_sioc_1_external_connection_export           (`CAM_SIOC_1),
     .camera_siod_0_external_connection_export           (`CAM_SIOD_0),
@@ -109,13 +99,13 @@ anxious_capture u0 (
     .new_sdram_controller_0_wire_dqm                    (DRAM_DQM),
     .new_sdram_controller_0_wire_ras_n                  (DRAM_RAS_N),
     .new_sdram_controller_0_wire_we_n                   (DRAM_WE_N),
-    
+
     .overlay_buffer_switcher_enable_enable              (SW[7]),
     .overlay_buffer_switcher_write_buffer_buffer_port   (overlay_buffer_port),
     .overlay_buffer_switcher_write_buffer_buffer_vsync  (overlay_buffer_vsync),
     .overlay_port_pio_external_connection_export        (overlay_buffer_port),
     .overlay_vsync_pio_external_connection_export       (overlay_buffer_vsync),
-    
+
     .recog_buffer_port_pio_0_external_connection_export (recog_buffer_port_0),
     .recog_buffer_port_pio_1_external_connection_export (recog_buffer_port_1),
     .recog_buffer_switcher_0_enable_enable              (SW[5]),
@@ -126,7 +116,7 @@ anxious_capture u0 (
     .recog_buffer_switcher_1_read_buffer_buffer_vsync   (recog_buffer_vsync_1),
     .recog_vsync_pio_0_external_connection_export       (recog_buffer_vsync_0),
     .recog_vsync_pio_1_external_connection_export       (recog_buffer_vsync_1),
-    
+
     .render_buffer_switcher_enable_enable               (SW[6]),
     .render_buffer_switcher_write_buffer_buffer_port    (render_buffer_port),
     .render_buffer_switcher_write_buffer_buffer_vsync   (render_buffer_vsync),
@@ -135,15 +125,6 @@ anxious_capture u0 (
     .render_vsync_pio_0_external_connection_export      (render_vsync[0]),
 
     .reset_reset_n                                      (KEY[0]),
-    
-    // .ssram_mm_0_ssram_wires_tcm_chipselect_n_out        (),
-    .ssram_mm_0_ssram_wires_tcm_byteenable_n_out        (SSRAM_BE),
-    .ssram_mm_0_ssram_wires_tcm_outputenable_n_out      (SSRAM_OE_N),
-    .ssram_mm_0_ssram_wires_tcm_write_n_out             (SSRAM_WE_N),
-    .ssram_mm_0_ssram_wires_tcm_data_out                (FS_DQ),
-    .ssram_mm_0_ssram_wires_tcm_address_out             (FS_ADDR[21:2]),
-    // .ssram_mm_0_ssram_wires_tcm_reset_n_out             (),
-    .ssram_mm_0_ssram_wires_tcm_begintransfer_n_out     (SSRAM_ADSC_N),
 
     .vga_st_composer_overlay_0_conduit_vga_b            (VGA_B),
     .vga_st_composer_overlay_0_conduit_vga_blank_n      (VGA_BLANK_N),
@@ -153,11 +134,23 @@ anxious_capture u0 (
     .vga_st_composer_overlay_0_conduit_vga_r            (VGA_R),
     .vga_st_composer_overlay_0_conduit_vga_sync_n       (VGA_SYNC_N),
     .vga_st_composer_overlay_0_conduit_vga_vs           (VGA_VS),
-    
+
     .clk_vga_clk                                        (clk_vga),
     .vid_read_buffer_0_vsync_s_vsync                    (VGA_VS),
     .render_mm_to_st_vga_vsync_s_vsync                  (VGA_VS),
     .cam_mm_to_st_vga_vsync_s_vsync                     (VGA_VS),
+
+	.fs_wires_sram_we_n                                 (SSRAM_WE_N),
+	.fs_wires_fl_we_n                                   (FL_WE_N),
+	.fs_wires_sram_oe_n                                 (SSRAM_OE_N),
+	.fs_wires_sram_begintransfer_n                      (SSRAM_ADSC_N),
+	.fs_wires_fl_oe_n                                   (FL_OE_N),
+	.fs_wires_sram_ce_n                                 (),
+	.fs_wires_fl_ce_n                                   (FL_CE_N),
+	.fs_wires_sram_be_n                                 (SSRAM_BE),
+	.fs_wires_fs_data                                   (FS_DQ),
+	.fs_wires_sram_reset_n                              (),
+	.fs_wires_fs_addr                                   (FS_ADDR)
 );
 
 endmodule
