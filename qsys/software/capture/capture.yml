@@ -1,0 +1,21 @@
+name: teamocil-session
+windows:
+    - name: capture
+      layout: tiled
+      panes:
+          - commands:
+              - cd /home/Robot/anAnxiousProject3/qsys/software
+              - export CONFIG=capture.config
+              - export CPU_ID=0
+          - commands:
+              - cd /home/Robot/anAnxiousProject3/qsys/software
+              - export CONFIG=capture.config
+              - export CPU_ID=1
+          - commands:
+              - cd /home/Robot/anAnxiousProject3/qsys/software
+              - export CONFIG=capture.config
+              - export CPU_ID=2
+          - commands:
+              - cd /home/Robot/anAnxiousProject3/qsys/software
+              - export CONFIG=capture.config
+              - export CPU_ID=3
