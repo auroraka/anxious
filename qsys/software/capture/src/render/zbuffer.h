@@ -6,6 +6,8 @@
 
 #ifdef MYLOCAL
 #include "bmp.h"
+#else
+#include "object.h"
 #endif
 
 #ifndef MYLOCAL
@@ -21,10 +23,13 @@
 #define WRITE_PIXF(i, j, r, g, b) SDRAM_W(j, HEIGHT - i, ((uchar)((r) * 255) << 16) | ((uchar)((g) * 255) << 8) | ((uchar)((b) * 255)))
 #define WRITE_TRANS(i, j) SDRAM_CLEAR(j, HEIGHT - i)
 
-#define BUFFER_PORT (3)
-#define BUFFER_R(x, y) (IORD(SDRAM,(3<<23)|(BUFFER_PORT << 19) | ((y) << 10) | (x)))
-#define BUFFER_W(x, y, val) (IOWR(SDRAM,(3 << 23) | (BUFFER_PORT << 19) | ((y) << 10) | (x), (val)))
+//(x,y)~(640,480)
+//#define BUFFER_R(x, y) IORD(SDRAM,((3<<23)| ((x)<<9) | (y)))
+//#define BUFFER_W(x, y, val) IOWR(SDRAM,((3<<23)| ((x)<<10) | (y)), (val))
 
+#define BUFFER_W(x,y,val) IOWR(SDRAM,(3 << 23) | (x<<10)|y, val)
+#define BUFFER_R(x,y) IORD(SDRAM,(3 << 23) | (x<<10)|y)
+	
 
 #endif
 
@@ -36,20 +41,12 @@ static int offline_render_status;
 #define MAX_B (10000000)
 
 #ifndef MYLOCAL
-int ZBuffer_R(int i,int j){
-		BUFFER_R(i,j);
-}
-void ZBuffer_W(int i,int j,int z){
-	BUFFER_W(i,j,z);
-}
+#define ZBuffer_R(i,j) BUFFER_R(i,j)
+#define ZBuffer_W(i,j,val) BUFFER_W(i,j,val)
 #else
 static int ZBuffer[PIC_H][PIC_W];
-float ZBuffer_R(int i, int j) {
-	return ZBuffer[i][j];
-}
-void ZBuffer_W(int i, int j, int z) {
-	ZBuffer[i][j] = z;
-}
+#define ZBuffer_R(i,j) ZBuffer[i][j]
+#define ZBuffer_W(i,j,val) ZBuffer[i][j]=val
 #endif
 
 void _setColor(int i, int j, Color color) {
@@ -74,29 +71,26 @@ void setColorXY(int x, int y, Color color) {
 }
 
 void bufferColor(int i, int j, Color color, float z) {
-	int x = z * 100000;
-	//if (x < ZBuffer_R(i, j)) {
-	//	ZBuffer_W(i, j, x);
+	IntF buf;
+	buf.u=ZBuffer_R(i, j);
+	if (z < buf.f) {
+		buf.f=z;
+		ZBuffer_W(i, j, buf.u);
 		setColorXY(i, j, color);
-	//}else{
+	}else{
 		//printf("%d %d [%d %d]\n",x,ZBuffer_R(i, j),i,j);
-	//}
+	}
 }
 void initBuffer() {
 	render_port=RENDER_PORT();
-	// for (int i = 0; i < PIC_H; i++) {
-		// for (int j = 0; j < PIC_W; j++) {
-			// ZBuffer_W( j,i, MAX_B);
-			
-		// }
-	// }
-	// for (int i=0;i<PIC_H;i++){
-		// for (int j=0;j<PIC_W;j++){
-				// if (ZBuffer_R(j,i)!=2333){
-				// printf("%d %d %d\n",j,i,ZBuffer_R(j,i));
-				// }
-		// }
-	// }
+
+	IntF inf;
+	inf.f=1e30;
+	for (int i = 0; i < PIC_W; i++) {
+		for (int j = 0; j < PIC_H; j++) {
+			ZBuffer_W( i,j ,inf.u);
+		}
+	}
 }
 
 #endif
