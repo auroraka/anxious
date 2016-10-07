@@ -17,45 +17,12 @@ const static float center_x_l = 284.432591f, center_y_l = 205.206010f;
 const static float center_x_r = 260.334008f, center_y_r = 307.355809f;
 const static float stereo_dist = 17.6; // cm
 
-
-void getColor(Vector _N, Vector C, Color _color, Color ret) {
-	Vector N;
-	copyVector(_N, N);
-	normal(N, N);
-	Color color, tmp;
-
-	copyColor(_color, color);
-	mulc(color, BG_C, tmp);
-	mulcd(tmp, DIFF, ret);
-
-	Vector R;
-	sub(LI_O, C, R);
-	normal(R, R);
-	float RN = dot(R, N);
-	//printf("%.5lf\n", RN);
-	if (RN > EPS) {
-
-		if (DIFF > EPS) {
-			float diff = DIFF * RN;
-			mulcd(color, diff, tmp);
-			//printf("diff: "); debugVector(tmp);
-			addc(ret, tmp, ret);
-		}
-		/*if (SPEC > EPS) {
-			float spec = SPEC * pow(RN, SPEC_POWER);
-			mulcd(color, spec, tmp);
-			printf("spec: "); debugVector(tmp);
-			addc(ret, tmp, ret);
-		}*/
-	}
-	normalize(ret);
+//SPEC_POWER=4
+inline float powSpec(float x){
+	return x*x*x*x;
 }
-void getColorNR(Vector _N, Vector _R, Color _color, Color ret) {
-	Vector N,R;
-	copyVector(_N, N);
-	copyVector(_R, R);
-	normal(N, N);
-	normal(R, R);
+//notice: N,R,color will change after function
+void getColorNR(Vector N, Vector R, Color _color, Color ret) {
 	Color color, tmp;
 
 	copyColor(_color, color);
@@ -64,17 +31,16 @@ void getColorNR(Vector _N, Vector _R, Color _color, Color ret) {
 
 	float RN = dot(R, N);
 	if (RN > EPS) {
-
-		if (DIFF > EPS) {
-			float diff = DIFF * RN;
-			mulcd(color, diff, tmp);
-			addc(ret, tmp, ret);
-		}
-		if (SPEC > EPS) {
-		float spec = SPEC * pow(RN, SPEC_POWER);
+		//DIFF
+		float diff = DIFF * RN;
+		mulcd(color, diff, tmp);
+		addc(ret, tmp, ret);
+		
+		//SPEC
+		//float spec = SPEC * pow(RN, SPEC_POWER);
+		float spec = SPEC * powSpec(RN);
 		mulcd(color, spec, tmp);
 		addc(ret, tmp, ret);
-		}
 	}
 	normalize(ret);
 }
@@ -166,13 +132,8 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 		add(P[i], Y, P[i + 4]);
 	}
 	
-	if (!checkInCavans(P)) return false;
+	//if (!checkInCavans(P)) return false;
 	
-	Vector nX, nY, nZ;
-	copyNegVector(X, nX);
-	copyNegVector(Y, nY);
-	copyNegVector(Z, nZ);
-
 	Vector tmp;
 	muld(X, 0.5, tmp);
 	add(O, tmp, O);
@@ -181,7 +142,14 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 	muld(Z, 0.5, tmp);
 	add(O, tmp, O);
 
+	normal(X,X);normal(Y,Y);normal(Z,Z);
+	Vector nX, nY, nZ;
+	copyNegVector(X, nX);
+	copyNegVector(Y, nY);
+	copyNegVector(Z, nZ);
+
 	Vector R={-5,-5,-5};
+	normal(R,R);
 	Vector eye={0,0,100};
 
 	float k=1;
@@ -245,6 +213,16 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 }
 
 
+int sqrti(int a){
+	if (a<=1) return 1;
+	int l=1,r=a,mid;
+	while (l<r){
+		mid=(l+r)>>1;
+		if ((mid+1)*(mid+1)>a) r=mid;
+		else l=mid+1;
+	}
+	return l;
+}
 void drawSphereLine(Pos2 p, int r, int x1, int x2, int y, Color color) {
 	int j = y;
 	int r2 = r*r;
@@ -252,7 +230,7 @@ void drawSphereLine(Pos2 p, int r, int x1, int x2, int y, Color color) {
 	Vector col;
 	for (int i = x1; i <= x2; i++) {
 		int a2 = (i - p[0])*(i - p[0]) + (j - p[1])*(j - p[1]);
-		float b = sqrt(abs(r2 - a2));
+		float b = sqrti(abs(r2 - a2));
 		Vector N = { i - p[0],j - p[1],b };
 		//printf("%d %d\n", a2, r2);
 		//debugVector(N);
@@ -268,56 +246,18 @@ void drawSphereLine(Pos2 p, int r, int x1, int x2, int y, Color color) {
 void drawSphereLine3d(Pos p, int r,float k, int x1, int x2, int y, Color color) {
 	int j = y;
 	int r2 = r*r;
-	Vector R = { 1,0.7,0.8 };
-	//Vector R = { -5,-5,-5 };
+	Vector R = {0.6851887,0.4796320,0.5481509};//normalized //{ 1,0.7,0.8 };
 	Vector col;
 	for (int i = x1; i <= x2; i++) {
 		int a2 = (i - p[0])*(i - p[0]) + (j - p[1])*(j - p[1]);
 		float b = sqrt(abs(r2 - a2));
 		Vector N = { i - p[0],j - p[1],b };
-		//printf("%d %d\n", a2, r2);
-		//debugVector(N);
-		//normal(N, N);
-		//N[2] += 0.5;
 		normal(N, N);
 		getColorNR(N, R, color, col);
-		//setColorXY(i, j, col);
 		bufferColor(i,j,col,p[2]+b*k);
-		//printf("%d %d\n", i, j);
 	}
 }
 
-//void drawSphere(Pos P, int r,Color color) {
-//	int p0 = round(P[0]);
-//	int p1 = round(P[1]);
-//	int xMi = p0 - r;
-//	if (xMi < 0) return;
-//	int xMa = p0 + r;
-//	if (xMa >= PIC_W) return;
-//	int yMi = p1 - r;
-//	if (yMi < 0) return;
-//	int yMa = p1 + r;
-//	if (yMa >= PIC_H) return;
-//	int r2 = r*r;
-//	Vector R = { 1,0.7,0.8 };
-//	Color col;
-//	for (int i = xMi; i <= xMa; i++) {
-//		for (int j = yMi; j <= yMa; j++) {
-//			int a2 = (i - p0)*(i - p0) + (j - p1)*(j - p1);
-//			if (a2<=r2) {
-//				float b = sqrt(r2 - a2);
-//				Vector N = { i - p0,j - p1,b };
-//				normal(N,N);
-//				N[2] += 0.5;
-//				normal(N, N);
-//				getColorNR(N, R, color, col);
-//				//printf("n  : "); debugVector(N);
-//				//printf("col: "); debugVector(color);
-//				setColorXY(i, j, col);
-//			}
-//		}
-//	}
-//}
 
 void drawSphereC(Pos2 c, int radius, Color color) {
 	int cx = c[0], cy = c[1];

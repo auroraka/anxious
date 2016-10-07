@@ -63,25 +63,7 @@ void sync_objects() {
 		RENDER_STATUS_W(RENDER_IDLE);
 		return;
 	}
-	else if (status == RENDER_ADD_SPHERE){
-		int cnt=OBJECT_CNT_R();
-		int x  =OBJECT_R(cnt+1,0);
-		int y  =OBJECT_R(cnt+1,1);
-		int r  =OBJECT_R(cnt+1,2);
-		unsigned c  =OBJECT_R(cnt+1,3);
-		printf("[Object] now-tot: %d\n",cnt);
-		printf("[Object] receive-sphere: (%d,%d) r=%d\n", x,y,r);
-		Pos2 p={x,y};
-		Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
-		if (x-r<0 || x+r>=PIC_W || y-r<0 || y+r>=PIC_H){
-			printf("[Object] render-sphere failed: out of cavans\n");
-		}else{
-			printf("[Object] render-sphere: doing\n");
-			OBJECT_CNT_W(cnt+1);			
-			drawSphereC(p,r,color);
-		}
-		RENDER_STATUS_W(RENDER_IDLE);
-	}else if (status ==RENDER_ADD_CUBE){		
+	else if (status ==RENDER_ADD_CUBE){		
 		int cnt=OBJECT_CNT_R();
 		int i,j;IntF x;
 		Vector V[4];
@@ -122,6 +104,9 @@ void sync_objects() {
 		}
 		OBJECT_CNT_W(cnt+1);
 		RENDER_STATUS_W(RENDER_IDLE);
+	}else{
+		printf("[Object] format error\n");
+		RENDER_STATUS_W(RENDER_IDLE);	
 	}
 
 }
