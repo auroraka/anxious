@@ -20,9 +20,13 @@
 #include "object.h"
 #include "renderer.h"
 
+#define RENDER_VSYNC 0x08001010 
+#define RENDER_START() IORD(RENDER_START_PIO_BASE, 0)
+#define VSYNC(x) IOWR(RENDER_VSYNC, 0, x)
+
+
 void render_init(int row_start, int row_cnt) {
 	initZBuffer();
-	render_time_check=0;
 }
 
 inline void debugVector(Vector A){
@@ -48,7 +52,6 @@ void printReceiveSphere3D(Vector V[],unsigned color){
 int ttt=0;
 void sync_objects() {	
 	int status=RENDER_STATUS_R();
-	offline_render_status=status;
 	
 	ttt++;
 	if (ttt%5000==0) printf("sync_objects, RENDER_STATUS=%d\n",status);

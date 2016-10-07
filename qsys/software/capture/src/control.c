@@ -16,10 +16,11 @@
 #include <assert.h>
 #include <math.h>
 
+#include "common.h"
+#include "memory.h"
 #include "display.h"
-#include "control.h"
 #include "palette.h"
-#include "render/object.h"
+#include "control.h"
 
 const static float focus_x_l = 1117.36809f, focus_y_l = 1115.59155f;
 const static float focus_x_r = 1098.56402f, focus_y_r = 1095.74358f;
@@ -255,7 +256,6 @@ void draw_overlay_frame(unsigned color) {
 		case DRAW_POINT:
 			if (store) {
 				store_pf(0);
-//				p[0].x = get_x(cur_p), p[0].y = get_y(cur_p);
 				p[0] = project_point(pf[0]);
 			}
 			draw_point(p[0], color);

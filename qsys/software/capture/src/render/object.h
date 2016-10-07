@@ -35,7 +35,7 @@ void reset_objects();
 
 void remove_object(int idx);
 
-void add_sphere(pointf *sp, float r, unsigned color);
+void add_sphere3d(pointf *pf, unsigned color);
 
 void add_sphere2d(int x,int y,int r, unsigned color);
 

@@ -16,17 +16,6 @@ void clean_sdram(unsigned bank) {
 	}
 }
 
-void initZBuffer() {
-	//IntF inf;
-	//inf.f=1e30;
-	int i,j;
-	for (i = 0; i < WIDTH; i++) {
-		for (j = 0; j < HEIGHT; j++) {
-			ZBuffer_W( i,j ,0);
-		}
-	}
-}
-
 int getRand(){
 	return rand();
 }

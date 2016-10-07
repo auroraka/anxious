@@ -122,7 +122,7 @@ void drawTriangle(Pos v1, Pos v2, Pos v3, Color color) {
 				bufferColor(i, j, color, (a * v1[2] + b * v2[2] + c * v3[2]));
 			}
 		}
-		if (offline_render_status==RENDER_IDLE) return;
+		if (RENDER_STATUS_R()==RENDER_IDLE) return;
 	}
 }
 bool getPos_online(Vector A,Pos B) {
@@ -143,11 +143,9 @@ void renderTriangle(Vector A, Vector B, Vector C, Color color) {
 	drawTriangle(X, Y, Z, color);
 }
 void renderRect(Vector A, Vector B, Vector C, Vector D, Color color) {
-	if (offline_render_status==RENDER_IDLE) return;
+	if (RENDER_STATUS_R()==RENDER_IDLE) return;
 	renderTriangle(A, B, C, color);
-	if (offline_render_status==RENDER_IDLE) return;
 	renderTriangle(A, C, D, color);
-	if (offline_render_status==RENDER_IDLE) return;
 }
 
 bool checkInCavans(Vector P[]){
@@ -194,7 +192,7 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 		normalize(col);
 		renderRect(P[0], P[4], P[7], P[3], col);
 	}
-	printf("0: %d %d\n",dot(eye,nX)>0,(int)dot(eye,nX));
+	//printf("0: %d %d\n",dot(eye,nX)>0,(int)dot(eye,nX));
 	//usleep(1000*2000);
 
 	if (dot(eye,Z)<0){
@@ -203,7 +201,7 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 		normalize(col);
 		renderRect(P[2], P[3], P[7], P[6], col);
 	}
-	printf("1: %d %d\n",dot(eye,Z)>0,(int)dot(eye,Z));
+	//printf("1: %d %d\n",dot(eye,Z)>0,(int)dot(eye,Z));
 	//usleep(1000*2000);
 
 	if (dot(eye,Y)<0){
@@ -212,7 +210,7 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 		normalize(col);
 		renderRect(P[4], P[5], P[6], P[7], col);
 	}
-	printf("2: %d %d\n",dot(eye,Y)>0,(int)dot(eye,Y));
+	//printf("2: %d %d\n",dot(eye,Y)>0,(int)dot(eye,Y));
 	//usleep(1000*2000);
 
 	if (dot(eye,X)<0){
@@ -221,7 +219,7 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 		normalize(col);
 		renderRect(P[1], P[2], P[6], P[5], col);
 	}
-	printf("3: %d %d\n",dot(eye,X)>0,(int)dot(eye,X));
+	//printf("3: %d %d\n",dot(eye,X)>0,(int)dot(eye,X));
 	//usleep(1000*2000);
 	
 	if (dot(eye,nY)<0){
@@ -230,7 +228,7 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 		normalize(col);
 		renderRect(P[0], P[1], P[2], P[3], col);
 	}
-	printf("4: %d %d\n",dot(eye,nY)>0,(int)dot(eye,nY));
+	//printf("4: %d %d\n",dot(eye,nY)>0,(int)dot(eye,nY));
 	//usleep(1000*2000);
 
 
@@ -240,7 +238,7 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 		normalize(col);
 		renderRect(P[0], P[1], P[5], P[4], col);
 	}
-	printf("5: %d %d\n",dot(eye,nZ)>0,(int)dot(eye,nZ));
+	//printf("5: %d %d\n",dot(eye,nZ)>0,(int)dot(eye,nZ));
 	//usleep(1000*2000);
 	
 	return true;
@@ -330,13 +328,10 @@ void drawSphereC(Pos2 c, int radius, Color color) {
 		else d += 2 * (dx - dy) + 5, --dy;
 		++dx;
 		drawSphereLine(c, radius, -dx + cx, dx + cx, dy + cy, color);
-		if (offline_render_status==RENDER_IDLE) return;
 		drawSphereLine(c, radius, -dy + cx, dy + cx, dx + cy, color);
-		if (offline_render_status==RENDER_IDLE) return;
 		drawSphereLine(c, radius, -dy + cx, dy + cx, -dx + cy, color);
-		if (offline_render_status==RENDER_IDLE) return;
 		drawSphereLine(c, radius, -dx + cx, dx + cx, -dy + cy, color);
-		if (offline_render_status==RENDER_IDLE) return;
+		if (RENDER_STATUS_R()==RENDER_IDLE) return;
 	}
 }
 void drawSphere3d(Pos c, int radius,float k, Color color) {
@@ -348,23 +343,16 @@ void drawSphere3d(Pos c, int radius,float k, Color color) {
 		else d += 2 * (dx - dy) + 5, --dy;
 		++dx;
 		drawSphereLine3d(c, radius,k, -dx + cx, dx + cx, dy + cy, color);
-		if (offline_render_status==RENDER_IDLE) return;
 		drawSphereLine3d(c, radius,k, -dy + cx, dy + cx, dx + cy, color);
-		if (offline_render_status==RENDER_IDLE) return;
 		drawSphereLine3d(c, radius, k,-dy + cx, dy + cx, -dx + cy, color);
-		if (offline_render_status==RENDER_IDLE) return;
 		drawSphereLine3d(c, radius, k,-dx + cx, dx + cx, -dy + cy, color);
-		if (offline_render_status==RENDER_IDLE) return;
+		if (RENDER_STATUS_R()==RENDER_IDLE) return;
 	}
 }
 bool renderSphere3d(Vector O, Vector X, Color color){
 	Pos P,P1;
 	if (!getPos_online(O,P)) return false;
 	if (!getPos_online(X,P1)) return false;
-	//Color c={1,0,0};
-	//Color gg={0,1,0};
-	//bufferColor(P[0],P[1],c,300);
-	//bufferColor(P1[0],P1[1],gg,300);
 	
 	float r2d=sqrt((P[0]-P1[0])*(P[0]-P1[0])+(P[1]-P1[1])*(P[1]-P1[1]));
 	if (r2d<EPS) return false;
