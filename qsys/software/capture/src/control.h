@@ -5,9 +5,6 @@
 #ifndef ANXIOUS_CONTROL_H
 #define ANXIOUS_CONTROL_H
 
-#include "common.h"
-#include "render/object.h"
-
 #define KEY_R() IORD(KEY_PIO_BASE, 0)
 #define IR_R() ((IORD(IR_RECEIVER_0_BASE, 0) >> 16) & 0xFF)
 

@@ -16,11 +16,10 @@
 #include <assert.h>
 #include <math.h>
 
-#include "memory.h"
-#include "common.h"
 #include "display.h"
 #include "control.h"
 #include "palette.h"
+#include "render/object.h"
 
 const static float focus_x_l = 1117.36809f, focus_y_l = 1115.59155f;
 const static float focus_x_r = 1098.56402f, focus_y_r = 1095.74358f;
@@ -29,14 +28,11 @@ const static float center_x_r = 260.334008f, center_y_r = 307.355809f;
 const static float stereo_dist = 17.6; // cm
 
 #define VSYNC(x) IOWR(OVERLAY_VSYNC_PIO_BASE, 0, (x))
-#define BUFFER_PORT() IORD(OVERLAY_PORT_PIO_BASE, 0)
-//#define BUFFER_PORT() IORD(RENDER_PORT_PIO_BASE, 0)
 
 static float Xf, Yf, Zf;
 
 pointf find_location(point p_l, point p_r) {
 	int x_l = get_x(p_l), x_r = get_x(p_r);
-	//int y_l = get_y(p_l), y_r = get_y(p_r);
 	
 	pointf loc;
 	loc.z = stereo_dist / ((x_l - center_x_l) / focus_x_l - (x_r - center_x_r) / focus_x_r);
@@ -250,6 +246,7 @@ inline float lenf(pointf df) {
 #define TRANSPARENT 0xF
 
 pointf store_cube[5];
+pointf store_sphere[2];
 void draw_overlay_frame(unsigned color) {
 	boolean store = true;
 	point cur_p = SHARED_R(0);
@@ -275,6 +272,8 @@ void draw_overlay_frame(unsigned color) {
 			draw_point(p[0], color);
 			
 			draw_sphere(p[0], sphere_radius, color);
+			store_sphere[0]=pf[0];
+			store_sphere[1]=addf(pf[0], df[1]);
 			break;
 		case DRAW_CUBE_LINE:
 			if (store) {
@@ -549,7 +548,7 @@ void key_down(int key_code) {
 				break;
 			case DRAW_SPHERE_RADIUS:				
 				//add_sphere2d(store_x,store_y, store_r, store_color);
-				add_sphere3d(pf,store_color);
+				add_sphere3d(store_sphere,store_color);
 				draw_state = DRAW_POINT;
 				break;
 			case DRAW_CUBE_LINE:

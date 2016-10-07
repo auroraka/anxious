@@ -4,7 +4,7 @@
 
 #include "object.h"
 #include "../memory.h"
-
+#include "zbuffer.h"
 
 void reset_objects() {
 	int i,j;
@@ -15,6 +15,7 @@ void reset_objects() {
 	}
 	RENDER_STATUS_W(RENDER_IDLE);
 	OBJECT_CNT_W(0);
+	initZBuffer();
 	clean_sdram(1);
 	printf("[Object] delete all objects\n");
 	printf("[Object] now-tot: %d\n",OBJECT_CNT_R());
@@ -27,10 +28,11 @@ void printPoint(pointf x){
 	printf("(%d,%d,%d) ",(int)x.x,(int)x.y,(int)x.z);
 	
 }
-void printSendSphere3d(pointf pf[]){
+void printSendSphere3d(pointf pf[],unsigned color){
 	printf("[Object] send-cube3d: ");
 	printf("o=");printPoint(pf[0]);
 	printf("x=");printPoint(pf[1]);
+	printf("color=%u ",color);
 	printf("\n");	
 }
 void add_sphere3d(pointf *pf, float r, unsigned color) {
@@ -50,7 +52,7 @@ void add_sphere3d(pointf *pf, float r, unsigned color) {
 		
 	RENDER_STATUS_W(RENDER_ADD_SPHERE3D);
 	printf("[Object] now-tot: %d\n",cnt);
-	printSendSphere3d(pf);
+	printSendSphere3d(pf,color);
 }
 void add_sphere2d(int x,int y,int r,unsigned color) {
 	int status=RENDER_STATUS_R();

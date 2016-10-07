@@ -21,7 +21,7 @@
 #include "renderer.h"
 
 void render_init(int row_start, int row_cnt) {
-	initBuffer();
+	initZBuffer();
 	render_time_check=0;
 }
 
@@ -38,11 +38,11 @@ void printReceiveCube(Vector V[]){
 	for (i=0;i<4;i++) printVector(V[i]);
 	printf("\n");
 }
-void printReceiveSphere3D(Vector V[]){
+void printReceiveSphere3D(Vector V[],unsigned color){
 	printf("[Object] receive-sphere3d: ");
 	int i;
 	for (i=0;i<2;i++) printVector(V[i]);
-	printf("\n");
+	printf("color=%u\n",color);
 }
 
 int ttt=0;
@@ -108,12 +108,13 @@ void sync_objects() {
 				V[i][j]=x.f;
 			}
 		}
-		unsigned c=OBJECT_R(cnt+1,12);
+		unsigned c=OBJECT_R(cnt+1,6);
 		Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
-		printReceiveSphere3D(V);
+		printf("[Object] sphere-color: %d %d %d\n",(int)color[0],(int)color[1],(int)color[2]);
+		printReceiveSphere3D(V,c);
 		printf("[Object] now-tot: %d\n",cnt);
 		printf("[Object] render-sphere3d: doing\n");
-		if (!renderSphere(V[0],V[1],color)){
+		if (!renderSphere3d(V[0],V[1],color)){
 			printf("[Object] render-sphere3d failed: out of cavans\n");
 		}
 		OBJECT_CNT_W(cnt+1);

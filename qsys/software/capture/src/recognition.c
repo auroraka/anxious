@@ -82,27 +82,27 @@ unsigned check_range(unsigned pixel) {
 	return 1;
 }
 
-void cvtColor_inRange(int cam_port, unsigned *frame, unsigned *row) {
-	int i, j;
-	unsigned pixel;
+// void cvtColor_inRange(int cam_port, unsigned *frame, unsigned *row) {
+	// int i, j;
+	// unsigned pixel;
 	
-	for (j = 0; j < HEIGHT; ++j) {
-		if ((j & 1) == 0) {
-			for (i = 0; i < FRAME_WIDTH; ++i)
-				row[i] = 0;
-		}
-		for (i = 0; i < WIDTH; ++i) {
-			pixel = SDRAM_R(i, j);
-			row[i >> 1] += (((pixel >> 16) & 0xFF) << 20)
-			               + (((pixel >> 8) & 0xFF) << 10)
-			               + (pixel & 0xFF);
-		}
-		if ((j & 1) == 1) {
-			for (i = 0; i < FRAME_WIDTH; ++i)
-				set_frame(i, j >> 1, check_range(row[i]));
-		}
-	}
-}
+	// for (j = 0; j < HEIGHT; ++j) {
+		// if ((j & 1) == 0) {
+			// for (i = 0; i < FRAME_WIDTH; ++i)
+				// row[i] = 0;
+		// }
+		// for (i = 0; i < WIDTH; ++i) {
+			// pixel = SDRAM_R(i, j);
+			// row[i >> 1] += (((pixel >> 16) & 0xFF) << 20)
+			               // + (((pixel >> 8) & 0xFF) << 10)
+			               // + (pixel & 0xFF);
+		// }
+		// if ((j & 1) == 1) {
+			// for (i = 0; i < FRAME_WIDTH; ++i)
+				// set_frame(i, j >> 1, check_range(row[i]));
+		// }
+	// }
+// }
 
 void erode(unsigned *frame, unsigned *row) {
 	unsigned *first = row, *last = row + MASK_WIDTH, *swp_tmp;
@@ -315,10 +315,6 @@ RecogResult floodfill(unsigned *frame, unsigned *queue) {
 				}
 			}
 	
-//	min_x = get_x(best_pt1) * 2;
-//	min_y = get_y(best_pt1) * 2;
-//	max_x = get_x(best_pt2) * 2 + 1;
-//	max_y = get_y(best_pt2) * 2 + 1;
 	min_x = get_x(best_pt1);
 	min_y = get_y(best_pt1);
 	max_x = get_x(best_pt2);
@@ -343,7 +339,6 @@ RecogResult recognize_raw(unsigned port) {
 	unsigned *tmp = (unsigned *)RECOG_MEMORY + 2 * FRAME_SIZE;
 	RecogResult result;
 	
-//	cvtColor_inRange(port, frame_from, tmp);
 	int i, j;
 	for (j = 0; j < FRAME_HEIGHT; ++j)
 		for (i = 0; i < MASK_WIDTH; ++i)
@@ -352,14 +347,7 @@ RecogResult recognize_raw(unsigned port) {
 	erode(frame, tmp);
 	dilate(frame, tmp);
 	dilate(frame, tmp);
-	
-//	int render_port = 0;
-//	for (j = 0; j < HEIGHT; ++j)
-//		for (i = 0; i < WIDTH; ++i) {
-//			if (get_frame(i, j)) SDRAM_W(i, j, 0xFFFFFF);
-//			else SDRAM_W(i, j, 0x000000);
-//		}
-	
+		
 	result = floodfill(frame, tmp);
 	VSYNC(1);
 	usleep(0);
@@ -382,40 +370,5 @@ RecogResult recognize() {
 	return result;
 }
 
-/*
-void clear_result(unsigned render_port, RecogResult *result) {
-	int min_x, max_x, min_y, max_y, center_x, center_y, i, j;
-	unpack_result(result);
-	
-	for (i = min_x; i <= max_x; ++i) {
-		SDRAM_CLEAR(i, min_y);
-		SDRAM_CLEAR(i, max_y);
-	}
-	for (i = min_y; i <= max_y; ++i) {
-		SDRAM_CLEAR(min_x, i);
-		SDRAM_CLEAR(max_x, i);
-	}
-	for (i = center_x - 1; i <= center_x + 2; ++i)
-		for (j = center_y - 1; j <= center_y + 2; ++j)
-			SDRAM_CLEAR(i, j);
-}
-
-void draw_result(unsigned render_port, RecogResult *result) {
-	int min_x, max_x, min_y, max_y, center_x, center_y, i, j;
-	unpack_result(result);
-	
-	for (i = min_x; i <= max_x; ++i) {
-		SDRAM_W(i, min_y, 255 << 8);
-		SDRAM_W(i, max_y, 255 << 8);
-	}
-	for (i = min_y; i <= max_y; ++i) {
-		SDRAM_W(min_x, i, 255 << 8);
-		SDRAM_W(max_x, i, 255 << 8);
-	}
-	for (i = center_x - 1; i <= center_x + 2; ++i)
-		for (j = center_y - 1; j <= center_y + 2; ++j)
-			SDRAM_W(i, j, 255);
-}
- */
 
 #endif

@@ -271,19 +271,20 @@ void drawSphereLine3d(Pos p, int r,float k, int x1, int x2, int y, Color color) 
 	int j = y;
 	int r2 = r*r;
 	Vector R = { 1,0.7,0.8 };
+	//Vector R = { -5,-5,-5 };
 	Vector col;
 	for (int i = x1; i <= x2; i++) {
 		int a2 = (i - p[0])*(i - p[0]) + (j - p[1])*(j - p[1]);
-		float b = sqrt(abs(r2 - a2))*k;
+		float b = sqrt(abs(r2 - a2));
 		Vector N = { i - p[0],j - p[1],b };
 		//printf("%d %d\n", a2, r2);
 		//debugVector(N);
-		normal(N, N);
-		N[2] += 0.5;
+		//normal(N, N);
+		//N[2] += 0.5;
 		normal(N, N);
 		getColorNR(N, R, color, col);
 		//setColorXY(i, j, col);
-		bufferColor(i,j,col,p[2]+b);
+		bufferColor(i,j,col,p[2]+b*k);
 		//printf("%d %d\n", i, j);
 	}
 }
@@ -356,16 +357,22 @@ void drawSphere3d(Pos c, int radius,float k, Color color) {
 		if (offline_render_status==RENDER_IDLE) return;
 	}
 }
-bool renderSphere(Vector O, Vector X, Color color){
+bool renderSphere3d(Vector O, Vector X, Color color){
 	Pos P,P1;
 	if (!getPos_online(O,P)) return false;
 	if (!getPos_online(X,P1)) return false;
+	//Color c={1,0,0};
+	//Color gg={0,1,0};
+	//bufferColor(P[0],P[1],c,300);
+	//bufferColor(P1[0],P1[1],gg,300);
+	
 	float r2d=sqrt((P[0]-P1[0])*(P[0]-P1[0])+(P[1]-P1[1])*(P[1]-P1[1]));
 	if (r2d<EPS) return false;
 	float r3d=dis(O,X);
 	float k=r3d/r2d;
 	drawSphere3d(P, r2d, k,color);
 	return true;
+	
 }
 
 

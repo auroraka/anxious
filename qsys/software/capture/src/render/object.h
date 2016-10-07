@@ -22,11 +22,6 @@
 #define OBJECT_R(i,j) SHARED_R(7+i*OBJECT_LENGTH+j)
 #define OBJECT_W(i,j,x) SHARED_W(7+i*OBJECT_LENGTH+j,x)
 
-typedef union{
-	float f;
-	unsigned u;
-}IntF;
-
 typedef struct {
 	int x, y;
 } pointi;

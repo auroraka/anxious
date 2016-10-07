@@ -24,4 +24,9 @@ typedef int point;
 #define BLACK 0x000000
 #define RED 0xFF0000
 
+#define HEIGHT (480)
+#define WIDTH (640)
+#define PIC_H HEIGHT
+#define PIC_W WIDTH
+
 #endif // COMMON_H
