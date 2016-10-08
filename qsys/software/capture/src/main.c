@@ -9,6 +9,7 @@
 #include <io.h>
 #include <time.h>
 
+#include "debug.h"
 #include "common.h"
 #include "memory.h"
 

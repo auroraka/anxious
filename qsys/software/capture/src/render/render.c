@@ -62,7 +62,7 @@ void sync_objects() {
 	
 	ttt++;
 	if (ttt%5000==0){
-		sprintf(MSG,"sync_objects, RENDER_STATUS=%d\n",status);
+		sprintf(MSG,"sync_objects, RENDER_STATUS=%d\n\0",status);
 		debugMSG();
 	}
 	if (status==RENDER_IDLE){
