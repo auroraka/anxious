@@ -1,4 +1,4 @@
-#if CPU_ID>2
+#if CPU_ID>=2
 
 #include "zbuffer.h"
 
@@ -22,7 +22,6 @@ void bufferColor(int i, int j, Color color, float z) {
 		ZBuffer_W(i, j, buf.u);
 		setColorXY(i, j, color);
 	}else{
-		//printf("%d %d [%d %d]\n",x,ZBuffer_R(i, j),i,j);
 	}
 
 }

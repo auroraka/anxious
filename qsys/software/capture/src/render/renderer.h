@@ -160,7 +160,7 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 		normalize(col);
 		renderRect(P[0], P[4], P[7], P[3], col);
 	}
-	//printf("0: %d %d\n",dot(eye,nX)>0,(int)dot(eye,nX));
+	//sprintf(MSG,"0: %d %d\n",dot(eye,nX)>0,(int)dot(eye,nX));
 	//usleep(1000*2000);
 
 	if (dot(eye,Z)<0){
@@ -169,7 +169,7 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 		normalize(col);
 		renderRect(P[2], P[3], P[7], P[6], col);
 	}
-	//printf("1: %d %d\n",dot(eye,Z)>0,(int)dot(eye,Z));
+	//sprintf(MSG,"1: %d %d\n",dot(eye,Z)>0,(int)dot(eye,Z));
 	//usleep(1000*2000);
 
 	if (dot(eye,Y)<0){
@@ -178,7 +178,7 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 		normalize(col);
 		renderRect(P[4], P[5], P[6], P[7], col);
 	}
-	//printf("2: %d %d\n",dot(eye,Y)>0,(int)dot(eye,Y));
+	//sprintf(MSG,"2: %d %d\n",dot(eye,Y)>0,(int)dot(eye,Y));
 	//usleep(1000*2000);
 
 	if (dot(eye,X)<0){
@@ -187,7 +187,7 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 		normalize(col);
 		renderRect(P[1], P[2], P[6], P[5], col);
 	}
-	//printf("3: %d %d\n",dot(eye,X)>0,(int)dot(eye,X));
+	//sprintf(MSG,"3: %d %d\n",dot(eye,X)>0,(int)dot(eye,X));
 	//usleep(1000*2000);
 	
 	if (dot(eye,nY)<0){
@@ -196,7 +196,7 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 		normalize(col);
 		renderRect(P[0], P[1], P[2], P[3], col);
 	}
-	//printf("4: %d %d\n",dot(eye,nY)>0,(int)dot(eye,nY));
+	//sprintf(MSG,"4: %d %d\n",dot(eye,nY)>0,(int)dot(eye,nY));
 	//usleep(1000*2000);
 
 
@@ -206,7 +206,7 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 		normalize(col);
 		renderRect(P[0], P[1], P[5], P[4], col);
 	}
-	//printf("5: %d %d\n",dot(eye,nZ)>0,(int)dot(eye,nZ));
+	//sprintf(MSG,"5: %d %d\n",dot(eye,nZ)>0,(int)dot(eye,nZ));
 	//usleep(1000*2000);
 	
 	return true;
@@ -232,7 +232,7 @@ void drawSphereLine(Pos2 p, int r, int x1, int x2, int y, Color color) {
 		int a2 = (i - p[0])*(i - p[0]) + (j - p[1])*(j - p[1]);
 		float b = sqrti(abs(r2 - a2));
 		Vector N = { i - p[0],j - p[1],b };
-		//printf("%d %d\n", a2, r2);
+		//sprintf(MSG,"%d %d\n", a2, r2);
 		//debugVector(N);
 		normal(N, N);
 		N[2] += 0.5;
@@ -240,7 +240,7 @@ void drawSphereLine(Pos2 p, int r, int x1, int x2, int y, Color color) {
 		getColorNR(N, R, color, col);
 		//setColorXY(i, j, col);
 		bufferColor(i,j,col,-b);
-		//printf("%d %d\n", i, j);
+		//sprintf(MSG,"%d %d\n", i, j);
 	}
 }
 void drawSphereLine3d(Pos p, int r,float k, int x1, int x2, int y, Color color) {

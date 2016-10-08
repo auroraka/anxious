@@ -20,7 +20,8 @@ inline void swapPos(Pos A, Pos B) {
 }
 
 void debugPos(Pos X) {
-	printf("%.5lf %.5lf %.5lf\n", X[0], X[1], X[2]);
+	sprintf(MSG,"%.5lf %.5lf %.5lf\n", X[0], X[1], X[2]);
+	debugMSG();
 }
 
 typedef int Pos2[2];

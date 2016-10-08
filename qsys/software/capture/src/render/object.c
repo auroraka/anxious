@@ -2,8 +2,9 @@
 // Created by Kanari on 2016/8/24.
 //
 
-#if CPU_ID>2
+#if CPU_ID>=2
 
+#include "../debug.h"
 #include "object.h"
 #include "../memory.h"
 #include "zbuffer.h"
@@ -19,28 +20,36 @@ void reset_objects() {
 	OBJECT_CNT_W(0);
 	initZBuffer();
 	clean_sdram(1);
-	printf("[Object] delete all objects\n");
-	printf("[Object] now-tot: %d\n",OBJECT_CNT_R());
+	sprintf(MSG,"[Object] delete all objects\n");
+	debugMSG();
+	sprintf(MSG,"[Object] now-tot: %d\n",OBJECT_CNT_R());
+	debugMSG();
 }
 
 void remove_object(int idx) {
 }
 
 void printPoint(pointf x){
-	printf("(%d,%d,%d) ",(int)x.x,(int)x.y,(int)x.z);
-	
+	sprintf(MSG,"(%d,%d,%d) ",(int)x.x,(int)x.y,(int)x.z);
+	debugMSG();	
 }
 void printSendSphere3d(pointf pf[],unsigned color){
-	printf("[Object] send-cube3d: ");
-	printf("o=");printPoint(pf[0]);
-	printf("x=");printPoint(pf[1]);
-	printf("color=%u ",color);
-	printf("\n");	
+	sprintf(MSG,"[Object] send-cube3d: ");
+	debugMSG();
+	sprintf(MSG,"o=");printPoint(pf[0]);
+	debugMSG();
+	sprintf(MSG,"x=");printPoint(pf[1]);
+	debugMSG();
+	sprintf(MSG,"color=%u ",color);
+	debugMSG();
+	sprintf(MSG,"\n");	
+	debugMSG();
 }
 void add_sphere3d(pointf *pf, unsigned color) {
 	int status=RENDER_STATUS_R();
 	if (status!=RENDER_IDLE){
-		printf("[Object] add-sphere3d failed: not ready\n");
+		sprintf(MSG,"[Object] add-sphere3d failed: not ready\n");
+		debugMSG();
 		return;
 	}
 	int cnt=OBJECT_CNT_R();
@@ -53,17 +62,20 @@ void add_sphere3d(pointf *pf, unsigned color) {
 	OBJECT_W(cnt+1,6,color);
 		
 	RENDER_STATUS_W(RENDER_ADD_SPHERE3D);
-	printf("[Object] now-tot: %d\n",cnt);
+	sprintf(MSG,"[Object] now-tot: %d\n",cnt);
+	debugMSG();
 	printSendSphere3d(pf,color);
 }
 void add_sphere2d(int x,int y,int r,unsigned color) {
 	int status=RENDER_STATUS_R();
 	if (status!=RENDER_IDLE){
-		printf("[Object] add-sphere failed: not ready\n");
+		sprintf(MSG,"[Object] add-sphere failed: not ready\n");
+		debugMSG();
 		return;
 	}
 	if (x-r<0 || x+r>=640 || y-r<0 || y+r>=480){
-		printf("[Object] add-sphere failed: out of canvas\n");		
+		sprintf(MSG,"[Object] add-sphere failed: out of canvas\n");		
+		debugMSG();
 		return;
 	}
 	int cnt=OBJECT_CNT_R();
@@ -74,23 +86,33 @@ void add_sphere2d(int x,int y,int r,unsigned color) {
 	
 	RENDER_STATUS_W(RENDER_ADD_SPHERE);
 	
-	printf("[Object] now-tot: %d\n",cnt);
-	printf("[Object] send-sphere: (%d,%d) r=%d\n", x,y,r);
+	sprintf(MSG,"[Object] now-tot: %d\n",cnt);
+	debugMSG();
+	sprintf(MSG,"[Object] send-sphere: (%d,%d) r=%d\n", x,y,r);
+	debugMSG();
 }
 
 void printSendCube(pointf pf[],unsigned color){
-	printf("[Object] send-cube: ");
-	printf("o=");printPoint(pf[0]);
-	printf("x=");printPoint(pf[1]);
-	printf("y=");printPoint(pf[2]);
-	printf("z=");printPoint(pf[3]);
-	printf("color=%u ",color);
-	printf("\n");	
+	sprintf(MSG,"[Object] send-cube: ");
+	debugMSG();
+	sprintf(MSG,"o=");printPoint(pf[0]);
+	debugMSG();
+	sprintf(MSG,"x=");printPoint(pf[1]);
+	debugMSG();
+	sprintf(MSG,"y=");printPoint(pf[2]);
+	debugMSG();
+	sprintf(MSG,"z=");printPoint(pf[3]);
+	debugMSG();
+	sprintf(MSG,"color=%u ",color);
+	debugMSG();
+	sprintf(MSG,"\n");	
+	debugMSG();
 }
 void add_cube(pointf pf[], unsigned color) {
 	int status=RENDER_STATUS_R();
 	if (status!=RENDER_IDLE){
-		printf("[Object] add-cube failed: not ready\n");
+		sprintf(MSG,"[Object] add-cube failed: not ready\n");
+		debugMSG();
 		return;
 	}
 	int cnt=OBJECT_CNT_R();
@@ -104,7 +126,8 @@ void add_cube(pointf pf[], unsigned color) {
 	
 	
 	RENDER_STATUS_W(RENDER_ADD_CUBE);
-	printf("[Object] now-tot: %d\n",cnt);
+	sprintf(MSG,"[Object] now-tot: %d\n",cnt);
+	debugMSG();
 	printSendCube(pf,color);
 	
 }

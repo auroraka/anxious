@@ -308,7 +308,7 @@
       }
       datum baseAddress
       {
-         value = "134357024";
+         value = "134357040";
          type = "String";
       }
    }
@@ -334,7 +334,7 @@
       }
       datum baseAddress
       {
-         value = "134357024";
+         value = "134357040";
          type = "String";
       }
    }
@@ -360,7 +360,7 @@
       }
       datum baseAddress
       {
-         value = "134357040";
+         value = "134357056";
          type = "String";
       }
    }
@@ -386,7 +386,7 @@
       }
       datum baseAddress
       {
-         value = "134357040";
+         value = "134357056";
          type = "String";
       }
    }
@@ -543,7 +543,7 @@
       }
       datum baseAddress
       {
-         value = "134357064";
+         value = "134357080";
          type = "String";
       }
    }
@@ -569,7 +569,7 @@
       }
       datum baseAddress
       {
-         value = "134357064";
+         value = "134357080";
          type = "String";
       }
    }
@@ -645,7 +645,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
       }
    }
@@ -666,7 +666,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
       }
    }
@@ -708,7 +708,7 @@
       }
       datum sopceditor_expanded
       {
-         value = "0";
+         value = "1";
          type = "boolean";
       }
    }
@@ -717,6 +717,22 @@
       datum baseAddress
       {
          value = "134219776";
+         type = "String";
+      }
+   }
+   element niso_terminal_output_enable
+   {
+      datum _sortIndex
+      {
+         value = "53";
+         type = "int";
+      }
+   }
+   element niso_terminal_output_enable.s1
+   {
+      datum baseAddress
+      {
+         value = "134356992";
          type = "String";
       }
    }
@@ -819,7 +835,7 @@
       }
       datum baseAddress
       {
-         value = "134357008";
+         value = "134357024";
          type = "String";
       }
    }
@@ -845,7 +861,7 @@
       }
       datum baseAddress
       {
-         value = "134357008";
+         value = "134357024";
          type = "String";
       }
    }
@@ -944,7 +960,7 @@
    {
       datum baseAddress
       {
-         value = "134356992";
+         value = "134357008";
          type = "String";
       }
    }
@@ -970,7 +986,7 @@
       }
       datum baseAddress
       {
-         value = "134356992";
+         value = "134357008";
          type = "String";
       }
    }
@@ -1174,7 +1190,7 @@
    {
       datum baseAddress
       {
-         value = "134357056";
+         value = "134357072";
          type = "String";
       }
    }
@@ -1302,6 +1318,11 @@
  <interface
    name="new_sdram_controller_0_wire"
    internal="sdram_controller_0.wire"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="nios_terminal_output_enable"
+   internal="niso_terminal_output_enable.external_connection"
    type="conduit"
    dir="end" />
  <interface
@@ -1435,7 +1456,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@35747122</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@6885cb2e</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_cam_mm_to_st</parameter>
  </module>
  <module
@@ -1532,7 +1553,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='recog_memory_0.s1' start='0x8000000' end='0x8014000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@7838629d</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@5d939e3d</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_st_to_hsv_mm_0</parameter>
  </module>
  <module
@@ -1551,7 +1572,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='recog_memory_1.s1' start='0x8000000' end='0x8014000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@7b1fbcca</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@7125b76c</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_st_to_hsv_mm_1</parameter>
  </module>
  <module
@@ -1570,7 +1591,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@32e1b306</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@6daa1a23</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_st_to_rgb_mm_0</parameter>
  </module>
  <module name="clk" kind="clock_source" version="15.0" enabled="1">
@@ -1710,7 +1731,7 @@
   <parameter name="dataAddrWidth" value="29" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='recog_memory_0.s1' start='0x8000000' end='0x8014000' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x8021800' end='0x8022000' /><slave name='recog_vsync_pio_0.s1' start='0x8022000' end='0x8022010' /><slave name='recog_buffer_port_pio_0.s1' start='0x8022010' end='0x8022020' /><slave name='camera_sioc_0.s1' start='0x8022020' end='0x8022030' /><slave name='camera_siod_0.s1' start='0x8022030' end='0x8022040' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x8022048' end='0x8022050' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x10000000' end='0x14000000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='recog_memory_0.s1' start='0x8000000' end='0x8014000' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='nios2_gen2_0.debug_mem_slave' start='0x8021800' end='0x8022000' /><slave name='niso_terminal_output_enable.s1' start='0x8022000' end='0x8022010' /><slave name='recog_vsync_pio_0.s1' start='0x8022010' end='0x8022020' /><slave name='recog_buffer_port_pio_0.s1' start='0x8022020' end='0x8022030' /><slave name='camera_sioc_0.s1' start='0x8022030' end='0x8022040' /><slave name='camera_siod_0.s1' start='0x8022040' end='0x8022050' /><slave name='sysid_qsys_0.control_slave' start='0x8022050' end='0x8022058' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x8022058' end='0x8022060' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x10000000' end='0x14000000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -1890,7 +1911,7 @@
   <parameter name="dataAddrWidth" value="29" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='recog_memory_1.s1' start='0x8000000' end='0x8014000' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='nios2_gen2_1.debug_mem_slave' start='0x8021800' end='0x8022000' /><slave name='recog_vsync_pio_1.s1' start='0x8022000' end='0x8022010' /><slave name='recog_buffer_port_pio_1.s1' start='0x8022010' end='0x8022020' /><slave name='camera_sioc_1.s1' start='0x8022020' end='0x8022030' /><slave name='camera_siod_1.s1' start='0x8022030' end='0x8022040' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='jtag_uart_1.avalon_jtag_slave' start='0x8022048' end='0x8022050' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x10000000' end='0x14000000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='recog_memory_1.s1' start='0x8000000' end='0x8014000' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='nios2_gen2_1.debug_mem_slave' start='0x8021800' end='0x8022000' /><slave name='niso_terminal_output_enable.s1' start='0x8022000' end='0x8022010' /><slave name='recog_vsync_pio_1.s1' start='0x8022010' end='0x8022020' /><slave name='recog_buffer_port_pio_1.s1' start='0x8022020' end='0x8022030' /><slave name='camera_sioc_1.s1' start='0x8022030' end='0x8022040' /><slave name='camera_siod_1.s1' start='0x8022040' end='0x8022050' /><slave name='sysid_qsys_0.control_slave' start='0x8022050' end='0x8022058' /><slave name='jtag_uart_1.avalon_jtag_slave' start='0x8022058' end='0x8022060' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x10000000' end='0x14000000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -2070,7 +2091,7 @@
   <parameter name="dataAddrWidth" value="29" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_2.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='overlay_port_pio.s1' start='0x8001000' end='0x8001010' /><slave name='overlay_vsync_pio.s1' start='0x8001010' end='0x8001020' /><slave name='render_port_pio.s1' start='0x8001020' end='0x8001030' /><slave name='key_pio.s1' start='0x8001030' end='0x8001040' /><slave name='jtag_uart_2.avalon_jtag_slave' start='0x8001040' end='0x8001048' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='fs_mm_0_ssram.uas' start='0x8200000' end='0x8300000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x10000000' end='0x14000000' /><slave name='ir_receiver_0.avalon_slave_0' start='0x18000000' end='0x20000000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_2.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='overlay_port_pio.s1' start='0x8001000' end='0x8001010' /><slave name='overlay_vsync_pio.s1' start='0x8001010' end='0x8001020' /><slave name='render_port_pio.s1' start='0x8001020' end='0x8001030' /><slave name='key_pio.s1' start='0x8001030' end='0x8001040' /><slave name='jtag_uart_2.avalon_jtag_slave' start='0x8001040' end='0x8001048' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='niso_terminal_output_enable.s1' start='0x8022000' end='0x8022010' /><slave name='sysid_qsys_0.control_slave' start='0x8022050' end='0x8022058' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='fs_mm_0_ssram.uas' start='0x8200000' end='0x8300000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x10000000' end='0x14000000' /><slave name='ir_receiver_0.avalon_slave_0' start='0x18000000' end='0x20000000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -2250,7 +2271,7 @@
   <parameter name="dataAddrWidth" value="29" />
   <parameter name="dataMasterHighPerformanceAddrWidth" value="1" />
   <parameter name="dataMasterHighPerformanceMapParam" value="" />
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_3.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='render_start_pio.s1' start='0x8001000' end='0x8001010' /><slave name='render_vsync_pio_0.s1' start='0x8001010' end='0x8001020' /><slave name='render_port_pio.s1' start='0x8001020' end='0x8001030' /><slave name='jtag_uart_3.avalon_jtag_slave' start='0x8001030' end='0x8001038' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='sysid_qsys_0.control_slave' start='0x8022040' end='0x8022048' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x10000000' end='0x14000000' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /><slave name='nios2_gen2_3.debug_mem_slave' start='0x8000800' end='0x8001000' /><slave name='render_start_pio.s1' start='0x8001000' end='0x8001010' /><slave name='render_vsync_pio_0.s1' start='0x8001010' end='0x8001020' /><slave name='render_port_pio.s1' start='0x8001020' end='0x8001030' /><slave name='jtag_uart_3.avalon_jtag_slave' start='0x8001030' end='0x8001038' /><slave name='shared_memory.s1' start='0x8020000' end='0x8021000' /><slave name='niso_terminal_output_enable.s1' start='0x8022000' end='0x8022010' /><slave name='sysid_qsys_0.control_slave' start='0x8022050' end='0x8022058' /><slave name='onchip_memory2_0.s1' start='0x8100000' end='0x8164000' /><slave name='fs_mm_0_cfi_flash.uas' start='0x10000000' end='0x14000000' /></address-map>]]></parameter>
   <parameter name="data_master_high_performance_paddr_base" value="0" />
   <parameter name="data_master_high_performance_paddr_size" value="0" />
   <parameter name="data_master_paddr_base" value="0" />
@@ -2405,6 +2426,24 @@
   <parameter name="tmr_enabled" value="false" />
   <parameter name="tracefilename" value="" />
   <parameter name="userDefinedSettings" value="" />
+ </module>
+ <module
+   name="niso_terminal_output_enable"
+   kind="altera_avalon_pio"
+   version="15.0"
+   enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="100000000" />
+  <parameter name="direction" value="Input" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="1" />
  </module>
  <module
    name="onchip_memory2_0"
@@ -2652,7 +2691,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@248a3919</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@2bb06003</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_render_mm_to_st</parameter>
  </module>
  <module
@@ -2899,7 +2938,7 @@
    start="nios2_gen2_1.data_master"
    end="jtag_uart_1.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08022048" />
+  <parameter name="baseAddress" value="0x08022058" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2917,7 +2956,7 @@
    start="nios2_gen2_0.data_master"
    end="jtag_uart_0.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08022048" />
+  <parameter name="baseAddress" value="0x08022058" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2980,7 +3019,7 @@
    start="nios2_gen2_1.data_master"
    end="sysid_qsys_0.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08022040" />
+  <parameter name="baseAddress" value="0x08022050" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2989,7 +3028,7 @@
    start="nios2_gen2_0.data_master"
    end="sysid_qsys_0.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08022040" />
+  <parameter name="baseAddress" value="0x08022050" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2998,7 +3037,7 @@
    start="nios2_gen2_2.data_master"
    end="sysid_qsys_0.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08022040" />
+  <parameter name="baseAddress" value="0x08022050" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -3007,7 +3046,7 @@
    start="nios2_gen2_3.data_master"
    end="sysid_qsys_0.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08022040" />
+  <parameter name="baseAddress" value="0x08022050" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -3061,7 +3100,7 @@
    start="nios2_gen2_1.data_master"
    end="camera_siod_1.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08022030" />
+  <parameter name="baseAddress" value="0x08022040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -3070,7 +3109,7 @@
    start="nios2_gen2_1.data_master"
    end="camera_sioc_1.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08022020" />
+  <parameter name="baseAddress" value="0x08022030" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -3106,7 +3145,7 @@
    start="nios2_gen2_0.data_master"
    end="camera_siod_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08022030" />
+  <parameter name="baseAddress" value="0x08022040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -3115,7 +3154,7 @@
    start="nios2_gen2_0.data_master"
    end="camera_sioc_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08022020" />
+  <parameter name="baseAddress" value="0x08022030" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -3205,7 +3244,7 @@
    start="nios2_gen2_0.data_master"
    end="recog_buffer_port_pio_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08022010" />
+  <parameter name="baseAddress" value="0x08022020" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -3223,7 +3262,7 @@
    start="nios2_gen2_0.data_master"
    end="recog_vsync_pio_0.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08022000" />
+  <parameter name="baseAddress" value="0x08022010" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -3232,7 +3271,7 @@
    start="nios2_gen2_1.data_master"
    end="recog_buffer_port_pio_1.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08022010" />
+  <parameter name="baseAddress" value="0x08022020" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -3241,7 +3280,7 @@
    start="nios2_gen2_1.data_master"
    end="recog_vsync_pio_1.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x08022000" />
+  <parameter name="baseAddress" value="0x08022010" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -3305,6 +3344,42 @@
    end="sdram_controller_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_3.data_master"
+   end="niso_terminal_output_enable.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08022000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_2.data_master"
+   end="niso_terminal_output_enable.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08022000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_1.data_master"
+   end="niso_terminal_output_enable.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08022000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="nios2_gen2_0.data_master"
+   end="niso_terminal_output_enable.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x08022000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -3602,6 +3677,11 @@
    version="15.0"
    start="clk.clk"
    end="camera_st_to_rgb_mm_0.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="niso_terminal_output_enable.clk" />
  <connection
    kind="clock"
    version="15.0"
@@ -4101,6 +4181,11 @@
    version="15.0"
    start="clk.clk_reset"
    end="st_naive_multi_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="niso_terminal_output_enable.reset" />
  <connection
    kind="reset"
    version="15.0"

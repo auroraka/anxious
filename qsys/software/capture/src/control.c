@@ -16,11 +16,13 @@
 #include <assert.h>
 #include <math.h>
 
+#include "debug.h"
 #include "common.h"
 #include "memory.h"
 #include "display.h"
 #include "palette.h"
 #include "control.h"
+#include "render/object.h"
 
 const static float focus_x_l = 1117.36809f, focus_y_l = 1115.59155f;
 const static float focus_x_r = 1098.56402f, focus_y_r = 1095.74358f;
@@ -475,7 +477,7 @@ void draw_overlay() {
 	draw_status_bar();
 	
 	if (palette_state == PALETTE_SHOULD_SHOW) {
-		printf("Show palette\n");
+		debug("Show palette\n");
 		draw_palette();
 		palette_state = PALETTE_SHOWN;
 	}
@@ -514,8 +516,8 @@ enum IRType {
 };
 
 void key_down(int key_code) {
-	printf("key down: %d\n", key_code);
-	
+	sprintf(MSG,"key down: %d\n", key_code);
+	debugMSG();
 	if (palette_state == PALETTE_SHOWN) {
 		if (key_code >= IR_1 && key_code <= IR_9) {
 			cur_color = (unsigned int)(key_code - 1);
@@ -533,7 +535,8 @@ void key_down(int key_code) {
 			palette_state = PALETTE_NOT_SHOWN;
 		}
 		if (palette_state == PALETTE_NOT_SHOWN)
-			printf("Chose color: %s\n", palette_names[cur_color]);
+			sprintf(MSG,"Chose color: %s\n", palette_names[cur_color]);
+			debugMSG();
 	} else if (key_code == IR_MENU) {
 		palette_state = PALETTE_SHOULD_SHOW;
 	} else if (key_code==IR_POWER){
@@ -542,7 +545,8 @@ void key_down(int key_code) {
 	 else {
 		switch (draw_state) {
 			case DRAW_POINT:
-				printf("0: (%d,%d,%d)\n", (int)pf[0].x, (int)pf[0].y, (int)pf[0].z);
+				sprintf(MSG,"0: (%d,%d,%d)\n", (int)pf[0].x, (int)pf[0].y, (int)pf[0].z);
+				debugMSG();
 				if (key_code == IR_1) draw_state = DRAW_SPHERE_RADIUS;
 				else if (key_code == IR_2) draw_state = DRAW_CUBE_LINE;
 				break;
@@ -552,15 +556,18 @@ void key_down(int key_code) {
 				draw_state = DRAW_POINT;
 				break;
 			case DRAW_CUBE_LINE:
-				printf("1: (%d,%d,%d)\n", (int)pf[1].x, (int)pf[1].y, (int)pf[1].z);
+				sprintf(MSG,"1: (%d,%d,%d)\n", (int)pf[1].x, (int)pf[1].y, (int)pf[1].z);
+				debugMSG();
 				draw_state = DRAW_CUBE_AREA;
 				break;
 			case DRAW_CUBE_AREA:
-				printf("2: (%d,%d,%d)\n", (int)pf[2].x, (int)pf[2].y, (int)pf[2].z);
+				sprintf(MSG,"2: (%d,%d,%d)\n", (int)pf[2].x, (int)pf[2].y, (int)pf[2].z);
+				debugMSG();
 				draw_state = DRAW_CUBE_VOLUME;
 				break;
 			case DRAW_CUBE_VOLUME:
-				printf("3: (%d,%d,%d)\n", (int)pf[3].x, (int)pf[3].y, (int)pf[3].z);
+				sprintf(MSG,"3: (%d,%d,%d)\n", (int)pf[3].x, (int)pf[3].y, (int)pf[3].z);
+				debugMSG();
 				add_cube(store_cube,store_color);
 				draw_state = DRAW_POINT;
 				break;

@@ -79,7 +79,6 @@ void getCamFrontTransform(Vector eye, Vector front, Vector up, Mat m) {
 	At(B, 1, 3) = -eye[1];
 	At(B, 2, 3) = -eye[2];
 	mulm(A, B, m);
-	//copyMat(B, m);
 }
 void getCamLookAtTransform(Vector eye,Vector lookAt,Vector up,Mat m) {
 	Vector z;
@@ -91,22 +90,15 @@ void initTransform() {
 	Mat A,B;
 	Vector eye = { 0,0,0 };
 	Vector up = { 0,1,0 };
-	//Vector lookAt = { 0,0,100 };
 	Vector front = { 0,0,-1 };
-	//getCamLookAtTransform(eye,lookAt,up,A);
 	getCamFrontTransform(eye, front, up, A);
 	getViewPortTranform(1, 500, B);
 	mulm(B, A ,T);
-	//copyMat(B, T);
 }
 bool getPos(Vector A,Pos X) {
 	mulmv(T, A, X);
-	//debugVector(A);
-	//debugVector(X);
 	X[0] = X[0]*PIC_W+0.5f*PIC_W;
 	X[1] = X[1]*PIC_W+0.5f*PIC_H;
-	//debugVector(X);
-	//printf("#\n");
 	return (0 <= X[0] && X[0] <= PIC_W && 0 <= X[1] && X[1] <= PIC_H);
 }
 #endif

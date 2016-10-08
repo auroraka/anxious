@@ -12,6 +12,7 @@
 
 #include <unistd.h>
 
+#include "../debug.h"
 #include "../memory.h"
 #include "../common.h"
 #include "../palette.h"
@@ -30,23 +31,29 @@ void render_init(int row_start, int row_cnt) {
 }
 
 inline void debugVector(Vector A){
-	printf("%d %d %d\n",(int)A[0],(int)A[1],(int)A[2]);
+	sprintf(MSG,"%d %d %d\n",(int)A[0],(int)A[1],(int)A[2]);
+	debugMSG();
 }
 
 void printVector(Vector v){
-	printf("(%d,%d,%d) ",(int)v[0],(int)v[1],(int)v[2]);
+	sprintf(MSG,"(%d,%d,%d) ",(int)v[0],(int)v[1],(int)v[2]);
+	debugMSG();
 }
 void printReceiveCube(Vector V[]){
-	printf("[Object] receive-cube: ");
+	sprintf(MSG,"[Object] receive-cube: ");
+	debugMSG();
 	int i;
 	for (i=0;i<4;i++) printVector(V[i]);
-	printf("\n");
+	sprintf(MSG,"\n");
+	debugMSG();
 }
 void printReceiveSphere3D(Vector V[],unsigned color){
-	printf("[Object] receive-sphere3d: ");
+	sprintf(MSG,"[Object] receive-sphere3d: ");
+	debugMSG();
 	int i;
 	for (i=0;i<2;i++) printVector(V[i]);
-	printf("color=%u\n",color);
+	sprintf(MSG,"color=%u\n",color);
+	debugMSG();
 }
 
 int ttt=0;
@@ -54,8 +61,10 @@ void sync_objects() {
 	int status=RENDER_STATUS_R();
 	
 	ttt++;
-	if (ttt%5000==0) printf("sync_objects, RENDER_STATUS=%d\n",status);
-
+	if (ttt%5000==0){
+		sprintf(MSG,"sync_objects, RENDER_STATUS=%d\n",status);
+		debugMSG();
+	}
 	if (status==RENDER_IDLE){
 		return;
 	}
@@ -76,10 +85,13 @@ void sync_objects() {
 		unsigned c=OBJECT_R(cnt+1,12);
 		Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
 		printReceiveCube(V);
-		printf("[Object] now-tot: %d\n",cnt);
-		printf("[Object] render-cube: doing\n");
+		sprintf(MSG,"[Object] now-tot: %d\n",cnt);
+		debugMSG();
+		sprintf(MSG,"[Object] render-cube: doing\n");
+		debugMSG();
 		if (!renderBox(V[0],V[1],V[2],V[3],color)){
-			printf("[Object] render-cube failed: out of cavans\n");
+			sprintf(MSG,"[Object] render-cube failed: out of cavans\n");
+			debugMSG();
 		}
 		OBJECT_CNT_W(cnt+1);
 		RENDER_STATUS_W(RENDER_IDLE);
@@ -95,17 +107,22 @@ void sync_objects() {
 		}
 		unsigned c=OBJECT_R(cnt+1,6);
 		Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
-		printf("[Object] sphere-color: %d %d %d\n",(int)color[0],(int)color[1],(int)color[2]);
+		sprintf(MSG,"[Object] sphere-color: %d %d %d\n",(int)color[0],(int)color[1],(int)color[2]);
+		debugMSG();
 		printReceiveSphere3D(V,c);
-		printf("[Object] now-tot: %d\n",cnt);
-		printf("[Object] render-sphere3d: doing\n");
+		sprintf(MSG,"[Object] now-tot: %d\n",cnt);
+		debugMSG();
+		sprintf(MSG,"[Object] render-sphere3d: doing\n");
+		debugMSG();
 		if (!renderSphere3d(V[0],V[1],color)){
-			printf("[Object] render-sphere3d failed: out of cavans\n");
+			sprintf(MSG,"[Object] render-sphere3d failed: out of cavans\n");
+			debugMSG();
 		}
 		OBJECT_CNT_W(cnt+1);
 		RENDER_STATUS_W(RENDER_IDLE);
 	}else{
-		printf("[Object] format error\n");
+		sprintf(MSG,"[Object] format error\n");
+		debugMSG();
 		RENDER_STATUS_W(RENDER_IDLE);	
 	}
 

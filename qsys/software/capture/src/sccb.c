@@ -5,14 +5,16 @@
 
 #if CPU_ID < 2
  
-#include "memory.h"
-#include "sccb.h"
-
 #include <stdio.h>
 #include <alt_types.h>
 #include <unistd.h>
 #include <altera_avalon_pio_regs.h>
 #include <io.h>
+
+#include "debug.h"
+#include "memory.h"
+#include "sccb.h"
+
 
 #include "CameraOV7670RegisterDefinitions.h"
 
@@ -118,7 +120,6 @@ alt_u8 SCCB_WR_Byte(alt_u8 dat) {
 	DELAY();
 	SDA_DIR_OUT();        //设置SDA为输出
 	DELAY();
-	//printf("write %x %s.\n",dat,res?"failed":"success");
 	return res;
 }
 
@@ -152,31 +153,28 @@ alt_u8 SCCB_WR_Reg(alt_u8 reg, alt_u8 data) {
 	SCCB_Start();                    //启动SCCB传输
 	if (SCCB_WR_Byte(SCCB_ID)) {//写器件ID
 		SCCB_Stop();
-		//printf("write device id failed\n");
 		return 1;
 	}
-	//printf("write device id success\n");
 	DELAY();
 	
 	if (SCCB_WR_Byte(reg)) {//写寄存器地址
 		SCCB_Stop();
-		printf("write addr failed\n");
+		sprintf(MSG,"write addr failed\n");
+		debugMSG();
 		return 1;
 	}
-	//printf("write addr success\n");
 	DELAY();
 	
 	if (SCCB_WR_Byte(data)) {//写数据
 		SCCB_Stop();
-		printf("write data failed\n");
+		sprintf(MSG,"write data failed\n");
+		debugMSG();
 		return 1;
 	}
-	//printf("write data success");
 	DELAY();
 	
 	SCCB_Stop();
 	
-	//printf("write %x %x\n", reg, data);
 	usleep(2000);
 	return 0;
 }
@@ -188,18 +186,16 @@ alt_u8 SCCB_RD_Reg(alt_u8 reg) {
 	SCCB_Start();                //启动SCCB传输
 	if (SCCB_WR_Byte(SCCB_ID)) {//写器件ID
 		SCCB_Stop();
-		//printf("write device id failed\n");
 		return 1;
 	}
-	//printf("write device id success\n");
 	DELAY();
 	
 	if (SCCB_WR_Byte(reg)) {//写寄存器地址
 		SCCB_Stop();
-		//printf("write addr failed\n");
+		sprintf(MSG,"write addr failed\n");
+		debugMSG();
 		return 1;
 	}
-	//printf("write addr success\n");
 	DELAY();
 	
 	SCCB_Stop();
@@ -210,16 +206,15 @@ alt_u8 SCCB_RD_Reg(alt_u8 reg) {
 	DELAY();
 	if (SCCB_WR_Byte(SCCB_ID | 0X01)) {    //发送读命令
 		SCCB_Stop();
-		printf("send read addr failed.\n");
+		sprintf(MSG,"send read addr failed.\n");
+		debugMSG();
 	}
-	//printf("send read addr success.\n");
 	DELAY();
 	val = SCCB_RD_Byte();            //读取数据
 	DELAY();
 	SCCB_No_Ack();
 	DELAY();
 	SCCB_Stop();
-	printf("read: %x %x\n", reg, val);
 	
 	usleep(1000);
 	return val;
@@ -235,10 +230,12 @@ alt_u8 OV7670_Init(void) {
 	DELAY();
 	//读取产品型号
 	temp = SCCB_RD_Reg(0x0b);
-	printf("%x\n", temp);
+	sprintf(MSG,"%x\n", temp);
+	debugMSG();
 	//if(temp!=0x73)return 2;
 	temp = SCCB_RD_Reg(0x0a);
-	printf("%x\n", temp);
+	sprintf(MSG,"%x\n", temp);
+	debugMSG();
 	//if(temp!=0x76)return 2;
 //	//初始化序列
 //	for(i=0;i<sizeof(ov7670_init_reg_tbl)/sizeof(ov7670_init_reg_tbl[0]);i++)
@@ -745,11 +742,11 @@ void sccb_write_reg_list(const unsigned (*regs)[2]) {
 			SCCB_WR_Reg(reg, val);
 		}
 	}
-	//printf("%s: %d regs written.\n", __FUNCTION__, i);
+	//sprintf(MSG,"%s: %d regs written.\n", __FUNCTION__, i);
+	//debugMSG();
 }
 
 void configure_sccb() {
-	//printf("Configuring camera through SCCB...\n");
 	
 	SCCB_WR_Reg(REG_COM7, 0x80); // set COM7[7] => Reset
 	usleep(1000 * 1000 * 3);

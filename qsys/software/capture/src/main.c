@@ -1,4 +1,4 @@
-/*
+	/*
  * CPU Assignments:
  *   0, 1 : recognition cores for cameras 0 & 1
  *   2    : controller core

@@ -55,6 +55,32 @@ assign render_buffer_vsync = render_vsync_all;
 
 assign SSRAM_CLK = DRAM_CLK;
 
+/*
+description for functions of switchs and keys
+SW[0] : fan
+SW[1] : camera_st_0_conduit_enable
+SW[2] : camera_st_1_conduit_enable
+SW[3] : 
+SW[4] : cam_buffer_switcher_enable
+SW[5] : recog_buffer_switcher_0/1_enable
+SW[6] : render_buffer_switcher_enable
+SW[7] : overlay_buffer_switcher_enable
+SW[8] :
+SW[9] :
+SW[10]:
+SW[11]:
+SW[12]:
+SW[13]:
+SW[14]:
+SW[15]:
+SW[16]:
+SW[17]: nios_terminal_output_enable
+
+KEY[0]: reset_n
+KEY[1]: key_pio_external_connection
+KEY[2]:
+KEY[3]:
+*/
 anxious_capture u0 (
     .cam_buffer_switcher_enable_enable                  (SW[4]),
 
@@ -150,7 +176,8 @@ anxious_capture u0 (
 	.fs_wires_sram_be_n                                 (SSRAM_BE),
 	.fs_wires_fs_data                                   (FS_DQ),
 	.fs_wires_sram_reset_n                              (),
-	.fs_wires_fs_addr                                   (FS_ADDR)
+	.fs_wires_fs_addr                                   (FS_ADDR),
+	.nios_terminal_output_enable_export                 (SW[17])    
 );
 
 endmodule
