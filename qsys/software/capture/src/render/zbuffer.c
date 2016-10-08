@@ -1,5 +1,6 @@
+#if CPU_ID>2
+
 #include "zbuffer.h"
-#include "object.h"
 
 void _setColor(int i, int j, Color color) {
 	if (isZero(color)) {
@@ -35,3 +36,5 @@ void initZBuffer() {
 		}
 	}
 }
+
+#endif 

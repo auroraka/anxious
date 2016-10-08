@@ -26,9 +26,11 @@ static unsigned render_port;
 #define isZero(A) (fabs(A[0]) < EPS && fabs(A[1]) < EPS && fabs(A[2]) < EPS)
 #endif 
 
+
 void _setColor(int i, int j, Color color);
 void setColorXY(int x, int y, Color color);
 void bufferColor(int i, int j, Color color, float z);
 void initZBuffer();
+
 
 #endif
