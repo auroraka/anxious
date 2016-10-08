@@ -516,7 +516,7 @@ enum IRType {
 };
 
 void key_down(int key_code) {
-	sprintf(MSG,"key down: %d\n", key_code);
+	sprintf(MSG,"[Key Down] %d\n", key_code);
 	debugMSG();
 	if (palette_state == PALETTE_SHOWN) {
 		if (key_code >= IR_1 && key_code <= IR_9) {
@@ -535,7 +535,7 @@ void key_down(int key_code) {
 			palette_state = PALETTE_NOT_SHOWN;
 		}
 		if (palette_state == PALETTE_NOT_SHOWN)
-			sprintf(MSG,"Chose color: %s\n", palette_names[cur_color]);
+			sprintf(MSG,"[Chose Color] %s\n", palette_names[cur_color]);
 			debugMSG();
 	} else if (key_code == IR_MENU) {
 		palette_state = PALETTE_SHOULD_SHOW;
@@ -545,7 +545,7 @@ void key_down(int key_code) {
 	 else {
 		switch (draw_state) {
 			case DRAW_POINT:
-				sprintf(MSG,"0: (%d,%d,%d)\n", (int)pf[0].x, (int)pf[0].y, (int)pf[0].z);
+				sprintf(MSG,"[Step] 0: (%d,%d,%d)\n", (int)pf[0].x, (int)pf[0].y, (int)pf[0].z);
 				debugMSG();
 				if (key_code == IR_1) draw_state = DRAW_SPHERE_RADIUS;
 				else if (key_code == IR_2) draw_state = DRAW_CUBE_LINE;
@@ -556,17 +556,17 @@ void key_down(int key_code) {
 				draw_state = DRAW_POINT;
 				break;
 			case DRAW_CUBE_LINE:
-				sprintf(MSG,"1: (%d,%d,%d)\n", (int)pf[1].x, (int)pf[1].y, (int)pf[1].z);
+				sprintf(MSG,"[Step] 1: (%d,%d,%d)\n", (int)pf[1].x, (int)pf[1].y, (int)pf[1].z);
 				debugMSG();
 				draw_state = DRAW_CUBE_AREA;
 				break;
 			case DRAW_CUBE_AREA:
-				sprintf(MSG,"2: (%d,%d,%d)\n", (int)pf[2].x, (int)pf[2].y, (int)pf[2].z);
+				sprintf(MSG,"[Step] 2: (%d,%d,%d)\n", (int)pf[2].x, (int)pf[2].y, (int)pf[2].z);
 				debugMSG();
 				draw_state = DRAW_CUBE_VOLUME;
 				break;
 			case DRAW_CUBE_VOLUME:
-				sprintf(MSG,"3: (%d,%d,%d)\n", (int)pf[3].x, (int)pf[3].y, (int)pf[3].z);
+				sprintf(MSG,"[Step] 3: (%d,%d,%d)\n", (int)pf[3].x, (int)pf[3].y, (int)pf[3].z);
 				debugMSG();
 				add_cube(store_cube,store_color);
 				draw_state = DRAW_POINT;
