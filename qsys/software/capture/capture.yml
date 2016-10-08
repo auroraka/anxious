@@ -4,18 +4,22 @@ windows:
       layout: tiled
       panes:
           - commands:
-              - cd /home/Robot/anAnxiousProject3/qsys/software
+              - cd /cygdrive/c/anAnxiousProject3/qsys/software
               - export CONFIG=capture.config
               - export CPU_ID=0
+              - $NIOS_ENV
           - commands:
-              - cd /home/Robot/anAnxiousProject3/qsys/software
+              - cd /cygdrive/c/anAnxiousProject3/qsys/software
               - export CONFIG=capture.config
               - export CPU_ID=1
+              - $NIOS_ENV
           - commands:
-              - cd /home/Robot/anAnxiousProject3/qsys/software
+              - cd /cygdrive/c/anAnxiousProject3/qsys/software
               - export CONFIG=capture.config
               - export CPU_ID=2
+              - $NIOS_ENV
           - commands:
-              - cd /home/Robot/anAnxiousProject3/qsys/software
+              - cd /cygdrive/c/anAnxiousProject3/qsys/software
               - export CONFIG=capture.config
               - export CPU_ID=3
+              - $NIOS_ENV
