@@ -1,0 +1,159 @@
+-- vim: filetype=vhdl:
+
+-- altera vhdl_input_version vhdl_2008
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+use work.NEEE.all;
+
+entity sdram_arbitrator is
+    generic (
+        MAX_PENDING_READ : positive := 7
+    );
+    port (
+        clk                   : in  std_logic;
+        reset_n               : in  std_logic;
+
+        -- BEGIN range(num_slaves)
+        avs_s{index}_address       : in  std_logic_vector(SDRAM_ADDR_LENGTH - 1 downto 0);
+        avs_s{index}_byteenable    : in  std_logic_vector(SDRAM_DATA_WIDTH/8 - 1 downto 0);
+        avs_s{index}_read          : in  std_logic;
+        avs_s{index}_readdata      : out std_logic_vector(SDRAM_DATA_WIDTH - 1 downto 0);
+        avs_s{index}_readdatavalid : out std_logic;
+        avs_s{index}_waitrequest   : out std_logic;
+        avs_s{index}_write         : in  std_logic;
+        avs_s{index}_writedata     : in  std_logic_vector(SDRAM_DATA_WIDTH - 1 downto 0);
+        avs_s{index}_lock          : in  std_logic;
+        -- END
+
+        avm_m0_address        : out std_logic_vector(SDRAM_ADDR_LENGTH - 1 downto 0);
+        avm_m0_byteenable     : out std_logic_vector(SDRAM_DATA_WIDTH/8 - 1 downto 0);
+        avm_m0_read           : out std_logic;
+        avm_m0_readdata       : in  std_logic_vector(SDRAM_DATA_WIDTH - 1 downto 0);
+        avm_m0_readdatavalid  : in  std_logic;
+        avm_m0_waitrequest    : in  std_logic;
+        avm_m0_write          : out std_logic;
+        avm_m0_writedata      : out std_logic_vector(SDRAM_DATA_WIDTH - 1 downto 0)
+    );
+end entity sdram_arbitrator;
+
+architecture bhv of sdram_arbitrator is
+    constant NUM_SLAVES : positive := {num_slaves};
+    subtype reader_type is natural range 0 to {num_slaves} - 1;
+    type reader_arrtype is array (integer range <>) of reader_type;
+
+    type arbstate_type is (
+        -- BEGIN range(num_slaves)
+        ARB_S{index},
+        -- END
+        ARB_IDLE
+    );
+
+    type reg_type is record
+        arbstate: arbstate_type;
+        lock: std_logic;
+        -- circular queue whose valid subscript range is [head, tail)
+        reader_queue: reader_arrtype(0 to MAX_PENDING_READ);
+        head, tail: natural range 0 to MAX_PENDING_READ;
+    end record;
+
+    constant INIT_REGS: reg_type := (
+        arbstate => ARB_IDLE,
+        lock => '0',
+        reader_queue => (others => 0),
+        head => 0,
+        tail => 0
+    );
+
+    signal r: reg_type := INIT_REGS;
+    signal rin: reg_type := INIT_REGS;
+
+begin
+    P_regs: process(clk, reset_n)
+    begin
+        if not reset_n then
+            r <= INIT_REGS;
+        elsif rising_edge(clk) then
+            r <= rin;
+        end if;
+    end process;
+
+    P_comb: process(all)
+        variable v: reg_type;
+        variable rw: std_logic;
+    begin
+        -- default: hold the values
+        v := r;
+
+        if r.arbstate = ARB_IDLE then
+            avm_m0_read  <= '0';
+            avm_m0_write <= '0';
+            if avs_s0_read or avs_s0_write then
+                v.arbstate := ARB_S0;
+                v.lock     := avs_s0_lock;
+            -- BEGIN range(1, num_slaves)
+            elsif avs_s{index}_read or avs_s{index}_write then
+                v.arbstate := ARB_S{index};
+                v.lock     := avs_s{index}_lock;
+            -- END
+            end if;
+        end if;
+
+        -- BEGIN range(num_slaves)
+
+        if r.reader_queue(r.head) = {index} then
+            -- route the readdata to this master
+            avs_s{index}_readdata      <= avm_m0_readdata;
+            avs_s{index}_readdatavalid <= avm_m0_readdatavalid;
+
+            -- check if data has arrived
+            if avm_m0_readdatavalid then
+                if r.head = MAX_PENDING_READ then
+                    v.head := 0;
+                else
+                    v.head := r.head + 1;
+                end if;
+            end if;
+        else
+            avs_s{index}_readdata      <= (others => '0');
+            avs_s{index}_readdatavalid <= '0';
+        end if;
+
+        -- using the switched state to save time; might cause some problem?
+        if v.arbstate = ARB_S{index} then
+            avm_m0_address             <= avs_s{index}_address;
+            avm_m0_byteenable          <= avs_s{index}_byteenable;
+            avm_m0_read                <= avs_s{index}_read;
+            avs_s{index}_waitrequest   <= avm_m0_waitrequest;
+            avm_m0_write               <= avs_s{index}_write;
+            avm_m0_writedata           <= avs_s{index}_writedata;
+
+            rw := avs_s{index}_read or avs_s{index}_write;
+            if rw and (not avm_m0_waitrequest) then
+                -- a request has been accepted
+                v.lock := avs_s{index}_lock;
+                if avs_s{index}_read then
+                    v.reader_queue(r.tail) := {index};
+                    if r.tail = MAX_PENDING_READ then
+                        v.tail := 0;
+                    else
+                        v.tail := r.tail + 1;
+                    end if;
+                end if;
+            elsif (not rw) and (not r.lock) then
+                -- no more requests
+                v.arbstate := ARB_IDLE;
+            end if;
+        else
+            avs_s{index}_waitrequest   <= '1';
+        end if;
+
+        -- END
+
+        -- apply the new values
+        rin <= v;
+    end process;
+
+end architecture bhv;
