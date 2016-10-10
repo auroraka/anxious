@@ -50,6 +50,23 @@ always begin
 	render_start_rin <= render_start;
 end
 
+wire rgb_st_select;
+
+assign rgb_st_select = SW[3];
+
+wire [1:0] rgb_st_0_read_buffer_port;
+wire [1:0] rgb_st_1_read_buffer_port;
+wire [1:0] rgb_st_read_buffer_port;
+wire rgb_st_read_buffer_vsync;
+
+always begin
+	if (rgb_st_select == 1'b0) begin
+		rgb_st_read_buffer_port = rgb_st_0_read_buffer_port;
+	end else begin
+		rgb_st_read_buffer_port = rgb_st_1_read_buffer_port;
+	end
+end
+
 wire render_buffer_vsync;
 assign render_buffer_vsync = render_vsync_all;
 
@@ -60,7 +77,7 @@ description for functions of switchs and keys
 SW[0] : fan
 SW[1] : camera_st_0_conduit_enable
 SW[2] : camera_st_1_conduit_enable
-SW[3] : rgb_st_to_mm input mux selection
+SW[3] : vga_st selection
 SW[4] : cam_buffer_switcher_enable
 SW[5] : recog_buffer_switcher_0/1_enable
 SW[6] : render_buffer_switcher_enable
@@ -82,8 +99,6 @@ KEY[2]:
 KEY[3]:
 */
 anxious_capture u0 (
-    .cam_buffer_switcher_enable_enable                  (SW[4]),
-
     .camera_sioc_0_external_connection_export           (`CAM_SIOC_0),
     .camera_sioc_1_external_connection_export           (`CAM_SIOC_1),
     .camera_siod_0_external_connection_export           (`CAM_SIOD_0),
@@ -116,7 +131,6 @@ anxious_capture u0 (
 
     .key_pio_external_connection_export                 (KEY[1]),
 	.sw_pio_0_external_connection_export				(SW[17:0]),
-	.st_naive_mux_0_conduit_export						(SW[3]),
 
     .new_sdram_controller_0_wire_addr                   (DRAM_ADDR),
     .new_sdram_controller_0_wire_ba                     (DRAM_BA),
@@ -179,7 +193,20 @@ anxious_capture u0 (
 	.fs_wires_fs_data                                   (FS_DQ),
 	.fs_wires_sram_reset_n                              (),
 	.fs_wires_fs_addr                                   (FS_ADDR),
-	.nios_terminal_output_enable_export                 (SW[17])
+	.nios_terminal_output_enable_export                 (SW[17]),
+
+	.rgb_st_buffer_switcher_0_enable_enable             (SW[4]),
+	.rgb_st_buffer_switcher_1_enable_enable             (SW[4]),
+
+	.rgb_st_switch_0_enable_enable                      (~rgb_st_select),
+	.rgb_st_switch_1_enable_enable                      (rgb_st_select),
+
+	.rgb_st_buffer_switcher_0_read_buffer_buffer_port   (rgb_st_0_read_buffer_port),
+	.rgb_st_buffer_switcher_0_read_buffer_buffer_vsync  (rgb_st_read_buffer_vsync),
+	.rgb_st_buffer_switcher_1_read_buffer_buffer_port   (rgb_st_1_read_buffer_port),
+	.rgb_st_buffer_switcher_1_read_buffer_buffer_vsync  (rgb_st_read_buffer_vsync),
+	.cam_mm_to_st_buffer_switch_buffer_port             (rgb_st_read_buffer_port),
+	.cam_mm_to_st_buffer_switch_buffer_vsync            (rgb_st_read_buffer_vsync),
 );
 
 endmodule

@@ -257,32 +257,27 @@
          type = "String";
       }
    }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
    element bit_unpacker_0
    {
       datum _sortIndex
       {
-         value = "53";
+         value = "56";
          type = "int";
-      }
-   }
-   element cam_buffer_switcher
-   {
-      datum _sortIndex
-      {
-         value = "14";
-         type = "int";
-      }
-      datum sopceditor_expanded
-      {
-         value = "1";
-         type = "boolean";
       }
    }
    element cam_mm_to_st
    {
       datum _sortIndex
       {
-         value = "46";
+         value = "49";
          type = "int";
       }
    }
@@ -316,7 +311,7 @@
    {
       datum _sortIndex
       {
-         value = "26";
+         value = "29";
          type = "int";
       }
       datum sopceditor_expanded
@@ -368,7 +363,7 @@
    {
       datum _sortIndex
       {
-         value = "27";
+         value = "30";
          type = "int";
       }
       datum sopceditor_expanded
@@ -455,6 +450,14 @@
          type = "boolean";
       }
    }
+   element camera_st_to_rgb_mm_1
+   {
+      datum _sortIndex
+      {
+         value = "25";
+         type = "int";
+      }
+   }
    element clk
    {
       datum _sortIndex
@@ -472,7 +475,7 @@
    {
       datum _sortIndex
       {
-         value = "48";
+         value = "51";
          type = "int";
       }
    }
@@ -480,7 +483,7 @@
    {
       datum _sortIndex
       {
-         value = "50";
+         value = "53";
          type = "int";
       }
    }
@@ -509,7 +512,7 @@
    {
       datum _sortIndex
       {
-         value = "34";
+         value = "37";
          type = "int";
       }
    }
@@ -525,7 +528,7 @@
    {
       datum _sortIndex
       {
-         value = "56";
+         value = "59";
          type = "int";
       }
       datum sopceditor_expanded
@@ -564,7 +567,7 @@
    {
       datum _sortIndex
       {
-         value = "25";
+         value = "28";
          type = "int";
       }
       datum sopceditor_expanded
@@ -590,7 +593,7 @@
    {
       datum _sortIndex
       {
-         value = "33";
+         value = "36";
          type = "int";
       }
       datum sopceditor_expanded
@@ -611,7 +614,7 @@
    {
       datum _sortIndex
       {
-         value = "44";
+         value = "47";
          type = "int";
       }
       datum sopceditor_expanded
@@ -632,7 +635,7 @@
    {
       datum _sortIndex
       {
-         value = "42";
+         value = "45";
          type = "int";
       }
       datum sopceditor_expanded
@@ -695,7 +698,7 @@
    {
       datum _sortIndex
       {
-         value = "32";
+         value = "35";
          type = "int";
       }
       datum sopceditor_expanded
@@ -716,7 +719,7 @@
    {
       datum _sortIndex
       {
-         value = "43";
+         value = "46";
          type = "int";
       }
       datum sopceditor_expanded
@@ -737,7 +740,7 @@
    {
       datum _sortIndex
       {
-         value = "55";
+         value = "58";
          type = "int";
       }
    }
@@ -753,7 +756,7 @@
    {
       datum _sortIndex
       {
-         value = "29";
+         value = "32";
          type = "int";
       }
       datum sopceditor_expanded
@@ -774,7 +777,7 @@
    {
       datum _sortIndex
       {
-         value = "35";
+         value = "38";
          type = "int";
       }
    }
@@ -782,7 +785,7 @@
    {
       datum _sortIndex
       {
-         value = "54";
+         value = "57";
          type = "int";
       }
    }
@@ -790,7 +793,7 @@
    {
       datum _sortIndex
       {
-         value = "37";
+         value = "40";
          type = "int";
       }
    }
@@ -806,7 +809,7 @@
    {
       datum _sortIndex
       {
-         value = "52";
+         value = "55";
          type = "int";
       }
    }
@@ -814,7 +817,7 @@
    {
       datum _sortIndex
       {
-         value = "36";
+         value = "39";
          type = "int";
       }
    }
@@ -895,7 +898,7 @@
    {
       datum _sortIndex
       {
-         value = "24";
+         value = "27";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1007,7 +1010,7 @@
    {
       datum _sortIndex
       {
-         value = "38";
+         value = "41";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1020,7 +1023,7 @@
    {
       datum _sortIndex
       {
-         value = "47";
+         value = "50";
          type = "int";
       }
    }
@@ -1028,7 +1031,7 @@
    {
       datum _sortIndex
       {
-         value = "40";
+         value = "43";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1049,7 +1052,7 @@
    {
       datum _sortIndex
       {
-         value = "41";
+         value = "44";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1070,7 +1073,7 @@
    {
       datum _sortIndex
       {
-         value = "39";
+         value = "42";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1090,6 +1093,43 @@
       {
          value = "134217744";
          type = "String";
+      }
+   }
+   element rgb_st_buffer_switcher_0
+   {
+      datum _sortIndex
+      {
+         value = "14";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element rgb_st_buffer_switcher_1
+   {
+      datum _sortIndex
+      {
+         value = "26";
+         type = "int";
+      }
+   }
+   element rgb_st_switch_0
+   {
+      datum _sortIndex
+      {
+         value = "12";
+         type = "int";
+      }
+   }
+   element rgb_st_switch_1
+   {
+      datum _sortIndex
+      {
+         value = "24";
+         type = "int";
       }
    }
    element sdram_controller_0
@@ -1122,7 +1162,7 @@
    {
       datum _sortIndex
       {
-         value = "28";
+         value = "31";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1148,7 +1188,7 @@
    {
       datum _sortIndex
       {
-         value = "49";
+         value = "52";
          type = "int";
       }
    }
@@ -1186,14 +1226,6 @@
          type = "int";
       }
    }
-   element st_naive_mux_0
-   {
-      datum _sortIndex
-      {
-         value = "12";
-         type = "int";
-      }
-   }
    element subsystemA_0
    {
       datum _sortIndex
@@ -1206,7 +1238,7 @@
    {
       datum _sortIndex
       {
-         value = "57";
+         value = "60";
          type = "int";
       }
    }
@@ -1243,7 +1275,7 @@
    {
       datum _sortIndex
       {
-         value = "30";
+         value = "33";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1256,7 +1288,7 @@
    {
       datum _sortIndex
       {
-         value = "31";
+         value = "34";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1269,7 +1301,7 @@
    {
       datum _sortIndex
       {
-         value = "45";
+         value = "48";
          type = "int";
       }
    }
@@ -1277,7 +1309,7 @@
    {
       datum _sortIndex
       {
-         value = "51";
+         value = "54";
          type = "int";
       }
    }
@@ -1303,8 +1335,8 @@
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
-   name="cam_buffer_switcher_enable"
-   internal="cam_buffer_switcher.enable"
+   name="cam_mm_to_st_buffer_switch"
+   internal="cam_mm_to_st.buffer_switch"
    type="conduit"
    dir="end" />
  <interface
@@ -1461,12 +1493,37 @@
    type="conduit"
    dir="end" />
  <interface name="reset" internal="clk.clk_in_reset" type="reset" dir="end" />
- <interface name="ssram_mm_0_ssram_wires" internal="ssram_mm_0.ssram_wires" />
  <interface
-   name="st_naive_mux_0_conduit"
-   internal="st_naive_mux_0.conduit"
+   name="rgb_st_buffer_switcher_0_enable"
+   internal="rgb_st_buffer_switcher_0.enable"
    type="conduit"
    dir="end" />
+ <interface
+   name="rgb_st_buffer_switcher_0_read_buffer"
+   internal="rgb_st_buffer_switcher_0.read_buffer"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="rgb_st_buffer_switcher_1_enable"
+   internal="rgb_st_buffer_switcher_1.enable"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="rgb_st_buffer_switcher_1_read_buffer"
+   internal="rgb_st_buffer_switcher_1.read_buffer"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="rgb_st_switch_0_enable"
+   internal="rgb_st_switch_0.enable"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="rgb_st_switch_1_enable"
+   internal="rgb_st_switch_1.enable"
+   type="conduit"
+   dir="end" />
+ <interface name="ssram_mm_0_ssram_wires" internal="ssram_mm_0.ssram_wires" />
  <interface
    name="sw_pio_0_external_connection"
    internal="sw_pio_0.external_connection"
@@ -1491,11 +1548,6 @@
   <parameter name="DOUT_WIDTH" value="4" />
  </module>
  <module
-   name="cam_buffer_switcher"
-   kind="frame_buffer_switcher"
-   version="2.0"
-   enabled="1" />
- <module
    name="cam_mm_to_st"
    kind="rgb_mm_to_vga_st_bank0"
    version="1.0"
@@ -1511,7 +1563,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@6569581</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@62cb67f6</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_cam_mm_to_st</parameter>
  </module>
  <module
@@ -1608,7 +1660,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='recog_memory_0.s1' start='0x8000000' end='0x8014000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@57bd0609</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@590c0cdc</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_st_to_hsv_mm_0</parameter>
  </module>
  <module
@@ -1627,7 +1679,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='recog_memory_1.s1' start='0x8000000' end='0x8014000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@3e77cc13</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@1a9ac9a9</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_st_to_hsv_mm_1</parameter>
  </module>
  <module
@@ -1646,8 +1698,27 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@5b319cc4</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@480b3bfa</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_st_to_rgb_mm_0</parameter>
+ </module>
+ <module
+   name="camera_st_to_rgb_mm_1"
+   kind="camera_st_to_rgb_mm"
+   version="1.0"
+   enabled="1">
+  <parameter name="AUTO_CLK_CAMERA_CLOCK_DOMAIN" value="6" />
+  <parameter name="AUTO_CLK_CAMERA_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_CLK_CAMERA_RESET_DOMAIN" value="6" />
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="100000000" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
+  <parameter name="AUTO_DEVICE" value="EP4CGX150DF31C7" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@71c611da</parameter>
+  <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_st_to_rgb_mm_1</parameter>
  </module>
  <module name="clk" kind="clock_source" version="15.0" enabled="1">
   <parameter name="clockFrequency" value="100000000" />
@@ -2760,7 +2831,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@69f9e0be</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@481599d2</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_render_mm_to_st</parameter>
  </module>
  <module
@@ -2816,6 +2887,30 @@
   <parameter name="simDoTestBenchWiring" value="false" />
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="1" />
+ </module>
+ <module
+   name="rgb_st_buffer_switcher_0"
+   kind="frame_buffer_switcher"
+   version="2.0"
+   enabled="1" />
+ <module
+   name="rgb_st_buffer_switcher_1"
+   kind="frame_buffer_switcher"
+   version="2.0"
+   enabled="1" />
+ <module
+   name="rgb_st_switch_0"
+   kind="st_naive_switch"
+   version="1.0"
+   enabled="1">
+  <parameter name="DATA_WIDTH" value="32" />
+ </module>
+ <module
+   name="rgb_st_switch_1"
+   kind="st_naive_switch"
+   version="1.0"
+   enabled="1">
+  <parameter name="DATA_WIDTH" value="32" />
  </module>
  <module
    name="sdram_controller_0"
@@ -2902,9 +2997,6 @@
   <parameter name="DIN_DATA_WIDTH" value="24" />
   <parameter name="DOUT0_DATA_WIDTH" value="24" />
   <parameter name="DOUT1_DATA_WIDTH" value="32" />
- </module>
- <module name="st_naive_mux_0" kind="st_naive_mux" version="1.0" enabled="1">
-  <parameter name="DATA_WIDTH" value="32" />
  </module>
  <module name="sw_pio_0" kind="altera_avalon_pio" version="15.0" enabled="1">
   <parameter name="bitClearingEdgeCapReg" value="false" />
@@ -3676,10 +3768,24 @@
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
+   kind="avalon"
+   version="15.0"
+   start="camera_st_to_rgb_mm_1.master"
+   end="sdram_controller_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
    kind="avalon_streaming"
    version="15.0"
-   start="st_naive_mux_0.dout"
+   start="rgb_st_switch_0.dout"
    end="camera_st_to_rgb_mm_0.sink" />
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="rgb_st_switch_1.dout"
+   end="camera_st_to_rgb_mm_1.sink" />
  <connection
    kind="avalon_streaming"
    version="15.0"
@@ -3694,12 +3800,12 @@
    kind="avalon_streaming"
    version="15.0"
    start="st_naive_multi_0.dout1"
-   end="st_naive_mux_0.din0" />
+   end="rgb_st_switch_0.din" />
  <connection
    kind="avalon_streaming"
    version="15.0"
    start="st_naive_multi_1.dout1"
-   end="st_naive_mux_0.din1" />
+   end="rgb_st_switch_1.din" />
  <connection
    kind="avalon_streaming"
    version="15.0"
@@ -3825,6 +3931,11 @@
    kind="clock"
    version="15.0"
    start="clk.clk"
+   end="camera_st_to_rgb_mm_1.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
    end="onchip_memory2_0.clk1" />
  <connection kind="clock" version="15.0" start="clk.clk" end="recog_memory_1.clk1" />
  <connection kind="clock" version="15.0" start="clk.clk" end="shared_memory.clk1" />
@@ -3884,7 +3995,7 @@
    kind="clock"
    version="15.0"
    start="clk.clk"
-   end="cam_buffer_switcher.read_clock" />
+   end="rgb_st_buffer_switcher_0.read_clock" />
  <connection
    kind="clock"
    version="15.0"
@@ -3900,6 +4011,11 @@
    version="15.0"
    start="clk.clk"
    end="overlay_buffer_switcher.read_clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="rgb_st_buffer_switcher_1.read_clock" />
  <connection
    kind="clock"
    version="15.0"
@@ -3933,13 +4049,13 @@
  <connection
    kind="clock"
    version="15.0"
-   start="camera_st_0.clock"
-   end="st_naive_multi_0.clock" />
+   start="camera_st_1.clock"
+   end="camera_st_to_rgb_mm_1.clk_camera" />
  <connection
    kind="clock"
    version="15.0"
    start="camera_st_0.clock"
-   end="st_naive_mux_0.clock" />
+   end="st_naive_multi_0.clock" />
  <connection
    kind="clock"
    version="15.0"
@@ -3948,8 +4064,13 @@
  <connection
    kind="clock"
    version="15.0"
+   start="camera_st_0.clock"
+   end="rgb_st_switch_0.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
    start="camera_st_1.clock"
-   end="st_naive_mux_0.clock_1" />
+   end="rgb_st_switch_1.clock" />
  <connection
    kind="clock"
    version="15.0"
@@ -3963,13 +4084,29 @@
  <connection
    kind="clock"
    version="15.0"
+   start="camera_st_1.clock"
+   end="rgb_st_buffer_switcher_1.write_clk" />
+ <connection
+   kind="clock"
+   version="15.0"
    start="camera_st_0.clock"
-   end="cam_buffer_switcher.write_clk" />
+   end="rgb_st_buffer_switcher_0.write_clk" />
  <connection
    kind="conduit"
    version="15.0"
    start="vid_read_buffer_0.addr_gen"
    end="overlay_read_addr_gen_0.addr_gen">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="camera_st_to_rgb_mm_1.buffer_switch"
+   end="rgb_st_buffer_switcher_1.write_buffer">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
   <parameter name="startPort" value="" />
@@ -4001,17 +4138,6 @@
  <connection
    kind="conduit"
    version="15.0"
-   start="cam_buffer_switcher.read_buffer"
-   end="cam_mm_to_st.buffer_switch">
-  <parameter name="endPort" value="" />
-  <parameter name="endPortLSB" value="0" />
-  <parameter name="startPort" value="" />
-  <parameter name="startPortLSB" value="0" />
-  <parameter name="width" value="0" />
- </connection>
- <connection
-   kind="conduit"
-   version="15.0"
    start="render_buffer_switcher.read_buffer"
    end="render_mm_to_st.buffer_switch">
   <parameter name="endPort" value="" />
@@ -4023,7 +4149,7 @@
  <connection
    kind="conduit"
    version="15.0"
-   start="cam_buffer_switcher.read_buffer"
+   start="rgb_st_buffer_switcher_0.read_buffer"
    end="vga_composer_overlay_0.cam_buffer">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
@@ -4067,7 +4193,7 @@
  <connection
    kind="conduit"
    version="15.0"
-   start="cam_buffer_switcher.write_buffer"
+   start="rgb_st_buffer_switcher_0.write_buffer"
    end="camera_st_to_rgb_mm_0.buffer_switch">
   <parameter name="endPort" value="" />
   <parameter name="endPortLSB" value="0" />
@@ -4223,7 +4349,7 @@
    kind="reset"
    version="15.0"
    start="clk.clk_reset"
-   end="cam_buffer_switcher.reset" />
+   end="rgb_st_buffer_switcher_0.reset" />
  <connection
    kind="reset"
    version="15.0"
@@ -4349,17 +4475,32 @@
    kind="reset"
    version="15.0"
    start="clk.clk_reset"
-   end="st_naive_mux_0.reset" />
- <connection
-   kind="reset"
-   version="15.0"
-   start="clk.clk_reset"
    end="st_naive_multi_1.reset" />
  <connection
    kind="reset"
    version="15.0"
    start="clk.clk_reset"
    end="sw_pio_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="rgb_st_switch_0.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="rgb_st_switch_1.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="camera_st_to_rgb_mm_1.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="rgb_st_buffer_switcher_1.reset" />
  <connection
    kind="reset"
    version="15.0"

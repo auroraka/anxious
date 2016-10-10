@@ -180,7 +180,7 @@ begin
         valid             <= r.we;
         data(23 downto 0) <= r.dout;
         sop               <= r.sop;
-        eop               <= r.sop;
+        eop               <= r.eop;
 
         rin <= v; -- apply the new values
     end process;
