@@ -60,7 +60,7 @@ description for functions of switchs and keys
 SW[0] : fan
 SW[1] : camera_st_0_conduit_enable
 SW[2] : camera_st_1_conduit_enable
-SW[3] : 
+SW[3] : rgb_st_to_mm input mux selection
 SW[4] : cam_buffer_switcher_enable
 SW[5] : recog_buffer_switcher_0/1_enable
 SW[6] : render_buffer_switcher_enable
@@ -115,6 +115,8 @@ anxious_capture u0 (
     .ir_receiver_0_irda_IRDA                            (IRDA_RXD),
 
     .key_pio_external_connection_export                 (KEY[1]),
+	.sw_pio_0_external_connection_export				(SW[17:0]),
+	.st_naive_mux_0_conduit_export						(SW[3]),
 
     .new_sdram_controller_0_wire_addr                   (DRAM_ADDR),
     .new_sdram_controller_0_wire_ba                     (DRAM_BA),
@@ -177,7 +179,7 @@ anxious_capture u0 (
 	.fs_wires_fs_data                                   (FS_DQ),
 	.fs_wires_sram_reset_n                              (),
 	.fs_wires_fs_addr                                   (FS_ADDR),
-	.nios_terminal_output_enable_export                 (SW[17])    
+	.nios_terminal_output_enable_export                 (SW[17])
 );
 
 endmodule
