@@ -18,7 +18,7 @@ entity camera_st is
         valid      : out std_logic;
         sop        : out std_logic;
         eop        : out std_logic;
-        data       : out std_logic_vector(DATA_WIDTH - 1downto 0) := (others => '0');
+        data       : out std_logic_vector(DATA_WIDTH - 1 downto 0) := (others => '0');
 
         ---- Camera Wires ----
         CAM_VSYNC  : in  std_logic;
@@ -63,28 +63,40 @@ architecture camera_bhv of camera_st is
         cap_y               : unsigned(9 downto 0);
         cap_count           : natural range 0 to 3;
         vsync_reg, href_reg : std_logic;
+
+        -- registered output signals
         we                  : std_logic;
         dout                : std_logic_vector(23 downto 0);
         sop                 : std_logic;
         eop                 : std_logic;
+
+        -- buffered next output signals
+        dout_buf            : std_logic_vector(23 downto 0);
+
+        first_data          : std_logic;
+        second_data         : std_logic;
+
         black_cnt           : unsigned(19 downto 0);
     end record;
 
     constant INIT_REGS: reg_type := (
-        cap_state => C_IDLE,
-        y0        => (others => '0'),
-        cb        => (others => '0'),
-        cr        => (others => '0'),
-        cap_x     => (others => '0'),
-        cap_y     => (others => '0'),
-        cap_count => 0,
-        vsync_reg => '1',
-        href_reg  => '0',
-        we        => '0',
-        dout      => (others => '0'),
-        sop       => '0',
-        eop       => '0',
-        black_cnt => (others => '0')
+        cap_state  => C_IDLE,
+        y0         => (others => '0'),
+        cb         => (others => '0'),
+        cr         => (others => '0'),
+        cap_x      => (others => '0'),
+        cap_y      => (others => '0'),
+        cap_count  => 0,
+        vsync_reg  => '1',
+        href_reg   => '0',
+        we         => '0',
+        dout       => (others => '0'),
+        sop        => '0',
+        eop        => '0',
+        black_cnt  => (others => '0'),
+        dout_buf   => (others => '0'),
+        first_data => '0',
+        second_data => '0'
     );
 
     signal r: reg_type := INIT_REGS;
@@ -124,11 +136,12 @@ begin
         v.eop := '0';
 
         case r.cap_state is
-        when C_IDLE =>
+            when C_IDLE =>
                 black_cnt_r <= r.black_cnt;
                 if enable_n = '0' then
-                    v.cap_state := C_WAIT;
-                    v.sop := '1';
+                    v.cap_state  := C_WAIT;
+                    v.first_data := '1';
+                    v.second_data := '0';
                 end if;
             when C_WAIT =>
                 if r.vsync_reg and not CAM_VSYNC then
@@ -141,7 +154,9 @@ begin
             when C_BUSY =>
                 if CAM_VSYNC then
                     v.cap_state := C_IDLE;
-                    v.eop := '1';
+                    v.we        := '1';
+                    v.eop       := '1';
+                    v.dout      := v.dout_buf;
                 end if;
                 if CAM_HREF then
                     v.cap_count := (r.cap_count + 1) mod 4;
@@ -152,18 +167,27 @@ begin
                             end if;
                             v.cb := CAM_DIN;
                         when 1 =>
-                            v.we    := '1';
-                            rgb565_to_rgb888(r.cb, CAM_DIN, v.dout);
-                            -- Mock data for testing (overwrite previous assignments)
-                            -- v.dout := cap_y_mock & cap_y_mock & cap_y_mock;
+                            rgb565_to_rgb888(r.cb, CAM_DIN, v.dout_buf);
+                            if not r.first_data then
+                                v.we    := '1';
+                                v.dout  := v.dout_buf;
+                            else
+                                v.first_data := '0';
+                                v.second_data := '1';
+                            end if;
                         when 2 =>
                             v.cap_y := r.cap_y + 1;
                             v.cr := CAM_DIN;
                         when 3 =>
+                            if r.second_data then
+                                v.sop := '1';
+                                v.second_data := '0';
+                            else
+                                v.sop := '0';
+                            end if;
                             v.we    := '1';
-                            rgb565_to_rgb888(r.cr, CAM_DIN, v.dout);
-                            -- Mock data for testing (overwrite previous assignments)
-                            -- DATA_o <= cap_y_mock & cap_y_mock & cap_y_mock;
+                            v.dout  := v.dout_buf;
+                            rgb565_to_rgb888(r.cr, CAM_DIN, v.dout_buf);
                     end case;
                 end if;
                 if r.href_reg and not CAM_HREF then

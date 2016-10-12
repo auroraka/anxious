@@ -10,8 +10,6 @@ entity st_naive_mux is
     );
     port (
         clk                    : in  std_logic;
-        clk_1                  : in  std_logic;
-        clk_o                  : out std_logic;
         reset_n                : in  std_logic;
 
         asi_din0_data          : in  std_logic_vector(DATA_WIDTH - 1 downto 0);
@@ -67,20 +65,22 @@ begin
 
     P_comb: process(all)
         variable v:reg_type;
-        variable sop, eop: std_logic;
+        variable valid, sop, eop: std_logic;
     begin
         -- default: hold the values
         v := r;
 
         if not r.sel then
-            sop := asi_din0_startofpacket;
-            eop := asi_din0_endofpacket;
+            sop   := asi_din0_startofpacket;
+            eop   := asi_din0_endofpacket;
+            valid := asi_din0_valid;
         else
-            sop := asi_din1_startofpacket;
-            eop := asi_din1_endofpacket;
+            sop   := asi_din1_startofpacket;
+            eop   := asi_din1_endofpacket;
+            valid := asi_din1_valid;
         end if;
 
-        if r.ena and eop then
+        if r.ena and eop and valid then
             v.ena := '0';
             v.eop := '1';
             v.sel := coe_conduit_sel;
@@ -88,14 +88,14 @@ begin
             v.eop := '0';
         end if;
 
-        if not r.ena and sop then
+        if not r.ena and sop and valid then
             v.ena := '1';
             v.sop := '1';
         else
             v.sop := '0';
         end if;
 
-        if v.ena then
+        if r.ena or v.ena then
             if not r.sel then
                 v.data  := asi_din0_data;
                 v.valid := asi_din0_valid;
@@ -112,8 +112,6 @@ begin
         aso_dout_startofpacket <= r.sop;
         aso_dout_endofpacket   <= r.eop;
         aso_dout_valid         <= r.valid;
-
-        clk_o <= clk;
 
         -- apply the new values
         rin <= v;

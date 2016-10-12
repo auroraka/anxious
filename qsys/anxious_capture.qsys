@@ -321,11 +321,51 @@
          type = "String";
       }
    }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
    element bit_unpacker_0
    {
       datum _sortIndex
       {
-         value = "53";
+         value = "54";
          type = "int";
       }
    }
@@ -333,7 +373,7 @@
    {
       datum _sortIndex
       {
-         value = "46";
+         value = "47";
          type = "int";
       }
    }
@@ -341,7 +381,7 @@
    {
       datum _sortIndex
       {
-         value = "15";
+         value = "16";
          type = "int";
       }
       datum sopceditor_expanded
@@ -367,7 +407,7 @@
    {
       datum _sortIndex
       {
-         value = "26";
+         value = "27";
          type = "int";
       }
       datum sopceditor_expanded
@@ -393,7 +433,7 @@
    {
       datum _sortIndex
       {
-         value = "16";
+         value = "17";
          type = "int";
       }
       datum sopceditor_expanded
@@ -419,7 +459,7 @@
    {
       datum _sortIndex
       {
-         value = "27";
+         value = "28";
          type = "int";
       }
       datum sopceditor_expanded
@@ -458,7 +498,7 @@
    {
       datum _sortIndex
       {
-         value = "21";
+         value = "22";
          type = "int";
       }
       datum sopceditor_expanded
@@ -484,7 +524,7 @@
    {
       datum _sortIndex
       {
-         value = "23";
+         value = "24";
          type = "int";
       }
       datum sopceditor_expanded
@@ -497,7 +537,7 @@
    {
       datum _sortIndex
       {
-         value = "13";
+         value = "14";
          type = "int";
       }
       datum sopceditor_expanded
@@ -523,7 +563,15 @@
    {
       datum _sortIndex
       {
-         value = "48";
+         value = "49";
+         type = "int";
+      }
+   }
+   element dc_fifo_0
+   {
+      datum _sortIndex
+      {
+         value = "13";
          type = "int";
       }
    }
@@ -531,7 +579,7 @@
    {
       datum _sortIndex
       {
-         value = "50";
+         value = "51";
          type = "int";
       }
    }
@@ -560,7 +608,7 @@
    {
       datum _sortIndex
       {
-         value = "34";
+         value = "35";
          type = "int";
       }
    }
@@ -576,7 +624,7 @@
    {
       datum _sortIndex
       {
-         value = "56";
+         value = "57";
          type = "int";
       }
       datum sopceditor_expanded
@@ -615,7 +663,7 @@
    {
       datum _sortIndex
       {
-         value = "25";
+         value = "26";
          type = "int";
       }
       datum sopceditor_expanded
@@ -641,7 +689,7 @@
    {
       datum _sortIndex
       {
-         value = "33";
+         value = "34";
          type = "int";
       }
       datum sopceditor_expanded
@@ -662,7 +710,7 @@
    {
       datum _sortIndex
       {
-         value = "44";
+         value = "45";
          type = "int";
       }
       datum sopceditor_expanded
@@ -683,7 +731,7 @@
    {
       datum _sortIndex
       {
-         value = "42";
+         value = "43";
          type = "int";
       }
       datum sopceditor_expanded
@@ -725,7 +773,7 @@
    {
       datum _sortIndex
       {
-         value = "17";
+         value = "18";
          type = "int";
       }
       datum sopceditor_expanded
@@ -746,7 +794,7 @@
    {
       datum _sortIndex
       {
-         value = "32";
+         value = "33";
          type = "int";
       }
       datum sopceditor_expanded
@@ -767,7 +815,7 @@
    {
       datum _sortIndex
       {
-         value = "43";
+         value = "44";
          type = "int";
       }
       datum sopceditor_expanded
@@ -788,7 +836,7 @@
    {
       datum _sortIndex
       {
-         value = "55";
+         value = "56";
          type = "int";
       }
    }
@@ -804,7 +852,7 @@
    {
       datum _sortIndex
       {
-         value = "29";
+         value = "30";
          type = "int";
       }
       datum sopceditor_expanded
@@ -825,7 +873,7 @@
    {
       datum _sortIndex
       {
-         value = "35";
+         value = "36";
          type = "int";
       }
    }
@@ -833,7 +881,7 @@
    {
       datum _sortIndex
       {
-         value = "54";
+         value = "55";
          type = "int";
       }
    }
@@ -841,7 +889,7 @@
    {
       datum _sortIndex
       {
-         value = "37";
+         value = "38";
          type = "int";
       }
    }
@@ -857,7 +905,7 @@
    {
       datum _sortIndex
       {
-         value = "52";
+         value = "53";
          type = "int";
       }
    }
@@ -865,7 +913,7 @@
    {
       datum _sortIndex
       {
-         value = "36";
+         value = "37";
          type = "int";
       }
    }
@@ -907,7 +955,7 @@
    {
       datum _sortIndex
       {
-         value = "19";
+         value = "20";
          type = "int";
       }
       datum sopceditor_expanded
@@ -946,7 +994,7 @@
    {
       datum _sortIndex
       {
-         value = "24";
+         value = "25";
          type = "int";
       }
       datum sopceditor_expanded
@@ -985,7 +1033,7 @@
    {
       datum _sortIndex
       {
-         value = "18";
+         value = "19";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1032,7 +1080,7 @@
    {
       datum _sortIndex
       {
-         value = "20";
+         value = "21";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1058,7 +1106,7 @@
    {
       datum _sortIndex
       {
-         value = "38";
+         value = "39";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1071,7 +1119,7 @@
    {
       datum _sortIndex
       {
-         value = "47";
+         value = "48";
          type = "int";
       }
    }
@@ -1079,7 +1127,7 @@
    {
       datum _sortIndex
       {
-         value = "40";
+         value = "41";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1100,7 +1148,7 @@
    {
       datum _sortIndex
       {
-         value = "41";
+         value = "42";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1121,7 +1169,7 @@
    {
       datum _sortIndex
       {
-         value = "39";
+         value = "40";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1147,7 +1195,7 @@
    {
       datum _sortIndex
       {
-         value = "14";
+         value = "15";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1186,7 +1234,7 @@
    {
       datum _sortIndex
       {
-         value = "28";
+         value = "29";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1212,7 +1260,7 @@
    {
       datum _sortIndex
       {
-         value = "49";
+         value = "50";
          type = "int";
       }
    }
@@ -1246,7 +1294,7 @@
    {
       datum _sortIndex
       {
-         value = "22";
+         value = "23";
          type = "int";
       }
    }
@@ -1270,7 +1318,7 @@
    {
       datum _sortIndex
       {
-         value = "57";
+         value = "58";
          type = "int";
       }
    }
@@ -1307,7 +1355,7 @@
    {
       datum _sortIndex
       {
-         value = "30";
+         value = "31";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1320,7 +1368,7 @@
    {
       datum _sortIndex
       {
-         value = "31";
+         value = "32";
          type = "int";
       }
       datum sopceditor_expanded
@@ -1333,7 +1381,7 @@
    {
       datum _sortIndex
       {
-         value = "45";
+         value = "46";
          type = "int";
       }
    }
@@ -1341,7 +1389,7 @@
    {
       datum _sortIndex
       {
-         value = "51";
+         value = "52";
          type = "int";
       }
    }
@@ -1570,7 +1618,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@7b03af2b</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@21dadc33</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_cam_mm_to_st</parameter>
  </module>
  <module
@@ -1645,10 +1693,10 @@
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="1" />
  </module>
- <module name="camera_st_0" kind="camera_st" version="1.0" enabled="1">
+ <module name="camera_st_0" kind="camera_st" version="2.0" enabled="1">
   <parameter name="DATA_WIDTH" value="24" />
  </module>
- <module name="camera_st_1" kind="camera_st" version="1.0" enabled="1">
+ <module name="camera_st_1" kind="camera_st" version="2.0" enabled="1">
   <parameter name="DATA_WIDTH" value="24" />
  </module>
  <module
@@ -1667,7 +1715,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='recog_memory_0.s1' start='0x8000000' end='0x8014000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@1097f18e</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@2c4dc20</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_st_to_hsv_mm_0</parameter>
  </module>
  <module
@@ -1686,7 +1734,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='recog_memory_1.s1' start='0x8000000' end='0x8014000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@713724cf</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@6d62872f</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_st_to_hsv_mm_1</parameter>
  </module>
  <module
@@ -1694,9 +1742,9 @@
    kind="camera_st_to_rgb_mm"
    version="1.0"
    enabled="1">
-  <parameter name="AUTO_CLK_CAMERA_CLOCK_DOMAIN" value="11" />
+  <parameter name="AUTO_CLK_CAMERA_CLOCK_DOMAIN" value="5" />
   <parameter name="AUTO_CLK_CAMERA_CLOCK_RATE" value="0" />
-  <parameter name="AUTO_CLK_CAMERA_RESET_DOMAIN" value="11" />
+  <parameter name="AUTO_CLK_CAMERA_RESET_DOMAIN" value="5" />
   <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
   <parameter name="AUTO_CLK_CLOCK_RATE" value="100000000" />
   <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
@@ -1705,7 +1753,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@3b6ca183</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@32956ab4</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_st_to_rgb_mm_0</parameter>
  </module>
  <module name="clk" kind="clock_source" version="15.0" enabled="1">
@@ -1719,6 +1767,25 @@
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module
+   name="dc_fifo_0"
+   kind="altera_avalon_dc_fifo"
+   version="15.0"
+   enabled="1">
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
+  <parameter name="BITS_PER_SYMBOL" value="8" />
+  <parameter name="CHANNEL_WIDTH" value="0" />
+  <parameter name="ENABLE_EXPLICIT_MAXCHANNEL" value="false" />
+  <parameter name="ERROR_WIDTH" value="0" />
+  <parameter name="EXPLICIT_MAXCHANNEL" value="0" />
+  <parameter name="FIFO_DEPTH" value="16" />
+  <parameter name="RD_SYNC_DEPTH" value="3" />
+  <parameter name="SYMBOLS_PER_BEAT" value="4" />
+  <parameter name="USE_IN_FILL_LEVEL" value="0" />
+  <parameter name="USE_OUT_FILL_LEVEL" value="0" />
+  <parameter name="USE_PACKETS" value="1" />
+  <parameter name="WR_SYNC_DEPTH" value="3" />
  </module>
  <module name="fs_mm_0" kind="fs_mm" version="1.0" enabled="1">
   <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
@@ -2819,7 +2886,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@5d703b32</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@45d90391</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_render_mm_to_st</parameter>
  </module>
  <module
@@ -3763,6 +3830,11 @@
    kind="avalon_streaming"
    version="15.0"
    start="st_naive_multi_1.dout1"
+   end="dc_fifo_0.in" />
+ <connection
+   kind="avalon_streaming"
+   version="15.0"
+   start="dc_fifo_0.out"
    end="st_naive_mux_0.din1" />
  <connection
    kind="avalon_streaming"
@@ -3993,6 +4065,11 @@
    kind="clock"
    version="15.0"
    start="camera_st_0.clock"
+   end="camera_st_to_rgb_mm_0.clk_camera" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="camera_st_0.clock"
    end="st_naive_multi_0.clock" />
  <connection
    kind="clock"
@@ -4008,7 +4085,12 @@
    kind="clock"
    version="15.0"
    start="camera_st_1.clock"
-   end="st_naive_mux_0.clock_1" />
+   end="dc_fifo_0.in_clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="camera_st_0.clock"
+   end="dc_fifo_0.out_clk" />
  <connection
    kind="clock"
    version="15.0"
@@ -4022,12 +4104,7 @@
  <connection
    kind="clock"
    version="15.0"
-   start="st_naive_mux_0.clock_o"
-   end="camera_st_to_rgb_mm_0.clk_camera" />
- <connection
-   kind="clock"
-   version="15.0"
-   start="st_naive_mux_0.clock_o"
+   start="camera_st_0.clock"
    end="rgb_st_buffer_switcher_0.write_clk" />
  <connection
    kind="conduit"
@@ -4177,6 +4254,16 @@
    version="15.0"
    start="clk.clk_reset"
    end="jtag_bridge_0.clk_reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="dc_fifo_0.in_clk_reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="dc_fifo_0.out_clk_reset" />
  <connection
    kind="reset"
    version="15.0"
