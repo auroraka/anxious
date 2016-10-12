@@ -376,22 +376,6 @@ void draw_overlay_frame(unsigned color) {
 			store_cube[3] = df[3];
 			store_color = color;
 			break;
-		}
-	}
-}
-
-void reproject_points() {
-	switch (draw_state) {
-		case DRAW_CUBE_VOLUME:
-			p[2] = project_point(addf(pf[0], df[2]));
-			p[3] = project_point(pf[2]);
-		case DRAW_CUBE_AREA:
-			p[1] = project_point(pf[1]);
-		case DRAW_SPHERE_RADIUS:
-		case DRAW_CUBE_LINE:
-			p[0] = project_point(pf[0]);
-		case DRAW_POINT:
-			break;
 		case DRAW_PYRAMID_LINE:
 			case_draw_line(color);
 			break;
@@ -399,10 +383,9 @@ void reproject_points() {
 			case_draw_area(color);
 			break;
 		case DRAW_PYRAMID_VOLUME:
-			if (store) {
-				store_pf(3);
-				p[4] = project_point(pf[3]);
-			}
+			store_pf(3);
+			p[4] = project_point(pf[3]);
+			
 			draw_line(p[0], p[1], color);
 			
 			draw_line(p[0], p[2], color);
@@ -420,6 +403,25 @@ void reproject_points() {
 			store_pyramid[3]=pf[3];
 			store_color=color;
 			break;		
+		}
+	}
+}
+
+void reproject_points() {
+	switch (draw_state) {
+		case DRAW_CUBE_VOLUME:
+		case DRAW_PYRAMID_VOLUME:
+			p[2] = project_point(addf(pf[0], df[2]));
+			p[3] = project_point(pf[2]);
+		case DRAW_PYRAMID_AREA:
+		case DRAW_CUBE_AREA:
+			p[1] = project_point(pf[1]);
+		case DRAW_SPHERE_RADIUS:
+		case DRAW_PYRAMID_LINE:
+		case DRAW_CUBE_LINE:
+			p[0] = project_point(pf[0]);
+		case DRAW_POINT:
+			break;
 	}
 }
 
