@@ -313,6 +313,14 @@
          type = "String";
       }
    }
+   element anxious_capture
+   {
+      datum _originalDeviceFamily
+      {
+         value = "Cyclone IV GX";
+         type = "String";
+      }
+   }
    element bit_unpacker_0
    {
       datum _sortIndex
@@ -1562,7 +1570,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@27397814</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@7b03af2b</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_cam_mm_to_st</parameter>
  </module>
  <module
@@ -1659,7 +1667,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='recog_memory_0.s1' start='0x8000000' end='0x8014000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@605a4c36</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@1097f18e</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_st_to_hsv_mm_0</parameter>
  </module>
  <module
@@ -1678,7 +1686,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='recog_memory_1.s1' start='0x8000000' end='0x8014000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@7deb7345</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@713724cf</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_st_to_hsv_mm_1</parameter>
  </module>
  <module
@@ -1697,7 +1705,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@2e4de126</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@3b6ca183</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_camera_st_to_rgb_mm_0</parameter>
  </module>
  <module name="clk" kind="clock_source" version="15.0" enabled="1">
@@ -2811,7 +2819,7 @@
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
   <parameter name="AUTO_GENERATION_ID" value="0" />
   <parameter name="AUTO_MASTER_ADDRESS_MAP"><![CDATA[<address-map><slave name='sdram_controller_0.s1' start='0x0' end='0x8000000' /></address-map>]]></parameter>
-  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@42d8d523</parameter>
+  <parameter name="AUTO_MASTER_ADDRESS_WIDTH">com.altera.entityinterfaces.moduleext.AddressWidthType@5d703b32</parameter>
   <parameter name="AUTO_UNIQUE_ID">$${FILENAME}_render_mm_to_st</parameter>
  </module>
  <module
