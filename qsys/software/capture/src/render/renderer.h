@@ -100,9 +100,12 @@ bool getPos_online(Vector A,Pos B) {
 
 void renderTriangle(Vector A, Vector B, Vector C, Color color) {
 	Pos X, Y, Z;
-	if (!getPos_online(A, X)) return;
-	if (!getPos_online(B, Y)) return;
-	if (!getPos_online(C, Z)) return;
+	getPos_online(A, X);
+	getPos_online(B, Y);
+	getPos_online(C, Z);
+	//if (!getPos_online(A, X)) return;
+	//if (!getPos_online(B, Y)) return;
+	//if (!getPos_online(C, Z)) return;
 	//if (!getPos(A, X)) return;
 	//if (!getPos(B, Y)) return;
 	//if (!getPos(C, Z)) return;
@@ -321,8 +324,10 @@ void drawSphere3d(Pos c, int radius,float k, Color color) {
 }
 bool renderSphere3d(Vector O, Vector X, Color color){
 	Pos P,P1;
-	if (!getPos_online(O,P)) return false;
-	if (!getPos_online(X,P1)) return false;
+	getPos_online(O,P);
+	getPos_online(X,P1);
+	//if (!getPos_online(O,P)) return false;
+	//if (!getPos_online(X,P1)) return false;
 	
 	float r2d=sqrt((P[0]-P1[0])*(P[0]-P1[0])+(P[1]-P1[1])*(P[1]-P1[1]));
 	if (r2d<EPS) return false;

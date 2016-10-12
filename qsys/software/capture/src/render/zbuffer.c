@@ -15,6 +15,7 @@ void setColorXY(int x, int y, Color color) {
 }
 
 void bufferColor(int i, int j, Color color, float z) {
+	i=i&0x3FF;j=j&0x1FF;//i->[0,640],j->[0,480]
 	IntF buf;
 	buf.u=ZBuffer_R(i, j);
 	if (z < buf.f) {
