@@ -4,11 +4,13 @@
 #include "../common.h"
 #include "../memory.h"
 
+//render_status
 #define RENDER_IDLE (0)
 #define RENDER_CLEAR (1)
 #define RENDER_ADD_SPHERE (2)
 #define RENDER_ADD_SPHERE3D (3)
 #define RENDER_ADD_CUBE (4)
+#define RENDER_ADD_PYRAMID (5)
 
 #define RENDER_STATUS_R() SHARED_R(5)
 #define RENDER_STATUS_W(x) SHARED_W(5, x)
@@ -40,6 +42,8 @@ void add_sphere3d(pointf *pf, unsigned color);
 void add_sphere2d(int x,int y,int r, unsigned color);
 
 void add_cube(pointf center[], unsigned color);
+
+void add_pyramid(pointf center[], unsigned color);
 
 void delete_all();
 

@@ -11,7 +11,6 @@
 #include <unistd.h>
 
 #include <stdio.h>
-#include <time.h>
 #include <string.h>
 #include <assert.h>
 #include <math.h>
@@ -21,6 +20,7 @@
 #include "memory.h"
 #include "display.h"
 #include "palette.h"
+#include "render/object.h"
 #include "control.h"
 
 const static float focus_x_l = 1117.36809f, focus_y_l = 1115.59155f;
@@ -73,10 +73,6 @@ pointf find_location(point p_l, point p_r) {
 	}
 	
 	Xf = loc.x, Yf = loc.y, Zf = loc.z;
-
-//	memcpy(last_msg, msg, sizeof(msg));
-//	sprintf(msg, "Left(%3d,%3d) Right(%3d,%3d) Position(%d,%3d,%3d)",
-//	        x_l, y_l, x_r, y_r, (int)loc.x, (int)loc.y, (int)loc.z);
 	
 	return loc;
 }
@@ -98,7 +94,10 @@ enum DRAW_STATE {
 	DRAW_SPHERE_RADIUS,
 	DRAW_CUBE_LINE,
 	DRAW_CUBE_AREA,
-	DRAW_CUBE_VOLUME
+	DRAW_CUBE_VOLUME,
+	DRAW_PYRAMID_LINE,
+	DRAW_PYRAMID_AREA,
+	DRAW_PYRAMID_VOLUME
 } draw_state;
 
 static unsigned overlay_port = 0;
@@ -121,6 +120,7 @@ void clear_ssram() {
 			for (i = 0; i < WIDTH; ++i)
 				set_sram(port, i, j, 0xF);
 }
+
 
 inline void OVERLAY_W(int x, int y, unsigned val) {
 	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
@@ -284,7 +284,31 @@ inline float lenf(pointf df) {
 #undef TRANSPARENT
 #define TRANSPARENT 0xF
 
-pointf store_cube[5];
+void case_draw_line(unsigned color){
+				store_pf(1);
+				df[1] = subf(pf[1], pf[0]);
+				p[1] = project_point(pf[1]);
+			draw_line(p[0], p[1], color);	
+}
+void case_draw_area(unsigned color){
+				store_pf(2);
+				df[2] = subf(pf[1], pf[2]);
+				
+				float t = dotf(df[2], df[1]) / len2f(df[1]);
+				pf[2] = addf(pf[2], mulf(df[1], t));
+				df[2] = subf(pf[2], pf[1]);
+				
+				p[2] = project_point(addf(pf[0], df[2]));
+				p[3] = project_point(pf[2]);
+			draw_line(p[0], p[1], color);
+			
+			draw_line(p[0], p[2], color);
+			draw_line(p[1], p[3], color);
+			draw_line(p[2], p[3], color);
+}
+
+pointf store_cube[4];
+pointf store_pyramid[4];
 pointf store_sphere[2];
 
 void draw_overlay_frame(unsigned color) {
@@ -313,31 +337,11 @@ void draw_overlay_frame(unsigned color) {
 			store_sphere[0] = pf[0];
 			store_sphere[1] = addf(pf[0], df[1]);
 			break;
-		}
-		case DRAW_CUBE_LINE: {
-			store_pf(1);
-			df[1] = subf(pf[1], pf[0]);
-			p[1] = project_point(pf[1]);
-			
-			draw_line(p[0], p[1], color);
+		case DRAW_CUBE_LINE:
+			case_draw_line(color);
 			break;
-		}
-		case DRAW_CUBE_AREA: {
-			store_pf(2);
-			df[2] = subf(pf[1], pf[2]);
-			
-			float t = dotf(df[2], df[1]) / len2f(df[1]);
-			pf[2] = addf(pf[2], mulf(df[1], t));
-			df[2] = subf(pf[2], pf[1]);
-			
-			p[2] = project_point(addf(pf[0], df[2]));
-			p[3] = project_point(pf[2]);
-			
-			draw_line(p[0], p[1], color);
-			
-			draw_line(p[0], p[2], color);
-			draw_line(p[1], p[3], color);
-			draw_line(p[2], p[3], color);
+		case DRAW_CUBE_AREA:
+			case_draw_area(color);
 			break;
 		}
 		case DRAW_CUBE_VOLUME: {
@@ -388,6 +392,34 @@ void reproject_points() {
 			p[0] = project_point(pf[0]);
 		case DRAW_POINT:
 			break;
+		case DRAW_PYRAMID_LINE:
+			case_draw_line(color);
+			break;
+		case DRAW_PYRAMID_AREA:
+			case_draw_area(color);
+			break;
+		case DRAW_PYRAMID_VOLUME:
+			if (store) {
+				store_pf(3);
+				p[4] = project_point(pf[3]);
+			}
+			draw_line(p[0], p[1], color);
+			
+			draw_line(p[0], p[2], color);
+			draw_line(p[1], p[3], color);
+			draw_line(p[2], p[3], color);
+			
+			draw_line(p[4], p[0], color);
+			draw_line(p[4], p[1], color);
+			draw_line(p[4], p[2], color);
+			draw_line(p[4], p[3], color);
+
+			store_pyramid[0]=pf[0];
+			store_pyramid[1]=df[1];
+			store_pyramid[2]=df[2];
+			store_pyramid[3]=pf[3];
+			store_color=color;
+			break;		
 	}
 }
 
@@ -602,6 +634,7 @@ void key_down(int key_code) {
 				debugMSG();
 				if (key_code == IR_1) draw_state = DRAW_SPHERE_RADIUS;
 				else if (key_code == IR_2) draw_state = DRAW_CUBE_LINE;
+				else if (key_code == IR_3) draw_state = DRAW_PYRAMID_LINE;
 				break;
 			case DRAW_SPHERE_RADIUS:
 				//add_sphere2d(store_x,store_y, store_r, store_color);
@@ -622,6 +655,22 @@ void key_down(int key_code) {
 				sprintf(MSG, "[Step] 3: (%d,%d,%d)\n", (int)pf[3].x, (int)pf[3].y, (int)pf[3].z);
 				debugMSG();
 				add_cube(store_cube, store_color);
+				draw_state = DRAW_POINT;
+				break;
+			case DRAW_PYRAMID_LINE:
+				sprintf(MSG,"[Pyramid-Step] 1: (%d,%d,%d)\n", (int)pf[1].x, (int)pf[1].y, (int)pf[1].z);
+				debugMSG();
+				draw_state = DRAW_PYRAMID_AREA;
+				break;
+			case DRAW_PYRAMID_AREA:
+				sprintf(MSG,"[Pyramid-Step] 2: (%d,%d,%d)\n", (int)pf[2].x, (int)pf[2].y, (int)pf[2].z);
+				debugMSG();
+				draw_state = DRAW_PYRAMID_VOLUME;
+				break;
+			case DRAW_PYRAMID_VOLUME:
+				sprintf(MSG,"[Pyramid-Step] 3: (%d,%d,%d)\n", (int)pf[3].x, (int)pf[3].y, (int)pf[3].z);
+				debugMSG();
+				add_pyramid(store_pyramid,store_color);
 				draw_state = DRAW_POINT;
 				break;
 		}

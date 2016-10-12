@@ -1,7 +1,4 @@
-//
-// Created by Kanari on 2016/8/24.
-//
-
+//[CPU2],[CPU3]
 #if CPU_ID>=2
 
 #include "../debug.h"
@@ -108,6 +105,22 @@ void printSendCube(pointf pf[],unsigned color){
 	sprintf(MSG,"\n");	
 	debugMSG();
 }
+void printSendPyramid(pointf pf[],unsigned color){
+	sprintf(MSG,"[Object] send-pyramid: ");
+	debugMSG();
+	sprintf(MSG,"o=");printPoint(pf[0]);
+	debugMSG();
+	sprintf(MSG,"x=");printPoint(pf[1]);
+	debugMSG();
+	sprintf(MSG,"y=");printPoint(pf[2]);
+	debugMSG();
+	sprintf(MSG,"a=");printPoint(pf[3]);
+	debugMSG();
+	sprintf(MSG,"color=%u ",color);
+	debugMSG();
+	sprintf(MSG,"\n");	
+	debugMSG();
+}
 void add_cube(pointf pf[], unsigned color) {
 	int status=RENDER_STATUS_R();
 	if (status!=RENDER_IDLE){
@@ -129,6 +142,29 @@ void add_cube(pointf pf[], unsigned color) {
 	sprintf(MSG,"[Object] now-tot: %d\n",cnt);
 	debugMSG();
 	printSendCube(pf,color);
+	
+}
+void add_pyramid(pointf pf[], unsigned color) {
+	int status=RENDER_STATUS_R();
+	if (status!=RENDER_IDLE){
+		sprintf(MSG,"[Object] add-pyramid failed: not ready\n");
+		debugMSG();
+		return;
+	}
+	int cnt=OBJECT_CNT_R();
+	int i;IntF x;
+	for (i=0;i<4;i++){
+		x.f=pf[i].x; OBJECT_W(cnt+1,i*3+0,x.u); 		
+		x.f=pf[i].y; OBJECT_W(cnt+1,i*3+1,x.u); 		
+		x.f=pf[i].z; OBJECT_W(cnt+1,i*3+2,x.u); 		
+	}
+	OBJECT_W(cnt+1,12,color);
+	
+	
+	RENDER_STATUS_W(RENDER_ADD_PYRAMID);
+	sprintf(MSG,"[Object] now-tot: %d\n",cnt);
+	debugMSG();
+	printSendPyramid(pf,color);
 	
 }
 

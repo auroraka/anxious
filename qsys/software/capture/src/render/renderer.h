@@ -132,16 +132,6 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 		add(P[i], Y, P[i + 4]);
 	}
 	
-	//if (!checkInCavans(P)) return false;
-	
-	Vector tmp;
-	muld(X, 0.5, tmp);
-	add(O, tmp, O);
-	muld(Y, 0.5, tmp);
-	add(O, tmp, O);
-	muld(Z, 0.5, tmp);
-	add(O, tmp, O);
-
 	normal(X,X);normal(Y,Y);normal(Z,Z);
 	Vector nX, nY, nZ;
 	copyNegVector(X, nX);
@@ -160,55 +150,114 @@ bool renderBox(Vector O, Vector X, Vector Y, Vector Z, Color color) {
 		normalize(col);
 		renderRect(P[0], P[4], P[7], P[3], col);
 	}
-	//sprintf(MSG,"0: %d %d\n",dot(eye,nX)>0,(int)dot(eye,nX));
-	//usleep(1000*2000);
-
 	if (dot(eye,Z)<0){
 		getColorNR(Z, R, color, col);//z
 		mulcd(col, k, col);
 		normalize(col);
 		renderRect(P[2], P[3], P[7], P[6], col);
 	}
-	//sprintf(MSG,"1: %d %d\n",dot(eye,Z)>0,(int)dot(eye,Z));
-	//usleep(1000*2000);
-
 	if (dot(eye,Y)<0){
 		getColorNR(Y, R, color, col);//y
 		mulcd(col, k, col);
 		normalize(col);
 		renderRect(P[4], P[5], P[6], P[7], col);
 	}
-	//sprintf(MSG,"2: %d %d\n",dot(eye,Y)>0,(int)dot(eye,Y));
-	//usleep(1000*2000);
-
 	if (dot(eye,X)<0){
 		getColorNR(X, R, color, col);//nx
 		mulcd(col, k, col);
 		normalize(col);
 		renderRect(P[1], P[2], P[6], P[5], col);
 	}
-	//sprintf(MSG,"3: %d %d\n",dot(eye,X)>0,(int)dot(eye,X));
-	//usleep(1000*2000);
-	
 	if (dot(eye,nY)<0){
 		getColorNR(nY, R, color, col);//ny
 		mulcd(col, k, col);
 		normalize(col);
 		renderRect(P[0], P[1], P[2], P[3], col);
 	}
-	//sprintf(MSG,"4: %d %d\n",dot(eye,nY)>0,(int)dot(eye,nY));
-	//usleep(1000*2000);
-
-
 	if (dot(eye,nZ)<0){
 		getColorNR(nZ, R, color, col);//nz
 		mulcd(col, k, col);
 		normalize(col);
 		renderRect(P[0], P[1], P[5], P[4], col);
 	}
-	//sprintf(MSG,"5: %d %d\n",dot(eye,nZ)>0,(int)dot(eye,nZ));
-	//usleep(1000*2000);
+	return true;
+}
+
+bool renderPyramid(Vector O, Vector X, Vector Z, Vector A, Color color) {
+	Vector P[4];
+	Color col;
+	copyColor(color, col);
+	copyVector(O, P[0]);
+	add(O, X, P[1]);
+	add(P[1], Z, P[2]);
+	add(O, Z, P[3]);
 	
+	Vector R={-5,-5,-5};
+	normal(R,R);
+	Vector eye={0,0,100};
+
+	float k=1;
+
+	normal(X,X);normal(Z,Z);
+	Vector nX, nZ;
+	copyNegVector(X, nX);
+	copyNegVector(Z, nZ);
+	
+	if (dot(eye,nZ)){
+		getColorNR(nZ, R, color, col);//x
+		mulcd(col, k, col);
+		normalize(col);
+		renderTriangle(P[0],P[1],A,col);
+	}
+	//usleep(1000*1000);
+
+	if (dot(eye,X)){
+		getColorNR(X, R, color, col);//x
+		mulcd(col, k, col);
+		normalize(col);
+		renderTriangle(P[1],P[2],A,col);
+	}
+	//usleep(1000*1000);
+	
+	if (dot(eye,Z)){
+		getColorNR(Z, R, color, col);//x
+		mulcd(col, k, col);
+		normalize(col);
+		renderTriangle(P[2],P[3],A,col);
+	}
+	//usleep(1000*1000);
+	
+	if (dot(eye,nX)){
+		getColorNR(nX, R, color, col);//x
+		mulcd(col, k, col);
+		normalize(col);
+		renderTriangle(P[3],P[0],A,col);
+	}
+	//usleep(1000*1000);
+	Vector N;
+	//normal()
+	// for (int i=0;i<4;i++){
+		// int j=(i+1)%4;
+		// sub(P[j],P[i],tmp);
+		// sub(A,P[j],tmp1);
+		// cross(tmp,tmp1,N);
+		// normal(N,N);
+		// if (dot(eye,N)<0){
+			// getColorNR(N, R, color, col);//x
+			// mulcd(col, k, col);
+			// normalize(col);
+			// renderTriangle(P[i],P[j],A,col);
+		// }		
+	// }
+	
+	cross(Z,X,N);
+	normal(N,N);
+	if (dot(eye,N)<0){
+		getColorNR(N, R, color, col);//x
+		mulcd(col, k, col);
+		normalize(col);
+		renderRect(P[0],P[1],P[2],P[3],col);
+	}
 	return true;
 }
 

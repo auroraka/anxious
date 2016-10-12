@@ -47,6 +47,14 @@ void printReceiveCube(Vector V[]){
 	sprintf(MSG,"\n");
 	debugMSG();
 }
+void printReceivePyramid(Vector V[]){
+	sprintf(MSG,"[Object] receive-pyramid: ");
+	debugMSG();
+	int i;
+	for (i=0;i<4;i++) printVector(V[i]);
+	sprintf(MSG,"\n");
+	debugMSG();
+}
 void printReceiveSphere3D(Vector V[],unsigned color){
 	sprintf(MSG,"[Object] receive-sphere3d: ");
 	debugMSG();
@@ -61,7 +69,7 @@ void sync_objects() {
 	int status=RENDER_STATUS_R();
 	
 	ttt++;
-	if (ttt%5000==0){
+	if (ttt%1000==0){
 		sprintf(MSG,"sync_objects, RENDER_STATUS=%d\n\0",status);
 		debugMSG();
 	}
@@ -95,7 +103,8 @@ void sync_objects() {
 		}
 		OBJECT_CNT_W(cnt+1);
 		RENDER_STATUS_W(RENDER_IDLE);
-	}else if (status ==RENDER_ADD_SPHERE3D){		
+	}
+	else if (status ==RENDER_ADD_SPHERE3D){		
 		int cnt=OBJECT_CNT_R();
 		int i,j;IntF x;
 		Vector V[2];
@@ -120,7 +129,32 @@ void sync_objects() {
 		}
 		OBJECT_CNT_W(cnt+1);
 		RENDER_STATUS_W(RENDER_IDLE);
-	}else{
+	}
+	else if (status ==RENDER_ADD_PYRAMID){		
+		int cnt=OBJECT_CNT_R();
+		int i,j;IntF x;
+		Vector V[4];
+		for (i=0;i<4;i++){
+			for (j=0;j<3;j++){
+				x.u=OBJECT_R(cnt+1,i*3+j); 
+				V[i][j]=x.f;
+			}
+		}
+		unsigned c=OBJECT_R(cnt+1,12);
+		Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
+		printReceivePyramid(V);
+		sprintf(MSG,"[Object] now-tot: %d\n",cnt);
+		debugMSG();
+		sprintf(MSG,"[Object] render-pyramid: doing\n");
+		debugMSG();
+		if (!renderPyramid(V[0],V[1],V[2],V[3],color)){
+			sprintf(MSG,"[Object] render-pyramid failed: out of cavans\n");
+			debugMSG();
+		}
+		OBJECT_CNT_W(cnt+1);
+		RENDER_STATUS_W(RENDER_IDLE);
+	}
+	else{
 		sprintf(MSG,"[Object] format error\n");
 		debugMSG();
 		RENDER_STATUS_W(RENDER_IDLE);	
