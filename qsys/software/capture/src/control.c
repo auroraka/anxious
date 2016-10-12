@@ -22,7 +22,6 @@
 #include "display.h"
 #include "palette.h"
 #include "control.h"
-#include "render/object.h"
 
 const static float focus_x_l = 1117.36809f, focus_y_l = 1115.59155f;
 const static float focus_x_r = 1098.56402f, focus_y_r = 1095.74358f;
@@ -30,21 +29,48 @@ const static float center_x_l = 284.432591f, center_y_l = 205.206010f;
 const static float center_x_r = 260.334008f, center_y_r = 307.355809f;
 const static float stereo_dist = 17.6; // cm
 
-static int camera_main;
-static float focus_x_main, focus_y_main;
-static float center_x_main, center_y_main;
+static int camera_main = -1;
+//static float focus_x_main, focus_y_main;
+//static float center_x_main, center_y_main;
 
 #define VSYNC(x) IOWR(OVERLAY_VSYNC_PIO_BASE, 0, (x))
 
 static float Xf, Yf, Zf;
+
+void reproject_points();
+
+void update_camera_selection() {
+	int selection = ((IORD(SW_PIO_0_BASE, 0)) >> 3) & 1;
+	if (camera_main != selection) {
+		camera_main = selection;
+		reproject_points();
+	}
+//	if (camera_main == 0) {
+//		focus_x_main = focus_x_r;
+//		focus_y_main = focus_y_r;
+//		center_x_main = center_x_r;
+//		center_y_main = center_y_r;
+//	} else {
+//		focus_x_main = focus_x_l;
+//		focus_y_main = focus_y_l;
+//		center_x_main = center_x_l;
+//		center_y_main = center_y_l;
+//	}
+}
 
 pointf find_location(point p_l, point p_r) {
 	int x_l = get_x(p_l), x_r = get_x(p_r);
 	
 	pointf loc;
 	loc.z = stereo_dist / ((x_l - center_x_l) / focus_x_l - (x_r - center_x_r) / focus_x_r);
-	loc.x = loc.z * (x_r - center_x_r) / focus_x_r;
-	loc.y = loc.z * (get_y(p_r) - center_y_r) / focus_y_r;
+	if (camera_main == 0) {
+		loc.x = loc.z * (x_r - center_x_r) / focus_x_r;
+		loc.y = loc.z * (get_y(p_r) - center_y_r) / focus_y_r;
+	} else {
+		loc.x = loc.z * (x_l - center_x_l) / focus_x_l;
+		loc.y = loc.z * (get_y(p_l) - center_y_l) / focus_y_l;
+		loc.x -= stereo_dist;
+	}
 	
 	Xf = loc.x, Yf = loc.y, Zf = loc.z;
 
@@ -57,8 +83,13 @@ pointf find_location(point p_l, point p_r) {
 
 pointi project_point(pointf p) {
 	pointi ret;
-	ret.x = (int)round(focus_x_main * p.x / p.z + center_x_main);
-	ret.y = (int)round(focus_y_main * p.y / p.z + center_y_main);
+	if (camera_main == 0) {
+		ret.x = (int)round(focus_x_r * p.x / p.z + center_x_r);
+		ret.y = (int)round(focus_y_r * p.y / p.z + center_y_r);
+	} else {
+		ret.x = (int)round(focus_x_l * (p.x + stereo_dist) / p.z + center_x_l);
+		ret.y = (int)round(focus_y_l * p.y / p.z + center_y_l);
+	}
 	return ret;
 }
 
@@ -102,14 +133,15 @@ inline void OVERLAY_W_v(int x, int y, unsigned val) {
 	set_sram(overlay_port, x, y, val);
 }
 
-int store_x, store_y, store_r;unsigned store_color;
+int store_x, store_y, store_r;
+unsigned store_color;
 
 void draw_sphere(pointi c, float radius, unsigned color) {
 	int cx = c.x, cy = c.y;
 	store_x = cx;
 	store_y = cy;
 	store_r = radius;
-	store_color=color;
+	store_color = color;
 //void draw_sphere(int cx, int cy, float radius, unsigned color) {
 	int dx = 0, dy = (int)radius;
 	float d = 1.25f - radius;
@@ -254,72 +286,72 @@ inline float lenf(pointf df) {
 
 pointf store_cube[5];
 pointf store_sphere[2];
+
 void draw_overlay_frame(unsigned color) {
 	boolean store = true;
 	point cur_p = SHARED_R(0);
 	
 	switch (draw_state) {
-		case DRAW_POINT:
-			if (store) {
-				store_pf(0);
-				p[0] = project_point(pf[0]);
-			}
+		case DRAW_POINT: {
+			store_pf(0);
+			p[0] = project_point(pf[0]);
+			
 			draw_point(p[0], color);
 			break;
-		case DRAW_SPHERE_RADIUS:
-			if (store) {
-				store_pf(1);
-				df[1] = subf(pf[1], pf[0]);
-				df[1].x = sqrt(df[1].x * df[1].x + df[1].y * df[1].y + df[1].z * df[1].z);
-				df[1].y = df[1].z = 0;
-				p[1] = project_point(addf(pf[0], df[1]));
-				sphere_radius = sqrt((p[1].x - p[0].x) * (p[1].x - p[0].x) + (p[1].y - p[0].y) * (p[1].y - p[0].y));
-			}
+		}
+		case DRAW_SPHERE_RADIUS: {
+			store_pf(1);
+			df[1] = subf(pf[1], pf[0]);
+			df[1].x = sqrt(df[1].x * df[1].x + df[1].y * df[1].y + df[1].z * df[1].z);
+			df[1].y = df[1].z = 0;
+			p[1] = project_point(addf(pf[0], df[1]));
+			sphere_radius = sqrt((p[1].x - p[0].x) * (p[1].x - p[0].x) + (p[1].y - p[0].y) * (p[1].y - p[0].y));
+			
 			draw_point(p[0], color);
 			
 			draw_sphere(p[0], sphere_radius, color);
-			store_sphere[0]=pf[0];
-			store_sphere[1]=addf(pf[0], df[1]);
+			store_sphere[0] = pf[0];
+			store_sphere[1] = addf(pf[0], df[1]);
 			break;
-		case DRAW_CUBE_LINE:
-			if (store) {
-				store_pf(1);
-				df[1] = subf(pf[1], pf[0]);
-				p[1] = project_point(pf[1]);
-			}
+		}
+		case DRAW_CUBE_LINE: {
+			store_pf(1);
+			df[1] = subf(pf[1], pf[0]);
+			p[1] = project_point(pf[1]);
+			
 			draw_line(p[0], p[1], color);
 			break;
-		case DRAW_CUBE_AREA:
-			if (store) {
-				store_pf(2);
-				df[2] = subf(pf[1], pf[2]);
-				
-				float t = dotf(df[2], df[1]) / len2f(df[1]);
-				pf[2] = addf(pf[2], mulf(df[1], t));
-				df[2] = subf(pf[2], pf[1]);
-				
-				p[2] = project_point(addf(pf[0], df[2]));
-				p[3] = project_point(pf[2]);
-			}
+		}
+		case DRAW_CUBE_AREA: {
+			store_pf(2);
+			df[2] = subf(pf[1], pf[2]);
+			
+			float t = dotf(df[2], df[1]) / len2f(df[1]);
+			pf[2] = addf(pf[2], mulf(df[1], t));
+			df[2] = subf(pf[2], pf[1]);
+			
+			p[2] = project_point(addf(pf[0], df[2]));
+			p[3] = project_point(pf[2]);
+			
 			draw_line(p[0], p[1], color);
 			
 			draw_line(p[0], p[2], color);
 			draw_line(p[1], p[3], color);
 			draw_line(p[2], p[3], color);
 			break;
-		case DRAW_CUBE_VOLUME:
-			if (store) {
-				store_pf(3);
-				df[3] = subf(pf[3], pf[2]);
-				pointf n = crossf(df[1], df[2]);
-				float t = dotf(df[3], n) / len2f(n);
-				df[3] = mulf(n, t);
-				
-				p[4] = project_point(addf(pf[0], df[3]));
-				p[5] = project_point(addf(pf[1], df[3]));
-				p[6] = project_point(addf(addf(pf[0], df[2]), df[3]));
-				p[7] = project_point(addf(pf[2], df[3]));
-			}
+		}
+		case DRAW_CUBE_VOLUME: {
+			store_pf(3);
+			df[3] = subf(pf[3], pf[2]);
+			pointf n = crossf(df[1], df[2]);
+			float t = dotf(df[3], n) / len2f(n);
+			df[3] = mulf(n, t);
+			
+			p[4] = project_point(addf(pf[0], df[3]));
+			p[5] = project_point(addf(pf[1], df[3]));
+			p[6] = project_point(addf(addf(pf[0], df[2]), df[3]));
+			p[7] = project_point(addf(pf[2], df[3]));
+			
 			draw_line(p[0], p[1], color);
 			
 			draw_line(p[0], p[2], color);
@@ -334,11 +366,27 @@ void draw_overlay_frame(unsigned color) {
 			draw_line(p[1], p[5], color);
 			draw_line(p[2], p[6], color);
 			draw_line(p[3], p[7], color);
-			store_cube[0]=pf[0];
-			store_cube[1]=df[1];
-			store_cube[2]=df[2];
-			store_cube[3]=df[3];
-			store_color=color;
+			store_cube[0] = pf[0];
+			store_cube[1] = df[1];
+			store_cube[2] = df[2];
+			store_cube[3] = df[3];
+			store_color = color;
+			break;
+		}
+	}
+}
+
+void reproject_points() {
+	switch (draw_state) {
+		case DRAW_CUBE_VOLUME:
+			p[2] = project_point(addf(pf[0], df[2]));
+			p[3] = project_point(pf[2]);
+		case DRAW_CUBE_AREA:
+			p[1] = project_point(pf[1]);
+		case DRAW_SPHERE_RADIUS:
+		case DRAW_CUBE_LINE:
+			p[0] = project_point(pf[0]);
+		case DRAW_POINT:
 			break;
 	}
 }
@@ -467,20 +515,8 @@ void clear_port(unsigned port) {
 
 void draw_overlay() {
 	if (palette_state == PALETTE_SHOWN) return;
-
-  char buf[100];
-  camera_main = ((IORD(SW_PIO_0_BASE, 0)) >> 3) & 1;
-  if (camera_main == 0) {
-    focus_x_main = focus_x_r;
-    focus_y_main = focus_y_r;
-    center_x_main = center_x_r;
-    center_y_main = center_y_r;
-  } else {
-    focus_x_main = focus_x_l;
-    focus_y_main = focus_y_l;
-    center_x_main = center_x_l;
-    center_y_main = center_y_l;
-  }
+	
+	char buf[100];
 	
 	//draw_overlay_frame(TRANSPARENT);
 	//draw_point(cur_p, TRANSPARENT);
@@ -534,7 +570,7 @@ enum IRType {
 };
 
 void key_down(int key_code) {
-	sprintf(MSG,"[Key Down] %d\n", key_code);
+	sprintf(MSG, "[Key Down] %d\n", key_code);
 	debugMSG();
 	if (palette_state == PALETTE_SHOWN) {
 		if (key_code >= IR_1 && key_code <= IR_9) {
@@ -553,40 +589,39 @@ void key_down(int key_code) {
 			palette_state = PALETTE_NOT_SHOWN;
 		}
 		if (palette_state == PALETTE_NOT_SHOWN)
-			sprintf(MSG,"[Chose Color] %s\n", palette_names[cur_color]);
-			debugMSG();
+			sprintf(MSG, "[Chose Color] %s\n", palette_names[cur_color]);
+		debugMSG();
 	} else if (key_code == IR_MENU) {
 		palette_state = PALETTE_SHOULD_SHOW;
-	} else if (key_code==IR_POWER){
+	} else if (key_code == IR_POWER) {
 		reset_objects();
-	}
-	 else {
+	} else {
 		switch (draw_state) {
 			case DRAW_POINT:
-				sprintf(MSG,"[Step] 0: (%d,%d,%d)\n", (int)pf[0].x, (int)pf[0].y, (int)pf[0].z);
+				sprintf(MSG, "[Step] 0: (%d,%d,%d)\n", (int)pf[0].x, (int)pf[0].y, (int)pf[0].z);
 				debugMSG();
 				if (key_code == IR_1) draw_state = DRAW_SPHERE_RADIUS;
 				else if (key_code == IR_2) draw_state = DRAW_CUBE_LINE;
 				break;
-			case DRAW_SPHERE_RADIUS:				
+			case DRAW_SPHERE_RADIUS:
 				//add_sphere2d(store_x,store_y, store_r, store_color);
-				add_sphere3d(store_sphere,store_color);
+				add_sphere3d(store_sphere, store_color);
 				draw_state = DRAW_POINT;
 				break;
 			case DRAW_CUBE_LINE:
-				sprintf(MSG,"[Step] 1: (%d,%d,%d)\n", (int)pf[1].x, (int)pf[1].y, (int)pf[1].z);
+				sprintf(MSG, "[Step] 1: (%d,%d,%d)\n", (int)pf[1].x, (int)pf[1].y, (int)pf[1].z);
 				debugMSG();
 				draw_state = DRAW_CUBE_AREA;
 				break;
 			case DRAW_CUBE_AREA:
-				sprintf(MSG,"[Step] 2: (%d,%d,%d)\n", (int)pf[2].x, (int)pf[2].y, (int)pf[2].z);
+				sprintf(MSG, "[Step] 2: (%d,%d,%d)\n", (int)pf[2].x, (int)pf[2].y, (int)pf[2].z);
 				debugMSG();
 				draw_state = DRAW_CUBE_VOLUME;
 				break;
 			case DRAW_CUBE_VOLUME:
-				sprintf(MSG,"[Step] 3: (%d,%d,%d)\n", (int)pf[3].x, (int)pf[3].y, (int)pf[3].z);
+				sprintf(MSG, "[Step] 3: (%d,%d,%d)\n", (int)pf[3].x, (int)pf[3].y, (int)pf[3].z);
 				debugMSG();
-				add_cube(store_cube,store_color);
+				add_cube(store_cube, store_color);
 				draw_state = DRAW_POINT;
 				break;
 		}

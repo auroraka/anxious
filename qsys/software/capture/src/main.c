@@ -1,4 +1,4 @@
-	/*
+/*
  * CPU Assignments:
  *   0, 1 : recognition cores for cameras 0 & 1
  *   2    : controller core
@@ -37,6 +37,7 @@ int main() {
 	
 	unsigned key_state = 1, key_code = 0xFF;
 	while (true) {
+		update_camera_selection();
 		
 		unsigned center_l = SHARED_R(1), center_r = SHARED_R(0);
 		pointf loc = find_location(center_l, center_r);
