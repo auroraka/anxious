@@ -209,7 +209,6 @@ bool renderPyramid(Vector O, Vector X, Vector Z, Vector A, Color color) {
 		normalize(col);
 		renderTriangle(P[0],P[1],A,col);
 	}
-	//usleep(1000*1000);
 
 	if (dot(eye,X)){
 		getColorNR(X, R, color, col);//x
@@ -217,7 +216,6 @@ bool renderPyramid(Vector O, Vector X, Vector Z, Vector A, Color color) {
 		normalize(col);
 		renderTriangle(P[1],P[2],A,col);
 	}
-	//usleep(1000*1000);
 	
 	if (dot(eye,Z)){
 		getColorNR(Z, R, color, col);//x
@@ -225,7 +223,6 @@ bool renderPyramid(Vector O, Vector X, Vector Z, Vector A, Color color) {
 		normalize(col);
 		renderTriangle(P[2],P[3],A,col);
 	}
-	//usleep(1000*1000);
 	
 	if (dot(eye,nX)){
 		getColorNR(nX, R, color, col);//x
@@ -233,23 +230,7 @@ bool renderPyramid(Vector O, Vector X, Vector Z, Vector A, Color color) {
 		normalize(col);
 		renderTriangle(P[3],P[0],A,col);
 	}
-	//usleep(1000*1000);
 	Vector N;
-	//normal()
-	// for (int i=0;i<4;i++){
-		// int j=(i+1)%4;
-		// sub(P[j],P[i],tmp);
-		// sub(A,P[j],tmp1);
-		// cross(tmp,tmp1,N);
-		// normal(N,N);
-		// if (dot(eye,N)<0){
-			// getColorNR(N, R, color, col);//x
-			// mulcd(col, k, col);
-			// normalize(col);
-			// renderTriangle(P[i],P[j],A,col);
-		// }		
-	// }
-	
 	cross(Z,X,N);
 	normal(N,N);
 	if (dot(eye,N)<0){
