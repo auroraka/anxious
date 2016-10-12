@@ -21,7 +21,7 @@
 #include "object.h"
 #include "renderer.h"
 
-#define RENDER_VSYNC 0x08001010 
+#define RENDER_VSYNC RENDER_VSYNC_PIO_0_BASE
 #define RENDER_START() IORD(RENDER_START_PIO_BASE, 0)
 #define VSYNC(x) IOWR(RENDER_VSYNC, 0, x)
 
