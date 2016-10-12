@@ -30,6 +30,10 @@ const static float center_x_l = 284.432591f, center_y_l = 205.206010f;
 const static float center_x_r = 260.334008f, center_y_r = 307.355809f;
 const static float stereo_dist = 17.6; // cm
 
+static int camera_main;
+static float focus_x_main, focus_y_main;
+static float center_x_main, center_y_main;
+
 #define VSYNC(x) IOWR(OVERLAY_VSYNC_PIO_BASE, 0, (x))
 
 static float Xf, Yf, Zf;
@@ -53,8 +57,8 @@ pointf find_location(point p_l, point p_r) {
 
 pointi project_point(pointf p) {
 	pointi ret;
-	ret.x = (int)round(focus_x_r * p.x / p.z + center_x_r);
-	ret.y = (int)round(focus_y_r * p.y / p.z + center_y_r);
+	ret.x = (int)round(focus_x_main * p.x / p.z + center_x_main);
+	ret.y = (int)round(focus_y_main * p.y / p.z + center_y_main);
 	return ret;
 }
 
@@ -463,13 +467,27 @@ void clear_port(unsigned port) {
 
 void draw_overlay() {
 	if (palette_state == PALETTE_SHOWN) return;
+
+  char buf[100];
+  camera_main = ((IORD(SW_PIO_0_BASE, 0)) >> 3) & 1;
+  if (camera_main == 0) {
+    focus_x_main = focus_x_r;
+    focus_y_main = focus_y_r;
+    center_x_main = center_x_r;
+    center_y_main = center_y_r;
+  } else {
+    focus_x_main = focus_x_l;
+    focus_y_main = focus_y_l;
+    center_x_main = center_x_l;
+    center_y_main = center_y_l;
+  }
 	
 	//draw_overlay_frame(TRANSPARENT);
 	//draw_point(cur_p, TRANSPARENT);
 	
 	overlay_port = BUFFER_PORT();
 	clear_port(overlay_port);
-	int p = SHARED_R(0);
+	int p = SHARED_R(camera_main);
 	cur_p.x = get_x(p), cur_p.y = get_y(p);
 	
 	draw_overlay_frame(cur_color);
