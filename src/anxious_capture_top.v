@@ -196,17 +196,7 @@ anxious_capture u0 (
 	.nios_terminal_output_enable_export                 (SW[17]),
 
 	.rgb_st_buffer_switcher_0_enable_enable             (SW[4]),
-	.rgb_st_buffer_switcher_1_enable_enable             (SW[4]),
-
-	.rgb_st_switch_0_enable_enable                      (~rgb_st_select),
-	.rgb_st_switch_1_enable_enable                      (rgb_st_select),
-
-	.rgb_st_buffer_switcher_0_read_buffer_buffer_port   (rgb_st_0_read_buffer_port),
-	.rgb_st_buffer_switcher_0_read_buffer_buffer_vsync  (rgb_st_read_buffer_vsync),
-	.rgb_st_buffer_switcher_1_read_buffer_buffer_port   (rgb_st_1_read_buffer_port),
-	.rgb_st_buffer_switcher_1_read_buffer_buffer_vsync  (rgb_st_read_buffer_vsync),
-	.cam_mm_to_st_buffer_switch_buffer_port             (rgb_st_read_buffer_port),
-	.cam_mm_to_st_buffer_switch_buffer_vsync            (rgb_st_read_buffer_vsync),
+	.st_naive_mux_0_conduit_export						(SW[3]),
 );
 
 endmodule

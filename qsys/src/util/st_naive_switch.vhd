@@ -27,13 +27,56 @@ entity st_naive_switch is
 end entity st_naive_switch;
 
 architecture bhv of st_naive_switch is
+    type reg_type is record
+        ena   : std_logic;
+        data  : std_logic_vector(DATA_WIDTH - 1 downto 0);
+        sop   : std_logic;
+        eop   : std_logic;
+        valid : std_logic;
+    end record;
+
+    constant INIT_REGS: reg_type := (
+        ena   => '0',
+        data  => (others => '0'),
+        sop   => '0',
+        eop   => '0',
+        valid => '0'
+    );
+
+    signal r: reg_type := INIT_REGS;
+    signal rin: reg_type := INIT_REGS;
+
 begin
-    P_comb: process(all)
+    P_regs: process(clk, reset_n)
     begin
-        aso_dout_data          <= asi_din_data;
-        aso_dout_startofpacket <= asi_din_startofpacket;
-        aso_dout_endofpacket   <= asi_din_endofpacket;
-        aso_dout_valid         <= asi_din_valid and coe_conduit_sel;
+        if not reset_n then
+            r <= INIT_REGS;
+        elsif rising_edge(clk) then
+            r <= rin;
+        end if;
+    end process;
+
+    P_comb: process(all)
+        variable v:reg_type;
+    begin
+        -- default: hold the values
+        v := r;
+
+        if not r.ena and asi_din_startofpacket then
+            v.ena := coe_conduit_sel;
+        end if;
+
+        if v.ena then
+            v.data  := asi_din_data;
+            v.sop   := asi_din_startofpacket;
+            v.eop   := asi_din_endofpacket;
+            v.valid := asi_din_valid and coe_conduit_sel;
+        else
+            v := INIT_REGS;
+        end if;
+
+        -- apply the new values
+        rin <= v;
     end process;
 
 end architecture bhv;
