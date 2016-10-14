@@ -62,6 +62,17 @@ BSP_FLAGS := --set hal.max_file_descriptors 4 \
 
 # ******** DON'T NEED TO MODIFY ANYTHING BELOW THIS LINE **************
 
+APP_MAKEFILE := $(APP_DIR)/Makefile
+
+.PHONY: make
+make: $(APP_MAKEFILE)
+	# Running make (for application and the bsp due to dependencies)
+	$(MAKE) --directory=$(APP_DIR)
+
+$(APP_MAKEFILE): | $(SOPC_DIR)
+	$(MAKE) generate-bsp
+	$(MAKE) generate-makefile
+
 .PHONY: all
 all: | generate-bsp generate-makefile make download open-terminal
 
@@ -84,10 +95,6 @@ generate-makefile:
 	# generate the application in the $APP_DIR
 	nios2-app-generate-makefile --app-dir $(APP_DIR) --bsp-dir $(BSP_DIR) --elf-name $(ELF_NAME) --src-rdir $(SRC_DIR) --set APP_CFLAGS_OPTIMIZATION $(OPTIMIZATION_LEVEL) --set APP_CFLAGS_USER_FLAGS $(CFLAGS_USER_FLAGS) --set CFLAGS \"-DCPU_ID=$(CPU_ID)\"
 
-.PHONY: make
-make:
-	# Running make (for application and the bsp due to dependencies)
-	$(MAKE) --directory=$(APP_DIR)
 
 # Downloading the code
 #
@@ -118,7 +125,7 @@ configure:
 	-nios2-configure-sof $(QUARTUS_PROJECT_ROOT)/$(QUARTUS_PROJECT_NAME).sof
 
 .PHONY: download
-download:
+download: | make
 	nios2-download -g -r --instance $(CPU_INSTANCE_NUMBER) --cable $(CABLE_NUMBER) $(APP_DIR)/$(ELF_NAME)
 
 .PHONY: open-terminal
