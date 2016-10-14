@@ -276,18 +276,37 @@ void drawSphereLine(Pos2 p, int r, int x1, int x2, int y, Color color) {
 		//sprintf(MSG,"%d %d\n", i, j);
 	}
 }
-void drawSphereLine3d(Pos p, int r,float k, int x1, int x2, int y, Color color) {
+void drawSphereLine3d(Vector O, float r3d, Pos p, int r, int x1, int x2, int y, Color color) {
+  // Calculation of distance
+  // solve for P(x, y, z) whose projection on the plane is (i, j)
+  //   AND on the surface of the sphere
+  // P = P_z * (r_x, r_y, 1), where
+  //   r_x = (PIC_W - center_x - i) / focus_x
+  //   r_y = (PIC_H - center_y - j) / focus_y
+  // => (r_x, r_y, 1)^2 P_z^2 - 2 P_z (r_x, r_y, 1) O + O^2 - r^2 = 0
+
 	int j = y;
 	int r2 = r*r;
 	Vector R = {0.6851887,0.4796320,0.5481509};//normalized //{ 1,0.7,0.8 };
 	Vector col;
+
 	for (int i = x1; i <= x2; i++) {
 		int a2 = (i - p[0])*(i - p[0]) + (j - p[1])*(j - p[1]);
 		float b = sqrt(abs(r2 - a2));
 		Vector N = { i - p[0],j - p[1],b };
 		normal(N, N);
 		getColorNR(N, R, color, col);
-		bufferColor(i,j,col,p[2]+b*k);
+    float r_x = (PIC_W - center_x_r - i) / focus_x_r;
+    float r_y = (PIC_H - center_y_r - j) / focus_y_r;
+    // coefficients of the quadratic equation
+    float q_A = r_x * r_x + r_y * r_y + 1;
+    float q_B = 2 * (r_x * O[0] + r_y * O[1] + O[2]);
+    float q_C = len2(O) - r2;
+    float q_delta = q_B * q_B - 4 * q_A * q_C;
+    if (q_delta > EPS) {
+      float dis = (-q_B - sqrt(q_delta)) / (2 * q_A);
+      bufferColor(i, j, col, dis);
+    }
 	}
 }
 
@@ -307,7 +326,7 @@ void drawSphereC(Pos2 c, int radius, Color color) {
 		if (RENDER_STATUS_R()==RENDER_IDLE) return;
 	}
 }
-void drawSphere3d(Pos c, int radius,float k, Color color) {
+void drawSphere3d(Vector O, float r3d, Pos c, int radius, Color color) {
 	int cx = c[0], cy = c[1];
 	int dx = -1, dy = radius;
 	float d = 1.25f - radius;
@@ -315,10 +334,10 @@ void drawSphere3d(Pos c, int radius,float k, Color color) {
 		if (d < 0) d += 2 * dx + 3;
 		else d += 2 * (dx - dy) + 5, --dy;
 		++dx;
-		drawSphereLine3d(c, radius,k, -dx + cx, dx + cx, dy + cy, color);
-		drawSphereLine3d(c, radius,k, -dy + cx, dy + cx, dx + cy, color);
-		drawSphereLine3d(c, radius, k,-dy + cx, dy + cx, -dx + cy, color);
-		drawSphereLine3d(c, radius, k,-dx + cx, dx + cx, -dy + cy, color);
+		drawSphereLine3d(O, r3d, c, radius, -dx + cx, dx + cx, dy + cy, color);
+		drawSphereLine3d(O, r3d, c, radius, -dy + cx, dy + cx, dx + cy, color);
+		drawSphereLine3d(O, r3d, c, radius, -dy + cx, dy + cx, -dx + cy, color);
+		drawSphereLine3d(O, r3d, c, radius, -dx + cx, dx + cx, -dy + cy, color);
 		if (RENDER_STATUS_R()==RENDER_IDLE) return;
 	}
 }
@@ -332,8 +351,7 @@ bool renderSphere3d(Vector O, Vector X, Color color){
 	float r2d=sqrt((P[0]-P1[0])*(P[0]-P1[0])+(P[1]-P1[1])*(P[1]-P1[1]));
 	if (r2d<EPS) return false;
 	float r3d=dis(O,X);
-	float k=r3d/r2d;
-	drawSphere3d(P, r2d, k,color);
+	drawSphere3d(O, r3d, P, r2d, color);
 	return true;
 	
 }
