@@ -311,6 +311,23 @@ pointf store_cube[4];
 pointf store_pyramid[4];
 pointf store_sphere[2];
 
+void draw_cube_frame(pointi* p, unsigned color) {
+  draw_line(p[0], p[1], color);
+  
+  draw_line(p[0], p[2], color);
+  draw_line(p[1], p[3], color);
+  draw_line(p[2], p[3], color);
+  
+  draw_line(p[4], p[5], color);
+  draw_line(p[4], p[6], color);
+  draw_line(p[5], p[7], color);
+  draw_line(p[6], p[7], color);
+  draw_line(p[0], p[4], color);
+  draw_line(p[1], p[5], color);
+  draw_line(p[2], p[6], color);
+  draw_line(p[3], p[7], color);
+}
+
 void draw_overlay_frame(unsigned color) {
 	boolean store = true;
 	point cur_p = SHARED_R(0);
@@ -355,21 +372,9 @@ void draw_overlay_frame(unsigned color) {
 			p[5] = project_point(addf(pf[1], df[3]));
 			p[6] = project_point(addf(addf(pf[0], df[2]), df[3]));
 			p[7] = project_point(addf(pf[2], df[3]));
+
+      draw_cube_frame(p, color);
 			
-			draw_line(p[0], p[1], color);
-			
-			draw_line(p[0], p[2], color);
-			draw_line(p[1], p[3], color);
-			draw_line(p[2], p[3], color);
-			
-			draw_line(p[4], p[5], color);
-			draw_line(p[4], p[6], color);
-			draw_line(p[5], p[7], color);
-			draw_line(p[6], p[7], color);
-			draw_line(p[0], p[4], color);
-			draw_line(p[1], p[5], color);
-			draw_line(p[2], p[6], color);
-			draw_line(p[3], p[7], color);
 			store_cube[0] = pf[0];
 			store_cube[1] = df[1];
 			store_cube[2] = df[2];
@@ -405,6 +410,55 @@ void draw_overlay_frame(unsigned color) {
 			break;		
 		}
 	}
+}
+
+static pointf __hinting_tmp_pf_0[OBJECT_LENGTH];
+static pointf __hinting_tmp_pf_1[OBJECT_LENGTH];
+static pointi __hinting_tmp_pi_0[OBJECT_LENGTH];
+
+void draw_overlay_hinting_frame() {
+  int n = OBJECT_CNT_R();
+  pointf loc;
+  loc.x = Xf, loc.y = Yf; loc.z = Zf;
+  pointf* o = __hinting_tmp_pf_0;
+  pointf* pf = __hinting_tmp_pf_1;
+  pointi* p = __hinting_tmp_pi_0;
+  for (int i = 0; i < n; ++i) {
+    int type = OBJECT_R(i, OBJECT_LENGTH - 1);
+    if (type == RENDER_ADD_CUBE) {
+      IntF x;
+      for (int j = 0; j < 4; ++j) {
+        x.u = OBJECT_R(i, j * 3 + 0); o[j].x = x.f;
+        x.u = OBJECT_R(i, j * 3 + 1); o[j].y = x.f;
+        x.u = OBJECT_R(i, j * 3 + 2); o[j].z = x.f;
+      }
+      pointf d = subf(loc, o[0]);
+      int inside = 1;
+      for (int j = 1; j < 4; ++j) {
+        float projection = dotf(d, o[j]);
+        if (projection < 0.0 || projection > dotf(o[j], o[j])) {
+          inside = 0;
+          break;
+        }
+      }
+      if (!inside) {
+        continue;
+      }
+      // draw the frame
+      pf[0] = o[0];
+      pf[1] = addf(pf[0], o[1]);
+      pf[2] = addf(pf[1], o[2]);
+      pf[3] = addf(pf[0], o[2]);
+      for (int j = 0; j < 4; ++j) {
+        pf[j + 4] = addf(pf[j], o[3]);
+      }
+      for (int j = 0; j < 7; ++j) {
+        p[j] = project_point(pf[j]);
+      }
+      draw_cube_frame(p, 0xC);
+      break;
+    }
+  }
 }
 
 void reproject_points() {
@@ -562,6 +616,7 @@ void draw_overlay() {
 	cur_p.x = get_x(p), cur_p.y = get_y(p);
 	
 	draw_overlay_frame(cur_color);
+  draw_overlay_hinting_frame();
 	draw_mark(cur_p, 0x2);
 	draw_status_bar();
 	
