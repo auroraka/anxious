@@ -25,17 +25,19 @@ void reset_objects() {
 }
 
 void remove_object(int idx) {
-	// reset_objects();
-	// int cnt=OBJECT_CNT_R();
-	// for (int i=idx;i<cnt-1;i++){
-		// for (int j=0;j<OBJECT_LENGTH;j++){
-			// unsigned x=OBJECT_CNT_R(i+1,j);
-			// OBJECT_W(i,j,x);
-		// }
-	// }
-	// for (int i=0;i<cnt;i++){
-		
-	// }
+	reset_objects();
+	int cnt=OBJECT_CNT_R();
+	for (int i=idx;i<cnt-1;i++){
+		for (int j=0;j<OBJECT_LENGTH;j++){
+			unsigned x=OBJECT_R(i+1,j);
+			OBJECT_W(i,j,x);
+		}
+	}
+	for (int i=0;i<cnt;i++){
+		int status=OBJECT_R(i,OBJECT_LENGTH-1);
+		if (RENDER_STATUS_R()!=RENDER_IDLE) usleep(100);
+		RENDER_STATUS_W(status);
+	}
 }
 
 void printPoint(pointf x){
@@ -70,7 +72,8 @@ void add_sphere3d(pointf *pf, unsigned color) {
 		x.f=pf[i].z; OBJECT_W(cnt+1,i*3+2,x.u); 		
 	}
 	OBJECT_W(cnt+1,6,color);
-		
+	OBJECT_W(cnt+1,OBJECT_LENGTH-1,RENDER_ADD_SPHERE3D);
+	
 	if (status2 == RENDER_IDLE){//2 render
 		RENDER_STATUS_W(RENDER_ADD_SPHERE_HALF);
 		RENDER2_STATUS_W(RENDER_ADD_SPHERE_HALF);

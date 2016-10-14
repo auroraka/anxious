@@ -341,7 +341,7 @@ void drawSphere3d(Vector O, float r3d, Pos c, int radius, Color color) {
 		if (RENDER_STATUS_R()==RENDER_IDLE) return;
 	}
 }
-void drawSphere3dHalf(Pos c, int radius,float k, Color color) {
+void drawSphere3dHalf(Vector O, float r3d, Pos c, int radius, Color color) {
 	int cx = c[0], cy = c[1];
 	int dx = -1, dy = radius;
 	float d = 1.25f - radius;
@@ -350,11 +350,11 @@ void drawSphere3dHalf(Pos c, int radius,float k, Color color) {
 		else d += 2 * (dx - dy) + 5, --dy;
 		++dx;
 		#if CPU_ID==3
-		drawSphereLine3d(c, radius,k, -dx + cx, dx + cx, dy + cy, color);
-		drawSphereLine3d(c, radius,k, -dy + cx, dy + cx, dx + cy, color);
+		drawSphereLine3d(O, r3d, c, radius, -dx + cx, dx + cx, dy + cy, color);
+		drawSphereLine3d(O, r3d, c, radius, -dy + cx, dy + cx, dx + cy, color);
 		#else
-		drawSphereLine3d(c, radius, k,-dy + cx, dy + cx, -dx + cy, color);
-		drawSphereLine3d(c, radius, k,-dx + cx, dx + cx, -dy + cy, color);
+		drawSphereLine3d(O, r3d, c, radius, -dy + cx, dy + cx, -dx + cy, color);
+		drawSphereLine3d(O, r3d, c, radius, -dx + cx, dx + cx, -dy + cy, color);
 		#endif
 		if (RENDER_STATUS_R()==RENDER_IDLE) return;
 	}
@@ -383,10 +383,8 @@ bool renderSphere3dHalf(Vector O, Vector X, Color color){
 	float r2d=sqrt((P[0]-P1[0])*(P[0]-P1[0])+(P[1]-P1[1])*(P[1]-P1[1]));
 	if (r2d<EPS) return false;
 	float r3d=dis(O,X);
-	float k=r3d/r2d;
-	drawSphere3dHalf(P, r2d, k,color);
+	drawSphere3dHalf(O, r3d, P, r2d, color);
 	return true;
-	
 }
 
 
