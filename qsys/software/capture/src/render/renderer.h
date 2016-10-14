@@ -290,23 +290,29 @@ void drawSphereLine3d(Vector O, float r3d2, Pos p, int r, int x1, int x2, int y,
 	Vector R = {0.6851887,0.4796320,0.5481509};//normalized //{ 1,0.7,0.8 };
 	Vector col;
 
+  float inv_fx = 1.0 / focus_x_r;
+  float rx = (PIC_W - center_x_r - x1) * inv_fx, drx = -inv_fx;
+  float ry = (PIC_H - center_y_r - y) / focus_y_r;
+  float qA_c = ry * ry + 1;
+  float qB = - 2 * (rx * O[0] + ry * O[1] + O[2]), dqB = 2 * O[0] * inv_fx;
+  float qC = len2(O) - r3d2;
+
 	for (int i = x1; i <= x2; i++) {
 		int a2 = (i - p[0])*(i - p[0]) + (j - p[1])*(j - p[1]);
 		float b = sqrt(abs(r2 - a2));
 		Vector N = { i - p[0],j - p[1],b };
 		normal(N, N);
 		getColorNR(N, R, color, col);
-    float r_x = (PIC_W - center_x_r - i) / focus_x_r;
-    float r_y = (PIC_H - center_y_r - j) / focus_y_r;
+
     // coefficients of the quadratic equation
-    float q_A = r_x * r_x + r_y * r_y + 1;
-    float q_B = - 2 * (r_x * O[0] + r_y * O[1] + O[2]);
-    float q_C = len2(O) - r3d2;
-    float q_delta = q_B * q_B - 4 * q_A * q_C;
+    float qA = rx * rx + qA_c;
+    float q_delta = qB * qB - 4 * qA * qC;
     if (q_delta > EPS) {
-      float dis = (-q_B - sqrt(q_delta)) / (2 * q_A);
+      float dis = (-qB - sqrt(q_delta)) / (2 * qA);
       bufferColor(i, j, col, dis);
     }
+    rx = rx + drx;
+    qB = qB + dqB;
 	}
 }
 
