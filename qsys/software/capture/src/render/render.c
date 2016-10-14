@@ -1,7 +1,7 @@
 
-#ifndef CPU_ID
-#define CPU_ID 3
-#endif
+//#ifndef CPU_ID
+//#define CPU_ID 3
+//#endif
 
 #if CPU_ID > 2
 
@@ -66,11 +66,13 @@ void printReceiveSphere3D(Vector V[],unsigned color){
 
 int ttt=0;
 void sync_objects() {	
+#if CPU_ID==3
+
 	int status=RENDER_STATUS_R();
 	
 	ttt++;
 	if (ttt%1000==0){
-		sprintf(MSG,"sync_objects, RENDER_STATUS=%d\n\0",status);
+		sprintf(MSG,"[CPU3] sync_objects, RENDER_STATUS=%d\n\0",status);
 		debugMSG();
 	}
 	if (status==RENDER_IDLE){
@@ -104,32 +106,6 @@ void sync_objects() {
 		OBJECT_CNT_W(cnt+1);
 		RENDER_STATUS_W(RENDER_IDLE);
 	}
-	else if (status ==RENDER_ADD_SPHERE3D){		
-		int cnt=OBJECT_CNT_R();
-		int i,j;IntF x;
-		Vector V[2];
-		for (i=0;i<2;i++){
-			for (j=0;j<3;j++){
-				x.u=OBJECT_R(cnt+1,i*3+j); 
-				V[i][j]=x.f;
-			}
-		}
-		unsigned c=OBJECT_R(cnt+1,6);
-		Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
-		sprintf(MSG,"[Object] sphere-color: %d %d %d\n",(int)color[0],(int)color[1],(int)color[2]);
-		debugMSG();
-		printReceiveSphere3D(V,c);
-		sprintf(MSG,"[Object] now-tot: %d\n",cnt);
-		debugMSG();
-		sprintf(MSG,"[Object] render-sphere3d: doing\n");
-		debugMSG();
-		if (!renderSphere3d(V[0],V[1],color)){
-			sprintf(MSG,"[Object] render-sphere3d failed: out of cavans\n");
-			debugMSG();
-		}
-		OBJECT_CNT_W(cnt+1);
-		RENDER_STATUS_W(RENDER_IDLE);
-	}
 	else if (status ==RENDER_ADD_PYRAMID){		
 		int cnt=OBJECT_CNT_R();
 		int i,j;IntF x;
@@ -154,12 +130,93 @@ void sync_objects() {
 		OBJECT_CNT_W(cnt+1);
 		RENDER_STATUS_W(RENDER_IDLE);
 	}
+	else if (status ==RENDER_ADD_SPHERE3D || status == RENDER_ADD_SPHERE_HALF){		
+		int cnt=OBJECT_CNT_R();
+		int i,j;IntF x;
+		Vector V[2];
+		for (i=0;i<2;i++){
+			for (j=0;j<3;j++){
+				x.u=OBJECT_R(cnt+1,i*3+j); 
+				V[i][j]=x.f;
+			}
+		}
+		unsigned c=OBJECT_R(cnt+1,6);
+		Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
+		sprintf(MSG,"[Object] sphere-color: %d %d %d\n",(int)color[0],(int)color[1],(int)color[2]);
+		debugMSG();
+		printReceiveSphere3D(V,c);
+		sprintf(MSG,"[Object] now-tot: %d\n",cnt);
+		debugMSG();
+		if (status ==RENDER_ADD_SPHERE3D){
+			sprintf(MSG,"[Object] render-sphere3d: doing\n");
+			debugMSG();
+		}else{
+			debug("[Object] render-sphere-half: doing\n");
+		}
+		
+		if (status == RENDER_ADD_SPHERE_HALF){
+			renderSphere3dHalf(V[0],V[1],color);
+		}else{
+			if (!renderSphere3d(V[0],V[1],color)){
+				sprintf(MSG,"[Object] render-sphere3d failed: out of cavans\n");
+				debugMSG();
+				return;
+			}
+		}
+		OBJECT_CNT_W(cnt+1);
+		RENDER_STATUS_W(RENDER_IDLE);
+	}
 	else{
 		sprintf(MSG,"[Object] format error\n");
 		debugMSG();
 		RENDER_STATUS_W(RENDER_IDLE);	
 	}
+#else
+	int status=RENDER2_STATUS_R();
+	
+	ttt++;
+	if (ttt%1000==0){
+		sprintf(MSG,"[CPU4] sync_objects, RENDER_STATUS=%d\n\0",status);
+		debugMSG();
+	}
+	if (status==RENDER_IDLE){
+		return;
+	}
+	else if (status==RENDER_CLEAR){
+		RENDER2_STATUS_W(RENDER_IDLE);
+		return;
+	}
+	else if (status == RENDER_ADD_SPHERE_HALF){		
+		int cnt=OBJECT_CNT_R();
+		int i,j;IntF x;
+		Vector V[2];
+		for (i=0;i<2;i++){
+			for (j=0;j<3;j++){
+				x.u=OBJECT_R(cnt+1,i*3+j); 
+				V[i][j]=x.f;
+			}
+		}
+		unsigned c=OBJECT_R(cnt+1,6);
+		Color color={((palette_colors[c]>>16)&255)/255.0,((palette_colors[c]>>8)&255)/255.0,(palette_colors[c]&255)/255.0};
+		sprintf(MSG,"[Object] sphere-color: %d %d %d\n",(int)color[0],(int)color[1],(int)color[2]);
+		debugMSG();
+		printReceiveSphere3D(V,c);
+		sprintf(MSG,"[Object] now-tot: %d\n",cnt);
+		debugMSG();
+		sprintf(MSG,"[Object] render-sphere-half: doing\n");
+		debugMSG();
+		
+		renderSphere3dHalf(V[0],V[1],color);
 
+		RENDER2_STATUS_W(RENDER_IDLE);
+	}
+	else{
+		sprintf(MSG,"[Object] format error\n");
+		debugMSG();
+		RENDER2_STATUS_W(RENDER_IDLE);	
+	}
+
+#endif
 }
 
 int frame_cnt = 0;

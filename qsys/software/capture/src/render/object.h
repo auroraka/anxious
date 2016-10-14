@@ -11,18 +11,22 @@
 #define RENDER_ADD_SPHERE3D (3)
 #define RENDER_ADD_CUBE (4)
 #define RENDER_ADD_PYRAMID (5)
+#define RENDER_ADD_SPHERE_HALF (6)
 
 #define RENDER_STATUS_R() SHARED_R(5)
 #define RENDER_STATUS_W(x) SHARED_W(5, x)
 
-#define OBJECT_CNT_R() SHARED_R(6)
-#define OBJECT_CNT_W(x) SHARED_W(6, x)
+#define RENDER2_STATUS_R() SHARED_R(6)
+#define RENDER2_STATUS_W(x) SHARED_W(6, x)
+
+#define OBJECT_CNT_R() SHARED_R(7)
+#define OBJECT_CNT_W(x) SHARED_W(7, x)
 
 #define OBJECT_LENGTH (15)
 #define OBJECT_TOT (20)
 
-#define OBJECT_R(i,j) SHARED_R(7+i*OBJECT_LENGTH+j)
-#define OBJECT_W(i,j,x) SHARED_W(7+i*OBJECT_LENGTH+j,x)
+#define OBJECT_R(i,j) SHARED_R(8+i*OBJECT_LENGTH+j)
+#define OBJECT_W(i,j,x) SHARED_W(8+i*OBJECT_LENGTH+j,x)
 
 typedef struct {
 	int x, y;

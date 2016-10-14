@@ -55,7 +55,10 @@ int main() {
 			key_state = 0;
 		} else key_state = 1;
 	}
-#elif CPU_ID > 2
+#elif CPU_ID >2
+	sprintf(MSG,"cpu=%d\n",CPU_ID);
+	debugMSG();
+	
 	const int MODULO = HEIGHT % RENDER_CORES;
 	int ROW_CNT = HEIGHT / RENDER_CORES + ((CPU_ID - 3 < MODULO) ? 1 : 0);
 	int ROW_START = CPU_ID - 3 < MODULO ? ROW_CNT * (CPU_ID - 3) : (ROW_CNT + 1) * MODULO + (CPU_ID - 3 - MODULO) * ROW_CNT;

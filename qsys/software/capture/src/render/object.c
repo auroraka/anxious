@@ -14,6 +14,7 @@ void reset_objects() {
 		}
 	}
 	RENDER_STATUS_W(RENDER_IDLE);
+	RENDER2_STATUS_W(RENDER_IDLE);
 	OBJECT_CNT_W(0);
 	initZBuffer();
 	clean_sdram(1);
@@ -24,6 +25,17 @@ void reset_objects() {
 }
 
 void remove_object(int idx) {
+	// reset_objects();
+	// int cnt=OBJECT_CNT_R();
+	// for (int i=idx;i<cnt-1;i++){
+		// for (int j=0;j<OBJECT_LENGTH;j++){
+			// unsigned x=OBJECT_CNT_R(i+1,j);
+			// OBJECT_W(i,j,x);
+		// }
+	// }
+	// for (int i=0;i<cnt;i++){
+		
+	// }
 }
 
 void printPoint(pointf x){
@@ -31,7 +43,7 @@ void printPoint(pointf x){
 	debugMSG();	
 }
 void printSendSphere3d(pointf pf[],unsigned color){
-	sprintf(MSG,"[Object] send-cube3d: ");
+	sprintf(MSG,"[Object] send-sphere3d: ");
 	debugMSG();
 	sprintf(MSG,"o=");printPoint(pf[0]);
 	debugMSG();
@@ -44,6 +56,7 @@ void printSendSphere3d(pointf pf[],unsigned color){
 }
 void add_sphere3d(pointf *pf, unsigned color) {
 	int status=RENDER_STATUS_R();
+	int status2=RENDER2_STATUS_R();
 	if (status!=RENDER_IDLE){
 		sprintf(MSG,"[Object] add-sphere3d failed: not ready\n");
 		debugMSG();
@@ -58,7 +71,14 @@ void add_sphere3d(pointf *pf, unsigned color) {
 	}
 	OBJECT_W(cnt+1,6,color);
 		
-	RENDER_STATUS_W(RENDER_ADD_SPHERE3D);
+	if (status2 == RENDER_IDLE){//2 render
+		RENDER_STATUS_W(RENDER_ADD_SPHERE_HALF);
+		RENDER2_STATUS_W(RENDER_ADD_SPHERE_HALF);
+		debug("[Object] send half-sphere");
+	}else{//1 render
+		RENDER_STATUS_W(RENDER_ADD_SPHERE3D);
+		debug("[Object] send hole-sphere");
+	}
 	sprintf(MSG,"[Object] now-tot: %d\n",cnt);
 	debugMSG();
 	printSendSphere3d(pf,color);
@@ -136,6 +156,7 @@ void add_cube(pointf pf[], unsigned color) {
 		x.f=pf[i].z; OBJECT_W(cnt+1,i*3+2,x.u); 		
 	}
 	OBJECT_W(cnt+1,12,color);
+	OBJECT_W(cnt+1,OBJECT_LENGTH-1,RENDER_ADD_CUBE);
 	
 	
 	RENDER_STATUS_W(RENDER_ADD_CUBE);
@@ -159,6 +180,7 @@ void add_pyramid(pointf pf[], unsigned color) {
 		x.f=pf[i].z; OBJECT_W(cnt+1,i*3+2,x.u); 		
 	}
 	OBJECT_W(cnt+1,12,color);
+	OBJECT_W(cnt+1,OBJECT_LENGTH-1,RENDER_ADD_PYRAMID);
 	
 	
 	RENDER_STATUS_W(RENDER_ADD_PYRAMID);

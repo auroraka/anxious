@@ -341,6 +341,24 @@ void drawSphere3d(Vector O, float r3d, Pos c, int radius, Color color) {
 		if (RENDER_STATUS_R()==RENDER_IDLE) return;
 	}
 }
+void drawSphere3dHalf(Pos c, int radius,float k, Color color) {
+	int cx = c[0], cy = c[1];
+	int dx = -1, dy = radius;
+	float d = 1.25f - radius;
+	while (dx <= dy) {
+		if (d < 0) d += 2 * dx + 3;
+		else d += 2 * (dx - dy) + 5, --dy;
+		++dx;
+		#if CPU_ID==3
+		drawSphereLine3d(c, radius,k, -dx + cx, dx + cx, dy + cy, color);
+		drawSphereLine3d(c, radius,k, -dy + cx, dy + cx, dx + cy, color);
+		#else
+		drawSphereLine3d(c, radius, k,-dy + cx, dy + cx, -dx + cy, color);
+		drawSphereLine3d(c, radius, k,-dx + cx, dx + cx, -dy + cy, color);
+		#endif
+		if (RENDER_STATUS_R()==RENDER_IDLE) return;
+	}
+}
 bool renderSphere3d(Vector O, Vector X, Color color){
 	Pos P,P1;
 	getPos_online(O,P);
@@ -352,6 +370,21 @@ bool renderSphere3d(Vector O, Vector X, Color color){
 	if (r2d<EPS) return false;
 	float r3d=dis(O,X);
 	drawSphere3d(O, r3d, P, r2d, color);
+	return true;
+	
+}
+bool renderSphere3dHalf(Vector O, Vector X, Color color){
+	Pos P,P1;
+	getPos_online(O,P);
+	getPos_online(X,P1);
+	//if (!getPos_online(O,P)) return false;
+	//if (!getPos_online(X,P1)) return false;
+	
+	float r2d=sqrt((P[0]-P1[0])*(P[0]-P1[0])+(P[1]-P1[1])*(P[1]-P1[1]));
+	if (r2d<EPS) return false;
+	float r3d=dis(O,X);
+	float k=r3d/r2d;
+	drawSphere3dHalf(P, r2d, k,color);
 	return true;
 	
 }
