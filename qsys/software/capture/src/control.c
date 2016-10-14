@@ -486,6 +486,7 @@ void draw_palette() {
 		drawMsg(overlay_port, palette_names[k], x + 3, y + 2, palette_dark[k] ? WHITE : BLACK);
 		if (k < 9) number[0] = (char)('1' + k);
 		else number[0] = (char)('A' + (k - 9));
+    number[1] = '\0';
 		drawMsg(overlay_port, number, x + PALETTE_WIDTH - 20, y + PALETTE_HEIGHT - 21, palette_dark[k] ? WHITE : BLACK);
 		
 		if (cur_color == k) {

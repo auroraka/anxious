@@ -69,7 +69,7 @@ make: $(APP_MAKEFILE)
 	# Running make (for application and the bsp due to dependencies)
 	$(MAKE) --directory=$(APP_DIR)
 
-$(APP_MAKEFILE): | $(SOPC_DIR)
+$(APP_MAKEFILE): $(SOPC_DIR) $(CONFIG)
 	$(MAKE) generate-bsp
 	$(MAKE) generate-makefile
 
