@@ -5,9 +5,9 @@
 This repository holds our team project in *Digital Logic Circuit Design*. Team 
 members are:
 
-- Wei Yilong
-- Yang Tianlong
-- Hu Zecong
+- Wei Yilong ([wyl8899](https://github.com/wyl8899))
+- Yang Tianlong ([Auroraka](https://github.com/auroraka))
+- Hu Zecong ([huzecong](https://github.com/huzecong))
 
 Initials of our names "WYH" can be interpreted as "I'm nervous too" in Pinyin, 
 and so goes our team name.
